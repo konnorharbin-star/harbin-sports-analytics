@@ -6,7 +6,8 @@ from harbin.monitoring import build_live_monitoring
 
 
 def test_policy_default_gates():
-    assert signal_from_policy(.08,5,.60,"spread",path="/tmp/definitely_missing_policy.json") == "STRONG"
+    # Missing policy is fail-closed in v7: no evidence, no bet signal.
+    assert signal_from_policy(.08,5,.60,"spread",path="/tmp/definitely_missing_policy.json") == "PASS"
     assert signal_from_policy(.01,8,.70,"spread",path="/tmp/definitely_missing_policy.json") == "PASS"
 
 

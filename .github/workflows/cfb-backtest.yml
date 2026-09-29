@@ -16,9 +16,18 @@ on:
         required: false
         default: "2018"
   push:
+    branches: [main, v7-elite-model-upgrade]
+    paths:
+      - "harbin/**"
+      - "tests/**"
+      - "run_backtest.py"
+      - "requirements.txt"
+      - ".github/workflows/cfb-backtest.yml"
+  pull_request:
     branches: [main]
     paths:
       - "harbin/**"
+      - "tests/**"
       - "run_backtest.py"
       - "requirements.txt"
       - ".github/workflows/cfb-backtest.yml"
@@ -56,28 +65,44 @@ jobs:
           cp reports/backtest_summary.json docs/backtest_summary.json
           cp reports/evidence_report.json docs/evidence.json
           cp reports/production_policy.json docs/policy.json
+          cp reports/policy_validation.json docs/policy_validation.json
+          cp reports/v7_audit.json docs/v7_audit.json
       - name: Backtest summary
         shell: bash
         run: |
           python - <<'PY' >> "$GITHUB_STEP_SUMMARY"
           import json
-          m=json.load(open("reports/backtest_summary.json")); o=m["overall"]; e=json.load(open("reports/evidence_report.json")); p=json.load(open("reports/production_policy.json"))
+          m=json.load(open("reports/backtest_summary.json")); o=m["overall"]; e=json.load(open("reports/evidence_report.json")); p=json.load(open("reports/production_policy.json")); v=json.load(open("reports/policy_validation.json")); a=json.load(open("reports/v7_audit.json"))
           pct=lambda x:"n/a" if x is None else f"{x:.2%}"
           print(f"## CFB Walk-Forward Backtest — {m['start_season']}-{m['end_season']}")
-          print(f"- Bets: **{o['bets']}** · ROI: **{pct(o['roi'])}** · Units: **{o['units']:.2f}**")
-          print(f"- Win rate: **{pct(o['win_rate'])}** · Max drawdown: **{o['max_drawdown']:.2f}u**")
-          print(f"- Normalized CLV: **{pct(o['avg_clv'])}** over **{o['clv_samples']}** samples")
-          print(f"- Week-block ROI 95% CI: **{o['roi_ci_95']}**")
-          print(f"- Evidence: **{e['status']}** · Deployment mode: **{p['deployment_mode']}**")
+          print(f"- Raw signal set: **{o['bets']} bets** · ROI **{pct(o['roi'])}** · units **{o['units']:.2f}** · max DD **{o['max_drawdown']:.2f}u**")
+          print(f"- Calibration: Brier **{m.get('prediction',{}).get('brier')}** · ECE **{m.get('prediction',{}).get('ece')}**")
+          print(f"- Advanced dynamic coverage: **{m.get('advanced_features',{}).get('dynamic_coverage',0):.1%}**")
+          print(f"- Validated markets: **{p.get('validated_markets',[])}** · blocked weeks: **{(p.get('regime_filters') or {}).get('blocked_weeks',[])}**")
+          print(f"- Policy holdout: **{v.get('status')}** · deployment: **{p.get('deployment_mode','paper').upper()}**")
+          print(f"- Real-money release gate: **{a.get('release_gate',{}).get('real_money_allowed',False)}**")
           PY
-      - name: Commit reports
+      - name: Upload research reports
+        uses: actions/upload-artifact@v4
+        with:
+          name: cfb-v7-evidence-${{ github.run_id }}
+          path: |
+            reports/backtest_summary.json
+            reports/backtest_bets.csv
+            reports/evidence_report.json
+            reports/production_policy.json
+            reports/policy_validation.json
+            reports/v7_audit.json
+          retention-days: 30
+      - name: Commit reports on main only
+        if: github.ref == 'refs/heads/main' && github.event_name != 'pull_request'
         shell: bash
         run: |
           git config user.name "harbin-model-bot"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add reports docs/backtest_summary.json docs/evidence.json docs/policy.json
+          git add reports docs/backtest_summary.json docs/evidence.json docs/policy.json docs/policy_validation.json docs/v7_audit.json
           if ! git diff --cached --quiet; then
-            git commit -m "backtest: refresh evidence and production policy"
+            git commit -m "backtest: refresh v7 evidence and production policy"
             git pull --rebase origin main
             git push
           else
