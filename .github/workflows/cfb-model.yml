@@ -12,12 +12,15 @@ on:
         required: false
         default: ""
       history_start:
-        description: "First training season (blank = season-4)"
+        description: "First training season (blank = season-5)"
         required: false
         default: ""
   push:
     branches: [main]
-    paths-ignore: ["outputs/**", "history/**", "docs/**"]
+    paths-ignore:
+      - "outputs/**"
+      - "history/**"
+      - "docs/**"
   schedule:
     - cron: "17 11,17,23 * * *"
     - cron: "47 14 * * 6"
@@ -25,18 +28,32 @@ on:
 permissions:
   contents: write
 
+concurrency:
+  group: cfb-model-${{ github.ref }}
+  cancel-in-progress: true
+
 jobs:
   model:
     runs-on: ubuntu-latest
-    timeout-minutes: 35
+    timeout-minutes: 45
+    env:
+      PYTHONUNBUFFERED: "1"
+      TZ: "America/Chicago"
+
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-python@v5
+      - uses: actions/checkout@v7
+
+      - uses: actions/setup-python@v7
         with:
           python-version: "3.12"
           cache: pip
-      - run: python -m pip install -r requirements.txt
-      - run: python -m pytest -q
+
+      - name: Install dependencies
+        run: python -m pip install -r requirements.txt
+
+      - name: Test
+        run: python -m pytest -q
+
       - name: Run model
         shell: bash
         run: |
@@ -45,6 +62,30 @@ jobs:
           [ -n "${{ inputs.week }}" ] && ARGS="$ARGS --week ${{ inputs.week }}"
           [ -n "${{ inputs.history_start }}" ] && ARGS="$ARGS --history-start ${{ inputs.history_start }}"
           python run_week.py $ARGS
+
+      - name: Publish run summary
+        shell: bash
+        run: |
+          python - <<'PY' >> "$GITHUB_STEP_SUMMARY"
+          import glob, json, os
+          files = glob.glob("outputs/cfb_model_*_metadata.json")
+          if not files:
+              print("## CFB model\nNo metadata file was produced.")
+              raise SystemExit(0)
+          path = max(files, key=os.path.getmtime)
+          m = json.load(open(path))
+          c = m["market_coverage"]
+          print(f"## CFB Model v{m['model_version']} — {m['season']} Week {m['week']}")
+          print(f"- Games: **{m['upcoming_games']}**")
+          print(f"- Updated: **{m['updated_at_ct']}**")
+          print(f"- Odds source: **{m['odds_source']}**")
+          print(f"- Market coverage: **{c['any_market']}/{c['games']}**")
+          print(f"- ML / Spread / Total: **{c['moneyline']} / {c['spread']} / {c['total']}**")
+          print(f"- Margin blend weight: **{m['model_selection']['margin_blend_weight']:.2f}**")
+          print(f"- Total blend weight: **{m['model_selection']['total_blend_weight']:.2f}**")
+          print(f"- Status: {m['market_status']}")
+          PY
+
       - name: Commit generated state
         shell: bash
         run: |
@@ -54,4 +95,6 @@ jobs:
           if ! git diff --cached --quiet; then
             git commit -m "model: automated CFB refresh"
             git push
+          else
+            echo "No generated changes to commit."
           fi
