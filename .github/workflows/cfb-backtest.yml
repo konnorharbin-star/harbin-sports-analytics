@@ -24,14 +24,11 @@ on:
       - ".github/workflows/cfb-backtest.yml"
   schedule:
     - cron: "35 15 * * 1"
-
 permissions:
   contents: write
-
 concurrency:
   group: cfb-backtest-${{ github.ref }}
   cancel-in-progress: true
-
 jobs:
   backtest:
     runs-on: ubuntu-latest
@@ -55,6 +52,10 @@ jobs:
             --start-season "${{ inputs.start_season || '2023' }}" \
             --end-season "${{ inputs.end_season || '2025' }}" \
             --history-start "${{ inputs.history_start || '2018' }}"
+          mkdir -p docs
+          cp reports/backtest_summary.json docs/backtest_summary.json
+          cp reports/evidence_report.json docs/evidence.json
+          cp reports/production_policy.json docs/policy.json
       - name: Backtest summary
         shell: bash
         run: |
@@ -65,8 +66,8 @@ jobs:
           print(f"## CFB Walk-Forward Backtest — {m['start_season']}-{m['end_season']}")
           print(f"- Bets: **{o['bets']}** · ROI: **{pct(o['roi'])}** · Units: **{o['units']:.2f}**")
           print(f"- Win rate: **{pct(o['win_rate'])}** · Max drawdown: **{o['max_drawdown']:.2f}u**")
-          print(f"- Avg CLV: **{o['avg_clv']}** over **{o['clv_samples']}** samples")
-          print(f"- ROI 95% bootstrap CI: **{o['roi_ci_95']}**")
+          print(f"- Normalized CLV: **{pct(o['avg_clv'])}** over **{o['clv_samples']}** samples")
+          print(f"- Week-block ROI 95% CI: **{o['roi_ci_95']}**")
           print(f"- Evidence: **{e['status']}** · Deployment mode: **{p['deployment_mode']}**")
           PY
       - name: Commit reports
@@ -74,7 +75,7 @@ jobs:
         run: |
           git config user.name "harbin-model-bot"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add reports
+          git add reports docs/backtest_summary.json docs/evidence.json docs/policy.json
           if ! git diff --cached --quiet; then
             git commit -m "backtest: refresh evidence and production policy"
             git pull --rebase origin main
