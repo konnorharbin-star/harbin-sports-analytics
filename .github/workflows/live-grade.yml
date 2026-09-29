@@ -2,6 +2,12 @@ name: CFB Live Shadow Grading
 
 on:
   workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - "history/**"
+      - "harbin/grading.py"
+      - "grade_live.py"
   schedule:
     - cron: "37 10,16,22 * * *"
 permissions:
@@ -29,7 +35,9 @@ jobs:
         run: |
           git config user.name "harbin-grade-bot"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add reports/live_performance.json reports/live_graded_predictions.csv reports/live_graded_bets.csv outputs/live_performance.json docs/live_performance.json
+          for f in reports/live_performance.json reports/live_graded_predictions.csv reports/live_graded_bets.csv outputs/live_performance.json docs/live_performance.json; do
+            [ -f "$f" ] && git add "$f" || true
+          done
           if ! git diff --cached --quiet; then
             git commit -m "grade: refresh independent live shadow evidence"
             git pull --rebase origin main
