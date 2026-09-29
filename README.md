@@ -1,43 +1,53 @@
 # Harbin Sports Analytics
 
-Automated college-football projection and market-comparison system that lives entirely in this GitHub repository.
+Automated college-football projection, probability, market-comparison, risk, and evidence system that lives in this GitHub repository.
 
-## Run the model
+## Run the live model
 
 1. Open **Actions**.
 2. Select **CFB Model + Dashboard**.
 3. Click **Run workflow**.
-4. Enter a season/week, or leave both blank to auto-detect.
+4. Enter season/week, or leave blank to auto-detect.
 5. Wait for a green check.
+6. Open **`outputs/README.md`**.
 
-Then open **`outputs/README.md`**. It always points to the latest interactive table, CSV/JSON data, and Cooper-style carousel PNGs.
+The latest GitHub Pages dashboard is generated from `docs/`.
 
-## What v3 fixes
+## Run the proof layer
 
-- Live market data is attempted from multiple no-key ESPN hosts before falling back to the SportsDataVerse historical line archive.
-- If sportsbook data is unavailable, the model clearly enters **projection-only mode** and does not fabricate betting signals.
-- The ML residual layer is automatically shrunk toward the independent baseline; a residual model that is worse on chronological validation can receive a weight of `0.00`.
-- Generated output includes explicit market-coverage diagnostics and data-source errors.
-- Prediction-history snapshots only append when a projection or market quote actually changes.
-- The dashboard and PNGs include their latest Central Time update stamp.
-- GitHub Actions uses current Node-24-based checkout/setup actions and cancels overlapping runs.
+Open **Actions → CFB Walk-Forward Backtest → Run workflow**. This produces `reports/backtest_summary.json`, individual historical bets, edge/signal breakdowns, calibration tables, drawdown, ROI confidence intervals, and an opening-to-archive-final CLV proxy when the historical archive contains both prices.
 
-## Architecture
+## v4 architecture
 
-- `harbin/ratings.py` — leakage-safe opponent-adjusted score/Elo state.
-- `harbin/models.py` — margin/total residual models with validation shrinkage guard.
-- `harbin/data.py` — schedules/results + live/historical market data fallbacks.
-- `harbin/market.py` — Cooper-style replica thresholds plus no-vig/EV math.
-- `harbin/render.py` — dark 14-games-per-page HTML/PNG display.
-- `harbin/pipeline.py` — end-to-end run, diagnostics, history, and Pages output.
-- `run_week.py` — command-line entry point.
+The system intentionally separates six jobs that should not be conflated:
 
-## Output
+- **Fair-score engine** — leakage-safe opponent-adjusted ratings plus advanced football features; sportsbook prices do not enter the score projection.
+- **Advanced football layer** — prior-week EPA, passing/rushing EPA, success rate, scoring-opportunity/finishing metrics, third-down efficiency, pace, plays, starting field position, plus available roster-talent/returning-production/continuity priors.
+- **Probability layer** — nested chronological calibration with Brier score, log loss, ECE, residual variance, shrinkage guards, and season walk-forward validation.
+- **Market intelligence layer** — live ESPN/ESPN Core prices, multi-book consensus when available, best moneyline, dispersion, no-vig probabilities, and first-seen line movement.
+- **Risk/context layer** — current injuries/QB availability, weather, travel, rest, altitude, data-quality gating, model-vs-market disagreement, volatility, and capped fractional-Kelly sizing. Current-only context does not leak backward into historical training.
+- **Evidence layer** — week-by-week retraining against historical opening/archive-final market data, ATS/ML/total grading, ROI, units, max drawdown, CLV proxy, bootstrap ROI confidence intervals, and calibration.
 
-A run for 2026 Week 5 writes the CSV, JSON, HTML, metadata, and four PNG pages under `outputs/`, plus a single `outputs/README.md` landing page.
+The public-facing Cooper-style carousel is a separate **replica presentation layer**. Jason Cooper's private scoring formula is not public; this repository does not claim to contain it.
 
-GitHub Pages is generated from `docs/index.html`.
+## Key files
 
-## Methodology boundary
+- `harbin/ratings.py` — opponent-adjusted pregame state and independent score baseline.
+- `harbin/advanced.py` — leakage-safe prior-week advanced and preseason/static features.
+- `harbin/models.py` — residual models, nested validation, walk-forward diagnostics, shrinkage, win-probability calibration.
+- `harbin/data.py` — schedules/results and verified live/historical market data.
+- `harbin/market_intel.py` — multi-book consensus and best-price diagnostics.
+- `harbin/context.py` — current injury/QB, weather, rest, travel and altitude context.
+- `harbin/pro_market.py` — EV gates, fractional Kelly, stake/risk controls.
+- `harbin/line_history.py` — first-seen/current line movement.
+- `harbin/grading.py` — ongoing grading of archived v4 decisions.
+- `harbin/backtest.py` — historical walk-forward betting proof.
+- `harbin/health.py` — system-readiness score; never a profitability score.
+- `harbin/render.py` — Cooper-style 14-games-per-page cards.
+- `harbin/pipeline.py` — end-to-end production run.
 
-The visual market layer is a reconstruction from Jason Cooper's public model screenshots. Jason Cooper's private scoring formula has not been published. The underlying score engine here is an independent model and should be judged by its own chronological validation, calibration, closing-line value, and out-of-sample results.
+## Data behavior
+
+The free stack is designed around SportsDataverse/cfbfastR datasets, ESPN public endpoints, and Open-Meteo. Missing or blocked sources degrade explicitly. The system does not silently fill sportsbook prices, injuries, weather, or advanced metrics with invented values.
+
+A green workflow means the software ran successfully. It does **not** mean the model is profitable. `outputs/system_health.json` measures engineering/model readiness. Market-beating claims require a sufficiently large, leakage-safe historical and forward sample with ROI, calibration, drawdown, and CLV evidence.

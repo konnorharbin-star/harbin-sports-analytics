@@ -17,10 +17,7 @@ on:
         default: ""
   push:
     branches: [main]
-    paths-ignore:
-      - "outputs/**"
-      - "history/**"
-      - "docs/**"
+    paths-ignore: ["outputs/**", "history/**", "reports/**", "docs/**"]
   schedule:
     - cron: "17 11,17,23 * * *"
     - cron: "47 14 * * 6"
@@ -35,25 +32,20 @@ concurrency:
 jobs:
   model:
     runs-on: ubuntu-latest
-    timeout-minutes: 45
+    timeout-minutes: 60
     env:
       PYTHONUNBUFFERED: "1"
       TZ: "America/Chicago"
-
     steps:
       - uses: actions/checkout@v7
-
       - uses: actions/setup-python@v7
         with:
           python-version: "3.12"
           cache: pip
-
       - name: Install dependencies
         run: python -m pip install -r requirements.txt
-
       - name: Test
         run: python -m pytest -q
-
       - name: Run model
         shell: bash
         run: |
@@ -62,38 +54,34 @@ jobs:
           [ -n "${{ inputs.week }}" ] && ARGS="$ARGS --week ${{ inputs.week }}"
           [ -n "${{ inputs.history_start }}" ] && ARGS="$ARGS --history-start ${{ inputs.history_start }}"
           python run_week.py $ARGS
-
       - name: Publish run summary
         shell: bash
         run: |
           python - <<'PY' >> "$GITHUB_STEP_SUMMARY"
-          import glob, json, os
-          files = glob.glob("outputs/cfb_model_*_metadata.json")
+          import glob,json,os
+          files=glob.glob("outputs/cfb_model_*_metadata.json")
           if not files:
-              print("## CFB model\nNo metadata file was produced.")
-              raise SystemExit(0)
-          path = max(files, key=os.path.getmtime)
-          m = json.load(open(path))
-          c = m["market_coverage"]
+              print("## CFB model\nNo metadata file was produced."); raise SystemExit(0)
+          m=json.load(open(max(files,key=os.path.getmtime))); c=m["market_coverage"]; a=m["advanced_features"]; q=m["quant_picks"]; h=m["health"]
           print(f"## CFB Model v{m['model_version']} — {m['season']} Week {m['week']}")
-          print(f"- Games: **{m['upcoming_games']}**")
-          print(f"- Updated: **{m['updated_at_ct']}**")
-          print(f"- Odds source: **{m['odds_source']}**")
-          print(f"- Market coverage: **{c['any_market']}/{c['games']}**")
-          print(f"- ML / Spread / Total: **{c['moneyline']} / {c['spread']} / {c['total']}**")
-          print(f"- Margin blend weight: **{m['model_selection']['margin_blend_weight']:.2f}**")
-          print(f"- Total blend weight: **{m['model_selection']['total_blend_weight']:.2f}**")
+          print(f"- Games: **{m['upcoming_games']}** · Updated **{m['updated_at_ct']}**")
+          print(f"- Market ML / Spread / Total: **{c['moneyline']} / {c['spread']} / {c['total']}**")
+          print(f"- Advanced feature coverage: **{a['live_coverage']:.1%}**")
+          print(f"- Multi-book coverage: **{m['market_intelligence'].get('multi_book_coverage',0):.1%}**")
+          print(f"- Margin MAE: **{m['metrics'].get('margin_mae',float('nan')):.3f}**")
+          print(f"- Win Brier / ECE: **{m['metrics'].get('win_brier',float('nan')):.3f} / {m['metrics'].get('win_ece',float('nan')):.3f}**")
+          print(f"- Quant STRONG / BET / LEAN: **{q['strong']} / {q['bet']} / {q['lean']}**")
+          print(f"- System health: **{h['system_health_score']}/100** (readiness, not profitability)")
           print(f"- Status: {m['market_status']}")
           PY
-
       - name: Commit generated state
         shell: bash
         run: |
           git config user.name "harbin-model-bot"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add outputs history docs
+          git add outputs history reports docs
           if ! git diff --cached --quiet; then
-            git commit -m "model: automated CFB refresh"
+            git commit -m "model: automated CFB v4 refresh"
             git push
           else
             echo "No generated changes to commit."
