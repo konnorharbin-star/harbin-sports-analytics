@@ -8,12 +8,12 @@ import numpy as np
 import pandas as pd
 
 DEFAULT_POLICY = {
-    "version": 3,
+    "version": 4,
     "deployment_mode": "paper",
     "markets": {
-        "moneyline": {"enabled": False, "evidence_tier": "UNVALIDATED", "lean": {"min_ev": .02, "min_edge": 1.5, "min_prob": .52}, "bet": {"min_ev": .04, "min_edge": 2.5, "min_prob": .54}, "strong": {"min_ev": .07, "min_edge": 4.0, "min_prob": .56}},
-        "spread": {"enabled": False, "evidence_tier": "UNVALIDATED", "lean": {"min_ev": .02, "min_edge": 2.0, "min_prob": .52}, "bet": {"min_ev": .04, "min_edge": 3.0, "min_prob": .54}, "strong": {"min_ev": .07, "min_edge": 5.0, "min_prob": .57}},
-        "total": {"enabled": False, "evidence_tier": "UNVALIDATED", "lean": {"min_ev": .02, "min_edge": 2.5, "min_prob": .52}, "bet": {"min_ev": .04, "min_edge": 4.0, "min_prob": .54}, "strong": {"min_ev": .07, "min_edge": 6.0, "min_prob": .57}},
+        "moneyline": {"enabled": False, "candidate": False, "evidence_tier": "UNVALIDATED", "lean": {"min_ev": .02, "min_edge": 1.5, "min_prob": .52}, "bet": {"min_ev": .04, "min_edge": 2.5, "min_prob": .54}, "strong": {"min_ev": .07, "min_edge": 4.0, "min_prob": .56}},
+        "spread": {"enabled": False, "candidate": False, "evidence_tier": "UNVALIDATED", "lean": {"min_ev": .02, "min_edge": 2.0, "min_prob": .52}, "bet": {"min_ev": .04, "min_edge": 3.0, "min_prob": .54}, "strong": {"min_ev": .07, "min_edge": 5.0, "min_prob": .57}},
+        "total": {"enabled": False, "candidate": False, "evidence_tier": "UNVALIDATED", "lean": {"min_ev": .02, "min_edge": 2.5, "min_prob": .52}, "bet": {"min_ev": .04, "min_edge": 4.0, "min_prob": .54}, "strong": {"min_ev": .07, "min_edge": 6.0, "min_prob": .57}},
     },
     "regime_filters": {"blocked_weeks": [], "reason": {}},
     "portfolio": {"max_slate_units": 5.0, "max_game_units": 1.0, "max_team_units": 1.5, "max_market_units": 2.5, "kelly_fraction": .20},
@@ -31,17 +31,20 @@ def _normalize_policy(data: dict) -> dict:
     for market in base["markets"]:
         incoming = ((data or {}).get("markets") or {}).get(market, {})
         base["markets"][market].update(incoming)
-        if "enabled" not in incoming:
-            sel = (((data or {}).get("diagnostics") or {}).get(market) or {}).get("selected")
-            ok = False
-            if isinstance(sel, (list, tuple)) and len(sel) >= 4 and isinstance(sel[3], dict):
-                st = sel[3]
-                ok = int(st.get("n", 0) or 0) >= 50 and float(st.get("roi", -1) or -1) > 0 and float(st.get("lcb", -1) or -1) > 0
-            base["markets"][market]["enabled"] = bool(ok)
-            base["markets"][market]["evidence_tier"] = "VALIDATED" if ok else "UNVALIDATED"
+        # Old policies are never auto-promoted by compatibility logic. Evidence
+        # from a prior schema may inform research, but v4+ requires an explicit
+        # untouched-final-test promotion step in evidence_v7.py.
+        if "candidate" not in incoming:
+            base["markets"][market]["candidate"] = False
+        if int((data or {}).get("version", 0) or 0) < 4:
+            base["markets"][market]["enabled"] = False
+            if base["markets"][market].get("evidence_tier") not in {"FINAL_TEST_VALIDATED"}:
+                base["markets"][market]["evidence_tier"] = "LEGACY_REQUIRES_REVALIDATION"
     base.setdefault("regime_filters", {"blocked_weeks": [], "reason": {}})
     base["regime_filters"].setdefault("blocked_weeks", [])
     base["regime_filters"].setdefault("reason", {})
+    base.setdefault("candidate_markets", [])
+    base.setdefault("validated_markets", [])
     return base
 
 
@@ -126,9 +129,10 @@ def _split_three_way(df: pd.DataFrame):
         seasons = sorted(int(x) for x in pd.to_numeric(df["season"], errors="coerce").dropna().unique())
         if len(seasons) >= 3:
             tune_season, test_season = seasons[-2], seasons[-1]
-            dev = df[pd.to_numeric(df["season"], errors="coerce") < tune_season].copy()
-            tune = df[pd.to_numeric(df["season"], errors="coerce") == tune_season].copy()
-            test = df[pd.to_numeric(df["season"], errors="coerce") == test_season].copy()
+            season_num = pd.to_numeric(df["season"], errors="coerce")
+            dev = df[season_num < tune_season].copy()
+            tune = df[season_num == tune_season].copy()
+            test = df[season_num == test_season].copy()
             return dev, tune, test, f"development<{tune_season} / tune={tune_season} / untouched_test={test_season}"
     n = len(df)
     a, b = max(1, int(n * .55)), max(2, int(n * .78))
@@ -152,6 +156,12 @@ def _derive_blocked_weeks(summary: dict):
 
 
 def derive_production_policy(bets_path="reports/backtest_bets.csv", summary_path="reports/backtest_summary.json", out_path="reports/production_policy.json"):
+    """Research candidate thresholds without touching the final test set.
+
+    A market that passes development+tuning is only a *candidate*. It remains
+    disabled until ``validate_policy_against_backtest`` evaluates it on the
+    untouched final chronological block and explicitly promotes it.
+    """
     policy = _deepcopy_default()
     bp = Path(bets_path)
     if not bp.exists():
@@ -172,6 +182,7 @@ def derive_production_policy(bets_path="reports/backtest_bets.csv", summary_path
         "spread": ([.02,.03,.04,.05,.06,.07,.08,.10,.12], [2,2.5,3,3.5,4,5,6,7], [.52,.54,.56,.58,.60,.62,.64]),
         "total": ([.02,.03,.04,.05,.06,.07,.08,.10,.12], [2.5,3,3.5,4,5,6,7,8], [.52,.54,.56,.58,.60,.62]),
     }
+    candidate_markets = []
     for market, (evs, edges, probs) in grids.items():
         tr = dev[dev.market.astype(str).str.lower() == market].copy()
         va = tune[tune.market.astype(str).str.lower() == market].copy()
@@ -197,12 +208,15 @@ def derive_production_policy(bets_path="reports/backtest_bets.csv", summary_path
             ev, edge, prob, trst, hs = chosen
             d = DEFAULT_POLICY["markets"][market]
             floor = {"min_ev": max(float(d["lean"]["min_ev"]), ev), "min_edge": max(float(d["lean"]["min_edge"]), edge), "min_prob": max(float(d["lean"]["min_prob"]), prob)}
-            policy["markets"][market]["enabled"] = True
+            policy["markets"][market]["candidate"] = True
+            policy["markets"][market]["enabled"] = False
             policy["markets"][market]["evidence_tier"] = "TUNING_VALIDATED_AWAITING_FINAL_TEST"
             policy["markets"][market]["lean"] = floor
             policy["markets"][market]["bet"] = {"min_ev": max(float(d["bet"]["min_ev"]), floor["min_ev"] + .015), "min_edge": max(float(d["bet"]["min_edge"]), floor["min_edge"] + .75), "min_prob": max(float(d["bet"]["min_prob"]), floor["min_prob"] + .015)}
             policy["markets"][market]["strong"] = {"min_ev": max(float(d["strong"]["min_ev"]), floor["min_ev"] + .04), "min_edge": max(float(d["strong"]["min_edge"]), floor["min_edge"] + 2.0), "min_prob": max(float(d["strong"]["min_prob"]), floor["min_prob"] + .03)}
+            candidate_markets.append(market)
         else:
+            policy["markets"][market]["candidate"] = False
             policy["markets"][market]["enabled"] = False
             policy["markets"][market]["evidence_tier"] = "UNVALIDATED"
     try:
@@ -211,13 +225,13 @@ def derive_production_policy(bets_path="reports/backtest_bets.csv", summary_path
         summary = {}
     blocked, reason = _derive_blocked_weeks(summary)
     policy["regime_filters"] = {"blocked_weeks": blocked, "reason": reason}
-    enabled = [m for m, v in policy["markets"].items() if v.get("enabled")]
     policy["deployment_mode"] = "paper"
     policy["source"] = "three-way chronological threshold development/tuning with untouched final test; week-cluster bootstrap gates"
     policy["split"] = split_desc
     policy["untouched_test_seasons"] = sorted(int(x) for x in pd.to_numeric(untouched_test.get("season", pd.Series(dtype=float)), errors="coerce").dropna().unique())
     policy["diagnostics"] = diagnostics
-    policy["validated_markets"] = enabled
+    policy["candidate_markets"] = candidate_markets
+    policy["validated_markets"] = []
     Path(out_path).parent.mkdir(parents=True, exist_ok=True)
     Path(out_path).write_text(json.dumps(policy, indent=2))
     return policy
