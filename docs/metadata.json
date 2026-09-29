@@ -10,7 +10,7 @@
   "metrics": {
     "margin_baseline_mae": 13.720203965537888,
     "margin_mae": 12.87413430192907,
-    "margin_rmse": 15.872411915565795,
+    "margin_rmse": 15.872411915565793,
     "margin_blend_weight": 0.55,
     "margin_eval_rows": 368,
     "margin_walkforward_folds": [
@@ -41,14 +41,14 @@
       {
         "season": 2026,
         "rows": 215,
-        "mae": 12.8631505302551,
+        "mae": 12.863150530255098,
         "rmse": 16.05324695542498,
         "baseline_mae": 14.439117971947091,
         "weight": 1.0
       }
     ],
     "margin_walkforward_mae_mean": 12.746245296439195,
-    "margin_walkforward_mae_std": 0.2114605946485821,
+    "margin_walkforward_mae_std": 0.21146059464858186,
     "margin_walkforward_improved_folds": 4,
     "total_baseline_mae": 12.778014944283827,
     "total_mae": 12.841705909584391,
@@ -92,9 +92,9 @@
     "total_walkforward_mae_mean": 12.763060987477557,
     "total_walkforward_mae_std": 0.3833816849028627,
     "total_walkforward_improved_folds": 4,
-    "win_brier": 0.15521981084870634,
-    "win_log_loss": 0.474802344116421,
-    "win_ece": 0.02782638996349985,
+    "win_brier": 0.15521981084870637,
+    "win_log_loss": 0.4748023441164211,
+    "win_ece": 0.02782638996349993,
     "win_calibration_eval_rows": 368
   },
   "model_selection": {
@@ -103,8 +103,8 @@
   },
   "calibrated_margin_sigma": 15.833774095892851,
   "calibrated_total_sigma": 15.713931413011748,
-  "generated_at": "2026-09-29T05:11:56.373008+00:00",
-  "updated_at_ct": "Sep 29, 2026 \u00b7 12:11 AM CT",
+  "generated_at": "2026-09-29T05:16:06.133466+00:00",
+  "updated_at_ct": "Sep 29, 2026 \u00b7 12:16 AM CT",
   "schedule_source": "sportsdataverse/cfbfastR-data",
   "odds_source": "ESPN live (site.web.api.espn.com) + ESPN Core supplement",
   "odds_errors": [],
@@ -156,7 +156,7 @@
     "bet": 16,
     "lean": 10
   },
-  "snapshot_appended": true,
+  "snapshot_appended": false,
   "live_performance": {
     "graded_games": 0,
     "graded_bets": 0,
@@ -167,7 +167,7 @@
     "note": "CLV proxy uses the latest stored pre-kickoff snapshot, not a guaranteed official closing line."
   },
   "health": {
-    "system_health_score": 81.4,
+    "system_health_score": 81.6,
     "meaning": "engineering/model-readiness score only; not a profitability or win-rate guarantee",
     "components": {
       "pipeline_and_data": 100.0,
@@ -177,7 +177,7 @@
       "probability_calibration": 94.4,
       "market_intelligence": 65.0,
       "current_context": 100.0,
-      "live_monitoring": 82.3,
+      "live_monitoring": 84.7,
       "historical_betting_proof": 20.0
     },
     "betting_proof_status": "UNPROVEN",
