@@ -94,7 +94,7 @@
     "quant_ev":0.3691064762,
     "quant_probability":0.7171510113,
     "quant_edge":8.9270050191,
-    "stake_units":0.96
+    "stake_units":0.8
   },
   {
     "game_id":"401862786",
@@ -191,7 +191,7 @@
     "quant_ev":0.4991045062,
     "quant_probability":0.7852452175,
     "quant_edge":12.2782506678,
-    "stake_units":0.83
+    "stake_units":0.69
   },
   {
     "game_id":"401858245",
@@ -288,7 +288,7 @@
     "quant_ev":0.1027447541,
     "quant_probability":0.5776282045,
     "quant_edge":3.0434800887,
-    "stake_units":0.72
+    "stake_units":0.58
   },
   {
     "game_id":"401871050",
@@ -379,13 +379,13 @@
     "risk_multiplier":0.6437370805,
     "market_disagreement":4.4016829504,
     "quant_signal":"BET",
-    "quant_market":"moneyline",
-    "quant_side":"Delaware",
-    "quant_price":220.0,
-    "quant_ev":0.3094812638,
-    "quant_probability":0.4092128949,
-    "quant_edge":10.9374969503,
-    "stake_units":0.09
+    "quant_market":"total",
+    "quant_side":"O",
+    "quant_price":49.5,
+    "quant_ev":0.1659489461,
+    "quant_probability":0.6107351622,
+    "quant_edge":4.4016829504,
+    "stake_units":0.8
   },
   {
     "game_id":"401858476",
@@ -482,7 +482,7 @@
     "quant_ev":0.2093573504,
     "quant_probability":0.6334728978,
     "quant_edge":5.3380952378,
-    "stake_units":0.94
+    "stake_units":0.78
   },
   {
     "game_id":"401856707",
@@ -572,14 +572,14 @@
     "data_quality_score":0.7975,
     "risk_multiplier":0.6704669898,
     "market_disagreement":1.8681819947,
-    "quant_signal":"BET",
-    "quant_market":"moneyline",
-    "quant_side":"Mississippi State",
-    "quant_price":185.0,
-    "quant_ev":0.2267518185,
-    "quant_probability":0.4304392346,
-    "quant_edge":9.4087358763,
-    "stake_units":0.08
+    "quant_signal":"PASS",
+    "quant_market":null,
+    "quant_side":null,
+    "quant_price":null,
+    "quant_ev":0.0,
+    "quant_probability":null,
+    "quant_edge":null,
+    "stake_units":0.0
   },
   {
     "game_id":"401856807",
@@ -669,14 +669,14 @@
     "data_quality_score":0.7975,
     "risk_multiplier":0.7475382812,
     "market_disagreement":8.765215779,
-    "quant_signal":"BET",
-    "quant_market":"moneyline",
+    "quant_signal":"STRONG",
+    "quant_market":"spread",
     "quant_side":"Middle Tennessee",
-    "quant_price":800.0,
-    "quant_ev":1.0939140246,
-    "quant_probability":0.2326571138,
-    "quant_edge":12.6039466788,
-    "stake_units":0.1
+    "quant_price":19.5,
+    "quant_ev":0.3623636645,
+    "quant_probability":0.7136190623,
+    "quant_edge":8.765215779,
+    "stake_units":0.93
   },
   {
     "game_id":"401856819",
@@ -766,14 +766,14 @@
     "data_quality_score":0.7975,
     "risk_multiplier":0.7375053407,
     "market_disagreement":4.879409912,
-    "quant_signal":"PASS",
-    "quant_market":"moneyline",
+    "quant_signal":"BET",
+    "quant_market":"spread",
     "quant_side":"UCF",
-    "quant_price":350.0,
-    "quant_ev":0.3149023372,
-    "quant_probability":0.2922005194,
-    "quant_edge":7.8944035239,
-    "stake_units":0.0
+    "quant_price":12.5,
+    "quant_ev":0.1897922017,
+    "quant_probability":0.6232244866,
+    "quant_edge":4.879409912,
+    "stake_units":0.92
   },
   {
     "game_id":"401856822",
@@ -870,7 +870,7 @@
     "quant_ev":0.4848740049,
     "quant_probability":0.7777911454,
     "quant_edge":11.8854148669,
-    "stake_units":0.89
+    "stake_units":0.74
   },
   {
     "game_id":"401858246",
@@ -960,14 +960,14 @@
     "data_quality_score":0.7975,
     "risk_multiplier":0.72731927,
     "market_disagreement":4.6075412527,
-    "quant_signal":"PASS",
-    "quant_market":"moneyline",
+    "quant_signal":"BET",
+    "quant_market":"spread",
     "quant_side":"Boston College",
-    "quant_price":950.0,
-    "quant_ev":0.5490742167,
-    "quant_probability":0.1475308778,
-    "quant_edge":5.5787758519,
-    "stake_units":0.0
+    "quant_price":21.0,
+    "quant_ev":0.1770756297,
+    "quant_probability":0.6165634251,
+    "quant_edge":4.6075412527,
+    "stake_units":0.91
   },
   {
     "game_id":"401858250",
@@ -1057,14 +1057,14 @@
     "data_quality_score":0.7975,
     "risk_multiplier":0.6999435297,
     "market_disagreement":3.1020555355,
-    "quant_signal":"PASS",
-    "quant_market":"moneyline",
-    "quant_side":"North Carolina",
-    "quant_price":1000.0,
-    "quant_ev":0.3231979487,
-    "quant_probability":0.1202907226,
-    "quant_edge":3.2733118926,
-    "stake_units":0.0
+    "quant_signal":"LEAN",
+    "quant_market":"total",
+    "quant_side":"O",
+    "quant_price":47.5,
+    "quant_ev":0.1045145897,
+    "quant_probability":0.5785552613,
+    "quant_edge":3.1020555355,
+    "stake_units":0.59
   },
   {
     "game_id":"401858251",
@@ -1154,14 +1154,14 @@
     "data_quality_score":0.7975,
     "risk_multiplier":0.6574231332,
     "market_disagreement":2.2517790057,
-    "quant_signal":"PASS",
-    "quant_market":"moneyline",
+    "quant_signal":"LEAN",
+    "quant_market":"spread",
     "quant_side":"Stanford",
-    "quant_price":390.0,
-    "quant_ev":0.0961117208,
-    "quant_probability":0.2236962695,
-    "quant_edge":2.7989198835,
-    "stake_units":0.0
+    "quant_price":13.5,
+    "quant_ev":0.0645100294,
+    "quant_probability":0.5576004916,
+    "quant_edge":2.2517790057,
+    "stake_units":0.34
   },
   {
     "game_id":"401858252",
@@ -1258,7 +1258,7 @@
     "quant_ev":1.3718329789,
     "quant_probability":0.790610993,
     "quant_edge":47.1166548507,
-    "stake_units":0.33
+    "stake_units":0.27
   },
   {
     "game_id":"401858474",
@@ -1348,14 +1348,14 @@
     "data_quality_score":0.7975,
     "risk_multiplier":0.6660346077,
     "market_disagreement":4.3512759119,
-    "quant_signal":"PASS",
-    "quant_market":"moneyline",
-    "quant_side":"Minnesota",
-    "quant_price":185.0,
-    "quant_ev":0.2073761995,
-    "quant_probability":0.4236407717,
-    "quant_edge":8.7288895931,
-    "stake_units":0.0
+    "quant_signal":"BET",
+    "quant_market":"total",
+    "quant_side":"O",
+    "quant_price":43.5,
+    "quant_ev":0.1635900954,
+    "quant_probability":0.6094995738,
+    "quant_edge":4.3512759119,
+    "stake_units":0.83
   },
   {
     "game_id":"401862791",
@@ -1452,7 +1452,7 @@
     "quant_ev":0.309212427,
     "quant_probability":0.685777938,
     "quant_edge":7.5739095317,
-    "stake_units":1.12
+    "stake_units":0.93
   },
   {
     "game_id":"401858479",
@@ -1543,12 +1543,12 @@
     "risk_multiplier":0.6212079084,
     "market_disagreement":2.2210930758,
     "quant_signal":"PASS",
-    "quant_market":"moneyline",
-    "quant_side":"Michigan State",
-    "quant_price":320.0,
-    "quant_ev":0.0993209032,
-    "quant_probability":0.2617430722,
-    "quant_edge":3.3248448543,
+    "quant_market":null,
+    "quant_side":null,
+    "quant_price":null,
+    "quant_ev":0.0,
+    "quant_probability":null,
+    "quant_edge":null,
     "stake_units":0.0
   },
   {
@@ -1639,14 +1639,14 @@
     "data_quality_score":0.7975,
     "risk_multiplier":0.706961409,
     "market_disagreement":9.4966957474,
-    "quant_signal":"PASS",
-    "quant_market":"moneyline",
+    "quant_signal":"STRONG",
+    "quant_market":"spread",
     "quant_side":"Vanderbilt",
-    "quant_price":1300.0,
-    "quant_ev":1.3197875765,
-    "quant_probability":0.1656991126,
-    "quant_edge":9.6815502154,
-    "stake_units":0.0
+    "quant_price":24.5,
+    "quant_ev":0.3925260239,
+    "quant_probability":0.7294183935,
+    "quant_edge":9.4966957474,
+    "stake_units":0.88
   },
   {
     "game_id":"401866432",
@@ -1736,14 +1736,14 @@
     "data_quality_score":0.7975,
     "risk_multiplier":0.6274606075,
     "market_disagreement":11.5261014738,
-    "quant_signal":"BET",
-    "quant_market":"moneyline",
+    "quant_signal":"STRONG",
+    "quant_market":"spread",
     "quant_side":"Buffalo",
-    "quant_price":440.0,
-    "quant_ev":1.6106786013,
-    "quant_probability":0.4834590002,
-    "quant_edge":30.5794025616,
-    "stake_units":0.23
+    "quant_price":13.5,
+    "quant_ev":0.4716145554,
+    "quant_probability":0.7708457195,
+    "quant_edge":11.5261014738,
+    "stake_units":0.78
   },
   {
     "game_id":"401866431",
@@ -1834,12 +1834,12 @@
     "risk_multiplier":0.659280444,
     "market_disagreement":0.7115373667,
     "quant_signal":"PASS",
-    "quant_market":"moneyline",
-    "quant_side":"Ball State",
-    "quant_price":800.0,
-    "quant_ev":0.3247871636,
-    "quant_probability":0.1471985737,
-    "quant_edge":4.0580926676,
+    "quant_market":null,
+    "quant_side":null,
+    "quant_price":null,
+    "quant_ev":0.0,
+    "quant_probability":null,
+    "quant_edge":null,
     "stake_units":0.0
   },
   {
@@ -1931,12 +1931,12 @@
     "risk_multiplier":0.6777462386,
     "market_disagreement":1.5559835503,
     "quant_signal":"PASS",
-    "quant_market":"moneyline",
-    "quant_side":"Missouri",
-    "quant_price":170.0,
-    "quant_ev":0.0379762075,
-    "quant_probability":0.3844356324,
-    "quant_edge":2.9164811224,
+    "quant_market":null,
+    "quant_side":null,
+    "quant_price":null,
+    "quant_ev":0.0,
+    "quant_probability":null,
+    "quant_edge":null,
     "stake_units":0.0
   },
   {
@@ -2131,7 +2131,7 @@
     "quant_ev":0.2183216151,
     "quant_probability":0.6381684651,
     "quant_edge":5.5337647215,
-    "stake_units":0.97
+    "stake_units":0.81
   },
   {
     "game_id":"401858248",
@@ -2221,14 +2221,14 @@
     "data_quality_score":0.7975,
     "risk_multiplier":0.7059652124,
     "market_disagreement":5.3672393862,
-    "quant_signal":"BET",
+    "quant_signal":"LEAN",
     "quant_market":"moneyline",
     "quant_side":"NC State",
     "quant_price":185.0,
     "quant_ev":0.5077611206,
     "quant_probability":0.5290389897,
     "quant_edge":19.2687113862,
-    "stake_units":0.19
+    "stake_units":0.16
   },
   {
     "game_id":"401858253",
@@ -2319,12 +2319,12 @@
     "risk_multiplier":0.6460417059,
     "market_disagreement":1.4693280068,
     "quant_signal":"PASS",
-    "quant_market":"moneyline",
-    "quant_side":"Florida State",
-    "quant_price":124.0,
-    "quant_ev":0.0966794837,
-    "quant_probability":0.4895890552,
-    "quant_edge":6.1648690795,
+    "quant_market":null,
+    "quant_side":null,
+    "quant_price":null,
+    "quant_ev":0.0,
+    "quant_probability":null,
+    "quant_edge":null,
     "stake_units":0.0
   },
   {
@@ -2415,14 +2415,14 @@
     "data_quality_score":0.7975,
     "risk_multiplier":0.6392210313,
     "market_disagreement":7.0946244646,
-    "quant_signal":"BET",
-    "quant_market":"moneyline",
+    "quant_signal":"STRONG",
+    "quant_market":"spread",
     "quant_side":"Iowa",
-    "quant_price":425.0,
-    "quant_ev":0.9147673684,
-    "quant_probability":0.364717594,
-    "quant_edge":18.1976477239,
-    "stake_units":0.14
+    "quant_price":14.0,
+    "quant_ev":0.290513744,
+    "quant_probability":0.6759833897,
+    "quant_edge":7.0946244646,
+    "stake_units":0.8
   },
   {
     "game_id":"401862787",
@@ -2512,14 +2512,14 @@
     "data_quality_score":0.7975,
     "risk_multiplier":0.6866758583,
     "market_disagreement":4.8962071962,
-    "quant_signal":"PASS",
-    "quant_market":"moneyline",
-    "quant_side":"Charlotte",
-    "quant_price":850.0,
-    "quant_ev":0.7038044667,
-    "quant_probability":0.1793478386,
-    "quant_edge":7.8205913638,
-    "stake_units":0.0
+    "quant_signal":"BET",
+    "quant_market":"total",
+    "quant_side":"U",
+    "quant_price":54.5,
+    "quant_ev":0.1889740007,
+    "quant_probability":0.6227959052,
+    "quant_edge":4.8962071962,
+    "stake_units":0.86
   },
   {
     "game_id":"401864515",
@@ -2609,14 +2609,14 @@
     "data_quality_score":0.7975,
     "risk_multiplier":0.6876161894,
     "market_disagreement":4.7132432467,
-    "quant_signal":"PASS",
-    "quant_market":"moneyline",
+    "quant_signal":"BET",
+    "quant_market":"spread",
     "quant_side":"Wyoming",
-    "quant_price":750.0,
-    "quant_ev":0.5558867372,
-    "quant_probability":0.1830454985,
-    "quant_edge":7.0002020239,
-    "stake_units":0.0
+    "quant_price":18.5,
+    "quant_ev":0.1820278591,
+    "quant_probability":0.61915745,
+    "quant_edge":4.7132432467,
+    "stake_units":0.86
   },
   {
     "game_id":"401866430",
@@ -2713,7 +2713,7 @@
     "quant_ev":0.1340279873,
     "quant_probability":0.59401466,
     "quant_edge":3.7231844407,
-    "stake_units":0.76
+    "stake_units":0.61
   },
   {
     "game_id":"401866433",
@@ -2810,7 +2810,7 @@
     "quant_ev":0.2275520681,
     "quant_probability":0.6430034642,
     "quant_edge":5.7361527535,
-    "stake_units":0.91
+    "stake_units":0.76
   },
   {
     "game_id":"401866434",
@@ -2907,7 +2907,7 @@
     "quant_ev":0.3568102918,
     "quant_probability":0.7107101529,
     "quant_edge":8.6326767698,
-    "stake_units":0.9
+    "stake_units":0.75
   },
   {
     "game_id":"401866477",
@@ -2997,14 +2997,14 @@
     "data_quality_score":0.7975,
     "risk_multiplier":0.6043742205,
     "market_disagreement":10.081701143,
-    "quant_signal":"BET",
-    "quant_market":"moneyline",
+    "quant_signal":"STRONG",
+    "quant_market":"spread",
     "quant_side":"Bowling Green",
-    "quant_price":410.0,
-    "quant_ev":0.9636775097,
-    "quant_probability":0.3850348058,
-    "quant_edge":19.6901665439,
-    "stake_units":0.14
+    "quant_price":13.5,
+    "quant_ev":0.4160351818,
+    "quant_probability":0.7417327143,
+    "quant_edge":10.081701143,
+    "stake_units":0.76
   },
   {
     "game_id":"401869956",
@@ -3101,7 +3101,7 @@
     "quant_ev":0.3560195095,
     "quant_probability":0.7102959336,
     "quant_edge":8.6138548292,
-    "stake_units":0.99
+    "stake_units":0.83
   },
   {
     "game_id":"401869962",
@@ -3198,7 +3198,7 @@
     "quant_ev":0.1470691136,
     "quant_probability":0.6008457262,
     "quant_edge":3.9994641852,
-    "stake_units":0.99
+    "stake_units":0.79
   },
   {
     "game_id":"401858475",
@@ -3295,7 +3295,7 @@
     "quant_ev":0.1959610368,
     "quant_probability":0.6264557812,
     "quant_edge":5.0118285811,
-    "stake_units":0.87
+    "stake_units":0.72
   },
   {
     "game_id":"401864514",
@@ -3392,7 +3392,7 @@
     "quant_ev":0.0900068058,
     "quant_probability":0.5709559459,
     "quant_edge":2.7985718109,
-    "stake_units":0.59
+    "stake_units":0.47
   },
   {
     "game_id":"401856709",
@@ -3489,7 +3489,7 @@
     "quant_ev":0.2053795051,
     "quant_probability":0.7072888005,
     "quant_edge":14.3796736993,
-    "stake_units":0.15
+    "stake_units":0.12
   },
   {
     "game_id":"401858472",
@@ -3586,7 +3586,7 @@
     "quant_ev":0.1149293988,
     "quant_probability":0.5840106374,
     "quant_edge":3.2973490603,
-    "stake_units":0.76
+    "stake_units":0.61
   },
   {
     "game_id":"401860899",
@@ -3683,7 +3683,7 @@
     "quant_ev":0.7793460512,
     "quant_probability":0.6135676038,
     "quant_edge":28.2574624908,
-    "stake_units":0.28
+    "stake_units":0.22
   },
   {
     "game_id":"401856711",
@@ -3780,7 +3780,7 @@
     "quant_ev":0.1503886984,
     "quant_probability":0.6025845563,
     "quant_edge":4.0699864877,
-    "stake_units":0.83
+    "stake_units":0.67
   },
   {
     "game_id":"401856818",
@@ -3871,13 +3871,13 @@
     "risk_multiplier":0.7001076439,
     "market_disagreement":4.4130645864,
     "quant_signal":"BET",
-    "quant_market":"moneyline",
+    "quant_market":"spread",
     "quant_side":"TCU",
-    "quant_price":205.0,
-    "quant_ev":0.4660186263,
-    "quant_probability":0.4806618447,
-    "quant_edge":16.605510311,
-    "stake_units":0.16
+    "quant_price":6.5,
+    "quant_ev":0.1679382708,
+    "quant_probability":0.6117771895,
+    "quant_edge":4.4130645864,
+    "stake_units":0.88
   },
   {
     "game_id":"401862788",
@@ -3968,12 +3968,12 @@
     "risk_multiplier":0.6430638457,
     "market_disagreement":2.1934408035,
     "quant_signal":"PASS",
-    "quant_market":"moneyline",
-    "quant_side":"Rice",
-    "quant_price":340.0,
-    "quant_ev":0.3079096466,
-    "quant_probability":0.2972521924,
-    "quant_edge":7.9158492886,
+    "quant_market":null,
+    "quant_side":null,
+    "quant_price":null,
+    "quant_ev":0.0,
+    "quant_probability":null,
+    "quant_edge":null,
     "stake_units":0.0
   },
   {
@@ -4071,7 +4071,7 @@
     "quant_ev":0.1584867128,
     "quant_probability":0.5413489312,
     "quant_edge":9.2790045928,
-    "stake_units":0.1
+    "stake_units":0.08
   },
   {
     "game_id":"401871089",
@@ -4168,7 +4168,7 @@
     "quant_ev":0.2154696888,
     "quant_probability":0.6366745989,
     "quant_edge":5.4330538791,
-    "stake_units":1.03
+    "stake_units":0.86
   },
   {
     "game_id":"401856821",
@@ -4265,7 +4265,7 @@
     "quant_ev":0.1105261182,
     "quant_probability":0.5817041572,
     "quant_edge":3.2055080165,
-    "stake_units":0.76
+    "stake_units":0.6
   },
   {
     "game_id":"401858249",
@@ -4355,14 +4355,14 @@
     "data_quality_score":0.7975,
     "risk_multiplier":0.6266291354,
     "market_disagreement":2.4513297071,
-    "quant_signal":"PASS",
-    "quant_market":"moneyline",
+    "quant_signal":"LEAN",
+    "quant_market":"spread",
     "quant_side":"Clemson",
-    "quant_price":550.0,
-    "quant_ev":0.4330685077,
-    "quant_probability":0.2204720781,
-    "quant_edge":7.2931094507,
-    "stake_units":0.0
+    "quant_price":16.5,
+    "quant_ev":0.0741777332,
+    "quant_probability":0.5626645269,
+    "quant_edge":2.4513297071,
+    "stake_units":0.37
   },
   {
     "game_id":"401858478",
@@ -4452,14 +4452,14 @@
     "data_quality_score":0.7975,
     "risk_multiplier":0.686414107,
     "market_disagreement":3.7863797472,
-    "quant_signal":"PASS",
-    "quant_market":"moneyline",
+    "quant_signal":"BET",
+    "quant_market":"spread",
     "quant_side":"Washington",
-    "quant_price":295.0,
-    "quant_ev":0.3144084065,
-    "quant_probability":0.3327616219,
-    "quant_edge":8.9950120295,
-    "stake_units":0.0
+    "quant_price":9.5,
+    "quant_ev":0.1382793239,
+    "quant_probability":0.5962415506,
+    "quant_edge":3.7863797472,
+    "stake_units":0.76
   },
   {
     "game_id":"401860898",
@@ -4549,14 +4549,14 @@
     "data_quality_score":0.7975,
     "risk_multiplier":0.6475904883,
     "market_disagreement":4.5106075558,
-    "quant_signal":"PASS",
-    "quant_market":"moneyline",
+    "quant_signal":"BET",
+    "quant_market":"spread",
     "quant_side":"Utah State",
-    "quant_price":900.0,
-    "quant_ev":0.658898095,
-    "quant_probability":0.1658898095,
-    "quant_edge":6.9844611762,
-    "stake_units":0.0
+    "quant_price":19.5,
+    "quant_ev":0.1725254112,
+    "quant_probability":0.6141799773,
+    "quant_edge":4.5106075558,
+    "stake_units":0.81
   },
   {
     "game_id":"401862792",
@@ -4653,7 +4653,7 @@
     "quant_ev":0.4062503149,
     "quant_probability":0.7366073078,
     "quant_edge":9.8365230974,
-    "stake_units":1.1
+    "stake_units":0.92
   },
   {
     "game_id":"401869842",
@@ -4841,12 +4841,12 @@
     "risk_multiplier":0.6989447632,
     "market_disagreement":1.2110857287,
     "quant_signal":"PASS",
-    "quant_market":"moneyline",
-    "quant_side":"Rutgers",
-    "quant_price":1200.0,
-    "quant_ev":0.3218147219,
-    "quant_probability":0.1016780555,
-    "quant_edge":2.7494079271,
+    "quant_market":null,
+    "quant_side":null,
+    "quant_price":null,
+    "quant_ev":0.0,
+    "quant_probability":null,
+    "quant_edge":null,
     "stake_units":0.0
   },
   {
@@ -4938,13 +4938,13 @@
     "risk_multiplier":0.6880327205,
     "market_disagreement":4.8247823274,
     "quant_signal":"BET",
-    "quant_market":"moneyline",
+    "quant_market":"spread",
     "quant_side":"Arkansas State",
-    "quant_price":205.0,
-    "quant_ev":0.3013250222,
-    "quant_probability":0.4266639417,
-    "quant_edge":11.2057200132,
-    "stake_units":0.1
+    "quant_price":6.5,
+    "quant_ev":0.1872424922,
+    "quant_probability":0.6218889245,
+    "quant_edge":4.8247823274,
+    "stake_units":0.86
   },
   {
     "game_id":"401860921",
@@ -5041,7 +5041,7 @@
     "quant_ev":0.1100635126,
     "quant_probability":0.5814618399,
     "quant_edge":3.1958658093,
-    "stake_units":0.71
+    "stake_units":0.57
   },
   {
     "game_id":"401856817",
@@ -5138,7 +5138,7 @@
     "quant_ev":0.1547083441,
     "quant_probability":0.6048472279,
     "quant_edge":4.1618785111,
-    "stake_units":1.04
+    "stake_units":0.86
   },
   {
     "game_id":"401860900",
@@ -5235,7 +5235,7 @@
     "quant_ev":0.8978005678,
     "quant_probability":0.7299232953,
     "quant_edge":36.0863639104,
-    "stake_units":0.32
+    "stake_units":0.25
   },
   {
     "game_id":"401856820",
@@ -5429,6 +5429,6 @@
     "quant_ev":0.1566569614,
     "quant_probability":0.6786995393,
     "quant_edge":11.5207475821,
-    "stake_units":0.16
+    "stake_units":0.12
   }
 ]

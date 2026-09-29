@@ -1,0 +1,14 @@
+{
+  "mode": "paper",
+  "proposed_units": 30.51,
+  "approved_units": 0.0,
+  "paper_allocated_units": 5.0,
+  "bets": 10,
+  "limits": {
+    "max_slate_units": 5.0,
+    "max_game_units": 1.0,
+    "max_team_units": 1.5,
+    "max_market_units": 2.5,
+    "kelly_fraction": 0.2
+  }
+}

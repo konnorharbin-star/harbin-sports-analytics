@@ -25,7 +25,7 @@
       {
         "season": 2024,
         "rows": 798,
-        "mae": 12.97260028812298,
+        "mae": 12.972600288122981,
         "rmse": 16.40661399710636,
         "baseline_mae": 13.22842366531436,
         "weight": 0.4
@@ -48,7 +48,7 @@
       }
     ],
     "margin_walkforward_mae_mean": 12.833625108644224,
-    "margin_walkforward_mae_std": 0.2414303806966071,
+    "margin_walkforward_mae_std": 0.24143038069660736,
     "margin_walkforward_improved_folds": 4,
     "total_baseline_mae": 12.778014944283827,
     "total_mae": 12.711073278987822,
@@ -94,7 +94,7 @@
     "total_walkforward_improved_folds": 3,
     "win_brier": 0.15640752116978443,
     "win_log_loss": 0.4744542498337635,
-    "win_ece": 0.06200292882087318,
+    "win_ece": 0.0620029288208732,
     "win_calibration_eval_rows": 368
   },
   "model_selection": {
@@ -103,8 +103,8 @@
   },
   "calibrated_margin_sigma": 15.541476248611449,
   "calibrated_total_sigma": 15.651227745434577,
-  "generated_at": "2026-09-29T04:30:08.701898+00:00",
-  "updated_at_ct": "Sep 28, 2026 \u00b7 11:30 PM CT",
+  "generated_at": "2026-09-29T04:55:54.919480+00:00",
+  "updated_at_ct": "Sep 28, 2026 \u00b7 11:55 PM CT",
   "schedule_source": "sportsdataverse/cfbfastR-data",
   "odds_source": "ESPN live (site.web.api.espn.com) + ESPN Core supplement",
   "odds_errors": [],
@@ -149,11 +149,11 @@
     "coverage": 1.0
   },
   "quant_picks": {
-    "strong": 14,
-    "bet": 19,
-    "lean": 3
+    "strong": 19,
+    "bet": 20,
+    "lean": 7
   },
-  "snapshot_appended": false,
+  "snapshot_appended": true,
   "live_performance": {
     "graded_games": 0,
     "graded_bets": 0,
@@ -164,7 +164,7 @@
     "note": "CLV proxy uses the latest stored pre-kickoff snapshot, not a guaranteed official closing line."
   },
   "health": {
-    "system_health_score": 82.8,
+    "system_health_score": 79.6,
     "meaning": "engineering/model-readiness score only; not a profitability or win-rate guarantee",
     "components": {
       "pipeline_and_data": 100.0,
@@ -174,11 +174,13 @@
       "probability_calibration": 87.6,
       "market_intelligence": 65.0,
       "current_context": 100.0,
+      "live_monitoring": 70.0,
       "historical_betting_proof": 20.0
     },
     "betting_proof_status": "UNPROVEN",
     "blockers": [
-      "historical betting sample not yet large enough to establish market edge"
+      "historical market edge is not yet validated",
+      "live operational monitoring score below 75"
     ]
   }
 }

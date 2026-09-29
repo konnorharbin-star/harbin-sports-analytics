@@ -2,10 +2,10 @@
 
 **Model:** v4.0.0  
 **Season / Week:** 2026 / 5  
-**Updated:** Sep 28, 2026 · 11:30 PM CT  
+**Updated:** Sep 28, 2026 · 11:55 PM CT  
 **Market:** LIVE MARKET DATA — all 56 games have verified market data from ESPN live (site.web.api.espn.com) + ESPN Core supplement.  
 **Advanced feature live coverage:** 100%  
-**System health:** 82.8/100 *(readiness, not predicted profitability)*
+**System health:** 79.6/100 *(readiness, not predicted profitability)*
 
 ## Use these
 - [Interactive Cooper-style table](cfb_model_2026_week5.html)
@@ -20,3 +20,10 @@
 - [Cooper-style page 4](cfb_model_2026_week5_page4.png)
 
 The Cooper-style table is the reconstructed presentation layer. The Quant card is the independent EV/risk layer. Missing verified markets display **NO LINE**. Run the separate **CFB Backtest** workflow before treating signals as historically established.
+
+## v5 risk / proof layer
+- [Portfolio card](portfolio_card.csv)
+- [Portfolio summary](portfolio_summary.json)
+- [Live monitoring](live_monitoring.json)
+- [Model card](MODEL_CARD.md)
+- Policy is backtest-calibrated when `reports/production_policy.json` exists. Until evidence is validated, portfolio mode remains PAPER.
