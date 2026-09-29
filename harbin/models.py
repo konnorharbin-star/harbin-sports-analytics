@@ -57,20 +57,28 @@ def _season_walkforward(d,cols,target,baseline,max_folds=4):
     return folds
 
 
-def train_models(df: pd.DataFrame):
-    """Nested chronological core -> tuning -> calibration -> untouched evaluation."""
+def train_models(df: pd.DataFrame, diagnostics: bool = True):
+    """Nested chronological core -> tuning -> calibration -> untouched evaluation.
+
+    Set diagnostics=False for an outer week-by-week backtest. The outer walk-forward
+    loop is already the validation mechanism there, so repeating season-fold
+    diagnostics inside every historical week only wastes runner time and does not
+    change the fitted production predictions.
+    """
     if len(df)<600: raise RuntimeError(f"Need at least 600 historical FBS games; got {len(df)}")
     d=df.sort_values(["season","week","date","game_id"]).reset_index(drop=True); cols=feature_columns(d); n=len(d); i1=max(350,int(n*.70)); i2=max(i1+120,int(n*.82)); i3=max(i2+100,int(n*.91)); i3=min(i3,n-100); i2=min(i2,i3-80); i1=min(i1,i2-100); core,tune,cal,ev=d.iloc[:i1],d.iloc[i1:i2],d.iloc[i2:i3],d.iloc[i3:]
     if min(len(tune),len(cal),len(ev))<80: raise RuntimeError("Not enough rows for nested chronological validation blocks")
     metrics={}; sigma={}; weights={}; specs={"margin":("target_margin_home","baseline_margin"),"total":("target_total","baseline_total")}
     for name,(target,baseline) in specs.items():
-        pair_core=_fit_pair(core,cols,target,baseline); tune_res=_residual_predict(pair_core,tune[cols]); weight,_=choose_blend_weight(tune[target],tune[baseline],tune_res); weights[name]=weight; pre_eval=pd.concat([core,tune,cal],ignore_index=True); pair_pre=_fit_pair(pre_eval,cols,target,baseline); pred=ev[baseline].to_numpy(dtype=float)+weight*_residual_predict(pair_pre,ev[cols]); base=ev[baseline].to_numpy(dtype=float); metrics[f"{name}_baseline_mae"]=float(mean_absolute_error(ev[target],base)); metrics[f"{name}_mae"]=float(mean_absolute_error(ev[target],pred)); metrics[f"{name}_rmse"]=float(mean_squared_error(ev[target],pred)**.5); metrics[f"{name}_blend_weight"]=float(weight); metrics[f"{name}_eval_rows"]=int(len(ev)); sigma[name]=float(max(6.0,np.std(ev[target].to_numpy(dtype=float)-pred,ddof=1))); folds=_season_walkforward(d,cols,target,baseline); metrics[f"{name}_walkforward_folds"]=folds
-        if folds:
-            metrics[f"{name}_walkforward_mae_mean"]=float(np.mean([x["mae"] for x in folds])); metrics[f"{name}_walkforward_mae_std"]=float(np.std([x["mae"] for x in folds])); metrics[f"{name}_walkforward_improved_folds"]=int(sum(x["mae"]<=x["baseline_mae"] for x in folds))
+        pair_core=_fit_pair(core,cols,target,baseline); tune_res=_residual_predict(pair_core,tune[cols]); weight,_=choose_blend_weight(tune[target],tune[baseline],tune_res); weights[name]=weight; pre_eval=pd.concat([core,tune,cal],ignore_index=True); pair_pre=_fit_pair(pre_eval,cols,target,baseline); pred=ev[baseline].to_numpy(dtype=float)+weight*_residual_predict(pair_pre,ev[cols]); base=ev[baseline].to_numpy(dtype=float); metrics[f"{name}_baseline_mae"]=float(mean_absolute_error(ev[target],base)); metrics[f"{name}_mae"]=float(mean_absolute_error(ev[target],pred)); metrics[f"{name}_rmse"]=float(mean_squared_error(ev[target],pred)**.5); metrics[f"{name}_blend_weight"]=float(weight); metrics[f"{name}_eval_rows"]=int(len(ev)); sigma[name]=float(max(6.0,np.std(ev[target].to_numpy(dtype=float)-pred,ddof=1)))
+        if diagnostics:
+            folds=_season_walkforward(d,cols,target,baseline); metrics[f"{name}_walkforward_folds"]=folds
+            if folds:
+                metrics[f"{name}_walkforward_mae_mean"]=float(np.mean([x["mae"] for x in folds])); metrics[f"{name}_walkforward_mae_std"]=float(np.std([x["mae"] for x in folds])); metrics[f"{name}_walkforward_improved_folds"]=int(sum(x["mae"]<=x["baseline_mae"] for x in folds))
     mw=weights["margin"]; score_train=pd.concat([core,tune],ignore_index=True); pair_cal=_fit_pair(score_train,cols,"target_margin_home","baseline_margin"); cal_margin=cal["baseline_margin"].to_numpy(dtype=float)+mw*_residual_predict(pair_cal,cal[cols]); y_cal=(cal["target_margin_home"].to_numpy(dtype=float)>0).astype(int); calibrator=None
     if len(np.unique(y_cal))==2:
         calibrator=Pipeline([("scale",StandardScaler()),("logit",LogisticRegression(C=.65,max_iter=1000))]); calibrator.fit(cal_margin.reshape(-1,1),y_cal); pre_ev=pd.concat([core,tune,cal],ignore_index=True); pair_ev=_fit_pair(pre_ev,cols,"target_margin_home","baseline_margin"); ev_margin=ev["baseline_margin"].to_numpy(dtype=float)+mw*_residual_predict(pair_ev,ev[cols]); p=calibrator.predict_proba(ev_margin.reshape(-1,1))[:,1]; y=(ev["target_margin_home"].to_numpy(dtype=float)>0).astype(int); metrics["win_brier"]=brier_score(y,p); metrics["win_log_loss"]=log_loss_score(y,p); metrics["win_ece"]=expected_calibration_error(y,p); metrics["win_calibration_eval_rows"]=int(len(y))
-    return {"columns":cols,"margin":_fit_pair(d,cols,"target_margin_home","baseline_margin"),"total":_fit_pair(d,cols,"target_total","baseline_total"),"metrics":metrics,"margin_sigma":sigma["margin"],"total_sigma":sigma["total"],"margin_weight":weights["margin"],"total_weight":weights["total"],"win_calibrator":calibrator,"validation":"nested chronological core/tune/calibration/evaluation + season walk-forward + zero-weight guard"}
+    return {"columns":cols,"margin":_fit_pair(d,cols,"target_margin_home","baseline_margin"),"total":_fit_pair(d,cols,"target_total","baseline_total"),"metrics":metrics,"margin_sigma":sigma["margin"],"total_sigma":sigma["total"],"margin_weight":weights["margin"],"total_weight":weights["total"],"win_calibrator":calibrator,"validation":"nested chronological core/tune/calibration/evaluation + season walk-forward + zero-weight guard" if diagnostics else "nested chronological core/tune/calibration/evaluation + zero-weight guard inside outer week-by-week walk-forward"}
 
 
 def predict_models(bundle,frame: pd.DataFrame):
