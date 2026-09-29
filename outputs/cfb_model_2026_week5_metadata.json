@@ -25,7 +25,7 @@
       {
         "season": 2024,
         "rows": 798,
-        "mae": 12.972600288122981,
+        "mae": 12.97260028812298,
         "rmse": 16.40661399710636,
         "baseline_mae": 13.22842366531436,
         "weight": 0.4
@@ -34,7 +34,7 @@
         "season": 2025,
         "rows": 808,
         "mae": 12.418639380528921,
-        "rmse": 15.871023798754576,
+        "rmse": 15.871023798754575,
         "baseline_mae": 13.026608931009665,
         "weight": 0.6000000000000001
       },
@@ -42,13 +42,13 @@
         "season": 2026,
         "rows": 215,
         "mae": 13.01368004623921,
-        "rmse": 16.22405840224293,
+        "rmse": 16.224058402242935,
         "baseline_mae": 14.439117971947091,
         "weight": 0.8
       }
     ],
     "margin_walkforward_mae_mean": 12.833625108644224,
-    "margin_walkforward_mae_std": 0.24143038069660736,
+    "margin_walkforward_mae_std": 0.2414303806966071,
     "margin_walkforward_improved_folds": 4,
     "total_baseline_mae": 12.778014944283827,
     "total_mae": 12.711073278987822,
@@ -94,7 +94,7 @@
     "total_walkforward_improved_folds": 3,
     "win_brier": 0.15640752116978443,
     "win_log_loss": 0.4744542498337635,
-    "win_ece": 0.062002928820873195,
+    "win_ece": 0.06200292882087318,
     "win_calibration_eval_rows": 368
   },
   "model_selection": {
@@ -103,8 +103,8 @@
   },
   "calibrated_margin_sigma": 15.541476248611449,
   "calibrated_total_sigma": 15.651227745434577,
-  "generated_at": "2026-09-29T04:29:19.764972+00:00",
-  "updated_at_ct": "Sep 28, 2026 \u00b7 11:29 PM CT",
+  "generated_at": "2026-09-29T04:30:08.701898+00:00",
+  "updated_at_ct": "Sep 28, 2026 \u00b7 11:30 PM CT",
   "schedule_source": "sportsdataverse/cfbfastR-data",
   "odds_source": "ESPN live (site.web.api.espn.com) + ESPN Core supplement",
   "odds_errors": [],
@@ -153,7 +153,7 @@
     "bet": 19,
     "lean": 3
   },
-  "snapshot_appended": true,
+  "snapshot_appended": false,
   "live_performance": {
     "graded_games": 0,
     "graded_bets": 0,
