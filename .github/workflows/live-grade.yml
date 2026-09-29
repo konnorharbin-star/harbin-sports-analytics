@@ -1,0 +1,39 @@
+name: CFB Live Shadow Grading
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: "37 10,16,22 * * *"
+permissions:
+  contents: write
+concurrency:
+  group: cfb-live-grade
+  cancel-in-progress: true
+jobs:
+  grade:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    env:
+      PYTHONUNBUFFERED: "1"
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-python@v7
+        with:
+          python-version: "3.12"
+          cache: pip
+      - run: python -m pip install -r requirements.txt
+      - name: Grade completed paper/shadow bets
+        run: python grade_live.py
+      - name: Commit live evidence
+        shell: bash
+        run: |
+          git config user.name "harbin-grade-bot"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add reports/live_performance.json reports/live_graded_predictions.csv reports/live_graded_bets.csv outputs/live_performance.json docs/live_performance.json
+          if ! git diff --cached --quiet; then
+            git commit -m "grade: refresh independent live shadow evidence"
+            git pull --rebase origin main
+            git push
+          else
+            echo "No new completed bets to grade."
+          fi
