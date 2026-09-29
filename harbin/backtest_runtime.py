@@ -166,8 +166,8 @@ def _rigorous_group_summary(df: pd.DataFrame):
     work = df.copy()
     wins = int((work.result > 0).sum()); losses = int((work.result < 0).sum()); pushes = int((work.result == 0).sum())
     profits = pd.to_numeric(work.profit, errors="coerce").fillna(0).to_numpy(float)
-    clv = pd.to_numeric(work.get("clv"), errors="coerce").dropna()
-    raw = pd.to_numeric(work.get("clv_raw"), errors="coerce").dropna()
+    clv = pd.to_numeric(work["clv"] if "clv" in work.columns else pd.Series(index=work.index, dtype=float), errors="coerce").dropna()
+    raw = pd.to_numeric(work["clv_raw"] if "clv_raw" in work.columns else pd.Series(index=work.index, dtype=float), errors="coerce").dropna()
     weekly = work.groupby(["season", "week"], dropna=False).profit.sum() if {"season", "week"}.issubset(work.columns) else pd.Series(dtype=float)
     return {
         "bets": int(len(work)), "wins": wins, "losses": losses, "pushes": pushes,
