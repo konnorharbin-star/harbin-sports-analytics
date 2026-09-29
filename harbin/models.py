@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import math
+import os
 import numpy as np
 import pandas as pd
 from sklearn.ensemble import HistGradientBoostingRegressor
@@ -57,14 +58,15 @@ def _season_walkforward(d,cols,target,baseline,max_folds=4):
     return folds
 
 
-def train_models(df: pd.DataFrame, diagnostics: bool = True):
+def train_models(df: pd.DataFrame, diagnostics: bool | None = None):
     """Nested chronological core -> tuning -> calibration -> untouched evaluation.
 
-    Set diagnostics=False for an outer week-by-week backtest. The outer walk-forward
-    loop is already the validation mechanism there, so repeating season-fold
-    diagnostics inside every historical week only wastes runner time and does not
-    change the fitted production predictions.
+    In the outer week-by-week historical backtest, HARBIN_FAST_BACKTEST=1 turns
+    off the extra season-fold diagnostic loop. That changes only reporting work,
+    not the fitted fair-score predictions for that historical week.
     """
+    if diagnostics is None:
+        diagnostics = os.environ.get("HARBIN_FAST_BACKTEST", "0") != "1"
     if len(df)<600: raise RuntimeError(f"Need at least 600 historical FBS games; got {len(df)}")
     d=df.sort_values(["season","week","date","game_id"]).reset_index(drop=True); cols=feature_columns(d); n=len(d); i1=max(350,int(n*.70)); i2=max(i1+120,int(n*.82)); i3=max(i2+100,int(n*.91)); i3=min(i3,n-100); i2=min(i2,i3-80); i1=min(i1,i2-100); core,tune,cal,ev=d.iloc[:i1],d.iloc[i1:i2],d.iloc[i2:i3],d.iloc[i3:]
     if min(len(tune),len(cal),len(ev))<80: raise RuntimeError("Not enough rows for nested chronological validation blocks")
