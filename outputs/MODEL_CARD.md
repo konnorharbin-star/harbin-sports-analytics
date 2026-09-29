@@ -2,9 +2,9 @@
 
 ## Identity
 - Core model version: **4.0.0**
-- Repository revision: `af96f0fdd08fcfd287a71f4ea55b6b40e6e9b671`
+- Repository revision: `edfd9fdb31d57cebe4f837435ab0417a90fc8a8b`
 - Season / Week: **2026 / 5**
-- Generated: **Sep 29, 2026 · 12:16 AM CT**
+- Generated: **Sep 29, 2026 · 12:24 AM CT**
 
 ## Intended use
 Independent CFB score, margin, total and win-probability estimation; sportsbook comparison; paper/production betting research with explicit uncertainty and risk controls. The Cooper-style table is a presentation layer, not the proprietary formula of any third party.
@@ -21,8 +21,8 @@ Independent CFB score, margin, total and win-probability estimation; sportsbook 
 - Method: nested chronological core/tune/calibration/evaluation + season walk-forward + zero-weight guard
 - Margin MAE: **12.87413430192907** vs baseline **13.720203965537888**
 - Total MAE: **12.841705909584391** vs baseline **12.778014944283827**
-- Win-probability Brier: **0.15521981084870637**
-- Calibration ECE: **0.02782638996349993**
+- Win-probability Brier: **0.15521981084870634**
+- Calibration ECE: **0.027826389963499825**
 
 ## Operational controls
 - Live monitoring score: **84.7/100**
