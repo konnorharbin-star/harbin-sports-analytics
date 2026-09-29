@@ -74,7 +74,12 @@ def validate_policy_against_backtest(
         Path(out_path).parent.mkdir(parents=True, exist_ok=True)
         Path(out_path).write_text(json.dumps(out, indent=2))
         return out
-    df = pd.read_csv(bp, low_memory=False)
+    try:
+        df = pd.read_csv(bp, low_memory=False)
+    except pd.errors.EmptyDataError:
+        # pandas writes a truly empty DataFrame as a zero-column CSV. Treat that
+        # as absence of evidence and fail closed rather than crashing CI.
+        df = pd.DataFrame()
     if df.empty:
         Path(out_path).parent.mkdir(parents=True, exist_ok=True)
         Path(out_path).write_text(json.dumps(out, indent=2))
