@@ -2,9 +2,9 @@
 
 ## Identity
 - Core model version: **4.0.0**
-- Repository revision: `edfd9fdb31d57cebe4f837435ab0417a90fc8a8b`
+- Repository revision: `68bdee59f88da172dcc9cfc35a5c89637e057fc1`
 - Season / Week: **2026 / 5**
-- Generated: **Sep 29, 2026 · 12:24 AM CT**
+- Generated: **Sep 29, 2026 · 6:44 PM CT**
 
 ## Intended use
 Independent CFB score, margin, total and win-probability estimation; sportsbook comparison; paper/production betting research with explicit uncertainty and risk controls. The Cooper-style table is a presentation layer, not the proprietary formula of any third party.
@@ -18,17 +18,17 @@ Independent CFB score, margin, total and win-probability estimation; sportsbook 
 - Current context sources: SportsDataverse ESPN injuries, SportsDataverse cfb_team_info, Open-Meteo forecast, Open-Meteo geocoding / team venue metadata
 
 ## Validation
-- Method: nested chronological core/tune/calibration/evaluation + season walk-forward + zero-weight guard
+- Method: nested chronological core/tune/calibration/release holdout + leak-free expanding-season walk-forward + fail-closed baseline fallback
 - Margin MAE: **12.87413430192907** vs baseline **13.720203965537888**
-- Total MAE: **12.841705909584391** vs baseline **12.778014944283827**
+- Total MAE: **12.778014944283827** vs baseline **12.778014944283827**
 - Win-probability Brier: **0.15521981084870634**
-- Calibration ECE: **0.027826389963499825**
+- Calibration ECE: **0.02782638996349985**
 
 ## Operational controls
-- Live monitoring score: **84.7/100**
+- Live monitoring score: **87.6/100**
 - Portfolio mode: **PAPER**
 - Approved units: **0.0**
-- Proposed/paper units: **29.33**
+- Proposed/paper units: **23.94**
 
 ## Leakage controls
 Features are generated pregame from prior games only; model training is chronological; tuning/calibration/evaluation are separated; historical market evidence is walk-forward. Sportsbook prices are excluded from the score-generation model and are used only after fair scores/probabilities are produced.

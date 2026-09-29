@@ -1,0 +1,14 @@
+{
+  "status": "PASS",
+  "errors": 0,
+  "warnings": 0,
+  "issues": [],
+  "checks": {
+    "unique_game_ids": true,
+    "required_schema": true,
+    "finite_core_predictions": true,
+    "sanity_ranges": true,
+    "complete_market_rate": 1.0
+  },
+  "rows": 56
+}
