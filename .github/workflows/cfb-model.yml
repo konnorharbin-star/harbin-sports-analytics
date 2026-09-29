@@ -16,8 +16,16 @@ on:
         required: false
         default: ""
   push:
-    branches: [main]
+    branches: [main, v7-elite-model-upgrade]
     paths-ignore: ["outputs/**", "history/**", "reports/**", "docs/**"]
+  pull_request:
+    branches: [main]
+    paths:
+      - "harbin/**"
+      - "tests/**"
+      - "run_week.py"
+      - "requirements.txt"
+      - ".github/workflows/cfb-model.yml"
   schedule:
     - cron: "17 11,17,23 * * *"
     - cron: "47 14 * * 6"
@@ -60,21 +68,36 @@ jobs:
           files=glob.glob("outputs/cfb_model_*_metadata.json")
           if not files: print("## CFB model\nNo metadata file was produced."); raise SystemExit(0)
           m=json.load(open(max(files,key=os.path.getmtime))); mon=m.get("live_monitoring",{}); port=m.get("portfolio",{}); c=m["market_coverage"]; a=m.get("advanced_features",{}); x=m.get("current_context",{}); mi=m.get("market_intelligence",{})
-          print(f"## Harbin CFB Platform v6 — {m['season']} Week {m['week']}")
+          try: policy=json.load(open("reports/production_policy.json"))
+          except Exception: policy={}
+          enabled=[k for k,v in (policy.get("markets") or {}).items() if v.get("enabled")]
+          blocked=(policy.get("regime_filters") or {}).get("blocked_weeks",[])
+          print(f"## Harbin CFB Platform v7 — {m['season']} Week {m['week']}")
           print(f"- Games: **{m['upcoming_games']}** · ML/Spread/Total: **{c['moneyline']}/{c['spread']}/{c['total']}**")
           print(f"- Margin / Total MAE: **{m['metrics'].get('margin_mae')} / {m['metrics'].get('total_mae')}** · Brier/ECE: **{m['metrics'].get('win_brier')} / {m['metrics'].get('win_ece')}**")
-          print(f"- Advanced feature count: **{a.get('feature_count',0)}** · Weather: **{x.get('weather_coverage',0):.1%}** · Travel: **{x.get('travel_coverage',0):.1%}**")
+          print(f"- Advanced feature count: **{a.get('feature_count',0)}** · dynamic coverage: **{a.get('dynamic_coverage',0):.1%}**")
+          print(f"- Weather: **{x.get('weather_coverage',0):.1%}** · Travel: **{x.get('travel_coverage',0):.1%}**")
           print(f"- Multi-book: **{mi.get('multi_book_coverage',0):.1%}** · The Odds API configured: **{mi.get('odds_api_configured',False)}**")
+          print(f"- Evidence-gated markets: **{enabled}** · blocked historical regimes/weeks: **{blocked}**")
           print(f"- Live readiness: **{mon.get('live_readiness_score','n/a')}/100** · Portfolio: **{str(port.get('mode','paper')).upper()}** · approved **{port.get('approved_units',0)}u**")
           PY
-      - name: Commit generated state
+      - name: Upload live research output
+        uses: actions/upload-artifact@v4
+        with:
+          name: cfb-live-v7-${{ github.run_id }}
+          path: |
+            outputs/
+            reports/
+          retention-days: 14
+      - name: Commit generated state on main only
+        if: github.ref == 'refs/heads/main' && github.event_name != 'pull_request'
         shell: bash
         run: |
           git config user.name "harbin-model-bot"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add outputs history reports docs
           if ! git diff --cached --quiet; then
-            git commit -m "model: automated CFB v6 refresh"
+            git commit -m "model: automated CFB v7 refresh"
             git pull --rebase origin main
             git push
           else
