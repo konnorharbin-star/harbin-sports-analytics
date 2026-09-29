@@ -8,6 +8,7 @@ on:
       - "history/**"
       - "harbin/grading.py"
       - "grade_live.py"
+      - ".github/workflows/live-grade.yml"
   schedule:
     - cron: "37 10,16,22 * * *"
 permissions:
@@ -28,6 +29,8 @@ jobs:
           python-version: "3.12"
           cache: pip
       - run: python -m pip install -r requirements.txt
+      - name: Unit tests
+        run: python -m pytest -q tests/test_live_grading.py tests/test_line_history.py
       - name: Grade completed paper/shadow bets
         run: python grade_live.py
       - name: Commit live evidence
