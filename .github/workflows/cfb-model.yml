@@ -1,0 +1,80 @@
+name: CFB Model + Dashboard
+
+on:
+  workflow_dispatch:
+    inputs:
+      season:
+        description: "Season year (blank = auto-detect)"
+        required: false
+        default: ""
+      week:
+        description: "Week number (blank = auto-detect)"
+        required: false
+        default: ""
+      history_start:
+        description: "First training season (blank = season-4)"
+        required: false
+        default: ""
+  push:
+    branches: [main]
+    paths-ignore: ["outputs/**", "history/**", "docs/**"]
+  schedule:
+    - cron: "17 11,17,23 * * *"
+    - cron: "47 14 * * 6"
+
+permissions:
+  contents: write
+  pages: write
+  id-token: write
+
+jobs:
+  model:
+    runs-on: ubuntu-latest
+    timeout-minutes: 35
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+      - uses: actions/cache@v4
+        with:
+          path: cache/espn
+          key: espn-${{ runner.os }}-${{ github.ref_name }}-${{ github.run_id }}
+          restore-keys: espn-${{ runner.os }}-${{ github.ref_name }}-
+      - run: python -m pip install -r requirements.txt
+      - run: python -m pytest -q
+      - name: Run model
+        shell: bash
+        run: |
+          ARGS=""
+          [ -n "${{ inputs.season }}" ] && ARGS="$ARGS --season ${{ inputs.season }}"
+          [ -n "${{ inputs.week }}" ] && ARGS="$ARGS --week ${{ inputs.week }}"
+          [ -n "${{ inputs.history_start }}" ] && ARGS="$ARGS --history-start ${{ inputs.history_start }}"
+          python run_week.py $ARGS
+      - name: Commit generated state
+        shell: bash
+        run: |
+          git config user.name "harbin-model-bot"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add outputs history docs
+          if ! git diff --cached --quiet; then
+            git commit -m "model: automated CFB refresh"
+            git push
+          fi
+      - uses: actions/configure-pages@v5
+        with:
+          enablement: true
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: docs
+  deploy:
+    needs: model
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Deploy Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
