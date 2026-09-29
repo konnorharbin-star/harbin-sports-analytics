@@ -25,7 +25,7 @@ def apply_portfolio_controls(pred: pd.DataFrame, policy_path="reports/production
     production_allowed=bool(gate.get("production_eligible")) and policy_mode=="production"
     effective_mode="production" if production_allowed else "shadow" if gate_state=="SHADOW" else "paper"
     if out.empty:
-        return out,{"mode":effective_mode,"proposed_units":0.,"approved_units":0.,"bets":0,"release_state":gate_state}
+        return out,{"mode":effective_mode,"proposed_units":0.,"approved_units":0.,"paper_allocated_units":0.,"paper_or_shadow_allocated_units":0.,"bets":0,"release_state":gate_state}
     out["paper_stake_units"]=pd.to_numeric(out.get("stake_units",0),errors="coerce").fillna(0.)
     out["portfolio_stake_units"]=0.; out["portfolio_action"]="PASS"
     score=pd.to_numeric(out.get("quant_ev",0),errors="coerce").fillna(0)*pd.to_numeric(out.get("risk_multiplier",1),errors="coerce").fillna(0)
@@ -44,10 +44,13 @@ def apply_portfolio_controls(pred: pd.DataFrame, policy_path="reports/production
         slate+=units; by_market[market]=by_market.get(market,0.)+units
         for t in teams:
             if t: by_team[t]=by_team.get(t,0.)+units
+    allocated=round(float(slate),2)
     summary={
         "mode":effective_mode,"policy_mode":policy_mode,"release_state":gate_state,"production_eligible":production_allowed,
         "proposed_units":round(float(out.paper_stake_units.sum()),2),"approved_units":round(float(out.portfolio_stake_units.sum()),2),
-        "paper_or_shadow_allocated_units":round(float(slate),2),"bets":int((out.portfolio_action!="PASS").sum()),"limits":limits,
+        "paper_allocated_units":allocated,
+        "paper_or_shadow_allocated_units":allocated,
+        "bets":int((out.portfolio_action!="PASS").sum()),"limits":limits,
         "release_blockers":gate.get("blockers",[])[:20],
     }
     return out,summary
