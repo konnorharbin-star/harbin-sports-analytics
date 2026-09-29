@@ -1,0 +1,945 @@
+{
+  "start_season": 2023,
+  "end_season": 2025,
+  "history_start": 2018,
+  "advanced_features": {
+    "coverage": 0.9981161157732489,
+    "dynamic_coverage": 0.0,
+    "sources": [
+      "SportsDataverse espn_cfb_adv_team",
+      "SportsDataverse cfb_matchup_roster_talent.csv",
+      "SportsDataverse cfb_matchup_returning_production.csv",
+      "SportsDataverse cfb_matchup_coach_continuity.csv"
+    ],
+    "errors": [],
+    "feature_count": 37,
+    "dynamic_feature_count": 32
+  },
+  "overall": {
+    "bets": 3523,
+    "wins": 1887,
+    "losses": 1599,
+    "pushes": 37,
+    "win_rate": 0.5413080895008606,
+    "units": -25.399241429353125,
+    "roi": -0.00720954908582263,
+    "max_drawdown": 79.2284156448144,
+    "avg_clv": 0.009166021805394949,
+    "avg_clv_raw": 0.39256315640079475,
+    "positive_clv_rate": 0.2364462106159523,
+    "clv_samples": 3523,
+    "roi_ci_95": [
+      -0.04817911055314652,
+      0.03236795430604397
+    ],
+    "profitable_week_rate": 0.46808510638297873
+  },
+  "by_market": {
+    "moneyline": {
+      "bets": 758,
+      "wins": 468,
+      "losses": 290,
+      "pushes": 0,
+      "win_rate": 0.6174142480211082,
+      "units": -6.399241429353143,
+      "roi": -0.008442271014977762,
+      "max_drawdown": 39.78277932036186,
+      "avg_clv": 0.0,
+      "avg_clv_raw": 0.0,
+      "positive_clv_rate": 0.0,
+      "clv_samples": 758,
+      "roi_ci_95": [
+        -0.07918940721400847,
+        0.06495656823035262
+      ],
+      "profitable_week_rate": 0.5227272727272727
+    },
+    "spread": {
+      "bets": 1554,
+      "wins": 810,
+      "losses": 723,
+      "pushes": 21,
+      "win_rate": 0.5283757338551859,
+      "units": 13.36363636363637,
+      "roi": 0.008599508599508605,
+      "max_drawdown": 32.636363636363605,
+      "avg_clv": 0.02094793811779272,
+      "avg_clv_raw": 0.896074646074646,
+      "positive_clv_rate": 0.44787644787644787,
+      "clv_samples": 1554,
+      "roi_ci_95": [
+        -0.038736247877947785,
+        0.05565434644256301
+      ],
+      "profitable_week_rate": 0.5217391304347826
+    },
+    "total": {
+      "bets": 1211,
+      "wins": 609,
+      "losses": 586,
+      "pushes": 16,
+      "win_rate": 0.5096234309623431,
+      "units": -32.36363636363636,
+      "roi": -0.02672472036633886,
+      "max_drawdown": 42.909090909090786,
+      "avg_clv": -0.0002156903506552291,
+      "avg_clv_raw": -0.007844756399669695,
+      "positive_clv_rate": 0.11312964492155243,
+      "clv_samples": 1211,
+      "roi_ci_95": [
+        -0.08151704709420358,
+        0.028765497865889004
+      ],
+      "profitable_week_rate": 0.5
+    }
+  },
+  "by_signal": {
+    "BET": {
+      "bets": 1115,
+      "wins": 603,
+      "losses": 504,
+      "pushes": 8,
+      "win_rate": 0.5447154471544715,
+      "units": -8.54433846266297,
+      "roi": -0.007663083823016117,
+      "max_drawdown": 32.92697782451043,
+      "avg_clv": 0.008750375059508542,
+      "avg_clv_raw": 0.36278026905829597,
+      "positive_clv_rate": 0.27802690582959644,
+      "clv_samples": 1115,
+      "roi_ci_95": [
+        -0.06870665670396672,
+        0.05218730863981806
+      ],
+      "profitable_week_rate": 0.43478260869565216
+    },
+    "LEAN": {
+      "bets": 952,
+      "wins": 484,
+      "losses": 454,
+      "pushes": 14,
+      "win_rate": 0.5159914712153518,
+      "units": -44.97759097758119,
+      "roi": -0.04724536867392982,
+      "max_drawdown": 48.40828601360292,
+      "avg_clv": 0.002270891920522434,
+      "avg_clv_raw": 0.09453781512605042,
+      "positive_clv_rate": 0.1953781512605042,
+      "clv_samples": 952,
+      "roi_ci_95": [
+        -0.10204185049549554,
+        0.005518715081339863
+      ],
+      "profitable_week_rate": 0.32608695652173914
+    },
+    "STRONG": {
+      "bets": 1456,
+      "wins": 800,
+      "losses": 641,
+      "pushes": 15,
+      "win_rate": 0.5551700208188758,
+      "units": 28.122688010891014,
+      "roi": 0.01931503297451306,
+      "max_drawdown": 41.865523729838436,
+      "avg_clv": 0.013992676868624331,
+      "avg_clv_raw": 0.6102335164835165,
+      "positive_clv_rate": 0.23145604395604397,
+      "clv_samples": 1456,
+      "roi_ci_95": [
+        -0.041674201885984065,
+        0.0848656105858167
+      ],
+      "profitable_week_rate": 0.5454545454545454
+    }
+  },
+  "prediction": {
+    "games": 2398,
+    "margin_mae": 12.675157507867903,
+    "total_mae": 13.016665664830269,
+    "brier": 0.18589437054215202,
+    "log_loss": 0.5506843228982465,
+    "ece": 0.01492323170289529
+  },
+  "evidence": {
+    "status": "ESTABLISHED SAMPLE",
+    "positive_roi_95ci": false,
+    "positive_average_clv": true,
+    "note": "Historical results do not guarantee future profitability. Opening/archive lines are used only when present and sportsbook prices never enter score features."
+  },
+  "by_season": {
+    "2023": {
+      "bets": 1104,
+      "wins": 573,
+      "losses": 512,
+      "pushes": 19,
+      "win_rate": 0.528110599078341,
+      "units": -24.514999913250037,
+      "roi": -0.02220561586345112,
+      "max_drawdown": 63.651871519254115,
+      "avg_clv": 0.0044076051567996915,
+      "avg_clv_raw": 0.18297101449275363,
+      "positive_clv_rate": 0.2653985507246377,
+      "clv_samples": 1104,
+      "roi_ci_95": [
+        -0.09595384547736667,
+        0.054570642736838336
+      ],
+      "profitable_week_rate": 0.5333333333333333
+    },
+    "2024": {
+      "bets": 1238,
+      "wins": 672,
+      "losses": 552,
+      "pushes": 14,
+      "win_rate": 0.5490196078431373,
+      "units": -0.15266789950064918,
+      "roi": -0.00012331817407160677,
+      "max_drawdown": 54.153851838666135,
+      "avg_clv": 0.012402043427494396,
+      "avg_clv_raw": 0.5496768982229402,
+      "positive_clv_rate": 0.2310177705977383,
+      "clv_samples": 1238,
+      "roi_ci_95": [
+        -0.0681424443554098,
+        0.06925125646305447
+      ],
+      "profitable_week_rate": 0.375
+    },
+    "2025": {
+      "bets": 1181,
+      "wins": 642,
+      "losses": 535,
+      "pushes": 4,
+      "win_rate": 0.5454545454545454,
+      "units": -0.7315736166024358,
+      "roi": -0.0006194526812891074,
+      "max_drawdown": 37.80479988184787,
+      "avg_clv": 0.01022198896194876,
+      "avg_clv_raw": 0.42379339542760375,
+      "positive_clv_rate": 0.21507197290431837,
+      "clv_samples": 1181,
+      "roi_ci_95": [
+        -0.06196924020300822,
+        0.059025613668814106
+      ],
+      "profitable_week_rate": 0.5
+    }
+  },
+  "by_week": {
+    "1": {
+      "bets": 459,
+      "wins": 208,
+      "losses": 247,
+      "pushes": 4,
+      "win_rate": 0.45714285714285713,
+      "units": -65.28871443602769,
+      "roi": -0.14224120792162895,
+      "max_drawdown": 82.78801292302492,
+      "avg_clv": 0.001988601871738315,
+      "avg_clv_raw": 0.08387799564270153,
+      "positive_clv_rate": 0.14596949891067537,
+      "clv_samples": 459,
+      "roi_ci_95": [
+        -0.22742342064263915,
+        -0.05589696405490676
+      ],
+      "profitable_week_rate": 0.0
+    },
+    "2": {
+      "bets": 235,
+      "wins": 121,
+      "losses": 112,
+      "pushes": 2,
+      "win_rate": 0.51931330472103,
+      "units": -1.1839298844636081,
+      "roi": -0.005037999508355779,
+      "max_drawdown": 20.48828282828283,
+      "avg_clv": 0.0009462244677500833,
+      "avg_clv_raw": 0.04468085106382979,
+      "positive_clv_rate": 0.3191489361702128,
+      "clv_samples": 235,
+      "roi_ci_95": [
+        -0.12594915016926359,
+        0.12447766058611445
+      ],
+      "profitable_week_rate": 0.6666666666666666
+    },
+    "3": {
+      "bets": 234,
+      "wins": 114,
+      "losses": 118,
+      "pushes": 2,
+      "win_rate": 0.49137931034482757,
+      "units": -15.506574990300699,
+      "roi": -0.06626741448846453,
+      "max_drawdown": 33.05327622473257,
+      "avg_clv": -0.0010229063420630923,
+      "avg_clv_raw": -0.042735042735042736,
+      "positive_clv_rate": 0.17094017094017094,
+      "clv_samples": 234,
+      "roi_ci_95": [
+        -0.18526099718811037,
+        0.054493275594515236
+      ],
+      "profitable_week_rate": 0.3333333333333333
+    },
+    "4": {
+      "bets": 248,
+      "wins": 134,
+      "losses": 112,
+      "pushes": 2,
+      "win_rate": 0.5447154471544715,
+      "units": 5.470810210143577,
+      "roi": 0.022059718589288617,
+      "max_drawdown": 16.760537707906128,
+      "avg_clv": 0.01024752010393831,
+      "avg_clv_raw": 0.43951612903225806,
+      "positive_clv_rate": 0.22983870967741934,
+      "clv_samples": 248,
+      "roi_ci_95": [
+        -0.09266360929326944,
+        0.13902127120047328
+      ],
+      "profitable_week_rate": 0.3333333333333333
+    },
+    "5": {
+      "bets": 240,
+      "wins": 139,
+      "losses": 99,
+      "pushes": 2,
+      "win_rate": 0.5840336134453782,
+      "units": 20.576387986298457,
+      "roi": 0.08573494994291024,
+      "max_drawdown": 7.119733924611973,
+      "avg_clv": 0.006154798534006573,
+      "avg_clv_raw": 0.2625,
+      "positive_clv_rate": 0.22916666666666666,
+      "clv_samples": 240,
+      "roi_ci_95": [
+        -0.03488621578858102,
+        0.20443716460416286
+      ],
+      "profitable_week_rate": 1.0
+    },
+    "6": {
+      "bets": 209,
+      "wins": 112,
+      "losses": 94,
+      "pushes": 3,
+      "win_rate": 0.5436893203883495,
+      "units": -1.7881065174757547,
+      "roi": -0.008555533576439017,
+      "max_drawdown": 10.648984941698782,
+      "avg_clv": 0.013013392507640399,
+      "avg_clv_raw": 0.562200956937799,
+      "positive_clv_rate": 0.2583732057416268,
+      "clv_samples": 209,
+      "roi_ci_95": [
+        -0.13371381733702178,
+        0.11702971307346159
+      ],
+      "profitable_week_rate": 0.6666666666666666
+    },
+    "7": {
+      "bets": 237,
+      "wins": 138,
+      "losses": 95,
+      "pushes": 4,
+      "win_rate": 0.592274678111588,
+      "units": 19.41558236215706,
+      "roi": 0.08192228844792009,
+      "max_drawdown": 12.181818181818183,
+      "avg_clv": 0.006175762543292894,
+      "avg_clv_raw": 0.26371308016877637,
+      "positive_clv_rate": 0.22362869198312235,
+      "clv_samples": 237,
+      "roi_ci_95": [
+        -0.03134379010237984,
+        0.19898024430367314
+      ],
+      "profitable_week_rate": 0.6666666666666666
+    },
+    "8": {
+      "bets": 246,
+      "wins": 135,
+      "losses": 109,
+      "pushes": 2,
+      "win_rate": 0.5532786885245902,
+      "units": 2.1203844176084763,
+      "roi": 0.008619448852066976,
+      "max_drawdown": 20.096373692776574,
+      "avg_clv": 0.015319165805372249,
+      "avg_clv_raw": 0.6422764227642277,
+      "positive_clv_rate": 0.3048780487804878,
+      "clv_samples": 246,
+      "roi_ci_95": [
+        -0.1057316583532085,
+        0.12184612740317491
+      ],
+      "profitable_week_rate": 0.6666666666666666
+    },
+    "9": {
+      "bets": 224,
+      "wins": 120,
+      "losses": 100,
+      "pushes": 4,
+      "win_rate": 0.5454545454545454,
+      "units": 0.4288837629584705,
+      "roi": 0.0019146596560646006,
+      "max_drawdown": 19.374085384210137,
+      "avg_clv": 0.01036254891424029,
+      "avg_clv_raw": 0.46875,
+      "positive_clv_rate": 0.25892857142857145,
+      "clv_samples": 224,
+      "roi_ci_95": [
+        -0.1173679903507522,
+        0.1155770894037049
+      ],
+      "profitable_week_rate": 0.3333333333333333
+    },
+    "10": {
+      "bets": 215,
+      "wins": 100,
+      "losses": 112,
+      "pushes": 3,
+      "win_rate": 0.4716981132075472,
+      "units": -27.961970695104945,
+      "roi": -0.1300556776516509,
+      "max_drawdown": 27.961970695104906,
+      "avg_clv": 0.009032326354841858,
+      "avg_clv_raw": 0.39069767441860465,
+      "positive_clv_rate": 0.24186046511627907,
+      "clv_samples": 215,
+      "roi_ci_95": [
+        -0.2531846437648008,
+        -0.009267638479814485
+      ],
+      "profitable_week_rate": 0.0
+    },
+    "11": {
+      "bets": 236,
+      "wins": 140,
+      "losses": 95,
+      "pushes": 1,
+      "win_rate": 0.5957446808510638,
+      "units": 17.903008015222344,
+      "roi": 0.07586020345433196,
+      "max_drawdown": 11.774053532674222,
+      "avg_clv": 0.018526021887751216,
+      "avg_clv_raw": 0.8135593220338984,
+      "positive_clv_rate": 0.2711864406779661,
+      "clv_samples": 236,
+      "roi_ci_95": [
+        -0.03815295561838934,
+        0.1954673525166393
+      ],
+      "profitable_week_rate": 0.6666666666666666
+    },
+    "12": {
+      "bets": 229,
+      "wins": 124,
+      "losses": 104,
+      "pushes": 1,
+      "win_rate": 0.543859649122807,
+      "units": -8.205404954487303,
+      "roi": -0.03583146268335067,
+      "max_drawdown": 15.340514883432338,
+      "avg_clv": 0.013177054736025559,
+      "avg_clv_raw": 0.5611353711790393,
+      "positive_clv_rate": 0.18777292576419213,
+      "clv_samples": 229,
+      "roi_ci_95": [
+        -0.15751627962015674,
+        0.07657275713656493
+      ],
+      "profitable_week_rate": 0.6666666666666666
+    },
+    "13": {
+      "bets": 274,
+      "wins": 167,
+      "losses": 103,
+      "pushes": 4,
+      "win_rate": 0.6185185185185185,
+      "units": 26.92974255134998,
+      "roi": 0.09828373193923351,
+      "max_drawdown": 19.259695419235083,
+      "avg_clv": 0.017911407801809394,
+      "avg_clv_raw": 0.7372262773722628,
+      "positive_clv_rate": 0.33941605839416056,
+      "clv_samples": 274,
+      "roi_ci_95": [
+        -0.006955716559442735,
+        0.2000655460524781
+      ],
+      "profitable_week_rate": 0.6666666666666666
+    },
+    "14": {
+      "bets": 212,
+      "wins": 129,
+      "losses": 80,
+      "pushes": 3,
+      "win_rate": 0.6172248803827751,
+      "units": 15.236115288223072,
+      "roi": 0.07186846834067487,
+      "max_drawdown": 17.964605400834635,
+      "avg_clv": 0.012981959091554583,
+      "avg_clv_raw": 0.5566037735849056,
+      "positive_clv_rate": 0.21226415094339623,
+      "clv_samples": 212,
+      "roi_ci_95": [
+        -0.04835303027131632,
+        0.18426623092988845
+      ],
+      "profitable_week_rate": 0.6666666666666666
+    },
+    "15": {
+      "bets": 22,
+      "wins": 5,
+      "losses": 17,
+      "pushes": 0,
+      "win_rate": 0.22727272727272727,
+      "units": -12.454545454545457,
+      "roi": -0.566115702479339,
+      "max_drawdown": 16.09090909090909,
+      "avg_clv": -0.0022677704741237326,
+      "avg_clv_raw": -0.09090909090909091,
+      "positive_clv_rate": 0.045454545454545456,
+      "clv_samples": 22,
+      "roi_ci_95": [
+        null,
+        null
+      ],
+      "profitable_week_rate": 0.0
+    },
+    "16": {
+      "bets": 3,
+      "wins": 1,
+      "losses": 2,
+      "pushes": 0,
+      "win_rate": 0.3333333333333333,
+      "units": -1.0909090909090908,
+      "roi": -0.3636363636363636,
+      "max_drawdown": 1.0909090909090908,
+      "avg_clv": 0.05425325955610542,
+      "avg_clv_raw": 2.1666666666666665,
+      "positive_clv_rate": 0.3333333333333333,
+      "clv_samples": 3,
+      "roi_ci_95": [
+        null,
+        null
+      ],
+      "profitable_week_rate": 0.0
+    }
+  },
+  "by_role": {
+    "favorite": {
+      "bets": 1162,
+      "wins": 697,
+      "losses": 459,
+      "pushes": 6,
+      "win_rate": 0.6029411764705882,
+      "units": 0.04257675246504178,
+      "roi": 3.6640922947540254e-05,
+      "max_drawdown": 40.6727990662759,
+      "avg_clv": 0.010650513361538745,
+      "avg_clv_raw": 0.44879518072289154,
+      "positive_clv_rate": 0.24182444061962136,
+      "clv_samples": 1162,
+      "roi_ci_95": [
+        -0.06694549620205614,
+        0.06316312189753814
+      ],
+      "profitable_week_rate": 0.5227272727272727
+    },
+    "over": {
+      "bets": 884,
+      "wins": 436,
+      "losses": 436,
+      "pushes": 12,
+      "win_rate": 0.5,
+      "units": -39.636363636363626,
+      "roi": -0.04483751542575071,
+      "max_drawdown": 41.90909090909083,
+      "avg_clv": -0.003315626385424276,
+      "avg_clv_raw": -0.13800904977375567,
+      "positive_clv_rate": 0.08484162895927602,
+      "clv_samples": 884,
+      "roi_ci_95": [
+        -0.1255481426304369,
+        0.029933621440119414
+      ],
+      "profitable_week_rate": 0.41304347826086957
+    },
+    "pickem": {
+      "bets": 10,
+      "wins": 7,
+      "losses": 3,
+      "pushes": 0,
+      "win_rate": 0.7,
+      "units": 3.3636363636363633,
+      "roi": 0.3363636363636363,
+      "max_drawdown": 1.0,
+      "avg_clv": 0.041167974400665545,
+      "avg_clv_raw": 1.65,
+      "positive_clv_rate": 0.6,
+      "clv_samples": 10,
+      "roi_ci_95": [
+        null,
+        null
+      ],
+      "profitable_week_rate": 0.625
+    },
+    "under": {
+      "bets": 327,
+      "wins": 173,
+      "losses": 150,
+      "pushes": 4,
+      "win_rate": 0.5356037151702786,
+      "units": 7.272727272727276,
+      "roi": 0.022240756185710326,
+      "max_drawdown": 16.09090909090909,
+      "avg_clv": 0.008164564862604213,
+      "avg_clv_raw": 0.3440366972477064,
+      "positive_clv_rate": 0.18960244648318042,
+      "clv_samples": 327,
+      "roi_ci_95": [
+        -0.07421446334820195,
+        0.11395314754689753
+      ],
+      "profitable_week_rate": 0.5
+    },
+    "underdog": {
+      "bets": 1140,
+      "wins": 574,
+      "losses": 551,
+      "pushes": 15,
+      "win_rate": 0.5102222222222222,
+      "units": 3.558181818181822,
+      "roi": 0.0031212121212121245,
+      "max_drawdown": 35.64363636363635,
+      "avg_clv": 0.01733817505696071,
+      "avg_clv_raw": 0.749561403508772,
+      "positive_clv_rate": 0.3587719298245614,
+      "clv_samples": 1140,
+      "roi_ci_95": [
+        -0.05138866477714506,
+        0.05989651370503476
+      ],
+      "profitable_week_rate": 0.5681818181818182
+    }
+  },
+  "by_side_location": {
+    "away": {
+      "bets": 1101,
+      "wins": 591,
+      "losses": 497,
+      "pushes": 13,
+      "win_rate": 0.5431985294117647,
+      "units": 9.490875817146613,
+      "roi": 0.00862023234981527,
+      "max_drawdown": 29.172727272727258,
+      "avg_clv": 0.0169847627373144,
+      "avg_clv_raw": 0.728882833787466,
+      "positive_clv_rate": 0.3315168029064487,
+      "clv_samples": 1101,
+      "roi_ci_95": [
+        -0.05631836125266728,
+        0.07384088574676441
+      ],
+      "profitable_week_rate": 0.4888888888888889
+    },
+    "home": {
+      "bets": 1211,
+      "wins": 687,
+      "losses": 516,
+      "pushes": 8,
+      "win_rate": 0.571072319201995,
+      "units": -2.5264808828633747,
+      "roi": -0.0020862765341563786,
+      "max_drawdown": 49.99142732853767,
+      "avg_clv": 0.01143920071120292,
+      "avg_clv_raw": 0.48720066061106526,
+      "positive_clv_rate": 0.27332782824112306,
+      "clv_samples": 1211,
+      "roi_ci_95": [
+        -0.06095951955824218,
+        0.05802526059957969
+      ],
+      "profitable_week_rate": 0.5111111111111111
+    },
+    "over": {
+      "bets": 884,
+      "wins": 436,
+      "losses": 436,
+      "pushes": 12,
+      "win_rate": 0.5,
+      "units": -39.636363636363626,
+      "roi": -0.04483751542575071,
+      "max_drawdown": 41.90909090909083,
+      "avg_clv": -0.003315626385424276,
+      "avg_clv_raw": -0.13800904977375567,
+      "positive_clv_rate": 0.08484162895927602,
+      "clv_samples": 884,
+      "roi_ci_95": [
+        -0.1255481426304369,
+        0.029933621440119414
+      ],
+      "profitable_week_rate": 0.41304347826086957
+    },
+    "under": {
+      "bets": 327,
+      "wins": 173,
+      "losses": 150,
+      "pushes": 4,
+      "win_rate": 0.5356037151702786,
+      "units": 7.272727272727276,
+      "roi": 0.022240756185710326,
+      "max_drawdown": 16.09090909090909,
+      "avg_clv": 0.008164564862604213,
+      "avg_clv_raw": 0.3440366972477064,
+      "positive_clv_rate": 0.18960244648318042,
+      "clv_samples": 327,
+      "roi_ci_95": [
+        -0.07421446334820195,
+        0.11395314754689753
+      ],
+      "profitable_week_rate": 0.5
+    }
+  },
+  "by_conference": {
+    "ACC": {
+      "bets": 231,
+      "wins": 131,
+      "losses": 96,
+      "pushes": 4,
+      "win_rate": 0.5770925110132159,
+      "units": 12.761067488600705,
+      "roi": 0.055242716400868856,
+      "max_drawdown": 10.363636363636363,
+      "avg_clv": 0.020835058677642068,
+      "avg_clv_raw": 0.9199134199134199,
+      "positive_clv_rate": 0.3333333333333333,
+      "clv_samples": 231,
+      "roi_ci_95": [
+        -0.08715362900248333,
+        0.19293616406818287
+      ],
+      "profitable_week_rate": 0.5
+    },
+    "American Athletic": {
+      "bets": 247,
+      "wins": 135,
+      "losses": 109,
+      "pushes": 3,
+      "win_rate": 0.5532786885245902,
+      "units": -6.98269003585642,
+      "roi": -0.02827000014516769,
+      "max_drawdown": 14.937214400326855,
+      "avg_clv": 0.011608474291154287,
+      "avg_clv_raw": 0.4757085020242915,
+      "positive_clv_rate": 0.30364372469635625,
+      "clv_samples": 247,
+      "roi_ci_95": [
+        -0.15273028029147773,
+        0.09911477434744519
+      ],
+      "profitable_week_rate": 0.5
+    },
+    "Big 12": {
+      "bets": 219,
+      "wins": 116,
+      "losses": 102,
+      "pushes": 1,
+      "win_rate": 0.5321100917431193,
+      "units": -9.794893673961154,
+      "roi": -0.044725541890233575,
+      "max_drawdown": 12.3224354139246,
+      "avg_clv": 0.02134861307088072,
+      "avg_clv_raw": 0.9383561643835616,
+      "positive_clv_rate": 0.3378995433789954,
+      "clv_samples": 219,
+      "roi_ci_95": [
+        -0.19051232588588898,
+        0.11322123125447664
+      ],
+      "profitable_week_rate": 0.5
+    },
+    "Big Ten": {
+      "bets": 271,
+      "wins": 160,
+      "losses": 108,
+      "pushes": 3,
+      "win_rate": 0.5970149253731343,
+      "units": 13.252476434010294,
+      "roi": 0.04890212706276861,
+      "max_drawdown": 13.594405594405593,
+      "avg_clv": 0.0209709297822674,
+      "avg_clv_raw": 0.8892988929889298,
+      "positive_clv_rate": 0.34686346863468637,
+      "clv_samples": 271,
+      "roi_ci_95": [
+        -0.0727379943338088,
+        0.172846417783992
+      ],
+      "profitable_week_rate": 0.5116279069767442
+    },
+    "Conference USA": {
+      "bets": 214,
+      "wins": 117,
+      "losses": 96,
+      "pushes": 1,
+      "win_rate": 0.5492957746478874,
+      "units": 5.451528506562802,
+      "roi": 0.025474432273657952,
+      "max_drawdown": 18.26176968758866,
+      "avg_clv": 0.001535934612512489,
+      "avg_clv_raw": 0.05841121495327103,
+      "positive_clv_rate": 0.22897196261682243,
+      "clv_samples": 214,
+      "roi_ci_95": [
+        -0.13826605419488175,
+        0.18590863362927398
+      ],
+      "profitable_week_rate": 0.47619047619047616
+    },
+    "FBS Independents": {
+      "bets": 70,
+      "wins": 50,
+      "losses": 20,
+      "pushes": 0,
+      "win_rate": 0.7142857142857143,
+      "units": 16.384754277358088,
+      "roi": 0.23406791824797268,
+      "max_drawdown": 3.0909090909090917,
+      "avg_clv": 0.027632738054376948,
+      "avg_clv_raw": 1.207142857142857,
+      "positive_clv_rate": 0.4,
+      "clv_samples": 70,
+      "roi_ci_95": [
+        0.03632290175336717,
+        0.4084767156309899
+      ],
+      "profitable_week_rate": 0.65625
+    },
+    "Mid-American": {
+      "bets": 246,
+      "wins": 134,
+      "losses": 111,
+      "pushes": 1,
+      "win_rate": 0.5469387755102041,
+      "units": -3.076407098556326,
+      "roi": -0.012505719912830593,
+      "max_drawdown": 12.014037255890093,
+      "avg_clv": 0.00401173898908392,
+      "avg_clv_raw": 0.16463414634146342,
+      "positive_clv_rate": 0.25203252032520324,
+      "clv_samples": 246,
+      "roi_ci_95": [
+        -0.14308971714854668,
+        0.11137104325262753
+      ],
+      "profitable_week_rate": 0.4318181818181818
+    },
+    "Mountain West": {
+      "bets": 235,
+      "wins": 112,
+      "losses": 119,
+      "pushes": 4,
+      "win_rate": 0.48484848484848486,
+      "units": -26.289551286139083,
+      "roi": -0.11187043100484716,
+      "max_drawdown": 31.083198873119997,
+      "avg_clv": 0.0014022120135503736,
+      "avg_clv_raw": 0.05106382978723404,
+      "positive_clv_rate": 0.2170212765957447,
+      "clv_samples": 235,
+      "roi_ci_95": [
+        -0.23304246251317792,
+        0.00780898910408634
+      ],
+      "profitable_week_rate": 0.40476190476190477
+    },
+    "Pac-12": {
+      "bets": 85,
+      "wins": 48,
+      "losses": 36,
+      "pushes": 1,
+      "win_rate": 0.5714285714285714,
+      "units": 0.5122057539151887,
+      "roi": 0.006025950046061044,
+      "max_drawdown": 4.931202659962696,
+      "avg_clv": 0.020927645065698126,
+      "avg_clv_raw": 0.8705882352941177,
+      "positive_clv_rate": 0.35294117647058826,
+      "clv_samples": 85,
+      "roi_ci_95": [
+        -0.1969907810670536,
+        0.1982715760605128
+      ],
+      "profitable_week_rate": 0.5757575757575758
+    },
+    "SEC": {
+      "bets": 215,
+      "wins": 126,
+      "losses": 87,
+      "pushes": 2,
+      "win_rate": 0.5915492957746479,
+      "units": 11.732624825755167,
+      "roi": 0.05457034802676822,
+      "max_drawdown": 13.368550368550368,
+      "avg_clv": 0.03795805931077072,
+      "avg_clv_raw": 1.6325581395348838,
+      "positive_clv_rate": 0.4,
+      "clv_samples": 215,
+      "roi_ci_95": [
+        -0.10845695447445954,
+        0.20944578600671088
+      ],
+      "profitable_week_rate": 0.4878048780487805
+    },
+    "Sun Belt": {
+      "bets": 279,
+      "wins": 149,
+      "losses": 129,
+      "pushes": 1,
+      "win_rate": 0.5359712230215827,
+      "units": -6.986720257406045,
+      "roi": -0.025042008091061094,
+      "max_drawdown": 22.874436077665695,
+      "avg_clv": 0.003567075373831663,
+      "avg_clv_raw": 0.14874551971326164,
+      "positive_clv_rate": 0.25089605734767023,
+      "clv_samples": 279,
+      "roi_ci_95": [
+        -0.15011663958654403,
+        0.10144616093352506
+      ],
+      "profitable_week_rate": 0.42857142857142855
+    },
+    "TOTAL": {
+      "bets": 1211,
+      "wins": 609,
+      "losses": 586,
+      "pushes": 16,
+      "win_rate": 0.5096234309623431,
+      "units": -32.36363636363636,
+      "roi": -0.02672472036633886,
+      "max_drawdown": 42.909090909090786,
+      "avg_clv": -0.0002156903506552291,
+      "avg_clv_raw": -0.007844756399669695,
+      "positive_clv_rate": 0.11312964492155243,
+      "clv_samples": 1211,
+      "roi_ci_95": [
+        -0.08151704709420358,
+        0.028765497865889004
+      ],
+      "profitable_week_rate": 0.5
+    }
+  },
+  "methodology": {
+    "bet_timestamp": "archived opening line/price when present; final quote used only when archive lacks a distinct opening value",
+    "clv": "moneyline: no-vig probability movement; spread/total: line movement converted to probability-equivalent CLV using model residual sigma",
+    "confidence_interval": "95% week-block bootstrap to preserve within-week wager correlation",
+    "modeling": "weekly expanding-window fit; nested chronological tuning/calibration; advanced features are pregame as-of only"
+  }
+}

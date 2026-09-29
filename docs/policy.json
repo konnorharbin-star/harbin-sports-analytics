@@ -1,0 +1,103 @@
+{
+  "version": 1,
+  "deployment_mode": "paper",
+  "markets": {
+    "moneyline": {
+      "lean": {
+        "min_ev": 0.03,
+        "min_edge": 5,
+        "min_prob": 0.58
+      },
+      "bet": {
+        "min_ev": 0.045,
+        "min_edge": 5.75,
+        "min_prob": 0.595
+      },
+      "strong": {
+        "min_ev": 0.07,
+        "min_edge": 7.0,
+        "min_prob": 0.61
+      }
+    },
+    "spread": {
+      "lean": {
+        "min_ev": 0.1,
+        "min_edge": 4,
+        "min_prob": 0.6
+      },
+      "bet": {
+        "min_ev": 0.115,
+        "min_edge": 4.75,
+        "min_prob": 0.615
+      },
+      "strong": {
+        "min_ev": 0.14,
+        "min_edge": 6.0,
+        "min_prob": 0.63
+      }
+    },
+    "total": {
+      "lean": {
+        "min_ev": 0.02,
+        "min_edge": 2.5,
+        "min_prob": 0.52
+      },
+      "bet": {
+        "min_ev": 0.04,
+        "min_edge": 4.0,
+        "min_prob": 0.54
+      },
+      "strong": {
+        "min_ev": 0.07,
+        "min_edge": 6.0,
+        "min_prob": 0.57
+      }
+    }
+  },
+  "portfolio": {
+    "max_slate_units": 5.0,
+    "max_game_units": 1.0,
+    "max_team_units": 1.5,
+    "max_market_units": 2.5,
+    "kelly_fraction": 0.2
+  },
+  "source": "time-split backtest policy calibration",
+  "split": "season<2025 / season=2025",
+  "diagnostics": {
+    "moneyline": {
+      "train_bets": 497,
+      "holdout_bets": 261,
+      "selected": [
+        0.03,
+        5,
+        0.58,
+        {
+          "n": 190,
+          "roi": 0.08452941100601412,
+          "lcb": 0.011919979327008001,
+          "avg_clv": 0.0
+        }
+      ]
+    },
+    "spread": {
+      "train_bets": 1042,
+      "holdout_bets": 512,
+      "selected": [
+        0.1,
+        4,
+        0.6,
+        {
+          "n": 278,
+          "roi": 0.04054937867887513,
+          "lcb": -0.032431584344875634,
+          "avg_clv": 0.02633401191273965
+        }
+      ]
+    },
+    "total": {
+      "train_bets": 803,
+      "holdout_bets": 408,
+      "selected": null
+    }
+  }
+}
