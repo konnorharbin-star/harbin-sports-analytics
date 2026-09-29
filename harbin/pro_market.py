@@ -24,22 +24,22 @@ def fractional_kelly_units(p, american, risk_multiplier=1.0, cap=1.25, policy_pa
 def standard_price_ev(p, price=-110): return roi(float(p),float(price))
 
 
-def quant_signal(ev, edge_value, probability, market: str):
-    return signal_from_policy(ev,edge_value,probability,market)
+def quant_signal(ev, edge_value, probability, market: str, week=None):
+    return signal_from_policy(ev,edge_value,probability,market,week=week)
 
 
 def select_best_market(row, risk_multiplier=1.0):
-    candidates=[]
+    candidates=[]; week=row.get("week")
     if not np.isnan(row.get("quant_best_ml_roi",np.nan)):
         side=row.get("quant_best_ml_side"); p=None; odds=None
         if side==row.get("home_team"): p=row.get("calibrated_home_probability"); odds=row.get("home_ml")
         elif side==row.get("away_team"): p=1-float(row.get("calibrated_home_probability")); odds=row.get("away_ml")
         if p is not None and odds is not None:
-            edge=row.get("quant_best_ml_edge_pp",0); ev=row.get("quant_best_ml_roi",-1); sig=quant_signal(ev,edge,p,"moneyline"); candidates.append((float(ev),"moneyline",side,odds,float(p),float(edge),sig))
+            edge=row.get("quant_best_ml_edge_pp",0); ev=row.get("quant_best_ml_roi",-1); sig=quant_signal(ev,edge,p,"moneyline",week=week); candidates.append((float(ev),"moneyline",side,odds,float(p),float(edge),sig))
     if not np.isnan(row.get("cover_probability",np.nan)) and not np.isnan(row.get("spread_edge_pts",np.nan)):
-        p=float(row["cover_probability"]); ev=standard_price_ev(p); edge=float(row["spread_edge_pts"]); sig=quant_signal(ev,edge,p,"spread"); candidates.append((ev,"spread",row.get("spread_team"),row.get("spread_line"),p,edge,sig))
+        p=float(row["cover_probability"]); ev=standard_price_ev(p); edge=float(row["spread_edge_pts"]); sig=quant_signal(ev,edge,p,"spread",week=week); candidates.append((ev,"spread",row.get("spread_team"),row.get("spread_line"),p,edge,sig))
     if not np.isnan(row.get("total_probability",np.nan)) and not np.isnan(row.get("total_edge_pts",np.nan)):
-        p=float(row["total_probability"]); ev=standard_price_ev(p); edge=float(row["total_edge_pts"]); sig=quant_signal(ev,edge,p,"total"); candidates.append((ev,"total",row.get("total_dir"),row.get("market_total"),p,edge,sig))
+        p=float(row["total_probability"]); ev=standard_price_ev(p); edge=float(row["total_edge_pts"]); sig=quant_signal(ev,edge,p,"total",week=week); candidates.append((ev,"total",row.get("total_dir"),row.get("market_total"),p,edge,sig))
     candidates=[x for x in candidates if x[6]!="PASS"]
     if not candidates: return {"quant_signal":"PASS","quant_market":None,"quant_side":None,"quant_ev":0.0,"stake_units":0.0,"quant_probability":np.nan}
     ev,market,side,price,p,edge,sig=max(candidates,key=lambda x:x[0])
