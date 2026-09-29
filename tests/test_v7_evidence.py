@@ -91,3 +91,16 @@ def test_candidate_fails_closed_on_negative_final_test(tmp_path):
     assert r["status"]=="RESEARCH_ONLY"
     assert saved["markets"]["spread"]["enabled"] is False
     assert saved["markets"]["spread"]["evidence_tier"]=="FINAL_TEST_FAILED"
+
+
+def test_empty_backtest_file_fails_closed_without_crashing(tmp_path):
+    policy=_write_policy(tmp_path,candidate=True)
+    bp=tmp_path/"bets.csv"; bp.write_text("")
+    out=tmp_path/"validation.json"
+    r=validate_policy_against_backtest(bp,policy,out)
+    saved=json.loads(policy.read_text())
+    assert r["status"]=="UNPROVEN"
+    assert r["deployment_mode"]=="paper"
+    assert r["markets"]=={}
+    assert saved["markets"]["spread"]["enabled"] is False
+    assert json.loads(out.read_text())["status"]=="UNPROVEN"
