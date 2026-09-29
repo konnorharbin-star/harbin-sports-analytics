@@ -75,7 +75,7 @@
       {
         "season": 2025,
         "rows": 808,
-        "mae": 12.939668956002865,
+        "mae": 12.939668956002867,
         "rmse": 16.010743003944654,
         "baseline_mae": 12.910666790164145,
         "weight": 1.0
@@ -89,12 +89,12 @@
         "weight": 0.15000000000000002
       }
     ],
-    "total_walkforward_mae_mean": 12.821867298725518,
-    "total_walkforward_mae_std": 0.34314579242694493,
+    "total_walkforward_mae_mean": 12.821867298725522,
+    "total_walkforward_mae_std": 0.3431457924269451,
     "total_walkforward_improved_folds": 3,
     "win_brier": 0.15640752116978443,
     "win_log_loss": 0.4744542498337635,
-    "win_ece": 0.0620029288208732,
+    "win_ece": 0.06200292882087315,
     "win_calibration_eval_rows": 368
   },
   "model_selection": {
@@ -103,8 +103,8 @@
   },
   "calibrated_margin_sigma": 15.541476248611449,
   "calibrated_total_sigma": 15.651227745434577,
-  "generated_at": "2026-09-29T04:55:54.919480+00:00",
-  "updated_at_ct": "Sep 28, 2026 \u00b7 11:55 PM CT",
+  "generated_at": "2026-09-29T05:03:20.906632+00:00",
+  "updated_at_ct": "Sep 29, 2026 \u00b7 12:03 AM CT",
   "schedule_source": "sportsdataverse/cfbfastR-data",
   "odds_source": "ESPN live (site.web.api.espn.com) + ESPN Core supplement",
   "odds_errors": [],
@@ -164,7 +164,7 @@
     "note": "CLV proxy uses the latest stored pre-kickoff snapshot, not a guaranteed official closing line."
   },
   "health": {
-    "system_health_score": 79.6,
+    "system_health_score": 80.8,
     "meaning": "engineering/model-readiness score only; not a profitability or win-rate guarantee",
     "components": {
       "pipeline_and_data": 100.0,
@@ -174,13 +174,12 @@
       "probability_calibration": 87.6,
       "market_intelligence": 65.0,
       "current_context": 100.0,
-      "live_monitoring": 70.0,
+      "live_monitoring": 82.3,
       "historical_betting_proof": 20.0
     },
     "betting_proof_status": "UNPROVEN",
     "blockers": [
-      "historical market edge is not yet validated",
-      "live operational monitoring score below 75"
+      "historical market edge is not yet validated"
     ]
   }
 }
