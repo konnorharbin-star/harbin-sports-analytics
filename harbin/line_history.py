@@ -48,14 +48,15 @@ def attach_line_movement(pred: pd.DataFrame, history_dir="history"):
     closing-line value until a verified pre-kickoff close exists.
     """
     out=pred.copy(); hdir=Path(history_dir); market=_read_market_snapshots(hdir); legacy=_read_prediction_histories(hdir)
-    cols=(
+    numeric_cols=(
         "opening_home_spread","opening_total","opening_home_ml","opening_away_ml",
         "latest_pre_kickoff_home_spread","latest_pre_kickoff_total","latest_pre_kickoff_home_ml","latest_pre_kickoff_away_ml",
-        "spread_move_home","total_move","home_ml_implied_move","away_ml_implied_move",
-        "market_snapshot_count","first_market_snapshot_at","last_pre_kickoff_snapshot_at","line_history_source",
+        "spread_move_home","total_move","home_ml_implied_move","away_ml_implied_move","market_snapshot_count",
     )
+    object_cols=("first_market_snapshot_at","last_pre_kickoff_snapshot_at","line_history_source")
     if out.empty: return out,{"tracked_games":0,"coverage":0.0,"snapshot_rows":int(len(market)),"source":"none"}
-    for c in cols: out[c]=np.nan
+    for c in numeric_cols: out[c]=np.nan
+    for c in object_cols: out[c]=pd.Series([None]*len(out),index=out.index,dtype="object")
     out["line_history_source"]="none"
     hits=0; market_hits=0; legacy_hits=0
 
@@ -85,14 +86,14 @@ def attach_line_movement(pred: pd.DataFrame, history_dir="history"):
                         srcrow=first if dst.startswith("opening_") else last
                         out.at[i,dst]=srcrow.get(src,np.nan)
                     out.at[i,"market_snapshot_count"]=int(len(pre))
-                    out.at[i,"first_market_snapshot_at"]=first.get("captured_at",np.nan)
-                    out.at[i,"last_pre_kickoff_snapshot_at"]=last.get("captured_at",np.nan)
+                    out.at[i,"first_market_snapshot_at"]=first.get("captured_at",None)
+                    out.at[i,"last_pre_kickoff_snapshot_at"]=last.get("captured_at",None)
                     out.at[i,"line_history_source"]="hourly_market_snapshots"
         if not used and len(legacy_first) and gid in legacy_first.index:
             f=legacy_first.loc[gid]; hits+=1; legacy_hits+=1
             out.at[i,"opening_home_spread"]=f.get("market_spread_home",np.nan); out.at[i,"opening_total"]=f.get("market_total",np.nan)
             out.at[i,"opening_home_ml"]=f.get("home_ml",np.nan); out.at[i,"opening_away_ml"]=f.get("away_ml",np.nan)
-            out.at[i,"market_snapshot_count"]=1; out.at[i,"first_market_snapshot_at"]=f.get("snapshot_at",np.nan); out.at[i,"line_history_source"]="prediction_snapshot_fallback"
+            out.at[i,"market_snapshot_count"]=1; out.at[i,"first_market_snapshot_at"]=f.get("snapshot_at",None); out.at[i,"line_history_source"]="prediction_snapshot_fallback"
         try: out.at[i,"spread_move_home"]=float(row.market_spread_home)-float(out.at[i,"opening_home_spread"])
         except Exception: out.at[i,"spread_move_home"]=np.nan
         try: out.at[i,"total_move"]=float(row.market_total)-float(out.at[i,"opening_total"])
