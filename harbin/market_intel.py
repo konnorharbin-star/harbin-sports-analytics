@@ -49,10 +49,30 @@ class MarketIntelligence:
 
     @staticmethod
     def _summary(game, quotes):
-        base = {"provider":game.provider or "primary","home_ml":game.home_ml,"away_ml":game.away_ml,"home_spread":game.home_spread,"market_total":game.market_total}
-        all_quotes = list(quotes or [])
+        base = {
+            "provider": game.provider or "primary",
+            "home_ml": game.home_ml,
+            "away_ml": game.away_ml,
+            "home_spread": game.home_spread,
+            "market_total": game.market_total,
+        }
+        # One sportsbook gets one vote in the consensus. The primary live quote
+        # can also be returned by ESPN Core, so merge by provider instead of
+        # appending it twice and accidentally overweighting that book.
+        all_quotes = [dict(q) for q in (quotes or [])]
         if any(base[k] is not None for k in ("home_ml","away_ml","home_spread","market_total")):
-            all_quotes.append(base)
+            bp = str(base.get("provider") or "primary").strip().lower()
+            existing = next(
+                (q for q in all_quotes if str(q.get("provider") or "unknown").strip().lower() == bp),
+                None,
+            )
+            if existing is None:
+                all_quotes.append(dict(base))
+            else:
+                for k in ("home_ml","away_ml","home_spread","market_total"):
+                    if existing.get(k) is None and base.get(k) is not None:
+                        existing[k] = base[k]
+
         providers=[]
         for q in all_quotes:
             p=str(q.get("provider") or "unknown")
