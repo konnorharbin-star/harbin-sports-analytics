@@ -46,7 +46,7 @@ jobs:
         run: python -m pip install -r requirements.txt
       - name: Test
         run: python -m pytest -q
-      - name: Run model
+      - name: Run model + monitoring + portfolio controls
         shell: bash
         run: |
           ARGS=""
@@ -60,19 +60,14 @@ jobs:
           python - <<'PY' >> "$GITHUB_STEP_SUMMARY"
           import glob,json,os
           files=glob.glob("outputs/cfb_model_*_metadata.json")
-          if not files:
-              print("## CFB model\nNo metadata file was produced."); raise SystemExit(0)
-          m=json.load(open(max(files,key=os.path.getmtime))); c=m["market_coverage"]; a=m["advanced_features"]; q=m["quant_picks"]; h=m["health"]
-          print(f"## CFB Model v{m['model_version']} — {m['season']} Week {m['week']}")
-          print(f"- Games: **{m['upcoming_games']}** · Updated **{m['updated_at_ct']}**")
-          print(f"- Market ML / Spread / Total: **{c['moneyline']} / {c['spread']} / {c['total']}**")
-          print(f"- Advanced feature coverage: **{a['live_coverage']:.1%}**")
-          print(f"- Multi-book coverage: **{m['market_intelligence'].get('multi_book_coverage',0):.1%}**")
-          print(f"- Margin MAE: **{m['metrics'].get('margin_mae',float('nan')):.3f}**")
-          print(f"- Win Brier / ECE: **{m['metrics'].get('win_brier',float('nan')):.3f} / {m['metrics'].get('win_ece',float('nan')):.3f}**")
-          print(f"- Quant STRONG / BET / LEAN: **{q['strong']} / {q['bet']} / {q['lean']}**")
-          print(f"- System health: **{h['system_health_score']}/100** (readiness, not profitability)")
-          print(f"- Status: {m['market_status']}")
+          if not files: print("## CFB model\nNo metadata file was produced."); raise SystemExit(0)
+          m=json.load(open(max(files,key=os.path.getmtime))); mon=m.get("live_monitoring",{}); port=m.get("portfolio",{}); c=m["market_coverage"]
+          print(f"## Harbin CFB Platform v5 — {m['season']} Week {m['week']}")
+          print(f"- Games: **{m['upcoming_games']}** · Market ML/Spread/Total: **{c['moneyline']}/{c['spread']}/{c['total']}**")
+          print(f"- Margin / Total MAE: **{m['metrics'].get('margin_mae')} / {m['metrics'].get('total_mae')}**")
+          print(f"- Brier / ECE: **{m['metrics'].get('win_brier')} / {m['metrics'].get('win_ece')}**")
+          print(f"- Live readiness: **{mon.get('live_readiness_score','n/a')}/100**")
+          print(f"- Portfolio: **{str(port.get('mode','paper')).upper()}** · proposed **{port.get('proposed_units',0)}u** · approved **{port.get('approved_units',0)}u**")
           PY
       - name: Commit generated state
         shell: bash
@@ -81,7 +76,7 @@ jobs:
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add outputs history reports docs
           if ! git diff --cached --quiet; then
-            git commit -m "model: automated CFB v4 refresh"
+            git commit -m "model: automated CFB v5 refresh"
             git push
           else
             echo "No generated changes to commit."
