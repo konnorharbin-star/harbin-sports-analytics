@@ -1,3 +1,4 @@
+import json
 import numpy as np
 import pandas as pd
 
@@ -5,6 +6,7 @@ from harbin.advanced import canon_team
 from harbin.calibration import brier_score, expected_calibration_error
 from harbin.pro_market import kelly_fraction, quant_signal, risk_multiplier
 from harbin.models import choose_blend_weight
+from harbin.policy import DEFAULT_POLICY
 
 
 def test_team_canonicalization_aliases():
@@ -18,9 +20,14 @@ def test_calibration_metrics_are_sane():
     assert expected_calibration_error(y,p,2) < .2
 
 
-def test_quant_gate_and_risk():
-    assert quant_signal(.08,6,.60,"spread") == "STRONG"
-    assert quant_signal(-.01,9,.70,"spread") == "PASS"
+def test_quant_gate_and_risk(tmp_path):
+    # Safe defaults must never create a bet without evidence.
+    assert quant_signal(.08,6,.60,"spread") == "PASS"
+    policy=json.loads(json.dumps(DEFAULT_POLICY)); policy["markets"]["spread"]["enabled"]=True; policy["markets"]["spread"]["evidence_tier"]="VALIDATED"
+    p=tmp_path/"policy.json"; p.write_text(json.dumps(policy))
+    from harbin.policy import signal_from_policy
+    assert signal_from_policy(.08,6,.60,"spread",path=p) == "STRONG"
+    assert signal_from_policy(-.01,9,.70,"spread",path=p) == "PASS"
     assert 0 < risk_multiplier(.8,.7,20) < risk_multiplier(0,1,0) <= 1
 
 
