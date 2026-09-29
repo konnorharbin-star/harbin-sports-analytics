@@ -6,7 +6,7 @@
   "historical_games": 4079,
   "training_rows": 4079,
   "upcoming_games": 56,
-  "validation": "chronological 82/18 holdout with baseline shrinkage guard",
+  "validation": "chronological 82/18 holdout + season walk-forward folds + shrinkage guard",
   "metrics": {
     "margin_baseline_mae": 13.089135303690258,
     "margin_unshrunk_mae": 12.68573364279297,
@@ -14,12 +14,66 @@
     "margin_rmse": 15.765856830968925,
     "margin_blend_weight": 1.0,
     "margin_holdout_rows": 735,
+    "margin_walkforward_folds": [
+      {
+        "season": 2024,
+        "rows": 798,
+        "mae": 13.10987088945717,
+        "baseline_mae": 13.22842366531436,
+        "weight": 0.5
+      },
+      {
+        "season": 2025,
+        "rows": 808,
+        "mae": 12.601266890367409,
+        "baseline_mae": 13.026608931009665,
+        "weight": 1.0
+      },
+      {
+        "season": 2026,
+        "rows": 215,
+        "mae": 13.342225191716814,
+        "baseline_mae": 14.439117971947091,
+        "weight": 1.0
+      }
+    ],
+    "margin_walkforward_mae_mean": 13.017787657180463,
+    "margin_walkforward_mae_std": 0.30942343407757944,
     "total_baseline_mae": 12.42412593968529,
-    "total_unshrunk_mae": 12.49864301091077,
+    "total_unshrunk_mae": 12.498643010910774,
     "total_mae": 12.42412593968529,
     "total_rmse": 15.50168246742681,
     "total_blend_weight": 0.0,
-    "total_holdout_rows": 735
+    "total_holdout_rows": 735,
+    "total_walkforward_folds": [
+      {
+        "season": 2024,
+        "rows": 798,
+        "mae": 12.861236175747777,
+        "baseline_mae": 12.964033987572272,
+        "weight": 1.0
+      },
+      {
+        "season": 2025,
+        "rows": 808,
+        "mae": 12.899063524945882,
+        "baseline_mae": 12.910666790164145,
+        "weight": 0.25
+      },
+      {
+        "season": 2026,
+        "rows": 215,
+        "mae": 12.146574237105073,
+        "baseline_mae": 12.290736967103378,
+        "weight": 1.0
+      }
+    ],
+    "total_walkforward_mae_mean": 12.635624645932909,
+    "total_walkforward_mae_std": 0.346155508279006,
+    "win_brier": 0.15557241341376873,
+    "win_log_loss": 0.4763285833478033,
+    "win_ece": 0.05076706130509872,
+    "win_calibration_rows": 368
   },
   "model_selection": {
     "margin_blend_weight": 1.0,
@@ -28,8 +82,8 @@
   "replica_margin_sigma": 16.41,
   "calibrated_margin_sigma": 15.769708017734605,
   "calibrated_total_sigma": 15.493240964289257,
-  "generated_at": "2026-09-29T03:47:07.596662+00:00",
-  "updated_at_ct": "Sep 28, 2026 \u00b7 10:47 PM CT",
+  "generated_at": "2026-09-29T04:05:39.366260+00:00",
+  "updated_at_ct": "Sep 28, 2026 \u00b7 11:05 PM CT",
   "schedule_source": "sportsdataverse/cfbfastR-data",
   "odds_source": "ESPN live (site.web.api.espn.com) + ESPN Core supplement",
   "odds_errors": [],
