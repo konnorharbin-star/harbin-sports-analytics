@@ -15,6 +15,13 @@ on:
         description: "First training season"
         required: false
         default: "2018"
+  push:
+    branches: [main]
+    paths:
+      - "harbin/**"
+      - "run_backtest.py"
+      - "requirements.txt"
+      - ".github/workflows/cfb-backtest.yml"
   schedule:
     - cron: "35 15 * * 1"
 
@@ -32,6 +39,7 @@ jobs:
     env:
       PYTHONUNBUFFERED: "1"
       TZ: "America/Chicago"
+      HARBIN_FAST_BACKTEST: "1"
     steps:
       - uses: actions/checkout@v7
       - uses: actions/setup-python@v7
@@ -53,13 +61,15 @@ jobs:
           python - <<'PY' >> "$GITHUB_STEP_SUMMARY"
           import json
           m=json.load(open("reports/backtest_summary.json")); o=m["overall"]; p=m["prediction"]
+          pct=lambda x: "n/a" if x is None else f"{x:.2%}"
+          num=lambda x: "n/a" if x is None else f"{x:.3f}"
           print(f"## CFB Walk-Forward Backtest — {m['start_season']}-{m['end_season']}")
-          print(f"- Bets: **{o['bets']}** · ROI: **{o['roi']:.2%}** · Units: **{o['units']:.2f}**")
-          print(f"- Win rate: **{o['win_rate']:.2%}** · Max drawdown: **{o['max_drawdown']:.2f}u**")
-          print(f"- Avg CLV proxy: **{o['avg_clv']}** over **{o['clv_samples']}** samples")
+          print(f"- Bets: **{o['bets']}** · ROI: **{pct(o['roi'])}** · Units: **{o['units']:.2f}**")
+          print(f"- Win rate: **{pct(o['win_rate'])}** · Max drawdown: **{o['max_drawdown']:.2f}u**")
+          print(f"- Avg CLV proxy: **{num(o['avg_clv'])}** over **{o['clv_samples']}** samples")
           print(f"- ROI 95% bootstrap CI: **{o['roi_ci_95']}**")
-          print(f"- Prediction margin / total MAE: **{p.get('margin_mae')} / {p.get('total_mae')}**")
-          print(f"- Brier / ECE: **{p.get('brier')} / {p.get('ece')}**")
+          print(f"- Prediction margin / total MAE: **{num(p.get('margin_mae'))} / {num(p.get('total_mae'))}**")
+          print(f"- Brier / ECE: **{num(p.get('brier'))} / {num(p.get('ece'))}**")
           print(f"- Evidence: **{m['evidence']['status']}**")
           PY
       - name: Commit reports
