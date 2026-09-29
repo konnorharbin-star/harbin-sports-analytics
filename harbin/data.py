@@ -2,7 +2,6 @@ from __future__ import annotations
 
 import re
 from dataclasses import dataclass
-from datetime import datetime
 
 import pandas as pd
 
@@ -45,18 +44,38 @@ def _bool(v):
 
 
 def _canon(name: str) -> str:
-    return re.sub(r"[^a-z0-9]", "", str(name).lower())
+    s = re.sub(r"[^a-z0-9]", "", str(name).lower())
+    aliases = {
+        "northcarolinastate": "ncstate",
+        "southernmethodist": "smu",
+        "texaschristian": "tcu",
+        "brighamyoung": "byu",
+        "centralflorida": "ucf",
+        "louisianastate": "lsu",
+        "alabamabirmingham": "uab",
+        "nevadalasvegas": "unlv",
+        "texaselpaso": "utep",
+        "texassanantonio": "utsa",
+        "floridainternational": "fiu",
+        "southernmississippi": "southernmiss",
+    }
+    return aliases.get(s, s)
 
 
 class SportsDataVerseClient:
     """Free GitHub-friendly CFB schedule/results and market loader."""
 
-    BOOK_PRIORITY = ("pinnacle", "circa", "draftkings", "espn", "fanduel", "fanatics", "bovada")
+    # Replica mode prefers a widely available retail line because Jason's public
+    # screenshots appear consistent with retail-market pricing. Quant diagnostics
+    # remain separate from the display layer.
+    BOOK_PRIORITY = ("draftkings", "fanduel", "espn", "fanatics", "circa", "pinnacle", "bovada")
 
     def __init__(self):
         self._seasons: dict[int, pd.DataFrame] = {}
         self._odds: pd.DataFrame | None = None
         self.odds_columns: list[str] = []
+        self.odds_rows_matched: int = 0
+        self.odds_games_attached: int = 0
 
     def season_frame(self, season: int) -> pd.DataFrame:
         if season not in self._seasons:
@@ -150,6 +169,80 @@ class SportsDataVerseClient:
                 return c
         return None
 
+    def _book_rank(self, book) -> int:
+        s = str(book).lower()
+        for i, name in enumerate(self.BOOK_PRIORITY):
+            if name in s:
+                return i
+        return len(self.BOOK_PRIORITY)
+
+    def _attach_long_odds(self, games: list[Game], o: pd.DataFrame, id_col: str) -> list[Game]:
+        """Parse cfbfastR's long archive: one row per side per market.
+
+        Schema documented by sportsdataverse's build_line_odds.py:
+        market_type, abbr, lines, odds, opening_lines, opening_odds, book.
+        """
+        market_col = self._col(o.columns, exact=("market_type",))
+        side_col = self._col(o.columns, exact=("abbr",))
+        line_col = self._col(o.columns, exact=("lines",))
+        price_col = self._col(o.columns, exact=("odds",))
+        book_col = self._col(o.columns, exact=("book", "provider", "sportsbook"))
+        if not all((market_col, side_col, line_col, price_col, book_col)):
+            return games
+
+        o = o.copy()
+        o["_market"] = o[market_col].astype(str).str.lower().str.replace("-", "_", regex=False).str.replace(" ", "_", regex=False)
+        o["_book"] = o[book_col].astype(str)
+
+        by_gid = {str(k): v.copy() for k, v in o.groupby(o[id_col].astype(str), sort=False)}
+        attached = 0
+        for g in games:
+            rows = by_gid.get(str(g.game_id))
+            if rows is None or rows.empty:
+                continue
+
+            # Prefer a book carrying the most market types, then the replica book priority.
+            candidates = []
+            for book, br in rows.groupby("_book", dropna=False):
+                markets = set(br["_market"].tolist())
+                completeness = sum(any(token in m for m in markets) for token in ("spread", "total", "money"))
+                candidates.append((-completeness, self._book_rank(book), str(book)))
+            candidates.sort()
+            chosen_book = candidates[0][2]
+            br = rows[rows["_book"].astype(str) == chosen_book].copy()
+
+            home_key, away_key = _canon(g.home_team), _canon(g.away_team)
+            br["_side"] = br[side_col].map(_canon)
+
+            def side_value(market_token, team_key, value_col):
+                z = br[br["_market"].str.contains(market_token, na=False)]
+                exact = z[z["_side"] == team_key]
+                if len(exact):
+                    return _num(exact.iloc[-1][value_col])
+                # fallback for modest source naming differences
+                fuzzy = z[z["_side"].map(lambda x: x in team_key or team_key in x if x else False)]
+                return _num(fuzzy.iloc[-1][value_col]) if len(fuzzy) else None
+
+            g.home_ml = side_value("money", home_key, price_col)
+            g.away_ml = side_value("money", away_key, price_col)
+            g.home_spread = side_value("spread", home_key, line_col)
+            if g.home_spread is None:
+                away_spread = side_value("spread", away_key, line_col)
+                if away_spread is not None:
+                    g.home_spread = -away_spread
+
+            totals = br[br["_market"].str.contains("total", na=False)]
+            if len(totals):
+                over = totals[totals["_side"].str.contains("over", na=False)]
+                src = over.iloc[-1] if len(over) else totals.iloc[-1]
+                g.market_total = _num(src[line_col])
+
+            g.provider = chosen_book
+            if any(v is not None for v in (g.home_ml, g.away_ml, g.home_spread, g.market_total)):
+                attached += 1
+        self.odds_games_attached = attached
+        return games
+
     def _attach_odds(self, games: list[Game]) -> list[Game]:
         odds = self._load_odds()
         if odds.empty:
@@ -159,34 +252,26 @@ class SportsDataVerseClient:
             return games
         wanted = {str(g.game_id) for g in games}
         o = odds[odds[id_col].astype(str).isin(wanted)].copy()
+        self.odds_rows_matched = len(o)
         if o.empty:
             return games
 
+        # Current sportsdataverse archive is long-form. Parse it directly.
+        if {"market_type", "abbr", "lines", "odds", "book"}.issubset(o.columns):
+            return self._attach_long_odds(games, o, id_col)
+
+        # Wide-schema fallback for any future provider change.
         provider_col = self._col(o.columns, exact=("provider", "sportsbook", "book"), contains=(("provider",), ("book",)))
-        time_col = self._col(o.columns, exact=("updated", "updated_at", "timestamp", "created_at"), contains=(("update",), ("timestamp",), ("created", "at")))
         hml_col = self._col(o.columns, exact=("home_moneyline", "home_money_line", "home_ml"), contains=(("home", "money", "line"), ("home", "ml")))
         aml_col = self._col(o.columns, exact=("away_moneyline", "away_money_line", "away_ml"), contains=(("away", "money", "line"), ("away", "ml")))
         hsp_col = self._col(o.columns, exact=("home_spread", "spread"), contains=(("home", "spread"),))
         total_col = self._col(o.columns, exact=("over_under", "overunder", "total"), contains=(("over", "under"), ("total",)))
-
         if provider_col:
-            def book_rank(v):
-                s = str(v).lower()
-                for i, name in enumerate(self.BOOK_PRIORITY):
-                    if name in s:
-                        return i
-                return len(self.BOOK_PRIORITY)
-            o["_book_rank"] = o[provider_col].map(book_rank)
-        else:
-            o["_book_rank"] = 999
-        if time_col:
-            o["_ts"] = pd.to_datetime(o[time_col], utc=True, errors="coerce")
-        else:
-            o["_ts"] = pd.NaT
-        o = o.sort_values(["_book_rank", "_ts"], ascending=[True, False])
+            o["_book_rank"] = o[provider_col].map(self._book_rank)
+            o = o.sort_values("_book_rank")
         chosen = o.groupby(o[id_col].astype(str), sort=False).head(1)
         by_id = {str(r[id_col]): r for _, r in chosen.iterrows()}
-
+        attached = 0
         for g in games:
             r = by_id.get(str(g.game_id))
             if r is None:
@@ -197,4 +282,7 @@ class SportsDataVerseClient:
             g.market_total = _num(r.get(total_col)) if total_col else None
             if provider_col and not pd.isna(r.get(provider_col)):
                 g.provider = str(r.get(provider_col))
+            if any(v is not None for v in (g.home_ml, g.away_ml, g.home_spread, g.market_total)):
+                attached += 1
+        self.odds_games_attached = attached
         return games
