@@ -7,11 +7,12 @@ def _rows(n=360, profit=1.0, clv=.02):
     rows=[]
     for i in range(n):
         week=1+(i%15)
-        # Keep probabilities calibrated around realized home outcomes.
+        # 80% of outcomes are home wins, so a constant 0.80 home-win
+        # probability is genuinely calibrated at the sample level.
         home_win=(i%5)!=0
         rows.append({
             "season":2026,"week":week,"quant_signal":"BET","quant_market":"spread",
-            "profit":profit,"clv_proxy":clv,"calibrated_home_probability":.80 if home_win else .20,
+            "profit":profit,"clv_proxy":clv,"calibrated_home_probability":.80,
             "actual_margin_home":7 if home_win else -7,
         })
     return rows
