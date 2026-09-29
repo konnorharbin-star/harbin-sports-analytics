@@ -63,7 +63,7 @@ jobs:
           print(f"## Harbin CFB Platform v6 — {m['season']} Week {m['week']}")
           print(f"- Games: **{m['upcoming_games']}** · ML/Spread/Total: **{c['moneyline']}/{c['spread']}/{c['total']}**")
           print(f"- Margin / Total MAE: **{m['metrics'].get('margin_mae')} / {m['metrics'].get('total_mae')}** · Brier/ECE: **{m['metrics'].get('win_brier')} / {m['metrics'].get('win_ece')}**")
-          print(f"- Dynamic advanced coverage: **{a.get('dynamic_coverage',0):.1%}** ({a.get('dynamic_feature_count',0)} features) · Weather: **{x.get('weather_coverage',0):.1%}** · Travel: **{x.get('travel_coverage',0):.1%}**")
+          print(f"- Advanced feature count: **{a.get('feature_count',0)}** · Weather: **{x.get('weather_coverage',0):.1%}** · Travel: **{x.get('travel_coverage',0):.1%}**")
           print(f"- Multi-book: **{mi.get('multi_book_coverage',0):.1%}** · The Odds API configured: **{mi.get('odds_api_configured',False)}**")
           print(f"- Live readiness: **{mon.get('live_readiness_score','n/a')}/100** · Portfolio: **{str(port.get('mode','paper')).upper()}** · approved **{port.get('approved_units',0)}u**")
           PY
@@ -73,4 +73,10 @@ jobs:
           git config user.name "harbin-model-bot"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add outputs history reports docs
-          if ! git diff --cached --quiet; then git commit -m "model: automated CFB v6 refresh"; git push; else echo "No generated changes to commit."; fi
+          if ! git diff --cached --quiet; then
+            git commit -m "model: automated CFB v6 refresh"
+            git pull --rebase origin main
+            git push
+          else
+            echo "No generated changes to commit."
+          fi
