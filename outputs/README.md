@@ -2,9 +2,9 @@
 
 **Model:** v3.0.0  
 **Season / Week:** 2026 / 5  
-**Updated:** Sep 28, 2026 · 10:41 PM CT  
-**Market status:** LIVE MARKET DATA — all 56 games have market data from ESPN live (site.web.api.espn.com).  
-**Odds source:** ESPN live (site.web.api.espn.com)
+**Updated:** Sep 28, 2026 · 10:44 PM CT  
+**Market status:** LIVE MARKET DATA — all 56 games have market data from ESPN live (site.web.api.espn.com) + ESPN Core supplement.  
+**Odds source:** ESPN live (site.web.api.espn.com) + ESPN Core supplement
 
 ## Open these
 - [Interactive Cooper-style table](cfb_model_2026_week5.html)
