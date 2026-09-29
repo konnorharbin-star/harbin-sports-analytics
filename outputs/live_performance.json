@@ -1,0 +1,24 @@
+{
+  "graded_games": 0,
+  "graded_bets": 0,
+  "wins": 0,
+  "losses": 0,
+  "pushes": 0,
+  "units": 0.0,
+  "roi": null,
+  "win_rate": null,
+  "avg_clv_proxy": null,
+  "positive_clv_rate": null,
+  "clv_samples": 0,
+  "roi_ci_95": [
+    null,
+    null
+  ],
+  "max_drawdown": 0.0,
+  "by_market": {},
+  "by_signal": {},
+  "by_season": {},
+  "clv_method": "latest hourly market snapshot strictly before kickoff; moneyline uses no-vig probability movement when both sides are stored",
+  "verified_close_clv_samples": 0,
+  "status": "live/shadow evidence only; not historical backtest evidence"
+}
