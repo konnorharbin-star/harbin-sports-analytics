@@ -2,10 +2,10 @@
 
 **Model:** v4.0.0  
 **Season / Week:** 2026 / 5  
-**Updated:** Sep 29, 2026 · 12:03 AM CT  
+**Updated:** Sep 29, 2026 · 12:11 AM CT  
 **Market:** LIVE MARKET DATA — all 56 games have verified market data from ESPN live (site.web.api.espn.com) + ESPN Core supplement.  
 **Advanced feature live coverage:** 100%  
-**System health:** 80.8/100 *(readiness, not predicted profitability)*
+**System health:** 81.4/100 *(readiness, not predicted profitability)*
 
 ## Use these
 - [Interactive Cooper-style table](cfb_model_2026_week5.html)

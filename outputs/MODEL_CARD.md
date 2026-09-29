@@ -2,9 +2,9 @@
 
 ## Identity
 - Core model version: **4.0.0**
-- Repository revision: `f1119fd5e2a3b442270d21452bec8c5275d3f043`
+- Repository revision: `bff2b87f53a89618be99ab767d09693034c40f85`
 - Season / Week: **2026 / 5**
-- Generated: **Sep 29, 2026 · 12:03 AM CT**
+- Generated: **Sep 29, 2026 · 12:11 AM CT**
 
 ## Intended use
 Independent CFB score, margin, total and win-probability estimation; sportsbook comparison; paper/production betting research with explicit uncertainty and risk controls. The Cooper-style table is a presentation layer, not the proprietary formula of any third party.
@@ -15,20 +15,20 @@ Independent CFB score, margin, total and win-probability estimation; sportsbook 
 - Live odds: ESPN live (site.web.api.espn.com) + ESPN Core supplement
 - Advanced feature coverage: **100.0%**
 - Multi-book coverage: **0.0%**
-- Current context sources: SportsDataverse ESPN injuries, SportsDataverse cfb_team_info
+- Current context sources: SportsDataverse ESPN injuries, SportsDataverse cfb_team_info, Open-Meteo forecast, Open-Meteo geocoding / team venue metadata
 
 ## Validation
 - Method: nested chronological core/tune/calibration/evaluation + season walk-forward + zero-weight guard
-- Margin MAE: **12.68680249236582** vs baseline **13.720203965537888**
-- Total MAE: **12.711073278987822** vs baseline **12.778014944283827**
-- Win-probability Brier: **0.15640752116978443**
-- Calibration ECE: **0.06200292882087315**
+- Margin MAE: **12.87413430192907** vs baseline **13.720203965537888**
+- Total MAE: **12.841705909584391** vs baseline **12.778014944283827**
+- Win-probability Brier: **0.15521981084870634**
+- Calibration ECE: **0.02782638996349985**
 
 ## Operational controls
-- Live monitoring score: **82.3/100**
+- Live monitoring score: **84.7/100**
 - Portfolio mode: **PAPER**
 - Approved units: **0.0**
-- Proposed/paper units: **30.51**
+- Proposed/paper units: **29.33**
 
 ## Leakage controls
 Features are generated pregame from prior games only; model training is chronological; tuning/calibration/evaluation are separated; historical market evidence is walk-forward. Sportsbook prices are excluded from the score-generation model and are used only after fair scores/probabilities are produced.

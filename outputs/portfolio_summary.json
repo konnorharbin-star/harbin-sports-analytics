@@ -1,9 +1,9 @@
 {
   "mode": "paper",
-  "proposed_units": 30.51,
+  "proposed_units": 29.33,
   "approved_units": 0.0,
   "paper_allocated_units": 5.0,
-  "bets": 10,
+  "bets": 11,
   "limits": {
     "max_slate_units": 5.0,
     "max_game_units": 1.0,
