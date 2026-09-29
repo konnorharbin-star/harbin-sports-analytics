@@ -6,6 +6,7 @@ from pathlib import Path
 from harbin.backtest_runtime import run_backtest
 from harbin.policy import derive_production_policy, DEFAULT_POLICY
 from harbin.proof import build_evidence_report
+from harbin.evidence_v7 import validate_policy_against_backtest, build_upgrade_audit
 
 p=argparse.ArgumentParser(description="Leakage-safe historical CFB market backtest")
 p.add_argument("--start-season",type=int,default=2023)
@@ -21,7 +22,7 @@ bets,summary=run_backtest(a.start_season,a.end_season,a.history_start)
 if bets.empty:
     policy=json.loads(json.dumps(DEFAULT_POLICY))
     policy["deployment_mode"]="paper"
-    policy["source"]="conservative defaults; no matched historical betting sample"
+    policy["source"]="safe defaults; no matched historical betting sample"
     Path("reports/production_policy.json").write_text(json.dumps(policy,indent=2))
     evidence={
         "status":"UNPROVEN",
@@ -40,6 +41,9 @@ else:
     policy=derive_production_policy()
     evidence=build_evidence_report()
 
+policy_validation=validate_policy_against_backtest()
+audit=build_upgrade_audit()
+
 print(f"Backtest complete: {a.start_season}-{a.end_season}")
 print("Bets:",summary["overall"]["bets"])
 print("ROI:",summary["overall"]["roi"])
@@ -48,4 +52,7 @@ print("Average CLV:",summary["overall"]["avg_clv"])
 print("ROI 95% bootstrap CI:",summary["overall"]["roi_ci_95"])
 print("Evidence:",evidence["status"])
 print("Deployment mode:",policy["deployment_mode"])
-print("Open reports/backtest_summary.json, reports/evidence_report.json, and reports/production_policy.json.")
+print("Validated markets:",policy.get("validated_markets",[]))
+print("Blocked weeks:",(policy.get("regime_filters") or {}).get("blocked_weeks",[]))
+print("Policy holdout status:",policy_validation.get("status"))
+print("Open reports/backtest_summary.json, reports/evidence_report.json, reports/production_policy.json, reports/policy_validation.json, and reports/v7_audit.json.")
