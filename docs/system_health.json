@@ -1,0 +1,18 @@
+{
+  "system_health_score": 82.8,
+  "meaning": "engineering/model-readiness score only; not a profitability or win-rate guarantee",
+  "components": {
+    "pipeline_and_data": 100.0,
+    "market_coverage": 100.0,
+    "advanced_features": 100.0,
+    "model_validation": 100.0,
+    "probability_calibration": 87.6,
+    "market_intelligence": 65.0,
+    "current_context": 100.0,
+    "historical_betting_proof": 20.0
+  },
+  "betting_proof_status": "UNPROVEN",
+  "blockers": [
+    "historical betting sample not yet large enough to establish market edge"
+  ]
+}

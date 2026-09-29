@@ -1,19 +1,22 @@
 # Latest CFB model output
 
-**Model:** v3.0.0  
+**Model:** v4.0.0  
 **Season / Week:** 2026 / 5  
-**Updated:** Sep 28, 2026 · 11:05 PM CT  
-**Market status:** LIVE MARKET DATA — all 56 games have market data from ESPN live (site.web.api.espn.com) + ESPN Core supplement.  
-**Odds source:** ESPN live (site.web.api.espn.com) + ESPN Core supplement
+**Updated:** Sep 28, 2026 · 11:27 PM CT  
+**Market:** LIVE MARKET DATA — all 56 games have verified market data from ESPN live (site.web.api.espn.com) + ESPN Core supplement.  
+**Advanced feature live coverage:** 100%  
+**System health:** 82.8/100 *(readiness, not predicted profitability)*
 
-## Open these
+## Use these
 - [Interactive Cooper-style table](cfb_model_2026_week5.html)
-- [Full CSV](cfb_model_2026_week5.csv)
-- [Full JSON](cfb_model_2026_week5.json)
+- [Quant card](quant_card.html)
+- [Quant recommendations CSV](quant_recommendations.csv)
+- [Full model CSV](cfb_model_2026_week5.csv)
 - [Metadata / diagnostics](cfb_model_2026_week5_metadata.json)
-- [Page 1](cfb_model_2026_week5_page1.png)
-- [Page 2](cfb_model_2026_week5_page2.png)
-- [Page 3](cfb_model_2026_week5_page3.png)
-- [Page 4](cfb_model_2026_week5_page4.png)
+- [System health report](system_health.json)
+- [Cooper-style page 1](cfb_model_2026_week5_page1.png)
+- [Cooper-style page 2](cfb_model_2026_week5_page2.png)
+- [Cooper-style page 3](cfb_model_2026_week5_page3.png)
+- [Cooper-style page 4](cfb_model_2026_week5_page4.png)
 
-If a market says **NO LINE**, the model did not receive a verified sportsbook quote for that market. It does not invent one.
+The Cooper-style table is the reconstructed presentation layer. The Quant card is the independent EV/risk layer. Missing verified markets display **NO LINE**. Run the separate **CFB Backtest** workflow before treating signals as historically established.

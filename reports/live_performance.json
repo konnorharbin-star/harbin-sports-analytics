@@ -1,0 +1,9 @@
+{
+  "graded_games": 0,
+  "graded_bets": 0,
+  "units": 0.0,
+  "roi": null,
+  "win_rate": null,
+  "avg_clv_proxy": null,
+  "note": "CLV proxy uses the latest stored pre-kickoff snapshot, not a guaranteed official closing line."
+}
