@@ -1,94 +1,62 @@
 from __future__ import annotations
 
-import math
-import os
 import numpy as np
 import pandas as pd
 from sklearn.ensemble import HistGradientBoostingRegressor
 from sklearn.impute import SimpleImputer
+from sklearn.isotonic import IsotonicRegression
 from sklearn.linear_model import Ridge, LogisticRegression
-from sklearn.metrics import mean_absolute_error, mean_squared_error
+from sklearn.metrics import mean_absolute_error, mean_squared_error, brier_score_loss, log_loss
 from sklearn.pipeline import Pipeline
 from sklearn.preprocessing import StandardScaler
 
-from .calibration import brier_score, log_loss_score, expected_calibration_error
+NON_FEATURES={"game_id","season","week","date","away_id","home_id","away_team","home_team","target_margin_home","target_total"}
 
-NON_FEATURES={"game_id","season","week","date","away_team","home_team","target_margin_home","target_total"}
-
-
-def feature_columns(df):
-    return [c for c in df.columns if c not in NON_FEATURES and pd.api.types.is_numeric_dtype(df[c])]
-
-
-def _ridge(alpha=22.0):
-    return Pipeline([("impute",SimpleImputer(strategy="median")),("scale",StandardScaler()),("model",Ridge(alpha=alpha))])
-
-
-def _boost():
-    return Pipeline([("impute",SimpleImputer(strategy="median")),("model",HistGradientBoostingRegressor(max_depth=3,learning_rate=.04,max_iter=280,l2_regularization=9.0,min_samples_leaf=28,random_state=26))])
-
-
+def feature_columns(df): return [c for c in df.columns if c not in NON_FEATURES and pd.api.types.is_numeric_dtype(df[c])]
+def _ridge(alpha=22.): return Pipeline([("impute",SimpleImputer(strategy="median")),("scale",StandardScaler()),("model",Ridge(alpha=alpha))])
+def _boost(): return Pipeline([("impute",SimpleImputer(strategy="median")),("model",HistGradientBoostingRegressor(max_depth=3,learning_rate=.04,max_iter=280,l2_regularization=9,min_samples_leaf=28,random_state=26))])
 def _fit_pair(train,cols,target,baseline):
     y=train[target]-train[baseline]; r,b=_ridge(),_boost(); r.fit(train[cols],y); b.fit(train[cols],y); return r,b
-
-
-def _residual_predict(pair,X):
-    r,b=pair; return .62*r.predict(X)+.38*b.predict(X)
-
-
+def _residual(pair,X): r,b=pair; return .62*r.predict(X)+.38*b.predict(X)
 def choose_blend_weight(target,baseline,residual,grid=None):
-    target=np.asarray(target,dtype=float); baseline=np.asarray(baseline,dtype=float); residual=np.asarray(residual,dtype=float); grid=np.asarray(grid if grid is not None else np.linspace(0,1,21)); best_w=0.; best=float(mean_absolute_error(target,baseline))
+    target=np.asarray(target,float); baseline=np.asarray(baseline,float); residual=np.asarray(residual,float); grid=np.asarray(grid if grid is not None else np.linspace(0,1,21)); best=(0.,float(mean_absolute_error(target,baseline)))
     for w in grid:
         mae=float(mean_absolute_error(target,baseline+float(w)*residual))
-        if mae<best-1e-10: best_w,best=float(w),mae
-    return best_w,best
+        if mae<best[1]-1e-10: best=(float(w),mae)
+    return best
 
+def _ece(y,p,bins=10):
+    y=np.asarray(y,float); p=np.asarray(p,float); edges=np.linspace(0,1,bins+1); e=0.
+    for i in range(bins):
+        m=(p>=edges[i])&(p<(edges[i+1] if i<bins-1 else edges[i+1]+1e-12))
+        if m.any(): e+=m.mean()*abs(y[m].mean()-p[m].mean())
+    return float(e)
+def _fit_prob_calibrator(margins,y):
+    X=np.asarray(margins,float).reshape(-1,1); y=np.asarray(y,int); lr=LogisticRegression(C=.35,max_iter=2000).fit(X,y); raw=lr.predict_proba(X)[:,1]; iso=IsotonicRegression(out_of_bounds="clip").fit(raw,y); return lr,iso
+def _predict_prob(cal,margins):
+    lr,iso=cal; raw=lr.predict_proba(np.asarray(margins,float).reshape(-1,1))[:,1]; return np.clip(iso.predict(raw),.01,.99)
+def _walkfolds(d,cols,target,baseline):
+    rows=[]
+    for season in sorted(pd.to_numeric(d.season,errors="coerce").dropna().astype(int).unique()):
+        tr=d[d.season<season]; va=d[d.season==season]
+        if len(tr)<800 or len(va)<100: continue
+        pair=_fit_pair(tr,cols,target,baseline); res=_residual(pair,va[cols]); w,mae=choose_blend_weight(va[target],va[baseline],res); pred=va[baseline].to_numpy(float)+w*res
+        rows.append({"season":int(season),"rows":int(len(va)),"mae":float(mae),"rmse":float(mean_squared_error(va[target],pred)**.5),"baseline_mae":float(mean_absolute_error(va[target],va[baseline])),"weight":float(w)})
+    return rows
 
-def _inner_weight(train,cols,target,baseline):
-    if len(train)<500: return 0.0
-    cut=max(300,int(len(train)*.82)); cut=min(cut,len(train)-100); core,tune=train.iloc[:cut],train.iloc[cut:]; pair=_fit_pair(core,cols,target,baseline); residual=_residual_predict(pair,tune[cols]); w,_=choose_blend_weight(tune[target],tune[baseline],residual); return w
-
-
-def _season_walkforward(d,cols,target,baseline,max_folds=4):
-    folds=[]; seasons=sorted(int(x) for x in d.season.dropna().unique())
-    for season in seasons[-max_folds:]:
-        tr=d[d.season<season].copy(); va=d[d.season==season].copy()
-        if len(tr)<700 or len(va)<100: continue
-        w=_inner_weight(tr,cols,target,baseline); pair=_fit_pair(tr,cols,target,baseline); pred=va[baseline].to_numpy(dtype=float)+w*_residual_predict(pair,va[cols]); folds.append({"season":season,"rows":int(len(va)),"mae":float(mean_absolute_error(va[target],pred)),"rmse":float(mean_squared_error(va[target],pred)**.5),"baseline_mae":float(mean_absolute_error(va[target],va[baseline])),"weight":float(w)})
-    return folds
-
-
-def train_models(df: pd.DataFrame, diagnostics: bool | None = None):
-    """Nested chronological core -> tuning -> calibration -> untouched evaluation.
-
-    In the outer week-by-week historical backtest, HARBIN_FAST_BACKTEST=1 turns
-    off the extra season-fold diagnostic loop. That changes only reporting work,
-    not the fitted fair-score predictions for that historical week.
-    """
-    if diagnostics is None:
-        diagnostics = os.environ.get("HARBIN_FAST_BACKTEST", "0") != "1"
-    if len(df)<600: raise RuntimeError(f"Need at least 600 historical FBS games; got {len(df)}")
-    d=df.sort_values(["season","week","date","game_id"]).reset_index(drop=True); cols=feature_columns(d); n=len(d); i1=max(350,int(n*.70)); i2=max(i1+120,int(n*.82)); i3=max(i2+100,int(n*.91)); i3=min(i3,n-100); i2=min(i2,i3-80); i1=min(i1,i2-100); core,tune,cal,ev=d.iloc[:i1],d.iloc[i1:i2],d.iloc[i2:i3],d.iloc[i3:]
-    if min(len(tune),len(cal),len(ev))<80: raise RuntimeError("Not enough rows for nested chronological validation blocks")
-    metrics={}; sigma={}; weights={}; specs={"margin":("target_margin_home","baseline_margin"),"total":("target_total","baseline_total")}
+def train_models(df):
+    if len(df)<500: raise RuntimeError(f"Need at least 500 historical FBS games; got {len(df)}")
+    d=df.sort_values(["season","week","date","game_id"]).reset_index(drop=True); cols=feature_columns(d); n=len(d)
+    # nested chronological split: core fit / weight tune / probability calibration / untouched evaluation
+    a=int(n*.64); b=int(n*.75); c=int(n*.91); core,tune,calib,ev=d.iloc[:a],d.iloc[a:b],d.iloc[b:c],d.iloc[c:]
+    metrics={}; sig={}; weights={}; specs={"margin":("target_margin_home","baseline_margin"),"total":("target_total","baseline_total")}
     for name,(target,baseline) in specs.items():
-        pair_core=_fit_pair(core,cols,target,baseline); tune_res=_residual_predict(pair_core,tune[cols]); weight,_=choose_blend_weight(tune[target],tune[baseline],tune_res); weights[name]=weight; pre_eval=pd.concat([core,tune,cal],ignore_index=True); pair_pre=_fit_pair(pre_eval,cols,target,baseline); pred=ev[baseline].to_numpy(dtype=float)+weight*_residual_predict(pair_pre,ev[cols]); base=ev[baseline].to_numpy(dtype=float); metrics[f"{name}_baseline_mae"]=float(mean_absolute_error(ev[target],base)); metrics[f"{name}_mae"]=float(mean_absolute_error(ev[target],pred)); metrics[f"{name}_rmse"]=float(mean_squared_error(ev[target],pred)**.5); metrics[f"{name}_blend_weight"]=float(weight); metrics[f"{name}_eval_rows"]=int(len(ev)); sigma[name]=float(max(6.0,np.std(ev[target].to_numpy(dtype=float)-pred,ddof=1)))
-        if diagnostics:
-            folds=_season_walkforward(d,cols,target,baseline); metrics[f"{name}_walkforward_folds"]=folds
-            if folds:
-                metrics[f"{name}_walkforward_mae_mean"]=float(np.mean([x["mae"] for x in folds])); metrics[f"{name}_walkforward_mae_std"]=float(np.std([x["mae"] for x in folds])); metrics[f"{name}_walkforward_improved_folds"]=int(sum(x["mae"]<=x["baseline_mae"] for x in folds))
-    mw=weights["margin"]; score_train=pd.concat([core,tune],ignore_index=True); pair_cal=_fit_pair(score_train,cols,"target_margin_home","baseline_margin"); cal_margin=cal["baseline_margin"].to_numpy(dtype=float)+mw*_residual_predict(pair_cal,cal[cols]); y_cal=(cal["target_margin_home"].to_numpy(dtype=float)>0).astype(int); calibrator=None
-    if len(np.unique(y_cal))==2:
-        calibrator=Pipeline([("scale",StandardScaler()),("logit",LogisticRegression(C=.65,max_iter=1000))]); calibrator.fit(cal_margin.reshape(-1,1),y_cal); pre_ev=pd.concat([core,tune,cal],ignore_index=True); pair_ev=_fit_pair(pre_ev,cols,"target_margin_home","baseline_margin"); ev_margin=ev["baseline_margin"].to_numpy(dtype=float)+mw*_residual_predict(pair_ev,ev[cols]); p=calibrator.predict_proba(ev_margin.reshape(-1,1))[:,1]; y=(ev["target_margin_home"].to_numpy(dtype=float)>0).astype(int); metrics["win_brier"]=brier_score(y,p); metrics["win_log_loss"]=log_loss_score(y,p); metrics["win_ece"]=expected_calibration_error(y,p); metrics["win_calibration_eval_rows"]=int(len(y))
-    return {"columns":cols,"margin":_fit_pair(d,cols,"target_margin_home","baseline_margin"),"total":_fit_pair(d,cols,"target_total","baseline_total"),"metrics":metrics,"margin_sigma":sigma["margin"],"total_sigma":sigma["total"],"margin_weight":weights["margin"],"total_weight":weights["total"],"win_calibrator":calibrator,"validation":"nested chronological core/tune/calibration/evaluation + season walk-forward + zero-weight guard" if diagnostics else "nested chronological core/tune/calibration/evaluation + zero-weight guard inside outer week-by-week walk-forward"}
-
-
-def predict_models(bundle,frame: pd.DataFrame):
-    if frame.empty: return np.array([]),np.array([])
-    X=frame[bundle["columns"]]; margin=frame["baseline_margin"].to_numpy(dtype=float)+bundle["margin_weight"]*_residual_predict(bundle["margin"],X); total=frame["baseline_total"].to_numpy(dtype=float)+bundle["total_weight"]*_residual_predict(bundle["total"],X); return np.clip(margin,-48,48),np.clip(total,28,92)
-
-
-def predict_home_probabilities(bundle,margins):
-    m=np.asarray(margins,dtype=float); cal=bundle.get("win_calibrator")
-    if cal is not None: return cal.predict_proba(m.reshape(-1,1))[:,1]
-    sigma=max(6,float(bundle["margin_sigma"])); return np.array([.5*(1+math.erf(float(x)/(sigma*math.sqrt(2)))) for x in m],dtype=float)
+        pair=_fit_pair(core,cols,target,baseline); rr=_residual(pair,tune[cols]); w,_=choose_blend_weight(tune[target],tune[baseline],rr); weights[name]=w
+        pair2=_fit_pair(d.iloc[:b],cols,target,baseline); ep=ev[baseline].to_numpy(float)+w*_residual(pair2,ev[cols]); metrics[f"{name}_baseline_mae"]=float(mean_absolute_error(ev[target],ev[baseline])); metrics[f"{name}_mae"]=float(mean_absolute_error(ev[target],ep)); metrics[f"{name}_rmse"]=float(mean_squared_error(ev[target],ep)**.5); metrics[f"{name}_blend_weight"]=float(w); metrics[f"{name}_eval_rows"]=int(len(ev)); sig[name]=float(max(6,np.std(ev[target].to_numpy(float)-ep,ddof=1))); folds=_walkfolds(d,cols,target,baseline); metrics[f"{name}_walkforward_folds"]=folds; metrics[f"{name}_walkforward_mae_mean"]=float(np.mean([x["mae"] for x in folds])) if folds else None; metrics[f"{name}_walkforward_mae_std"]=float(np.std([x["mae"] for x in folds])) if folds else None; metrics[f"{name}_walkforward_improved_folds"]=int(sum(x["mae"]<=x["baseline_mae"] for x in folds))
+    # calibrate winner probabilities on a disjoint slice using pre-calibration score model
+    mp=_fit_pair(d.iloc[:b],cols,"target_margin_home","baseline_margin"); cm=calib.baseline_margin.to_numpy(float)+weights["margin"]*_residual(mp,calib[cols]); cal=_fit_prob_calibrator(cm,(calib.target_margin_home>0).astype(int)); em=ev.baseline_margin.to_numpy(float)+weights["margin"]*_residual(mp,ev[cols]); ep=_predict_prob(cal,em); ey=(ev.target_margin_home>0).astype(int).to_numpy(); metrics["win_brier"]=float(brier_score_loss(ey,ep)); metrics["win_log_loss"]=float(log_loss(ey,ep,labels=[0,1])); metrics["win_ece"]=_ece(ey,ep); metrics["win_calibration_eval_rows"]=int(len(ev))
+    return {"columns":cols,"margin":_fit_pair(d,cols,"target_margin_home","baseline_margin"),"total":_fit_pair(d,cols,"target_total","baseline_total"),"metrics":metrics,"margin_sigma":sig["margin"],"total_sigma":sig["total"],"margin_weight":weights["margin"],"total_weight":weights["total"],"probability_calibrator":cal,"validation":"nested chronological core/tune/calibration/evaluation + season walk-forward + zero-weight guard"}
+def predict_models(bundle,frame):
+    if frame.empty:return np.array([]),np.array([])
+    X=frame[bundle["columns"]]; m=frame.baseline_margin.to_numpy(float)+bundle["margin_weight"]*_residual(bundle["margin"],X); t=frame.baseline_total.to_numpy(float)+bundle["total_weight"]*_residual(bundle["total"],X); return np.clip(m,-48,48),np.clip(t,28,92)
+def predict_home_probabilities(bundle,margins): return _predict_prob(bundle["probability_calibrator"],margins)

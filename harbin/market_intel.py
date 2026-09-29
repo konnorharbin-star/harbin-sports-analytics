@@ -1,116 +1,75 @@
 from __future__ import annotations
-
-from concurrent.futures import ThreadPoolExecutor, as_completed
-import math
+from concurrent.futures import ThreadPoolExecutor,as_completed
+import math,os
 import numpy as np
 import requests
-
 from .advanced import canon_team
-from .data import ESPN_CORE_ODDS, parse_espn_odds
+from .data import ESPN_CORE_ODDS,parse_espn_odds
 from .market import no_vig
 
-
-def _best_american(values):
-    vals = [float(x) for x in values if x is not None and math.isfinite(float(x))]
-    return max(vals) if vals else np.nan
-
-
+def _best(vals):
+    x=[float(v) for v in vals if v is not None and math.isfinite(float(v))];return max(x) if x else np.nan
 class MarketIntelligence:
-    """Build a multi-book market view without feeding prices into the score model."""
-
-    def __init__(self, max_workers: int = 10):
-        self.max_workers = max_workers
-        self.session = requests.Session()
-        self.session.headers.update({
-            "User-Agent": "Mozilla/5.0 (compatible; HarbinSportsAnalytics/4.0)",
-            "Accept": "application/json,text/plain,*/*",
-        })
-        self.errors: list[str] = []
-
-    def _event_quotes(self, game):
-        url = ESPN_CORE_ODDS.format(game_id=game.game_id)
+    """Consensus/best-price layer. Score projections never consume sportsbook prices."""
+    def __init__(self,max_workers=10):
+        self.max_workers=max_workers;self.s=requests.Session();self.s.headers.update({"User-Agent":"HarbinSportsAnalytics/6.0","Accept":"application/json,text/plain,*/*"});self.errors=[];self.odds_key=os.getenv("THE_ODDS_API_KEY","").strip();self.odds_api_used=False;self.external={}
+    def _espn(self,g):
         try:
-            r = self.session.get(url, params={"limit": 100}, timeout=9)
-            r.raise_for_status()
-            items = r.json().get("items") or []
-            resolved = []
-            for item in items:
-                if isinstance(item, dict) and item.get("$ref"):
-                    rr = self.session.get(item["$ref"], timeout=7)
-                    rr.raise_for_status()
-                    item = rr.json()
-                if isinstance(item, dict):
-                    q = parse_espn_odds(item, {canon_team(game.home_team)}, {canon_team(game.away_team)})
-                    if any(q.get(k) is not None for k in ("home_ml","away_ml","home_spread","market_total")):
-                        resolved.append(q)
-            return str(game.game_id), resolved
-        except Exception as exc:
-            return str(game.game_id), exc
-
+            r=self.s.get(ESPN_CORE_ODDS.format(game_id=g.game_id),params={"limit":100},timeout=9);r.raise_for_status();items=r.json().get("items") or [];out=[]
+            for it in items:
+                if isinstance(it,dict) and it.get("$ref"):
+                    rr=self.s.get(it["$ref"],timeout=7);rr.raise_for_status();it=rr.json()
+                if isinstance(it,dict):
+                    q=parse_espn_odds(it,{canon_team(g.home_team)},{canon_team(g.away_team)})
+                    if any(q.get(k) is not None for k in ("home_ml","away_ml","home_spread","market_total")):out.append(q)
+            return str(g.game_id),out
+        except Exception as e:return str(g.game_id),e
+    def _load_odds_api(self):
+        if not self.odds_key:return
+        try:
+            r=self.s.get("https://api.the-odds-api.com/v4/sports/americanfootball_ncaaf/odds",params={"apiKey":self.odds_key,"regions":"us,us2","markets":"h2h,spreads,totals","oddsFormat":"american","dateFormat":"iso"},timeout=20);r.raise_for_status();data=r.json();self.odds_api_used=True
+            for ev in data:
+                key=(canon_team(ev.get("away_team")),canon_team(ev.get("home_team")));qs=[]
+                for book in ev.get("bookmakers") or []:
+                    q={"provider":book.get("title") or book.get("key"),"home_ml":None,"away_ml":None,"home_spread":None,"market_total":None}
+                    for m in book.get("markets") or []:
+                        mk=m.get("key");outs=m.get("outcomes") or []
+                        if mk=="h2h":
+                            for x in outs:
+                                if canon_team(x.get("name"))==key[1]:q["home_ml"]=x.get("price")
+                                elif canon_team(x.get("name"))==key[0]:q["away_ml"]=x.get("price")
+                        elif mk=="spreads":
+                            for x in outs:
+                                if canon_team(x.get("name"))==key[1]:q["home_spread"]=x.get("point")
+                        elif mk=="totals":
+                            over=next((x for x in outs if str(x.get("name")).lower()=="over"),None);q["market_total"]=over.get("point") if over else None
+                    if any(q[k] is not None for k in ("home_ml","away_ml","home_spread","market_total")):qs.append(q)
+                self.external[key]=qs
+        except Exception as e:self.errors.append(f"The Odds API: {type(e).__name__}: {e}")
     @staticmethod
-    def _summary(game, quotes):
-        base = {
-            "provider": game.provider or "primary",
-            "home_ml": game.home_ml,
-            "away_ml": game.away_ml,
-            "home_spread": game.home_spread,
-            "market_total": game.market_total,
-        }
-        # One sportsbook gets one vote in the consensus. The primary live quote
-        # can also be returned by ESPN Core, so merge by provider instead of
-        # appending it twice and accidentally overweighting that book.
-        all_quotes = [dict(q) for q in (quotes or [])]
-        if any(base[k] is not None for k in ("home_ml","away_ml","home_spread","market_total")):
-            bp = str(base.get("provider") or "primary").strip().lower()
-            existing = next(
-                (q for q in all_quotes if str(q.get("provider") or "unknown").strip().lower() == bp),
-                None,
-            )
-            if existing is None:
-                all_quotes.append(dict(base))
-            else:
-                for k in ("home_ml","away_ml","home_spread","market_total"):
-                    if existing.get(k) is None and base.get(k) is not None:
-                        existing[k] = base[k]
-
-        providers=[]
-        for q in all_quotes:
-            p=str(q.get("provider") or "unknown")
-            if p not in providers: providers.append(p)
-        spreads=[float(q["home_spread"]) for q in all_quotes if q.get("home_spread") is not None]
-        totals=[float(q["market_total"]) for q in all_quotes if q.get("market_total") is not None]
-        home_ml=[float(q["home_ml"]) for q in all_quotes if q.get("home_ml") is not None]
-        away_ml=[float(q["away_ml"]) for q in all_quotes if q.get("away_ml") is not None]
-        novig_h=[]
-        for q in all_quotes:
+    def _summary(g,quotes):
+        base={"provider":g.provider or "primary","home_ml":g.home_ml,"away_ml":g.away_ml,"home_spread":g.home_spread,"market_total":g.market_total};qs=[dict(x) for x in quotes or []];bp=str(base["provider"]).lower();ex=next((q for q in qs if str(q.get("provider") or "").lower()==bp),None)
+        if ex is None:qs.append(base)
+        else:
+            for k in ("home_ml","away_ml","home_spread","market_total"):
+                if ex.get(k) is None:ex[k]=base.get(k)
+        unique={}
+        for q in qs:unique[str(q.get("provider") or "unknown").lower()]=q
+        qs=list(unique.values());providers=[str(q.get("provider") or "unknown") for q in qs];sp=[float(q["home_spread"]) for q in qs if q.get("home_spread") is not None];to=[float(q["market_total"]) for q in qs if q.get("market_total") is not None];hm=[float(q["home_ml"]) for q in qs if q.get("home_ml") is not None];am=[float(q["away_ml"]) for q in qs if q.get("away_ml") is not None];ph=[]
+        for q in qs:
             if q.get("home_ml") is not None and q.get("away_ml") is not None:
-                try:
-                    _,ph=no_vig(q["away_ml"],q["home_ml"]); novig_h.append(float(ph))
-                except Exception: pass
-        return {
-            "market_book_count":len(providers),"market_books":" | ".join(providers[:12]),
-            "consensus_home_spread":float(np.median(spreads)) if spreads else np.nan,
-            "consensus_total":float(np.median(totals)) if totals else np.nan,
-            "spread_market_std":float(np.std(spreads)) if len(spreads)>1 else 0.0 if spreads else np.nan,
-            "total_market_std":float(np.std(totals)) if len(totals)>1 else 0.0 if totals else np.nan,
-            "best_home_ml":_best_american(home_ml),"best_away_ml":_best_american(away_ml),
-            "consensus_home_novig_probability":float(np.mean(novig_h)) if novig_h else np.nan,
-            "market_consensus_quality":min(1.0,len(providers)/4.0),
-        }
-
-    def attach(self, games, pred):
-        if pred.empty: return pred.copy(), {"coverage":0.0,"multi_book_coverage":0.0,"errors":[]}
-        by_id={str(g.game_id):g for g in games}; quotes={}
+                try:_,x=no_vig(q["away_ml"],q["home_ml"]);ph.append(float(x))
+                except Exception:pass
+        return {"market_book_count":len(providers),"market_books":" | ".join(providers[:15]),"consensus_home_spread":float(np.median(sp)) if sp else np.nan,"consensus_total":float(np.median(to)) if to else np.nan,"spread_market_std":float(np.std(sp)) if len(sp)>1 else 0. if sp else np.nan,"total_market_std":float(np.std(to)) if len(to)>1 else 0. if to else np.nan,"best_home_ml":_best(hm),"best_away_ml":_best(am),"consensus_home_novig_probability":float(np.mean(ph)) if ph else np.nan,"market_consensus_quality":min(1.,len(providers)/4.)}
+    def attach(self,games,pred):
+        if pred.empty:return pred.copy(),{"coverage":0.,"multi_book_coverage":0.,"errors":[]}
+        self._load_odds_api();by={str(g.game_id):g for g in games};quotes={}
         with ThreadPoolExecutor(max_workers=self.max_workers) as ex:
-            futs=[ex.submit(self._event_quotes,g) for g in games]
-            for fut in as_completed(futs):
-                gid,result=fut.result()
-                if isinstance(result,Exception):
-                    self.errors.append(f"{gid}: {type(result).__name__}: {result}"); quotes[gid]=[]
-                else: quotes[gid]=result
-        out=pred.copy(); covered=multi=0
-        for i,row in out.iterrows():
-            gid=str(row.game_id); s=self._summary(by_id[gid],quotes.get(gid,[]))
-            for k,v in s.items(): out.at[i,k]=v
-            covered += int(s["market_book_count"]>0); multi += int(s["market_book_count"]>=2)
-        return out,{"coverage":covered/len(out),"multi_book_coverage":multi/len(out),"errors":self.errors[-20:]}
+            fs=[ex.submit(self._espn,g) for g in games]
+            for f in as_completed(fs):gid,x=f.result();quotes[gid]=[] if isinstance(x,Exception) else x
+        out=pred.copy();covered=multi=0
+        for i,r in out.iterrows():
+            g=by[str(r.game_id)];q=list(quotes.get(str(r.game_id),[]));q.extend(self.external.get((canon_team(g.away_team),canon_team(g.home_team)),[]));z=self._summary(g,q)
+            for k,v in z.items():out.at[i,k]=v
+            covered+=int(z["market_book_count"]>0);multi+=int(z["market_book_count"]>=2)
+        return out,{"coverage":covered/len(out),"multi_book_coverage":multi/len(out),"odds_api_configured":bool(self.odds_key),"odds_api_used":self.odds_api_used,"errors":self.errors[-20:]}
