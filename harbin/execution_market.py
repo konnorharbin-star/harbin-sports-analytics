@@ -4,13 +4,15 @@ import json
 
 from .market_intel import MarketIntelligence as _BaseMarketIntelligence
 
+_ORIGINAL_SUMMARY = _BaseMarketIntelligence._summary
+
 
 class MarketIntelligence(_BaseMarketIntelligence):
     """Stage 7 execution wrapper that exposes the timestamp of every shopped quote."""
 
     @staticmethod
     def _summary(g, quotes):
-        out = _BaseMarketIntelligence._summary(g, quotes)
+        out = _ORIGINAL_SUMMARY(g, quotes)
         try:
             audit = json.loads(out.get("market_quotes_json") or "[]")
         except Exception:
@@ -29,3 +31,8 @@ class MarketIntelligence(_BaseMarketIntelligence):
             quote = by_provider.get(book) or {}
             out[target] = quote.get("last_update")
         return out
+
+
+def install_execution_timestamp_patch():
+    """Patch the already-imported market class in place without changing its API."""
+    _BaseMarketIntelligence._summary = staticmethod(MarketIntelligence._summary)
