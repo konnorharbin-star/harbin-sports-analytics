@@ -12,9 +12,42 @@ from sklearn.pipeline import Pipeline
 from sklearn.preprocessing import StandardScaler
 
 NON_FEATURES={"game_id","season","week","date","away_id","home_id","away_team","home_team","target_margin_home","target_total"}
+LEAKAGE_FRAGMENTS=(
+    "target_","market_","closing_","close_","moneyline","_odds","odds_",
+    "quant_","stake_","clv","final_","postgame_","result_",
+)
+
+
+def feature_leakage_columns(columns):
+    bad=[]
+    for c in columns:
+        lc=str(c).lower()
+        if c in NON_FEATURES or any(x in lc for x in LEAKAGE_FRAGMENTS):
+            bad.append(c)
+    return bad
+
 
 def feature_columns(df):
-    return [c for c in df.columns if c not in NON_FEATURES and pd.api.types.is_numeric_dtype(df[c])]
+    """Select only stable, numeric, pregame-safe model inputs.
+
+    The pipeline currently enriches the training frame before market/context attachment,
+    but this guard is deliberately redundant so a future refactor cannot accidentally
+    train on sportsbook prices, closing data, graded results, CLV, or bet outputs.
+    """
+    cols=[]
+    for c in df.columns:
+        if c in NON_FEATURES or not pd.api.types.is_numeric_dtype(df[c]):
+            continue
+        if any(x in str(c).lower() for x in LEAKAGE_FRAGMENTS):
+            continue
+        s=pd.to_numeric(df[c],errors="coerce")
+        if s.notna().sum()<max(25,int(len(df)*.02)):
+            continue
+        if s.nunique(dropna=True)<2:
+            continue
+        cols.append(c)
+    return cols
+
 
 def _ridge(alpha=22.):
     return Pipeline([("impute",SimpleImputer(strategy="median")),("scale",StandardScaler()),("model",Ridge(alpha=alpha))])
@@ -42,12 +75,7 @@ def choose_blend_weight(target,baseline,residual,grid=None):
     return best
 
 def release_weight_guard(tuned_weight, baseline_mae, tuned_mae, folds, min_fold_win_rate=.50):
-    """Fail closed when a learned residual does not survive independent release checks.
-
-    A zero weight is a legitimate production model: it means the independent baseline
-    beat the learned correction.  Season folds must have their weight tuned strictly
-    inside the training period; the held-out season is never used to select its weight.
-    """
+    """Fail closed when a learned residual does not survive independent release checks."""
     w=float(tuned_weight)
     if w<=1e-12:
         return 0.0, True, "tuning selected the independent baseline"
@@ -81,12 +109,7 @@ def _predict_prob(cal,margins):
     return np.clip(iso.predict(raw),.01,.99)
 
 def _walkfolds(d,cols,target,baseline):
-    """Leak-free expanding-season validation.
-
-    Each fold tunes the residual weight on a chronological tail of *prior* seasons,
-    then evaluates the next season once. The evaluation season is never used to fit
-    either the regressors or its blend weight.
-    """
+    """Leak-free expanding-season validation."""
     rows=[]
     seasons=sorted(pd.to_numeric(d.season,errors="coerce").dropna().astype(int).unique())
     for season in seasons:
@@ -99,8 +122,6 @@ def _walkfolds(d,cols,target,baseline):
         pair=_fit_pair(core,cols,target,baseline)
         tune_res=_residual(pair,tune[cols])
         w,_=choose_blend_weight(tune[target],tune[baseline],tune_res)
-        # Deliberately keep the pair fitted before the tuning tail. This makes the
-        # season score fully out of sample without a second fit using tune outcomes.
         pred=va[baseline].to_numpy(float)+w*_residual(pair,va[cols])
         rows.append({
             "season":int(season),"rows":int(len(va)),
@@ -115,9 +136,13 @@ def train_models(df):
     if len(df)<500:
         raise RuntimeError(f"Need at least 500 historical FBS games; got {len(df)}")
     d=df.sort_values(["season","week","date","game_id"]).reset_index(drop=True)
-    cols=feature_columns(d); n=len(d)
-    # Four chronological roles: core fit / blend tune / probability calibration / release holdout.
-    # The final slice is not used to tune the candidate weight. It is a fail-closed release gate.
+    cols=feature_columns(d)
+    leaked=feature_leakage_columns(cols)
+    if leaked:
+        raise RuntimeError(f"Pregame feature contract violation: {', '.join(map(str,leaked))}")
+    if len(cols)<8:
+        raise RuntimeError(f"Feature stack is unexpectedly thin; only {len(cols)} usable numeric pregame features")
+    n=len(d)
     a=max(300,int(n*.64)); b=max(a+75,int(n*.75)); c=max(b+75,int(n*.91)); c=min(c,n-75)
     core,tune,calib,release=d.iloc[:a],d.iloc[a:b],d.iloc[b:c],d.iloc[c:]
     metrics={}; sig={}; tuned_weights={}; release_weights={}; release_reasons={}
@@ -146,7 +171,7 @@ def train_models(df):
         metrics[f"{name}_rmse"]=float(mean_squared_error(release[target],deployed_pred)**.5)
         metrics[f"{name}_tuned_weight"]=float(tuned_w)
         metrics[f"{name}_release_weight"]=float(release_w)
-        metrics[f"{name}_blend_weight"]=float(release_w)  # backwards-compatible deployed weight
+        metrics[f"{name}_blend_weight"]=float(release_w)
         metrics[f"{name}_release_guard_passed"]=bool(guard_passed)
         metrics[f"{name}_release_guard_reason"]=guard_reason
         metrics[f"{name}_eval_rows"]=int(len(release))
@@ -157,8 +182,6 @@ def train_models(df):
         metrics[f"{name}_walkforward_fold_count"]=int(len(folds))
         sig[name]=float(max(6,np.std(release[target].to_numpy(float)-deployed_pred,ddof=1)))
 
-    # Probability calibration is evaluated honestly with the candidate margin weight,
-    # before the release gate is allowed to alter production behavior.
     margin_pre=pre_pairs["margin"]
     cm=calib.baseline_margin.to_numpy(float)+tuned_weights["margin"]*_residual(margin_pre,calib[cols])
     eval_cal=_fit_prob_calibrator(cm,(calib.target_margin_home>0).astype(int))
@@ -169,10 +192,9 @@ def train_models(df):
     metrics["win_ece"]=_ece(ey,ep)
     metrics["win_calibration_eval_rows"]=int(len(release))
     metrics["win_calibration_weight"]=float(tuned_weights["margin"])
+    metrics["feature_count"]=int(len(cols))
+    metrics["feature_columns"]=list(cols)
 
-    # If the margin release gate ever falls back, refit only the production calibrator
-    # on the dedicated calibration slice using the deployed weight. Evaluation metrics
-    # above remain tied to the untouched candidate path and are not overwritten.
     prod_cm=calib.baseline_margin.to_numpy(float)+release_weights["margin"]*_residual(margin_pre,calib[cols])
     prod_cal=_fit_prob_calibrator(prod_cm,(calib.target_margin_home>0).astype(int))
 
@@ -190,6 +212,9 @@ def train_models(df):
 
 def predict_models(bundle,frame):
     if frame.empty: return np.array([]),np.array([])
+    missing=[c for c in bundle["columns"] if c not in frame.columns]
+    if missing:
+        raise RuntimeError(f"Live feature parity failure; missing: {', '.join(map(str,missing[:12]))}")
     X=frame[bundle["columns"]]
     m=frame.baseline_margin.to_numpy(float)+bundle["margin_weight"]*_residual(bundle["margin"],X)
     t=frame.baseline_total.to_numpy(float)+bundle["total_weight"]*_residual(bundle["total"],X)
