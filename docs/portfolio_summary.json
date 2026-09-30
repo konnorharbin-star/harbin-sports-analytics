@@ -1,13 +1,13 @@
 {
   "mode": "paper",
   "policy_mode": "paper",
-  "release_state": "RESEARCH",
+  "release_state": "PAPER",
   "production_eligible": false,
-  "proposed_units": 6.34,
+  "proposed_units": 8.17,
   "approved_units": 0.0,
   "paper_allocated_units": 5.0,
   "paper_or_shadow_allocated_units": 5.0,
-  "bets": 29,
+  "bets": 22,
   "limits": {
     "max_slate_units": 5.0,
     "max_game_units": 1.0,
@@ -18,21 +18,19 @@
     "kickoff_window_hours": 3
   },
   "allocated_by_market": {
-    "moneyline": 1.21,
-    "spread": 2.44,
-    "total": 1.35
+    "moneyline": 1.67,
+    "spread": 2.5,
+    "total": 0.83
   },
   "allocated_by_kickoff_window": {
-    "2026-10-03 15:00:00+00:00": 1.95,
-    "2026-10-03 21:00:00+00:00": 1.04,
-    "2026-10-04 00:00:00+00:00": 0.32,
-    "2026-10-02 00:00:00+00:00": 0.28,
+    "2026-10-03 15:00:00+00:00": 2.0,
+    "2026-10-03 21:00:00+00:00": 1.07,
+    "2026-10-02 00:00:00+00:00": 0.33,
+    "2026-10-04 00:00:00+00:00": 0.28,
     "2026-10-03 18:00:00+00:00": 1.22,
-    "2026-10-02 21:00:00+00:00": 0.19
+    "2026-10-02 21:00:00+00:00": 0.1
   },
   "release_blockers": [
-    "live_monitoring: live readiness >= 90/100",
-    "multi_book_consensus: >= 75% of games covered by 2+ books",
     "historical_market_edge: >=1000 bets, ROI 95% CI lower bound >0, positive CLV, >=2 positive markets and >=2 positive seasons",
     "live_shadow_evidence: >=300 graded live bets, non-negative ROI and positive pre-kickoff CLV proxy"
   ]

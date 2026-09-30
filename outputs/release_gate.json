@@ -1,7 +1,7 @@
 {
-  "release_state": "RESEARCH",
+  "release_state": "PAPER",
   "production_eligible": false,
-  "engineering_ready": false,
+  "engineering_ready": true,
   "historical_edge_ready": false,
   "live_evidence_ready": false,
   "checks": [
@@ -57,28 +57,28 @@
     {
       "name": "probability_brier",
       "passed": true,
-      "value": 0.15710434541934895,
+      "value": 0.1571043454193505,
       "requirement": "Brier <= 0.18 on chronological release holdout",
       "detail": ""
     },
     {
       "name": "probability_ece",
       "passed": true,
-      "value": 0.038366813107869206,
+      "value": 0.038366813107871066,
       "requirement": "ECE <= 0.05 on chronological release holdout",
       "detail": ""
     },
     {
       "name": "live_monitoring",
-      "passed": false,
-      "value": 86.9,
+      "passed": true,
+      "value": 96.2,
       "requirement": "live readiness >= 90/100",
       "detail": ""
     },
     {
       "name": "multi_book_consensus",
-      "passed": false,
-      "value": 0.0,
+      "passed": true,
+      "value": 0.9821,
       "requirement": ">= 75% of games covered by 2+ books",
       "detail": "Configure THE_ODDS_API_KEY if ESPN exposes only one provider."
     },
@@ -111,13 +111,10 @@
     }
   ],
   "blockers": [
-    "live_monitoring: live readiness >= 90/100",
-    "multi_book_consensus: >= 75% of games covered by 2+ books",
     "historical_market_edge: >=1000 bets, ROI 95% CI lower bound >0, positive CLV, >=2 positive markets and >=2 positive seasons",
     "live_shadow_evidence: >=300 graded live bets, non-negative ROI and positive pre-kickoff CLV proxy"
   ],
   "next_requirements": [
-    "Add a verified multi-book source; THE_ODDS_API_KEY is already supported as a GitHub secret.",
     "Keep paper testing until the walk-forward ROI confidence interval clears zero with positive CLV across markets and seasons.",
     "Accumulate graded live/shadow bets and pre-kickoff line snapshots; do not infer live profitability from historical backtests."
   ],

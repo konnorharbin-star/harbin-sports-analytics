@@ -9,8 +9,8 @@
   "validation": "nested chronological core/tune/calibration/release holdout + leak-free expanding-season walk-forward + fail-closed baseline fallback",
   "metrics": {
     "margin_baseline_mae": 13.720203965537888,
-    "margin_tuned_model_mae": 13.042876228378635,
-    "margin_mae": 13.042876228378635,
+    "margin_tuned_model_mae": 13.042876228378638,
+    "margin_mae": 13.042876228378638,
     "margin_rmse": 16.03948596829363,
     "margin_tuned_weight": 0.45,
     "margin_release_weight": 0.45,
@@ -32,7 +32,7 @@
         "season": 2024,
         "rows": 798,
         "mae": 12.979333992634565,
-        "rmse": 16.33450430864589,
+        "rmse": 16.334504308645894,
         "baseline_mae": 13.22842366531436,
         "weight": 0.45,
         "weight_tuned_on": "prior-season chronological tail"
@@ -49,15 +49,15 @@
       {
         "season": 2026,
         "rows": 215,
-        "mae": 13.260937690453355,
-        "rmse": 16.414832110941944,
+        "mae": 13.260937690453348,
+        "rmse": 16.414832110941934,
         "baseline_mae": 14.439117971947091,
         "weight": 0.65,
         "weight_tuned_on": "prior-season chronological tail"
       }
     ],
-    "margin_walkforward_mae_mean": 12.932169862514877,
-    "margin_walkforward_mae_std": 0.23041732693847394,
+    "margin_walkforward_mae_mean": 12.932169862514876,
+    "margin_walkforward_mae_std": 0.23041732693847142,
     "margin_walkforward_improved_folds": 4,
     "margin_walkforward_fold_count": 4,
     "total_baseline_mae": 12.778014944283827,
@@ -92,7 +92,7 @@
       {
         "season": 2025,
         "rows": 808,
-        "mae": 12.907099210390616,
+        "mae": 12.907099210390614,
         "rmse": 15.934697172126919,
         "baseline_mae": 12.910666790164145,
         "weight": 0.30000000000000004,
@@ -109,12 +109,12 @@
       }
     ],
     "total_walkforward_mae_mean": 12.865129997401592,
-    "total_walkforward_mae_std": 0.30962476525918825,
+    "total_walkforward_mae_std": 0.3096247652591882,
     "total_walkforward_improved_folds": 1,
     "total_walkforward_fold_count": 4,
-    "win_brier": 0.15710434541934895,
-    "win_log_loss": 0.48556055523494307,
-    "win_ece": 0.038366813107869206,
+    "win_brier": 0.1571043454193505,
+    "win_log_loss": 0.48556055523494657,
+    "win_ece": 0.038366813107871066,
     "win_calibration_eval_rows": 368,
     "win_calibration_weight": 0.45
   },
@@ -122,10 +122,10 @@
     "margin_blend_weight": 0.45,
     "total_blend_weight": 0.0
   },
-  "calibrated_margin_sigma": 15.912778801724679,
+  "calibrated_margin_sigma": 15.91277880172468,
   "calibrated_total_sigma": 15.696990609626486,
-  "generated_at": "2026-09-30T00:31:48.988626+00:00",
-  "updated_at_ct": "Sep 29, 2026 \u00b7 7:31 PM CT",
+  "generated_at": "2026-09-30T00:38:05.720345+00:00",
+  "updated_at_ct": "Sep 29, 2026 \u00b7 7:38 PM CT",
   "schedule_source": "sportsdataverse/cfbfastR-data",
   "odds_source": "ESPN live (site.web.api.espn.com) + ESPN Core supplement",
   "odds_errors": [],
@@ -158,9 +158,12 @@
   },
   "market_intelligence": {
     "coverage": 1.0,
-    "multi_book_coverage": 0.0,
+    "multi_book_coverage": 0.9821428571428571,
     "odds_api_configured": false,
     "odds_api_used": false,
+    "action_network_enabled": true,
+    "action_network_used": true,
+    "action_network_match_coverage": 0.9821428571428571,
     "errors": [],
     "best_line_fields": [
       "best_home_ml",
@@ -192,9 +195,9 @@
     "source": "prediction_snapshot_fallback"
   },
   "quant_picks": {
-    "strong": 23,
-    "bet": 13,
-    "lean": 3
+    "strong": 30,
+    "bet": 15,
+    "lean": 0
   },
   "snapshot_appended": true,
   "live_performance": {
@@ -222,7 +225,7 @@
     "status": "live/shadow evidence only; not historical backtest evidence"
   },
   "health": {
-    "system_health_score": 90.6,
+    "system_health_score": 93.7,
     "meaning": "engineering/model-readiness score only; not a profitability or win-rate guarantee",
     "components": {
       "pipeline_and_data": 100.0,
@@ -230,7 +233,7 @@
       "advanced_features": 100.0,
       "model_validation": 94.8,
       "probability_calibration": 92.3,
-      "market_intelligence": 65.0,
+      "market_intelligence": 99.4,
       "current_context": 100.0,
       "live_monitoring": 86.9,
       "historical_betting_proof": 80
@@ -256,9 +259,9 @@
     "rows": 56
   },
   "release_gate": {
-    "release_state": "RESEARCH",
+    "release_state": "PAPER",
     "production_eligible": false,
-    "engineering_ready": false,
+    "engineering_ready": true,
     "historical_edge_ready": false,
     "live_evidence_ready": false,
     "checks": [
@@ -314,28 +317,28 @@
       {
         "name": "probability_brier",
         "passed": true,
-        "value": 0.15710434541934895,
+        "value": 0.1571043454193505,
         "requirement": "Brier <= 0.18 on chronological release holdout",
         "detail": ""
       },
       {
         "name": "probability_ece",
         "passed": true,
-        "value": 0.038366813107869206,
+        "value": 0.038366813107871066,
         "requirement": "ECE <= 0.05 on chronological release holdout",
         "detail": ""
       },
       {
         "name": "live_monitoring",
-        "passed": false,
-        "value": 86.9,
+        "passed": true,
+        "value": 96.2,
         "requirement": "live readiness >= 90/100",
         "detail": ""
       },
       {
         "name": "multi_book_consensus",
-        "passed": false,
-        "value": 0.0,
+        "passed": true,
+        "value": 0.9821,
         "requirement": ">= 75% of games covered by 2+ books",
         "detail": "Configure THE_ODDS_API_KEY if ESPN exposes only one provider."
       },
@@ -368,48 +371,43 @@
       }
     ],
     "blockers": [
-      "live_monitoring: live readiness >= 90/100",
-      "multi_book_consensus: >= 75% of games covered by 2+ books",
       "historical_market_edge: >=1000 bets, ROI 95% CI lower bound >0, positive CLV, >=2 positive markets and >=2 positive seasons",
       "live_shadow_evidence: >=300 graded live bets, non-negative ROI and positive pre-kickoff CLV proxy"
     ],
     "next_requirements": [
-      "Add a verified multi-book source; THE_ODDS_API_KEY is already supported as a GitHub secret.",
       "Keep paper testing until the walk-forward ROI confidence interval clears zero with positive CLV across markets and seasons.",
       "Accumulate graded live/shadow bets and pre-kickoff line snapshots; do not infer live profitability from historical backtests."
     ],
     "meaning": "Hard deployment gate. PRODUCTION requires engineering quality, dynamic advanced data, multi-book pricing, robust historical edge and independent live evidence; it is not a guarantee of future profit."
   },
   "live_monitoring": {
-    "live_readiness_score": 86.9,
+    "live_readiness_score": 96.2,
     "scores": {
       "market_coverage": 100.0,
       "advanced_coverage": 100.0,
-      "multi_book": 0.0,
+      "multi_book": 98.21428571428571,
       "context": 100.0,
-      "calibration": 90.40829672303269,
+      "calibration": 90.40829672303224,
       "freshness": 100.0,
       "drift_margin": 94.8,
       "drift_total": 90.0,
       "drift_probability": 97.2,
       "distribution_stability": 94.0,
-      "output_completeness": 84.93303571428572
+      "output_completeness": 89.28571428571428
     },
-    "alerts": [
-      "multi-book consensus is limited; configure THE_ODDS_API_KEY for free multi-book supplementation"
-    ],
+    "alerts": [],
     "meaning": "operational/model-monitoring score; not a profitability guarantee"
   },
   "portfolio": {
     "mode": "paper",
     "policy_mode": "paper",
-    "release_state": "RESEARCH",
+    "release_state": "PAPER",
     "production_eligible": false,
-    "proposed_units": 6.34,
+    "proposed_units": 8.17,
     "approved_units": 0.0,
     "paper_allocated_units": 5.0,
     "paper_or_shadow_allocated_units": 5.0,
-    "bets": 29,
+    "bets": 22,
     "limits": {
       "max_slate_units": 5.0,
       "max_game_units": 1.0,
@@ -420,21 +418,19 @@
       "kickoff_window_hours": 3
     },
     "allocated_by_market": {
-      "moneyline": 1.21,
-      "spread": 2.44,
-      "total": 1.35
+      "moneyline": 1.67,
+      "spread": 2.5,
+      "total": 0.83
     },
     "allocated_by_kickoff_window": {
-      "2026-10-03 15:00:00+00:00": 1.95,
-      "2026-10-03 21:00:00+00:00": 1.04,
-      "2026-10-04 00:00:00+00:00": 0.32,
-      "2026-10-02 00:00:00+00:00": 0.28,
+      "2026-10-03 15:00:00+00:00": 2.0,
+      "2026-10-03 21:00:00+00:00": 1.07,
+      "2026-10-02 00:00:00+00:00": 0.33,
+      "2026-10-04 00:00:00+00:00": 0.28,
       "2026-10-03 18:00:00+00:00": 1.22,
-      "2026-10-02 21:00:00+00:00": 0.19
+      "2026-10-02 21:00:00+00:00": 0.1
     },
     "release_blockers": [
-      "live_monitoring: live readiness >= 90/100",
-      "multi_book_consensus: >= 75% of games covered by 2+ books",
       "historical_market_edge: >=1000 bets, ROI 95% CI lower bound >0, positive CLV, >=2 positive markets and >=2 positive seasons",
       "live_shadow_evidence: >=300 graded live bets, non-negative ROI and positive pre-kickoff CLV proxy"
     ]

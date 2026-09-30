@@ -1,20 +1,18 @@
 {
-  "live_readiness_score": 86.9,
+  "live_readiness_score": 96.2,
   "scores": {
     "market_coverage": 100.0,
     "advanced_coverage": 100.0,
-    "multi_book": 0.0,
+    "multi_book": 98.21428571428571,
     "context": 100.0,
-    "calibration": 90.40829672303269,
+    "calibration": 90.40829672303224,
     "freshness": 100.0,
     "drift_margin": 94.8,
     "drift_total": 90.0,
     "drift_probability": 97.2,
     "distribution_stability": 94.0,
-    "output_completeness": 84.93303571428572
+    "output_completeness": 89.28571428571428
   },
-  "alerts": [
-    "multi-book consensus is limited; configure THE_ODDS_API_KEY for free multi-book supplementation"
-  ],
+  "alerts": [],
   "meaning": "operational/model-monitoring score; not a profitability guarantee"
 }
