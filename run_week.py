@@ -7,8 +7,9 @@ from harbin.monitoring import write_live_monitoring
 from harbin.model_card import write_model_card
 from harbin.contracts import write_data_quality
 from harbin.release_gate import write_release_gate
+from harbin.reporting import write_reporting_bundle
 
-PLATFORM_VERSION="7.2.0"
+PLATFORM_VERSION="7.3.0"
 
 p=argparse.ArgumentParser(description="Run Harbin Sports Analytics CFB model")
 p.add_argument("--season",type=int)
@@ -50,16 +51,21 @@ for src,dst in (
     (out/f"{base}_metadata.json",docs/"metadata.json"),
 ):
     if src.exists(): shutil.copyfile(src,dst)
+
+# Stage 6 publishes one reconciled audit snapshot and fails closed on cross-file drift.
+audit_snapshot,publication_validation=write_reporting_bundle(pred,meta)
+
 readme=out/"README.md"
 with readme.open("a") as f:
-    f.write("\n## v7.2 release / execution layer\n- [Portfolio card](portfolio_card.csv)\n- [Portfolio summary](portfolio_summary.json)\n- [Live monitoring](live_monitoring.json)\n- [Release gate](release_gate.json)\n- [Data-quality contracts](data_quality.json)\n- [Model card](MODEL_CARD.md)\n- [System audit dashboard](../docs/audit.html)\n- Real approved stake remains **0** unless the hard PRODUCTION gate, live-ledger bankroll controls, executable-price checks and all portfolio caps pass.\n")
+    f.write("\n## v7.3 reporting / observability layer\n- [Portfolio card](portfolio_card.csv)\n- [Portfolio summary](portfolio_summary.json)\n- [Live monitoring](live_monitoring.json)\n- [Canonical audit snapshot](audit_snapshot.json)\n- [Run report](RUN_REPORT.md)\n- [Publication validation](publication_validation.json)\n- [Release gate](release_gate.json)\n- [Data-quality contracts](data_quality.json)\n- [Model card](MODEL_CARD.md)\n- [System audit dashboard](../docs/audit.html)\n- Real approved stake remains **0** unless the hard PRODUCTION gate, live-ledger bankroll controls, executable-price checks and all portfolio caps pass.\n")
 print(f"Harbin CFB platform v{PLATFORM_VERSION} / core v{meta['model_version']} complete: {meta['season']} Week {meta['week']} — {len(pred)} games")
 print("Validation:",meta["validation"])
 print("Margin MAE:",meta["metrics"].get("margin_mae"),"| Total MAE:",meta["metrics"].get("total_mae"))
 print("Release weights — margin:",meta["metrics"].get("margin_release_weight"),"total:",meta["metrics"].get("total_release_weight"))
 print("Calibration Brier:",meta["metrics"].get("win_brier"),"| ECE:",meta["metrics"].get("win_ece"))
 print("Data contracts:",data_quality["status"],"| Release state:",release_gate["release_state"])
-print("Monitoring:",monitor["live_readiness_score"],"/100")
+print("Monitoring:",monitor["live_readiness_score"],"/100 | drift stability:",monitor.get("scores",{}).get("distribution_stability"))
 br=portfolio.get("bankroll_risk") or {}
 print("Portfolio mode:",portfolio["mode"],"| proposed units:",portfolio["proposed_units"],"| approved units:",portfolio["approved_units"],"| unit-risk multiplier:",br.get("risk_multiplier",1.0))
+print("Audit publication:",audit_snapshot.get("status"),"| reconciliation:",publication_validation.get("status"))
 print("Open outputs/README.md for the latest result links.")
