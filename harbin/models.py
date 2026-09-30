@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import math
+import os
 import numpy as np
 import pandas as pd
 from sklearn.ensemble import HistGradientBoostingRegressor
@@ -186,7 +187,9 @@ def _eval_guard(weight, baseline_mae, model_mae):
     return False,"selected residual did not beat baseline on untouched chronological evaluation; weight was not retuned on evaluation"
 
 
-def train_models(df, validation_diagnostics=True):
+def train_models(df, validation_diagnostics=None):
+    if validation_diagnostics is None:
+        validation_diagnostics = not bool(os.getenv("HARBIN_FAST_BACKTEST"))
     if len(df)<500:
         raise RuntimeError(f"Need at least 500 historical FBS games; got {len(df)}")
     d=sort_chronologically(df)
