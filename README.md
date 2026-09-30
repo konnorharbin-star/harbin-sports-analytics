@@ -17,7 +17,7 @@ The latest GitHub Pages dashboard is generated from `docs/`.
 
 Open **Actions → CFB Walk-Forward Backtest → Run workflow**. This produces `reports/backtest_summary.json`, individual historical bets, edge/signal breakdowns, calibration tables, drawdown, ROI confidence intervals, and an opening-to-archive-final CLV proxy when the historical archive contains both prices.
 
-## v7.1 architecture
+## v7.2 platform architecture
 
 The system intentionally separates the jobs that should not be conflated:
 
@@ -27,7 +27,7 @@ The system intentionally separates the jobs that should not be conflated:
 - **Probability layer** — nested chronological tuning/calibration, Brier score, log loss, ECE, residual variance, fail-closed shrinkage, and expanding-season walk-forward diagnostics.
 - **Market intelligence layer** — verified ESPN/ESPN Core markets, optional multi-book consensus via `THE_ODDS_API_KEY`, no-vig probabilities, market dispersion, and line shopping. When multiple executable quotes exist, the quant layer uses the best verified line/price rather than a consensus number as if it were bettable.
 - **Risk/context layer** — point-in-time current injuries/QB availability, current roster availability, indoor-aware kickoff weather, travel, rest, altitude, source freshness, context-quality gating, model-vs-market disagreement, volatility and fractional-Kelly sizing.
-- **Portfolio layer** — game, team, market, slate and correlated kickoff-window exposure caps.
+- **Portfolio/execution layer** — unit-based drawdown throttles, executable-price provenance, slate/game/team/market/book/kickoff caps, bet-count limits, and zero approved stake outside a fully open production path.
 - **Evidence layer** — week-by-week historical retraining against archived market data, ML/ATS/total grading, ROI, units, max drawdown, CLV proxy, confidence intervals, calibration, and time-split threshold validation.
 - **Release layer** — explicit RESEARCH/PAPER/SHADOW/PRODUCTION states. Production is impossible unless engineering checks, dynamic feature coverage, multi-book breadth, historical evidence and independent live/shadow evidence all pass.
 
@@ -43,8 +43,11 @@ The system is designed to refuse confidence rather than manufacture it:
 - Missing verified sportsbook data displays **NO LINE**; it is not imputed or invented.
 - Missing or stale injury/roster/weather context lowers usable context coverage and increases uncertainty risk; a source name by itself does not earn context credit.
 - Current-only injury, roster and weather inputs are disabled for historical-season runs instead of being backfilled into old games.
+- Missing executable sportsbook provenance blocks portfolio approval rather than assuming a price is bettable.
+- A current unit drawdown at the configured hard stop forces approved portfolio stake to zero.
+- A stale production gate cannot approve stake if the independent live/shadow grading ledger is missing.
 - A green GitHub workflow means the software ran. It does **not** mean a market edge is proven.
-- Approved real stake remains zero unless the hard PRODUCTION gate passes.
+- Approved real stake remains zero unless every hard PRODUCTION gate and Stage 5 execution control is satisfied.
 
 ## Key files
 
@@ -55,22 +58,25 @@ The system is designed to refuse confidence rather than manufacture it:
 - `harbin/market_intel.py` — multi-book consensus, executable best-line/best-price diagnostics and dispersion.
 - `harbin/context.py` — current point-in-time injury/QB/roster, indoor-aware weather, rest, travel, altitude, cache freshness and context quality.
 - `harbin/pro_market.py` — validated EV gates and odds-aware fractional Kelly.
-- `harbin/portfolio.py` — concentration and correlated-kickoff exposure controls.
-- `harbin/policy.py` — time-split production policy calibration and fail-closed market/week gates.
+- `harbin/portfolio.py` — bankroll throttles, executable-quote checks, concentration caps and production stake approval.
+- `harbin/policy.py` — time-split production policy calibration plus fail-closed market/week and portfolio defaults.
 - `harbin/line_history.py` — first-seen/current line movement.
 - `harbin/grading.py` — ongoing grading of archived live/shadow decisions.
 - `harbin/backtest.py` — historical walk-forward betting proof.
 - `harbin/release_gate.py` — hard deployment criteria.
 - `harbin/health.py` — engineering/model-readiness score; never a profitability score.
 - `harbin/render.py` — Cooper-style 14-games-per-page cards.
-- `harbin/pipeline.py` — end-to-end v7.1 production run.
+- `harbin/pipeline.py` — end-to-end v7.1 core model run.
 - `docs/STAGE4_WEATHER_QB_INJURY_ROSTER.md` — Stage 4 timing, freshness, roster, injury, weather and leakage contract.
+- `docs/STAGE5_PORTFOLIO_BANKROLL_EXECUTION.md` — Stage 5 unit-bankroll, execution provenance and concentration-control contract.
 
 ## Data behavior
 
 The free stack is designed around SportsDataverse/cfbfastR datasets, ESPN public endpoints, and Open-Meteo. An optional external multi-book odds source is supported through the `THE_ODDS_API_KEY` GitHub secret; if it is not configured, the system reports the missing breadth honestly instead of pretending a single provider is a consensus market.
 
 Current-only injuries, current roster availability, weather and market quotes do not leak backward into historical score training. Historical backtests use only information available at the simulated decision time. Current context is a post-prediction risk/confidence layer until enough historical point-in-time context exists to validate directional score adjustments.
+
+Stage 5 bankroll protection is unit-based. The repository does not infer a user's dollar bankroll, does not place wagers, and cannot promote the model into production; it can only reduce or halt risk after the release gate and production policy have been satisfied.
 
 ## What “10/10” means here
 
