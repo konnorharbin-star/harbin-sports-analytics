@@ -1,0 +1,35 @@
+{
+  "captured_at": "2026-09-30T05:32:38.595498+00:00",
+  "season": 2026,
+  "week": 5,
+  "games": 56,
+  "rows_appended": 56,
+  "odds_source": "ESPN live (site.web.api.espn.com) + ESPN Core supplement",
+  "market_intelligence": {
+    "coverage": 1.0,
+    "multi_book_coverage": 0.9821428571428571,
+    "odds_api_configured": false,
+    "odds_api_used": false,
+    "action_network_enabled": true,
+    "action_network_used": true,
+    "action_network_match_coverage": 0.9821428571428571,
+    "errors": [],
+    "best_line_fields": [
+      "best_home_ml",
+      "best_away_ml",
+      "best_home_spread",
+      "best_away_spread",
+      "best_over_total",
+      "best_under_total"
+    ],
+    "best_line_provenance_fields": [
+      "best_home_ml_book",
+      "best_away_ml_book",
+      "best_home_spread_book",
+      "best_away_spread_book",
+      "best_over_book",
+      "best_under_book"
+    ]
+  },
+  "errors": []
+}
