@@ -23,7 +23,13 @@ def fractional_kelly_units(p, american, risk_multiplier=1.0, cap=1.25, policy_pa
     return min(float(cap), raw*max(.0,min(1.,float(risk_multiplier))))
 
 
-def standard_price_ev(p, price=-110): return roi(float(p),float(price))
+def standard_price_ev(p, price=-110):
+    return roi(float(p),float(price))
+
+
+def _finite(v):
+    try: return math.isfinite(float(v))
+    except Exception: return False
 
 
 def _signal_from_thresholds(ev, edge_value, probability, market, thresholds):
@@ -41,12 +47,7 @@ def _signal_from_thresholds(ev, edge_value, probability, market, thresholds):
 
 
 def quant_signal(ev, edge_value, probability, market: str, policy_path=None, week=None):
-    """Classify an edge without contaminating research with generated policy state.
-
-    `policy_path=None` intentionally means fixed conservative defaults. Historical
-    backtests are therefore reproducible. Live selection passes the validated production
-    policy explicitly, including any market-disable or repeated-weak-week gate.
-    """
+    """Classify an edge without contaminating research with generated policy state."""
     if policy_path is None:
         return _signal_from_thresholds(ev,edge_value,probability,market,DEFAULT_POLICY.get("markets",{}))
     return signal_from_policy(ev,edge_value,probability,market,path=policy_path,week=week)
@@ -54,27 +55,50 @@ def quant_signal(ev, edge_value, probability, market: str, policy_path=None, wee
 
 def select_best_market(row, risk_multiplier=1.0, policy_path=PRODUCTION_POLICY_PATH):
     candidates=[]; week=row.get("week")
-    if not np.isnan(row.get("quant_best_ml_roi",np.nan)):
+
+    if _finite(row.get("quant_best_ml_roi")):
         side=row.get("quant_best_ml_side"); p=None; odds=None
-        if side==row.get("home_team"): p=row.get("calibrated_home_probability"); odds=row.get("home_ml")
-        elif side==row.get("away_team"): p=1-float(row.get("calibrated_home_probability")); odds=row.get("away_ml")
-        if p is not None and odds is not None:
-            edge=row.get("quant_best_ml_edge_pp",0); ev=row.get("quant_best_ml_roi",-1); sig=quant_signal(ev,edge,p,"moneyline",policy_path,week=week); candidates.append((float(ev),"moneyline",side,odds,float(p),float(edge),sig))
-    if not np.isnan(row.get("cover_probability",np.nan)) and not np.isnan(row.get("spread_edge_pts",np.nan)):
-        p=float(row["cover_probability"]); ev=standard_price_ev(p); edge=float(row["spread_edge_pts"]); sig=quant_signal(ev,edge,p,"spread",policy_path,week=week); candidates.append((ev,"spread",row.get("spread_team"),row.get("spread_line"),p,edge,sig))
-    if not np.isnan(row.get("total_probability",np.nan)) and not np.isnan(row.get("total_edge_pts",np.nan)):
-        p=float(row["total_probability"]); ev=standard_price_ev(p); edge=float(row["total_edge_pts"]); sig=quant_signal(ev,edge,p,"total",policy_path,week=week); candidates.append((ev,"total",row.get("total_dir"),row.get("market_total"),p,edge,sig))
-    candidates=[x for x in candidates if x[6]!="PASS"]
+        if side==row.get("home_team"):
+            p=row.get("calibrated_home_probability"); odds=row.get("best_home_ml") if _finite(row.get("best_home_ml")) else row.get("home_ml")
+        elif side==row.get("away_team"):
+            p=1-float(row.get("calibrated_home_probability")); odds=row.get("best_away_ml") if _finite(row.get("best_away_ml")) else row.get("away_ml")
+        if p is not None and _finite(odds):
+            edge=float(row.get("quant_best_ml_edge_pp",0)); ev=roi(float(p),float(odds)); sig=quant_signal(ev,edge,p,"moneyline",policy_path,week=week)
+            candidates.append({"ev":float(ev),"market":"moneyline","side":side,"line":float(odds),"odds":float(odds),"p":float(p),"edge":edge,"signal":sig})
+
+    if _finite(row.get("cover_probability")) and _finite(row.get("spread_edge_pts")):
+        p=float(row["cover_probability"]); edge=float(row["spread_edge_pts"])
+        odds=float(row.get("spread_odds")) if _finite(row.get("spread_odds")) else -110.0
+        ev=roi(p,odds); sig=quant_signal(ev,edge,p,"spread",policy_path,week=week)
+        candidates.append({"ev":ev,"market":"spread","side":row.get("spread_team"),"line":row.get("spread_line"),"odds":odds,"p":p,"edge":edge,"signal":sig})
+
+    if _finite(row.get("total_probability")) and _finite(row.get("total_edge_pts")):
+        p=float(row["total_probability"]); edge=float(row["total_edge_pts"])
+        odds=float(row.get("total_odds")) if _finite(row.get("total_odds")) else -110.0
+        ev=roi(p,odds); sig=quant_signal(ev,edge,p,"total",policy_path,week=week)
+        candidates.append({"ev":ev,"market":"total","side":row.get("total_dir"),"line":row.get("market_total"),"odds":odds,"p":p,"edge":edge,"signal":sig})
+
+    candidates=[x for x in candidates if x["signal"]!="PASS"]
     if not candidates:
         blocked=[]
         for m in ("moneyline","spread","total"):
             allowed,reason=market_allowed(m,week=week,path=policy_path)
             if not allowed: blocked.append(f"{m}: {reason}")
-        return {"quant_signal":"PASS","quant_market":None,"quant_side":None,"quant_ev":0.0,"stake_units":0.0,"quant_probability":np.nan,"policy_block_reason":" | ".join(blocked)}
-    ev,market,side,price,p,edge,sig=max(candidates,key=lambda x:x[0])
-    if market=="moneyline": units=fractional_kelly_units(p,price,risk_multiplier,policy_path=policy_path)
-    else: units=min(1.25,max(0.0,(ev/.05)*.40))*max(.15,min(1.0,float(risk_multiplier)))
-    return {"quant_signal":sig,"quant_market":market,"quant_side":side,"quant_price":price,"quant_ev":ev,"quant_probability":p,"quant_edge":edge,"stake_units":round(units,2),"policy_block_reason":""}
+        return {"quant_signal":"PASS","quant_market":None,"quant_side":None,"quant_ev":0.0,"stake_units":0.0,"quant_probability":np.nan,"quant_odds":np.nan,"policy_block_reason":" | ".join(blocked)}
+
+    best=max(candidates,key=lambda x:x["ev"])
+    if best["market"]=="moneyline":
+        units=fractional_kelly_units(best["p"],best["odds"],risk_multiplier,policy_path=policy_path)
+    else:
+        # Spread/total use the same bounded fractional-Kelly engine whenever an
+        # executable price is available; this avoids assuming every market is -110.
+        units=fractional_kelly_units(best["p"],best["odds"],risk_multiplier,policy_path=policy_path)
+    return {
+        "quant_signal":best["signal"],"quant_market":best["market"],"quant_side":best["side"],
+        "quant_price":best["line"],"quant_odds":best["odds"],"quant_ev":best["ev"],
+        "quant_probability":best["p"],"quant_edge":best["edge"],"stake_units":round(units,2),
+        "policy_block_reason":"",
+    }
 
 
 def risk_multiplier(availability_risk=0.0, data_quality=1.0, volatility=0.0):
