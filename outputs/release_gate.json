@@ -1,7 +1,7 @@
 {
-  "release_state": "PAPER",
+  "release_state": "RESEARCH",
   "production_eligible": false,
-  "engineering_ready": true,
+  "engineering_ready": false,
   "historical_edge_ready": false,
   "live_evidence_ready": false,
   "checks": [
@@ -43,7 +43,7 @@
     {
       "name": "margin_release_guard",
       "passed": true,
-      "value": 0.45,
+      "value": 0.5,
       "requirement": "learned margin correction passes release guard or safely falls back",
       "detail": ""
     },
@@ -57,21 +57,21 @@
     {
       "name": "probability_brier",
       "passed": true,
-      "value": 0.1571043454193505,
+      "value": 0.16380027003104383,
       "requirement": "Brier <= 0.18 on chronological release holdout",
       "detail": ""
     },
     {
       "name": "probability_ece",
-      "passed": true,
-      "value": 0.038366813107871066,
+      "passed": false,
+      "value": 0.05974734104448807,
       "requirement": "ECE <= 0.05 on chronological release holdout",
       "detail": ""
     },
     {
       "name": "live_monitoring",
       "passed": true,
-      "value": 96.2,
+      "value": 95.3,
       "requirement": "live readiness >= 90/100",
       "detail": ""
     },
@@ -111,6 +111,7 @@
     }
   ],
   "blockers": [
+    "probability_ece: ECE <= 0.05 on chronological release holdout",
     "historical_market_edge: >=1000 bets, ROI 95% CI lower bound >0, positive CLV, >=2 positive markets and >=2 positive seasons",
     "live_shadow_evidence: >=300 graded live bets, non-negative ROI and positive pre-kickoff CLV proxy"
   ],
