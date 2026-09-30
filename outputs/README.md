@@ -2,7 +2,7 @@
 
 **Model:** v7.1.0  
 **Season / Week:** 2026 / 5  
-**Updated:** Sep 29, 2026 · 9:16 PM CT  
+**Updated:** Sep 29, 2026 · 9:38 PM CT  
 **Market:** LIVE MARKET DATA — all 56 games have verified market data from ESPN live (site.web.api.espn.com) + ESPN Core supplement.  
 **Dynamic advanced-feature live coverage:** 100%  
 **System health:** 93.4/100 *(readiness, not predicted profitability)*
@@ -21,7 +21,7 @@
 
 The Cooper-style table is the reconstructed presentation layer. The Quant card is the independent EV/risk layer. Missing verified markets display **NO LINE**. Run the separate **CFB Backtest** workflow before treating signals as historically established.
 
-## v7.1 release / evidence layer
+## v7.2 release / execution layer
 - [Portfolio card](portfolio_card.csv)
 - [Portfolio summary](portfolio_summary.json)
 - [Live monitoring](live_monitoring.json)
@@ -29,4 +29,4 @@ The Cooper-style table is the reconstructed presentation layer. The Quant card i
 - [Data-quality contracts](data_quality.json)
 - [Model card](MODEL_CARD.md)
 - [System audit dashboard](../docs/audit.html)
-- Real approved stake remains **0** unless every hard PRODUCTION gate is satisfied.
+- Real approved stake remains **0** unless the hard PRODUCTION gate, live-ledger bankroll controls, executable-price checks and all portfolio caps pass.

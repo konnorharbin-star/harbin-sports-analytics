@@ -2,9 +2,9 @@
 
 ## Identity
 - Core model version: **7.1.0**
-- Repository revision: `d04d95927ca9521484694091d087b57e5dd09f90`
+- Repository revision: `91d11f52697d6d71db82b61a86eb574a8c1fa0d1`
 - Season / Week: **2026 / 5**
-- Generated: **Sep 29, 2026 · 9:16 PM CT**
+- Generated: **Sep 29, 2026 · 9:38 PM CT**
 
 ## Intended use
 Independent CFB score, margin, total and win-probability estimation; sportsbook comparison; paper/production betting research with explicit uncertainty and risk controls. The Cooper-style table is a presentation layer, not the proprietary formula of any third party.
@@ -19,19 +19,27 @@ Independent CFB score, margin, total and win-probability estimation; sportsbook 
 
 ## Validation
 - Method: nested whole-week chronology: core fit -> tune weight -> OOF calibration -> untouched evaluation; final refit keeps the tune-selected weight and uses OOF probability calibration
-- Margin MAE: **12.657079769201353** vs baseline **13.22104338022683**
+- Margin MAE: **12.657079769201356** vs baseline **13.22104338022683**
 - Total MAE: **12.681388088386885** vs baseline **12.693581407531097**
-- Win-probability Brier: **0.17194428420231783**
-- Calibration ECE: **0.06364117207321737**
+- Win-probability Brier: **0.171944284202318**
+- Calibration ECE: **0.0636411720732171**
 
 ## Operational controls
 - Live monitoring score: **93.6/100**
 - Portfolio mode: **PAPER**
 - Approved units: **0.0**
-- Proposed/paper units: **4.56**
+- Proposed units before bankroll/concentration controls: **4.56**
+- Paper/shadow allocated units after controls: **3.9**
+- Unit-risk multiplier: **1.0**
+- Current live/shadow drawdown: **0.0 units**
+- Portfolio hard stop active: **False**
+- Execution-blocked candidates: **0**
 
 ## Leakage controls
 Features are generated pregame from prior games only; model training is chronological; tuning/calibration/evaluation are separated; historical market evidence is walk-forward. Sportsbook prices are excluded from the score-generation model and are used only after fair scores/probabilities are produced.
+
+## Bankroll and execution interpretation
+Risk is expressed in abstract betting units; the system does not invent a dollar bankroll. Production approval requires the hard release gate, a production policy, an independent live/shadow grading ledger, no active drawdown hard stop, and an executable sportsbook/price for each approved candidate. The software produces an approval plan; it does not place wagers.
 
 ## Known limitations
 Injury designations and sportsbook feeds can be incomplete or change rapidly. Weather forecasts are uncertain. Historical betting edge may not persist. Public data cannot reproduce an unpublished third-party scoring formula. Do not infer profitability from MAE alone.
