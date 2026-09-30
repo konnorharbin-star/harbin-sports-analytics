@@ -41,7 +41,7 @@
         "season": 2025,
         "rows": 808,
         "mae": 12.610918130935023,
-        "rmse": 16.098855624029213,
+        "rmse": 16.09885562402921,
         "baseline_mae": 13.026608931009665,
         "weight": 0.7000000000000001,
         "weight_tuned_on": "prior-season chronological tail"
@@ -61,7 +61,7 @@
     "margin_walkforward_improved_folds": 4,
     "margin_walkforward_fold_count": 4,
     "total_baseline_mae": 12.778014944283827,
-    "total_tuned_model_mae": 12.916782682319536,
+    "total_tuned_model_mae": 12.916782682319537,
     "total_mae": 12.778014944283827,
     "total_rmse": 15.687832775187584,
     "total_tuned_weight": 0.45,
@@ -75,7 +75,7 @@
         "season": 2023,
         "rows": 792,
         "mae": 13.176404050515467,
-        "rmse": 16.281540724268968,
+        "rmse": 16.28154072426897,
         "baseline_mae": 13.171288637289225,
         "weight": 0.15000000000000002,
         "weight_tuned_on": "prior-season chronological tail"
@@ -113,8 +113,8 @@
     "total_walkforward_improved_folds": 1,
     "total_walkforward_fold_count": 4,
     "win_brier": 0.1595422323490443,
-    "win_log_loss": 0.4863440933049297,
-    "win_ece": 0.031110866289941832,
+    "win_log_loss": 0.4863440933049298,
+    "win_ece": 0.03111086628994184,
     "win_calibration_eval_rows": 368,
     "win_calibration_weight": 0.45
   },
@@ -124,8 +124,8 @@
   },
   "calibrated_margin_sigma": 15.936045782910531,
   "calibrated_total_sigma": 15.696990609626486,
-  "generated_at": "2026-09-30T00:14:20.989933+00:00",
-  "updated_at_ct": "Sep 29, 2026 \u00b7 7:14 PM CT",
+  "generated_at": "2026-09-30T00:16:34.784059+00:00",
+  "updated_at_ct": "Sep 29, 2026 \u00b7 7:16 PM CT",
   "schedule_source": "sportsdataverse/cfbfastR-data",
   "odds_source": "ESPN live (site.web.api.espn.com) + ESPN Core supplement",
   "odds_errors": [],
@@ -154,7 +154,15 @@
     "multi_book_coverage": 0.0,
     "odds_api_configured": false,
     "odds_api_used": false,
-    "errors": []
+    "errors": [],
+    "best_line_fields": [
+      "best_home_ml",
+      "best_away_ml",
+      "best_home_spread",
+      "best_away_spread",
+      "best_over_total",
+      "best_under_total"
+    ]
   },
   "current_context": {
     "coverage": 1.0,
@@ -181,7 +189,7 @@
     "bet": 19,
     "lean": 8
   },
-  "snapshot_appended": false,
+  "snapshot_appended": true,
   "live_performance": {
     "graded_games": 0,
     "graded_bets": 0,
@@ -299,14 +307,14 @@
       {
         "name": "probability_ece",
         "passed": true,
-        "value": 0.031110866289941832,
+        "value": 0.03111086628994184,
         "requirement": "ECE <= 0.05 on chronological release holdout",
         "detail": ""
       },
       {
         "name": "live_monitoring",
         "passed": false,
-        "value": 87.8,
+        "value": 87.2,
         "requirement": "live readiness >= 90/100",
         "detail": ""
       },
@@ -359,7 +367,7 @@
     "meaning": "Hard deployment gate. PRODUCTION requires engineering quality, multi-book pricing, robust historical edge and independent live evidence; it is not a guarantee of future profit."
   },
   "live_monitoring": {
-    "live_readiness_score": 87.8,
+    "live_readiness_score": 87.2,
     "scores": {
       "market_coverage": 100.0,
       "advanced_coverage": 100.0,
@@ -371,7 +379,7 @@
       "drift_total": 90.0,
       "drift_probability": 98.8,
       "distribution_stability": 94.0,
-      "output_completeness": 90.13157894736842
+      "output_completeness": 84.6
     },
     "alerts": [
       "multi-book consensus is limited; configure THE_ODDS_API_KEY for free multi-book supplementation"

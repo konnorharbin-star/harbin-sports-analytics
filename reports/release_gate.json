@@ -57,14 +57,14 @@
     {
       "name": "probability_ece",
       "passed": true,
-      "value": 0.031110866289941832,
+      "value": 0.03111086628994184,
       "requirement": "ECE <= 0.05 on chronological release holdout",
       "detail": ""
     },
     {
       "name": "live_monitoring",
       "passed": false,
-      "value": 87.8,
+      "value": 87.2,
       "requirement": "live readiness >= 90/100",
       "detail": ""
     },
