@@ -29,17 +29,21 @@ def test_cache_freshness(tmp_path):
 
 def test_asof_dynamic_features_exclude_current_week_and_add_recent_form():
     s=_store()
-    df=pd.DataFrame({
-        'season':[2026,2026,2026], 'week':[1,2,3], 'team_id':[1,1,1], 'team':['Alpha','Alpha','Alpha'],
-        'epa_per_play':[0.10,0.30,0.50],
-    })
+    # The production selector intentionally requires meaningful source density. Build
+    # 60 rows while keeping one target team's weekly values deterministic.
+    rows=[]
+    for team_id in range(1,21):
+        name=f'Team {team_id}'
+        for week,val in ((1,.10),(2,.30),(3,.50)):
+            rows.append({'season':2026,'week':week,'team_id':team_id,'team':name,'epa_per_play':val+team_id*.001})
+    df=pd.DataFrame(rows)
     s._build_asof(df)
     w2=s.id_lookup[(2026,2,'1')]
     w3=s.id_lookup[(2026,3,'1')]
-    assert abs(w2['adv_epa_per_play']-0.10)<1e-12
-    assert abs(w2['recent_adv_epa_per_play']-0.10)<1e-12
-    assert abs(w3['adv_epa_per_play']-0.20)<1e-12
-    assert abs(w3['recent_adv_epa_per_play']-0.17)<1e-12
+    assert abs(w2['adv_epa_per_play']-0.101)<1e-12
+    assert abs(w2['recent_adv_epa_per_play']-0.101)<1e-12
+    assert abs(w3['adv_epa_per_play']-0.201)<1e-12
+    assert abs(w3['recent_adv_epa_per_play']-0.171)<1e-12
     assert 'recent_adv_epa_per_play' in s.dynamic_names
 
 
@@ -49,7 +53,7 @@ def test_enrich_emits_pair_coverage_features():
     frame=pd.DataFrame([{'season':2026,'week':5,'home_id':'1','away_id':'2','home_team':'A','away_team':'B'}])
     out,meta=s.enrich(frame)
     assert out.loc[0,'advanced_pair_coverage']==1.0
-    assert out.loc[0,'diff_adv_epa']==0.3
+    assert abs(out.loc[0,'diff_adv_epa']-0.3)<1e-12
     assert meta['dynamic_pair_feature_coverage']==1.0
 
 
