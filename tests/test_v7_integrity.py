@@ -1,8 +1,11 @@
 import json
+from types import SimpleNamespace
 import pandas as pd
 
 from harbin.advanced import identify_team_columns
+from harbin.market_intel import MarketIntelligence
 from harbin.policy import signal_from_policy, market_allowed
+from harbin.portfolio import apply_portfolio_controls
 from harbin.pro_market import quant_signal
 
 
@@ -28,13 +31,7 @@ def test_advanced_identity_uses_numeric_pos_team_only_as_id():
 def test_unvalidated_market_fails_closed(tmp_path):
     p = tmp_path / "policy.json"
     p.write_text(json.dumps({
-        "markets": {
-            "total": {
-                "enabled": False,
-                "disabled_reason": "holdout failed",
-                "excluded_weeks": [],
-            }
-        }
+        "markets": {"total": {"enabled": False, "disabled_reason": "holdout failed", "excluded_weeks": []}}
     }))
     allowed, reason = market_allowed("total", path=str(p))
     assert not allowed and "holdout" in reason
@@ -49,5 +46,38 @@ def test_excluded_week_fails_closed(tmp_path):
 
 
 def test_research_defaults_remain_reproducible():
-    # Historical backtests call policy_path=None and must not consume generated policy state.
     assert quant_signal(.20, 10, .70, "total", policy_path=None) == "STRONG"
+
+
+def test_market_intel_selects_executable_best_lines_and_prices():
+    g = SimpleNamespace(provider="BookA", home_ml=-150, away_ml=130, home_spread=-3.5, market_total=56)
+    quotes = [
+        {"provider":"BookA","home_ml":-150,"away_ml":130,"home_spread":-3.5,"market_total":56,
+         "home_spread_price":-110,"away_spread_price":-110,"over_price":-108,"under_price":-112},
+        {"provider":"BookB","home_ml":-145,"away_ml":135,"home_spread":-3.0,"market_total":55.5,
+         "home_spread_price":-105,"away_spread_price":-115,"over_price":-110,"under_price":-110},
+    ]
+    s = MarketIntelligence._summary(g, quotes)
+    assert s["best_home_spread"] == -3.0
+    assert s["best_away_spread"] == 3.5
+    assert s["best_over_total"] == 55.5
+    assert s["best_under_total"] == 56.0
+    assert s["best_home_spread_odds"] == -105
+    assert s["best_home_ml"] == -145
+    assert s["best_away_ml"] == 135
+
+
+def test_portfolio_caps_same_kickoff_cluster(tmp_path):
+    policy = tmp_path / "policy.json"
+    gate = tmp_path / "gate.json"
+    policy.write_text(json.dumps({
+        "deployment_mode":"paper",
+        "portfolio":{"max_slate_units":5,"max_game_units":1.5,"max_team_units":2,"max_market_units":5,"max_kickoff_window_units":2,"kickoff_window_hours":3}
+    }))
+    gate.write_text(json.dumps({"release_state":"PAPER","production_eligible":False,"blockers":[]}))
+    df = pd.DataFrame([
+        {"date":"2026-10-03T16:00:00Z","home_team":"A","away_team":"B","quant_signal":"BET","quant_market":"spread","quant_ev":.10,"risk_multiplier":1,"stake_units":1.5},
+        {"date":"2026-10-03T17:00:00Z","home_team":"C","away_team":"D","quant_signal":"BET","quant_market":"spread","quant_ev":.09,"risk_multiplier":1,"stake_units":1.5},
+    ])
+    _, summary = apply_portfolio_controls(df, str(policy), str(gate))
+    assert summary["paper_allocated_units"] == 2.0
