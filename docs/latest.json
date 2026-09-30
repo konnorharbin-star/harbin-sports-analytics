@@ -74,7 +74,7 @@
     "temperature_f":69.1,
     "precip_probability":0.0,
     "wind_mph":10.4,
-    "wind_gust_mph":12.3,
+    "wind_gust_mph":6.7,
     "weather_risk":0.0,
     "travel_rest_risk":0.1797031935,
     "context_risk":0.026955479,
@@ -104,7 +104,8 @@
     "quant_ev":0.1317830109,
     "quant_probability":0.59283872,
     "quant_edge":3.742633702,
-    "stake_units":0.67
+    "stake_units":0.67,
+    "policy_block_reason":""
   },
   {
     "game_id":"401862786",
@@ -211,7 +212,8 @@
     "quant_ev":0.4416326698,
     "quant_probability":0.7551409223,
     "quant_edge":11.007937883,
-    "stake_units":0.72
+    "stake_units":0.72,
+    "policy_block_reason":""
   },
   {
     "game_id":"401858245",
@@ -288,7 +290,7 @@
     "temperature_f":72.1,
     "precip_probability":16.0,
     "wind_mph":1.8,
-    "wind_gust_mph":2.2,
+    "wind_gust_mph":10.5,
     "weather_risk":0.0,
     "travel_rest_risk":0.0,
     "context_risk":0.0,
@@ -318,7 +320,8 @@
     "quant_ev":0.1441679761,
     "quant_probability":0.5993260827,
     "quant_edge":4.0095590917,
-    "stake_units":0.81
+    "stake_units":0.81,
+    "policy_block_reason":""
   },
   {
     "game_id":"401871050",
@@ -395,7 +398,7 @@
     "temperature_f":76.1,
     "precip_probability":10.0,
     "wind_mph":5.3,
-    "wind_gust_mph":13.4,
+    "wind_gust_mph":19.5,
     "weather_risk":0.0,
     "travel_rest_risk":0.0,
     "context_risk":0.0,
@@ -425,7 +428,8 @@
     "quant_ev":0.1739686615,
     "quant_probability":0.6149359655,
     "quant_edge":4.5867765087,
-    "stake_units":0.8
+    "stake_units":0.8,
+    "policy_block_reason":""
   },
   {
     "game_id":"401858476",
@@ -502,7 +506,7 @@
     "temperature_f":59.3,
     "precip_probability":1.0,
     "wind_mph":10.6,
-    "wind_gust_mph":13.2,
+    "wind_gust_mph":14.5,
     "weather_risk":0.0,
     "travel_rest_risk":0.0,
     "context_risk":0.0,
@@ -532,7 +536,8 @@
     "quant_ev":0.1438177959,
     "quant_probability":0.599142655,
     "quant_edge":3.9419631668,
-    "stake_units":0.72
+    "stake_units":0.72,
+    "policy_block_reason":""
   },
   {
     "game_id":"401856707",
@@ -609,7 +614,7 @@
     "temperature_f":82.0,
     "precip_probability":47.0,
     "wind_mph":4.1,
-    "wind_gust_mph":4.0,
+    "wind_gust_mph":14.5,
     "weather_risk":0.035,
     "travel_rest_risk":0.0,
     "context_risk":0.00805,
@@ -639,7 +644,8 @@
     "quant_ev":0.2289316385,
     "quant_probability":0.6437260963,
     "quant_edge":5.7833438223,
-    "stake_units":0.83
+    "stake_units":0.83,
+    "policy_block_reason":""
   },
   {
     "game_id":"401856807",
@@ -716,7 +722,7 @@
     "temperature_f":64.2,
     "precip_probability":3.0,
     "wind_mph":6.5,
-    "wind_gust_mph":8.7,
+    "wind_gust_mph":9.2,
     "weather_risk":0.0,
     "travel_rest_risk":0.0,
     "context_risk":0.0,
@@ -746,7 +752,8 @@
     "quant_ev":0.4290336288,
     "quant_probability":0.7485414246,
     "quant_edge":10.6756667806,
-    "stake_units":0.91
+    "stake_units":0.91,
+    "policy_block_reason":""
   },
   {
     "game_id":"401856819",
@@ -823,7 +830,7 @@
     "temperature_f":84.8,
     "precip_probability":48.0,
     "wind_mph":10.7,
-    "wind_gust_mph":15.0,
+    "wind_gust_mph":13.4,
     "weather_risk":0.04,
     "travel_rest_risk":0.0259228607,
     "context_risk":0.0130884291,
@@ -853,7 +860,8 @@
     "quant_ev":0.2389836136,
     "quant_probability":0.6489914166,
     "quant_edge":6.0971140003,
-    "stake_units":0.92
+    "stake_units":0.92,
+    "policy_block_reason":""
   },
   {
     "game_id":"401856822",
@@ -930,7 +938,7 @@
     "temperature_f":59.3,
     "precip_probability":1.0,
     "wind_mph":9.2,
-    "wind_gust_mph":13.0,
+    "wind_gust_mph":13.9,
     "weather_risk":0.0,
     "travel_rest_risk":0.0,
     "context_risk":0.0,
@@ -960,7 +968,8 @@
     "quant_ev":0.464709993,
     "quant_probability":0.9056603774,
     "quant_edge":31.2290623199,
-    "stake_units":0.38
+    "stake_units":0.38,
+    "policy_block_reason":""
   },
   {
     "game_id":"401858246",
@@ -1037,7 +1046,7 @@
     "temperature_f":71.4,
     "precip_probability":57.0,
     "wind_mph":6.5,
-    "wind_gust_mph":8.1,
+    "wind_gust_mph":10.1,
     "weather_risk":0.085,
     "travel_rest_risk":0.3365529293,
     "context_risk":0.0700329394,
@@ -1067,7 +1076,8 @@
     "quant_ev":0.2803932857,
     "quant_probability":0.6706821972,
     "quant_edge":7.0405083205,
-    "stake_units":0.87
+    "stake_units":0.87,
+    "policy_block_reason":""
   },
   {
     "game_id":"401858250",
@@ -1144,7 +1154,7 @@
     "temperature_f":82.1,
     "precip_probability":33.0,
     "wind_mph":8.0,
-    "wind_gust_mph":8.5,
+    "wind_gust_mph":10.3,
     "weather_risk":0.0,
     "travel_rest_risk":0.0,
     "context_risk":0.0,
@@ -1174,7 +1184,8 @@
     "quant_ev":0.0,
     "quant_probability":null,
     "quant_edge":null,
-    "stake_units":0.0
+    "stake_units":0.0,
+    "policy_block_reason":""
   },
   {
     "game_id":"401858251",
@@ -1251,7 +1262,7 @@
     "temperature_f":80.1,
     "precip_probability":44.0,
     "wind_mph":8.6,
-    "wind_gust_mph":8.9,
+    "wind_gust_mph":10.5,
     "weather_risk":0.02,
     "travel_rest_risk":0.5,
     "context_risk":0.0796,
@@ -1281,7 +1292,8 @@
     "quant_ev":0.0502886433,
     "quant_probability":0.5501511941,
     "quant_edge":2.0086325565,
-    "stake_units":0.25
+    "stake_units":0.25,
+    "policy_block_reason":""
   },
   {
     "game_id":"401858252",
@@ -1358,7 +1370,7 @@
     "temperature_f":68.3,
     "precip_probability":2.0,
     "wind_mph":7.7,
-    "wind_gust_mph":10.1,
+    "wind_gust_mph":11.2,
     "weather_risk":0.0,
     "travel_rest_risk":0.0,
     "context_risk":0.0,
@@ -1388,7 +1400,8 @@
     "quant_ev":1.4666666667,
     "quant_probability":0.8222222222,
     "quant_edge":50.2777777778,
-    "stake_units":0.32
+    "stake_units":0.32,
+    "policy_block_reason":""
   },
   {
     "game_id":"401858474",
@@ -1465,7 +1478,7 @@
     "temperature_f":56.0,
     "precip_probability":4.0,
     "wind_mph":8.3,
-    "wind_gust_mph":18.6,
+    "wind_gust_mph":19.5,
     "weather_risk":0.0,
     "travel_rest_risk":0.0,
     "context_risk":0.0,
@@ -1495,7 +1508,8 @@
     "quant_ev":0.1004850207,
     "quant_probability":0.5764445346,
     "quant_edge":3.0264734429,
-    "stake_units":0.54
+    "stake_units":0.54,
+    "policy_block_reason":""
   },
   {
     "game_id":"401862791",
@@ -1572,7 +1586,7 @@
     "temperature_f":71.0,
     "precip_probability":0.0,
     "wind_mph":2.4,
-    "wind_gust_mph":3.1,
+    "wind_gust_mph":4.7,
     "weather_risk":0.0,
     "travel_rest_risk":0.3252243078,
     "context_risk":0.0487836462,
@@ -1602,7 +1616,8 @@
     "quant_ev":0.4626032359,
     "quant_probability":0.7661255045,
     "quant_edge":11.3983141368,
-    "stake_units":0.86
+    "stake_units":0.86,
+    "policy_block_reason":""
   },
   {
     "game_id":"401858479",
@@ -1679,7 +1694,7 @@
     "temperature_f":58.5,
     "precip_probability":1.0,
     "wind_mph":10.0,
-    "wind_gust_mph":13.4,
+    "wind_gust_mph":12.5,
     "weather_risk":0.0,
     "travel_rest_risk":0.0,
     "context_risk":0.0,
@@ -1709,7 +1724,8 @@
     "quant_ev":0.0883062798,
     "quant_probability":0.5700651942,
     "quant_edge":2.8133518558,
-    "stake_units":0.44
+    "stake_units":0.44,
+    "policy_block_reason":""
   },
   {
     "game_id":"401856705",
@@ -1786,7 +1802,7 @@
     "temperature_f":90.0,
     "precip_probability":33.0,
     "wind_mph":2.6,
-    "wind_gust_mph":3.1,
+    "wind_gust_mph":10.5,
     "weather_risk":0.0,
     "travel_rest_risk":0.0,
     "context_risk":0.0,
@@ -1816,7 +1832,8 @@
     "quant_ev":0.4539297048,
     "quant_probability":0.7615822263,
     "quant_edge":11.3369248778,
-    "stake_units":0.84
+    "stake_units":0.84,
+    "policy_block_reason":""
   },
   {
     "game_id":"401866432",
@@ -1893,7 +1910,7 @@
     "temperature_f":61.6,
     "precip_probability":0.0,
     "wind_mph":5.5,
-    "wind_gust_mph":5.1,
+    "wind_gust_mph":6.0,
     "weather_risk":0.0,
     "travel_rest_risk":0.0,
     "context_risk":0.0,
@@ -1923,7 +1940,8 @@
     "quant_ev":0.4054830491,
     "quant_probability":0.7362054067,
     "quant_edge":10.0666475157,
-    "stake_units":0.83
+    "stake_units":0.83,
+    "policy_block_reason":""
   },
   {
     "game_id":"401866431",
@@ -2000,7 +2018,7 @@
     "temperature_f":64.8,
     "precip_probability":5.0,
     "wind_mph":9.9,
-    "wind_gust_mph":11.2,
+    "wind_gust_mph":14.5,
     "weather_risk":0.0,
     "travel_rest_risk":0.0,
     "context_risk":0.0,
@@ -2030,7 +2048,8 @@
     "quant_ev":0.1558110285,
     "quant_probability":0.6054248244,
     "quant_edge":4.2615232015,
-    "stake_units":0.82
+    "stake_units":0.82,
+    "policy_block_reason":""
   },
   {
     "game_id":"401856708",
@@ -2107,7 +2126,7 @@
     "temperature_f":75.6,
     "precip_probability":7.0,
     "wind_mph":5.8,
-    "wind_gust_mph":6.7,
+    "wind_gust_mph":9.2,
     "weather_risk":0.0,
     "travel_rest_risk":0.0259279755,
     "context_risk":0.6238891963,
@@ -2137,7 +2156,8 @@
     "quant_ev":0.1266404747,
     "quant_probability":0.5901450106,
     "quant_edge":3.6321118904,
-    "stake_units":0.45
+    "stake_units":0.45,
+    "policy_block_reason":""
   },
   {
     "game_id":"401856710",
@@ -2214,7 +2234,7 @@
     "temperature_f":76.9,
     "precip_probability":63.0,
     "wind_mph":8.0,
-    "wind_gust_mph":7.8,
+    "wind_gust_mph":15.4,
     "weather_risk":0.115,
     "travel_rest_risk":0.0,
     "context_risk":0.02645,
@@ -2244,7 +2264,8 @@
     "quant_ev":0.0,
     "quant_probability":null,
     "quant_edge":null,
-    "stake_units":0.0
+    "stake_units":0.0,
+    "policy_block_reason":""
   },
   {
     "game_id":"401858247",
@@ -2351,7 +2372,8 @@
     "quant_ev":0.1781972012,
     "quant_probability":0.6171509149,
     "quant_edge":4.749045905,
-    "stake_units":0.81
+    "stake_units":0.81,
+    "policy_block_reason":""
   },
   {
     "game_id":"401858248",
@@ -2428,7 +2450,7 @@
     "temperature_f":82.8,
     "precip_probability":55.0,
     "wind_mph":9.2,
-    "wind_gust_mph":9.2,
+    "wind_gust_mph":9.6,
     "weather_risk":0.075,
     "travel_rest_risk":0.0,
     "context_risk":0.01725,
@@ -2458,7 +2480,8 @@
     "quant_ev":0.1038811573,
     "quant_probability":0.5782234633,
     "quant_edge":3.144990467,
-    "stake_units":0.58
+    "stake_units":0.58,
+    "policy_block_reason":""
   },
   {
     "game_id":"401858253",
@@ -2535,7 +2558,7 @@
     "temperature_f":85.7,
     "precip_probability":42.0,
     "wind_mph":6.5,
-    "wind_gust_mph":8.1,
+    "wind_gust_mph":3.4,
     "weather_risk":0.01,
     "travel_rest_risk":0.0,
     "context_risk":0.4208,
@@ -2565,7 +2588,8 @@
     "quant_ev":0.0,
     "quant_probability":null,
     "quant_edge":null,
-    "stake_units":0.0
+    "stake_units":0.0,
+    "policy_block_reason":""
   },
   {
     "game_id":"401858473",
@@ -2642,7 +2666,7 @@
     "temperature_f":64.9,
     "precip_probability":1.0,
     "wind_mph":7.4,
-    "wind_gust_mph":9.8,
+    "wind_gust_mph":8.5,
     "weather_risk":0.0,
     "travel_rest_risk":0.0,
     "context_risk":0.0,
@@ -2672,7 +2696,8 @@
     "quant_ev":0.3356787334,
     "quant_probability":0.6996412413,
     "quant_edge":8.3404317769,
-    "stake_units":0.8
+    "stake_units":0.8,
+    "policy_block_reason":""
   },
   {
     "game_id":"401862787",
@@ -2749,7 +2774,7 @@
     "temperature_f":86.2,
     "precip_probability":63.0,
     "wind_mph":6.9,
-    "wind_gust_mph":6.9,
+    "wind_gust_mph":8.9,
     "weather_risk":0.115,
     "travel_rest_risk":0.0,
     "context_risk":0.02645,
@@ -2779,7 +2804,8 @@
     "quant_ev":0.3326482744,
     "quant_probability":0.698053858,
     "quant_edge":8.2678018449,
-    "stake_units":0.85
+    "stake_units":0.85,
+    "policy_block_reason":""
   },
   {
     "game_id":"401864515",
@@ -2856,7 +2882,7 @@
     "temperature_f":62.3,
     "precip_probability":15.0,
     "wind_mph":10.4,
-    "wind_gust_mph":13.4,
+    "wind_gust_mph":12.3,
     "weather_risk":0.0,
     "travel_rest_risk":0.0,
     "context_risk":0.0,
@@ -2886,7 +2912,8 @@
     "quant_ev":0.2353518671,
     "quant_probability":0.6470890732,
     "quant_edge":6.0154328485,
-    "stake_units":0.86
+    "stake_units":0.86,
+    "policy_block_reason":""
   },
   {
     "game_id":"401866430",
@@ -2963,7 +2990,7 @@
     "temperature_f":62.0,
     "precip_probability":1.0,
     "wind_mph":5.4,
-    "wind_gust_mph":5.1,
+    "wind_gust_mph":5.6,
     "weather_risk":0.0,
     "travel_rest_risk":0.0,
     "context_risk":0.0,
@@ -2993,7 +3020,8 @@
     "quant_ev":0.0,
     "quant_probability":null,
     "quant_edge":null,
-    "stake_units":0.0
+    "stake_units":0.0,
+    "policy_block_reason":""
   },
   {
     "game_id":"401866433",
@@ -3070,7 +3098,7 @@
     "temperature_f":67.6,
     "precip_probability":0.0,
     "wind_mph":5.7,
-    "wind_gust_mph":6.7,
+    "wind_gust_mph":8.7,
     "weather_risk":0.0,
     "travel_rest_risk":0.0,
     "context_risk":0.0,
@@ -3100,7 +3128,8 @@
     "quant_ev":0.2085054379,
     "quant_probability":0.6330266579,
     "quant_edge":5.3350976401,
-    "stake_units":0.76
+    "stake_units":0.76,
+    "policy_block_reason":""
   },
   {
     "game_id":"401866434",
@@ -3177,7 +3206,7 @@
     "temperature_f":65.0,
     "precip_probability":3.0,
     "wind_mph":5.3,
-    "wind_gust_mph":5.6,
+    "wind_gust_mph":7.8,
     "weather_risk":0.0,
     "travel_rest_risk":0.0,
     "context_risk":0.0,
@@ -3207,7 +3236,8 @@
     "quant_ev":0.2822422645,
     "quant_probability":0.67165071,
     "quant_edge":7.0831876098,
-    "stake_units":0.75
+    "stake_units":0.75,
+    "policy_block_reason":""
   },
   {
     "game_id":"401866477",
@@ -3284,7 +3314,7 @@
     "temperature_f":67.6,
     "precip_probability":7.0,
     "wind_mph":10.7,
-    "wind_gust_mph":11.9,
+    "wind_gust_mph":13.0,
     "weather_risk":0.0,
     "travel_rest_risk":0.0,
     "context_risk":0.0,
@@ -3314,7 +3344,8 @@
     "quant_ev":0.2701238329,
     "quant_probability":0.6653029601,
     "quant_edge":6.7022970676,
-    "stake_units":0.76
+    "stake_units":0.76,
+    "policy_block_reason":""
   },
   {
     "game_id":"401869956",
@@ -3391,7 +3422,7 @@
     "temperature_f":88.5,
     "precip_probability":68.0,
     "wind_mph":3.5,
-    "wind_gust_mph":3.1,
+    "wind_gust_mph":11.6,
     "weather_risk":0.14,
     "travel_rest_risk":0.0,
     "context_risk":0.0322,
@@ -3421,7 +3452,8 @@
     "quant_ev":0.23,
     "quant_probability":0.6,
     "quant_edge":13.2467532468,
-    "stake_units":0.11
+    "stake_units":0.11,
+    "policy_block_reason":""
   },
   {
     "game_id":"401869962",
@@ -3498,7 +3530,7 @@
     "temperature_f":58.7,
     "precip_probability":41.0,
     "wind_mph":2.7,
-    "wind_gust_mph":6.3,
+    "wind_gust_mph":8.1,
     "weather_risk":0.005,
     "travel_rest_risk":0.0,
     "context_risk":0.00115,
@@ -3528,7 +3560,8 @@
     "quant_ev":0.0,
     "quant_probability":null,
     "quant_edge":null,
-    "stake_units":0.0
+    "stake_units":0.0,
+    "policy_block_reason":""
   },
   {
     "game_id":"401858475",
@@ -3605,7 +3638,7 @@
     "temperature_f":70.6,
     "precip_probability":0.0,
     "wind_mph":8.0,
-    "wind_gust_mph":9.8,
+    "wind_gust_mph":11.0,
     "weather_risk":0.0,
     "travel_rest_risk":0.1147993269,
     "context_risk":0.017219899,
@@ -3635,7 +3668,8 @@
     "quant_ev":0.1181609882,
     "quant_probability":0.5857033748,
     "quant_edge":3.3984946281,
-    "stake_units":0.54
+    "stake_units":0.54,
+    "policy_block_reason":""
   },
   {
     "game_id":"401864514",
@@ -3712,7 +3746,7 @@
     "temperature_f":74.3,
     "precip_probability":0.0,
     "wind_mph":6.7,
-    "wind_gust_mph":2.2,
+    "wind_gust_mph":2.7,
     "weather_risk":0.0,
     "travel_rest_risk":0.0,
     "context_risk":0.0,
@@ -3742,7 +3776,8 @@
     "quant_ev":0.178831326,
     "quant_probability":0.6174830755,
     "quant_edge":4.691470447,
-    "stake_units":0.82
+    "stake_units":0.82,
+    "policy_block_reason":""
   },
   {
     "game_id":"401856709",
@@ -3819,7 +3854,7 @@
     "temperature_f":81.4,
     "precip_probability":55.0,
     "wind_mph":5.3,
-    "wind_gust_mph":8.3,
+    "wind_gust_mph":14.5,
     "weather_risk":0.075,
     "travel_rest_risk":0.0,
     "context_risk":0.01725,
@@ -3849,7 +3884,8 @@
     "quant_ev":0.1075706599,
     "quant_probability":0.5801560599,
     "quant_edge":3.2237462677,
-    "stake_units":0.45
+    "stake_units":0.45,
+    "policy_block_reason":""
   },
   {
     "game_id":"401858472",
@@ -3926,7 +3962,7 @@
     "temperature_f":71.2,
     "precip_probability":4.0,
     "wind_mph":7.2,
-    "wind_gust_mph":8.1,
+    "wind_gust_mph":12.3,
     "weather_risk":0.0,
     "travel_rest_risk":0.0,
     "context_risk":0.0,
@@ -3956,7 +3992,8 @@
     "quant_ev":0.1471698113,
     "quant_probability":0.9056603774,
     "quant_edge":14.8471878956,
-    "stake_units":0.29
+    "stake_units":0.29,
+    "policy_block_reason":""
   },
   {
     "game_id":"401860899",
@@ -4033,7 +4070,7 @@
     "temperature_f":75.5,
     "precip_probability":2.0,
     "wind_mph":13.7,
-    "wind_gust_mph":9.8,
+    "wind_gust_mph":16.3,
     "weather_risk":0.0,
     "travel_rest_risk":0.0743749038,
     "context_risk":0.0111562356,
@@ -4063,7 +4100,8 @@
     "quant_ev":0.8669082126,
     "quant_probability":0.6328502415,
     "quant_edge":30.7881488541,
-    "stake_units":0.24
+    "stake_units":0.24,
+    "policy_block_reason":""
   },
   {
     "game_id":"401856711",
@@ -4140,7 +4178,7 @@
     "temperature_f":79.2,
     "precip_probability":58.0,
     "wind_mph":13.8,
-    "wind_gust_mph":19.0,
+    "wind_gust_mph":17.2,
     "weather_risk":0.09,
     "travel_rest_risk":0.0,
     "context_risk":0.0207,
@@ -4170,7 +4208,8 @@
     "quant_ev":0.2593631387,
     "quant_probability":0.659666406,
     "quant_edge":6.4601414086,
-    "stake_units":0.69
+    "stake_units":0.69,
+    "policy_block_reason":""
   },
   {
     "game_id":"401856818",
@@ -4247,7 +4286,7 @@
     "temperature_f":75.5,
     "precip_probability":35.0,
     "wind_mph":6.2,
-    "wind_gust_mph":8.5,
+    "wind_gust_mph":10.5,
     "weather_risk":0.0,
     "travel_rest_risk":0.0671738778,
     "context_risk":0.0100760817,
@@ -4277,7 +4316,8 @@
     "quant_ev":0.1864078985,
     "quant_probability":0.6214517564,
     "quant_edge":4.9289528314,
-    "stake_units":0.87
+    "stake_units":0.87,
+    "policy_block_reason":""
   },
   {
     "game_id":"401862788",
@@ -4354,7 +4394,7 @@
     "temperature_f":77.7,
     "precip_probability":69.0,
     "wind_mph":10.3,
-    "wind_gust_mph":19.5,
+    "wind_gust_mph":14.8,
     "weather_risk":0.145,
     "travel_rest_risk":0.0,
     "context_risk":0.45185,
@@ -4384,7 +4424,8 @@
     "quant_ev":0.1877220502,
     "quant_probability":0.6221401215,
     "quant_edge":4.8834338053,
-    "stake_units":0.6
+    "stake_units":0.6,
+    "policy_block_reason":""
   },
   {
     "game_id":"401869942",
@@ -4461,7 +4502,7 @@
     "temperature_f":74.7,
     "precip_probability":26.0,
     "wind_mph":6.1,
-    "wind_gust_mph":18.1,
+    "wind_gust_mph":12.5,
     "weather_risk":0.0,
     "travel_rest_risk":0.0,
     "context_risk":0.0,
@@ -4491,7 +4532,8 @@
     "quant_ev":0.3542995169,
     "quant_probability":0.6328502415,
     "quant_edge":18.4291356262,
-    "stake_units":0.18
+    "stake_units":0.18,
+    "policy_block_reason":""
   },
   {
     "game_id":"401871089",
@@ -4568,7 +4610,7 @@
     "temperature_f":74.3,
     "precip_probability":76.0,
     "wind_mph":3.5,
-    "wind_gust_mph":6.3,
+    "wind_gust_mph":20.1,
     "weather_risk":0.18,
     "travel_rest_risk":0.0,
     "context_risk":0.0414,
@@ -4598,7 +4640,8 @@
     "quant_ev":0.0566037736,
     "quant_probability":0.9056603774,
     "quant_edge":8.3325351978,
-    "stake_units":0.18
+    "stake_units":0.18,
+    "policy_block_reason":""
   },
   {
     "game_id":"401856821",
@@ -4675,7 +4718,7 @@
     "temperature_f":73.0,
     "precip_probability":3.0,
     "wind_mph":14.6,
-    "wind_gust_mph":8.7,
+    "wind_gust_mph":16.3,
     "weather_risk":0.0,
     "travel_rest_risk":0.0,
     "context_risk":0.0,
@@ -4705,7 +4748,8 @@
     "quant_ev":0.0338733432,
     "quant_probability":0.8571428571,
     "quant_edge":6.1366980026,
-    "stake_units":0.09
+    "stake_units":0.09,
+    "policy_block_reason":""
   },
   {
     "game_id":"401858249",
@@ -4782,7 +4826,7 @@
     "temperature_f":72.5,
     "precip_probability":69.0,
     "wind_mph":4.3,
-    "wind_gust_mph":3.4,
+    "wind_gust_mph":20.1,
     "weather_risk":0.145,
     "travel_rest_risk":0.0,
     "context_risk":0.03335,
@@ -4812,7 +4856,8 @@
     "quant_ev":0.1947737124,
     "quant_probability":0.6258338494,
     "quant_edge":5.1129071277,
-    "stake_units":0.77
+    "stake_units":0.77,
+    "policy_block_reason":""
   },
   {
     "game_id":"401858478",
@@ -4889,7 +4934,7 @@
     "temperature_f":99.0,
     "precip_probability":0.0,
     "wind_mph":9.5,
-    "wind_gust_mph":7.8,
+    "wind_gust_mph":11.2,
     "weather_risk":0.0,
     "travel_rest_risk":0.074953649,
     "context_risk":0.0112430473,
@@ -4919,7 +4964,8 @@
     "quant_ev":0.169937388,
     "quant_probability":0.6128243461,
     "quant_edge":4.5686714044,
-    "stake_units":0.85
+    "stake_units":0.85,
+    "policy_block_reason":""
   },
   {
     "game_id":"401860898",
@@ -4996,7 +5042,7 @@
     "temperature_f":83.9,
     "precip_probability":0.0,
     "wind_mph":3.9,
-    "wind_gust_mph":3.6,
+    "wind_gust_mph":2.9,
     "weather_risk":0.0,
     "travel_rest_risk":0.0,
     "context_risk":0.0,
@@ -5026,7 +5072,8 @@
     "quant_ev":0.3383977514,
     "quant_probability":0.7010654888,
     "quant_edge":8.4057452541,
-    "stake_units":0.81
+    "stake_units":0.81,
+    "policy_block_reason":""
   },
   {
     "game_id":"401862792",
@@ -5103,7 +5150,7 @@
     "temperature_f":80.0,
     "precip_probability":67.0,
     "wind_mph":10.7,
-    "wind_gust_mph":18.1,
+    "wind_gust_mph":13.0,
     "weather_risk":0.135,
     "travel_rest_risk":0.0564454581,
     "context_risk":0.0395168187,
@@ -5133,7 +5180,8 @@
     "quant_ev":0.2874278946,
     "quant_probability":0.6743669924,
     "quant_edge":7.2031583318,
-    "stake_units":0.9
+    "stake_units":0.9,
+    "policy_block_reason":""
   },
   {
     "game_id":"401869842",
@@ -5210,7 +5258,7 @@
     "temperature_f":80.0,
     "precip_probability":67.0,
     "wind_mph":7.3,
-    "wind_gust_mph":19.0,
+    "wind_gust_mph":21.3,
     "weather_risk":0.135,
     "travel_rest_risk":0.1799508682,
     "context_risk":0.0580426302,
@@ -5240,7 +5288,8 @@
     "quant_ev":0.0,
     "quant_probability":null,
     "quant_edge":null,
-    "stake_units":0.0
+    "stake_units":0.0,
+    "policy_block_reason":""
   },
   {
     "game_id":"401858477",
@@ -5317,7 +5366,7 @@
     "temperature_f":65.5,
     "precip_probability":5.0,
     "wind_mph":3.7,
-    "wind_gust_mph":4.7,
+    "wind_gust_mph":9.4,
     "weather_risk":0.0,
     "travel_rest_risk":0.0,
     "context_risk":0.0,
@@ -5347,7 +5396,8 @@
     "quant_ev":0.1050212679,
     "quant_probability":0.5788206641,
     "quant_edge":3.169318879,
-    "stake_units":0.59
+    "stake_units":0.59,
+    "policy_block_reason":""
   },
   {
     "game_id":"401869932",
@@ -5424,7 +5474,7 @@
     "temperature_f":72.6,
     "precip_probability":85.0,
     "wind_mph":9.7,
-    "wind_gust_mph":22.6,
+    "wind_gust_mph":16.6,
     "weather_risk":0.225,
     "travel_rest_risk":0.0,
     "context_risk":0.05175,
@@ -5454,7 +5504,8 @@
     "quant_ev":0.118382548,
     "quant_probability":0.5858194299,
     "quant_edge":3.4031694321,
-    "stake_units":0.63
+    "stake_units":0.63,
+    "policy_block_reason":""
   },
   {
     "game_id":"401860921",
@@ -5531,7 +5582,7 @@
     "temperature_f":68.6,
     "precip_probability":0.0,
     "wind_mph":2.5,
-    "wind_gust_mph":3.6,
+    "wind_gust_mph":2.0,
     "weather_risk":0.0,
     "travel_rest_risk":0.0,
     "context_risk":0.0,
@@ -5561,7 +5612,8 @@
     "quant_ev":0.0906184025,
     "quant_probability":0.5712763061,
     "quant_edge":2.8625038789,
-    "stake_units":0.47
+    "stake_units":0.47,
+    "policy_block_reason":""
   },
   {
     "game_id":"401856817",
@@ -5638,7 +5690,7 @@
     "temperature_f":94.4,
     "precip_probability":0.0,
     "wind_mph":4.7,
-    "wind_gust_mph":4.7,
+    "wind_gust_mph":5.4,
     "weather_risk":0.0,
     "travel_rest_risk":0.0328695751,
     "context_risk":0.0049304363,
@@ -5668,7 +5720,8 @@
     "quant_ev":0.1849352815,
     "quant_probability":0.6206803855,
     "quant_edge":4.8231862444,
-    "stake_units":0.87
+    "stake_units":0.87,
+    "policy_block_reason":""
   },
   {
     "game_id":"401860900",
@@ -5775,7 +5828,8 @@
     "quant_ev":0.645410628,
     "quant_probability":0.6328502415,
     "quant_edge":26.3790585327,
-    "stake_units":0.2
+    "stake_units":0.2,
+    "policy_block_reason":""
   },
   {
     "game_id":"401856820",
@@ -5852,7 +5906,7 @@
     "temperature_f":84.1,
     "precip_probability":0.0,
     "wind_mph":8.5,
-    "wind_gust_mph":14.3,
+    "wind_gust_mph":15.7,
     "weather_risk":0.0,
     "travel_rest_risk":0.3417127892,
     "context_risk":0.0512569184,
@@ -5882,7 +5936,8 @@
     "quant_ev":0.0,
     "quant_probability":null,
     "quant_edge":null,
-    "stake_units":0.0
+    "stake_units":0.0,
+    "policy_block_reason":""
   },
   {
     "game_id":"401864513",
@@ -5989,6 +6044,7 @@
     "quant_ev":0.1044530279,
     "quant_probability":0.5785230146,
     "quant_edge":3.1571924901,
-    "stake_units":0.56
+    "stake_units":0.56,
+    "policy_block_reason":""
   }
 ]

@@ -11,7 +11,7 @@
     "drift_total": 90.0,
     "drift_probability": 98.8,
     "distribution_stability": 94.0,
-    "output_completeness": 90.04424778761062
+    "output_completeness": 90.13157894736842
   },
   "alerts": [
     "multi-book consensus is limited; configure THE_ODDS_API_KEY for free multi-book supplementation"

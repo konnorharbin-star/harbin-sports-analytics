@@ -41,7 +41,7 @@
         "season": 2025,
         "rows": 808,
         "mae": 12.610918130935023,
-        "rmse": 16.09885562402921,
+        "rmse": 16.098855624029213,
         "baseline_mae": 13.026608931009665,
         "weight": 0.7000000000000001,
         "weight_tuned_on": "prior-season chronological tail"
@@ -49,15 +49,15 @@
       {
         "season": 2026,
         "rows": 215,
-        "mae": 13.19905395747769,
-        "rmse": 16.3403437518396,
+        "mae": 13.199053957477693,
+        "rmse": 16.340343751839605,
         "baseline_mae": 14.439117971947091,
         "weight": 0.7000000000000001,
         "weight_tuned_on": "prior-season chronological tail"
       }
     ],
-    "margin_walkforward_mae_mean": 12.916768538061028,
-    "margin_walkforward_mae_std": 0.21218114308513397,
+    "margin_walkforward_mae_mean": 12.91676853806103,
+    "margin_walkforward_mae_std": 0.21218114308513514,
     "margin_walkforward_improved_folds": 4,
     "margin_walkforward_fold_count": 4,
     "total_baseline_mae": 12.778014944283827,
@@ -74,8 +74,8 @@
       {
         "season": 2023,
         "rows": 792,
-        "mae": 13.17640405051547,
-        "rmse": 16.28154072426897,
+        "mae": 13.176404050515467,
+        "rmse": 16.281540724268968,
         "baseline_mae": 13.171288637289225,
         "weight": 0.15000000000000002,
         "weight_tuned_on": "prior-season chronological tail"
@@ -83,8 +83,8 @@
       {
         "season": 2024,
         "rows": 798,
-        "mae": 13.014675650253528,
-        "rmse": 16.448942251905038,
+        "mae": 13.01442731745411,
+        "rmse": 16.448801421367673,
         "baseline_mae": 12.964033987572272,
         "weight": 0.6000000000000001,
         "weight_tuned_on": "prior-season chronological tail"
@@ -108,13 +108,13 @@
         "weight_tuned_on": "prior-season chronological tail"
       }
     ],
-    "total_walkforward_mae_mean": 12.860951081473832,
-    "total_walkforward_mae_std": 0.3077536974984165,
+    "total_walkforward_mae_mean": 12.860888998273978,
+    "total_walkforward_mae_std": 0.30772270384335515,
     "total_walkforward_improved_folds": 1,
     "total_walkforward_fold_count": 4,
     "win_brier": 0.1595422323490443,
-    "win_log_loss": 0.4863440933049298,
-    "win_ece": 0.031110866289941825,
+    "win_log_loss": 0.4863440933049297,
+    "win_ece": 0.031110866289941832,
     "win_calibration_eval_rows": 368,
     "win_calibration_weight": 0.45
   },
@@ -124,8 +124,8 @@
   },
   "calibrated_margin_sigma": 15.936045782910531,
   "calibrated_total_sigma": 15.696990609626486,
-  "generated_at": "2026-09-30T00:12:42.482977+00:00",
-  "updated_at_ct": "Sep 29, 2026 \u00b7 7:12 PM CT",
+  "generated_at": "2026-09-30T00:14:20.989933+00:00",
+  "updated_at_ct": "Sep 29, 2026 \u00b7 7:14 PM CT",
   "schedule_source": "sportsdataverse/cfbfastR-data",
   "odds_source": "ESPN live (site.web.api.espn.com) + ESPN Core supplement",
   "odds_errors": [],
@@ -181,7 +181,7 @@
     "bet": 19,
     "lean": 8
   },
-  "snapshot_appended": true,
+  "snapshot_appended": false,
   "live_performance": {
     "graded_games": 0,
     "graded_bets": 0,
@@ -217,7 +217,7 @@
       "probability_calibration": 93.8,
       "market_intelligence": 65.0,
       "current_context": 100.0,
-      "live_monitoring": 87.6,
+      "live_monitoring": 87.8,
       "historical_betting_proof": 80
     },
     "betting_proof_status": "DEVELOPING",
@@ -299,7 +299,7 @@
       {
         "name": "probability_ece",
         "passed": true,
-        "value": 0.031110866289941825,
+        "value": 0.031110866289941832,
         "requirement": "ECE <= 0.05 on chronological release holdout",
         "detail": ""
       },
@@ -371,7 +371,7 @@
       "drift_total": 90.0,
       "drift_probability": 98.8,
       "distribution_stability": 94.0,
-      "output_completeness": 90.04424778761062
+      "output_completeness": 90.13157894736842
     },
     "alerts": [
       "multi-book consensus is limited; configure THE_ODDS_API_KEY for free multi-book supplementation"
