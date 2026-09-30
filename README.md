@@ -1,6 +1,6 @@
 # Harbin Sports Analytics
 
-Automated college-football projection, probability, market-comparison, risk, and evidence system that lives in this GitHub repository.
+Automated college-football projection, probability, market-comparison, risk, monitoring, and evidence system that lives in this GitHub repository.
 
 ## Run the live model
 
@@ -17,7 +17,7 @@ The latest GitHub Pages dashboard is generated from `docs/`.
 
 Open **Actions → CFB Walk-Forward Backtest → Run workflow**. This produces `reports/backtest_summary.json`, individual historical bets, edge/signal breakdowns, calibration tables, drawdown, ROI confidence intervals, and an opening-to-archive-final CLV proxy when the historical archive contains both prices.
 
-## v7.2 platform architecture
+## v7.3 platform architecture
 
 The system intentionally separates the jobs that should not be conflated:
 
@@ -30,6 +30,7 @@ The system intentionally separates the jobs that should not be conflated:
 - **Portfolio/execution layer** — unit-based drawdown throttles, executable-price provenance, slate/game/team/market/book/kickoff caps, bet-count limits, and zero approved stake outside a fully open production path.
 - **Evidence layer** — week-by-week historical retraining against archived market data, ML/ATS/total grading, ROI, units, max drawdown, CLV proxy, confidence intervals, calibration, and time-split threshold validation.
 - **Release layer** — explicit RESEARCH/PAPER/SHADOW/PRODUCTION states. Production is impossible unless engineering checks, dynamic feature coverage, multi-book breadth, historical evidence and independent live/shadow evidence all pass.
+- **Reporting/observability layer** — one canonical audit snapshot, distribution-drift diagnostics, compact forward run history, human-readable run reports, and cross-file publication reconciliation before dashboard state is committed.
 
 The public-facing Cooper-style carousel is a separate **replica presentation layer**. Jason Cooper's private scoring formula is not public; this repository does not claim to contain it.
 
@@ -46,6 +47,8 @@ The system is designed to refuse confidence rather than manufacture it:
 - Missing executable sportsbook provenance blocks portfolio approval rather than assuming a price is bettable.
 - A current unit drawdown at the configured hard stop forces approved portfolio stake to zero.
 - A stale production gate cannot approve stake if the independent live/shadow grading ledger is missing.
+- Reporting independently rejects non-zero approved stake unless release, policy, and portfolio modes all reconcile to production.
+- Dashboard publication stops if the public metadata/release/portfolio/monitoring bundle disagrees with the canonical audit snapshot.
 - A green GitHub workflow means the software ran. It does **not** mean a market edge is proven.
 - Approved real stake remains zero unless every hard PRODUCTION gate and Stage 5 execution control is satisfied.
 
@@ -63,12 +66,16 @@ The system is designed to refuse confidence rather than manufacture it:
 - `harbin/line_history.py` — first-seen/current line movement.
 - `harbin/grading.py` — ongoing grading of archived live/shadow decisions.
 - `harbin/backtest.py` — historical walk-forward betting proof.
+- `harbin/monitoring.py` — operational readiness and explicit historical-reference distribution drift.
+- `harbin/reporting.py` — canonical audit snapshot, run report, trend ledger and publication reconciliation.
 - `harbin/release_gate.py` — hard deployment criteria.
 - `harbin/health.py` — engineering/model-readiness score; never a profitability score.
 - `harbin/render.py` — Cooper-style 14-games-per-page cards.
 - `harbin/pipeline.py` — end-to-end v7.1 core model run.
+- `validate_publication.py` — workflow-level verification that public dashboard files describe one coherent run.
 - `docs/STAGE4_WEATHER_QB_INJURY_ROSTER.md` — Stage 4 timing, freshness, roster, injury, weather and leakage contract.
 - `docs/STAGE5_PORTFOLIO_BANKROLL_EXECUTION.md` — Stage 5 unit-bankroll, execution provenance and concentration-control contract.
+- `docs/STAGE6_REPORTING_MONITORING.md` — Stage 6 dashboard, drift, audit-snapshot and publication-integration contract.
 
 ## Data behavior
 
@@ -77,6 +84,8 @@ The free stack is designed around SportsDataverse/cfbfastR datasets, ESPN public
 Current-only injuries, current roster availability, weather and market quotes do not leak backward into historical score training. Historical backtests use only information available at the simulated decision time. Current context is a post-prediction risk/confidence layer until enough historical point-in-time context exists to validate directional score adjustments.
 
 Stage 5 bankroll protection is unit-based. The repository does not infer a user's dollar bankroll, does not place wagers, and cannot promote the model into production; it can only reduce or halt risk after the release gate and production policy have been satisfied.
+
+Stage 6 monitoring compares live prediction distributions with the stored walk-forward reference when enough observations are available. Drift is an operational diagnostic, not evidence of profitability and not an automatic retraining instruction.
 
 ## What “10/10” means here
 
