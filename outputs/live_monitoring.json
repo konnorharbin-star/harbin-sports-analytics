@@ -1,6 +1,6 @@
 {
   "status": "OK",
-  "live_readiness_score": 91.8,
+  "live_readiness_score": 93.3,
   "scores": {
     "market_coverage": 100.0,
     "advanced_coverage": 100.0,
@@ -12,7 +12,7 @@
     "drift_total": 89.3,
     "drift_probability": 97.2,
     "distribution_stability": 93.6,
-    "output_completeness": 73.1833195706028
+    "output_completeness": 88.06771263418662
   },
   "drift_details": {
     "margin": {

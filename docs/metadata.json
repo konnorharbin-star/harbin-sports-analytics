@@ -481,8 +481,8 @@
   },
   "calibrated_margin_sigma": 16.242754639563632,
   "calibrated_total_sigma": 16.224718521007322,
-  "generated_at": "2026-09-30T03:32:59.996052+00:00",
-  "updated_at_ct": "Sep 29, 2026 \u00b7 10:32 PM CT",
+  "generated_at": "2026-09-30T15:48:31.111123+00:00",
+  "updated_at_ct": "Sep 30, 2026 \u00b7 10:48 AM CT",
   "schedule_source": "sportsdataverse/cfbfastR-data",
   "odds_source": "ESPN live (site.web.api.espn.com) + ESPN Core supplement",
   "odds_errors": [],
@@ -555,15 +555,15 @@
   "line_history": {
     "tracked_games": 56,
     "coverage": 1.0,
-    "snapshot_rows": 0,
-    "hourly_snapshot_games": 0,
-    "legacy_fallback_games": 56,
-    "consensus_close_games": 0,
-    "source": "prediction_snapshot_fallback"
+    "snapshot_rows": 112,
+    "hourly_snapshot_games": 56,
+    "legacy_fallback_games": 0,
+    "consensus_close_games": 56,
+    "source": "hourly_market_snapshots"
   },
   "quant_picks": {
-    "strong": 32,
-    "bet": 11,
+    "strong": 31,
+    "bet": 12,
     "lean": 0
   },
   "snapshot_appended": true,
@@ -595,7 +595,7 @@
     "clv_method": "first execution-ready cap-constrained portfolio decision strictly before kickoff; close is latest timestamp-valid market snapshot strictly before kickoff"
   },
   "health": {
-    "system_health_score": 83.1,
+    "system_health_score": 83.2,
     "meaning": "engineering/model-readiness score only; not a profitability or win-rate guarantee",
     "components": {
       "pipeline_and_data": 100.0,
@@ -605,7 +605,7 @@
       "probability_calibration": 87.3,
       "market_intelligence": 99.4,
       "current_context": 75.0,
-      "live_monitoring": 91.3,
+      "live_monitoring": 91.8,
       "historical_betting_proof": 25.0
     },
     "betting_proof_status": "UNPROVEN",
@@ -702,7 +702,7 @@
       {
         "name": "live_monitoring",
         "passed": true,
-        "value": 91.8,
+        "value": 93.3,
         "requirement": "live readiness >= 90/100",
         "detail": ""
       },
@@ -779,7 +779,7 @@
   },
   "live_monitoring": {
     "status": "OK",
-    "live_readiness_score": 91.8,
+    "live_readiness_score": 93.3,
     "scores": {
       "market_coverage": 100.0,
       "advanced_coverage": 100.0,
@@ -791,7 +791,7 @@
       "drift_total": 89.3,
       "drift_probability": 97.2,
       "distribution_stability": 93.6,
-      "output_completeness": 73.1833195706028
+      "output_completeness": 88.06771263418662
     },
     "drift_details": {
       "margin": {
@@ -852,11 +852,11 @@
       "reason": "no independent graded live/shadow betting history; unit throttle is neutral outside production"
     },
     "production_block_reason": "",
-    "proposed_units": 7.6,
-    "risk_adjusted_proposed_units": 7.6,
+    "proposed_units": 7.57,
+    "risk_adjusted_proposed_units": 7.57,
     "approved_units": 0.0,
-    "paper_allocated_units": 4.44,
-    "paper_or_shadow_allocated_units": 4.44,
+    "paper_allocated_units": 4.43,
+    "paper_or_shadow_allocated_units": 4.43,
     "bets": 20,
     "approved_bets": 0,
     "execution_blocked_bets": 43,
@@ -894,25 +894,25 @@
       "max_book_units": 2.0
     },
     "allocated_by_market": {
-      "moneyline": 2.44,
+      "moneyline": 2.45,
       "spread": 1.35,
-      "total": 0.65
+      "total": 0.63
     },
     "allocated_by_book": {
       "ActionNetwork book 30": 2.0,
       "ActionNetwork book 69": 0.39,
-      "DraftKings": 0.34,
-      "ActionNetwork book 75": 0.38,
-      "ActionNetwork book 71": 0.73,
-      "ActionNetwork book 49": 0.47,
-      "ActionNetwork book 68": 0.13
+      "Draft Kings": 0.33,
+      "ActionNetwork book 15": 0.26,
+      "ActionNetwork book 71": 0.84,
+      "ActionNetwork book 49": 0.36,
+      "ActionNetwork book 75": 0.25
     },
     "allocated_by_kickoff_window": {
-      "2026-10-03 15:00:00+00:00": 1.93,
-      "2026-10-03 18:00:00+00:00": 0.74,
-      "2026-10-03 21:00:00+00:00": 0.94,
+      "2026-10-03 15:00:00+00:00": 1.92,
+      "2026-10-03 18:00:00+00:00": 0.86,
+      "2026-10-03 21:00:00+00:00": 0.93,
       "2026-10-02 00:00:00+00:00": 0.39,
-      "2026-10-04 00:00:00+00:00": 0.44
+      "2026-10-04 00:00:00+00:00": 0.33
     },
     "allocated_by_team_exposure": {
       "UConn": 0.31,
@@ -923,21 +923,21 @@
       "San Diego State": 0.2,
       "Iowa State": 0.34,
       "Buffalo": 0.29,
+      "South Florida": 0.26,
       "Air Force": 0.27,
       "Navy": 0.27,
-      "South Florida": 0.27,
-      "Georgia": 0.24,
-      "Vanderbilt": 0.24,
-      "Ohio": 0.32,
+      "Ohio": 0.33,
+      "Georgia": 0.23,
+      "Vanderbilt": 0.23,
       "Miami": 0.19,
-      "Coastal Carolina": 0.14,
       "Iowa": 0.18,
+      "Coastal Carolina": 0.13,
       "Western Kentucky": 0.11,
-      "Arizona State": 0.14,
-      "Baylor": 0.14,
+      "Texas Tech": 0.14,
       "Boston College": 0.13,
-      "Texas Tech": 0.13,
-      "Fresno State": 0.1
+      "Arizona State": 0.13,
+      "Baylor": 0.13,
+      "Old Dominion": 0.11
     },
     "limit_hit_counts": {
       "book cap": 8,
@@ -954,7 +954,7 @@
   "decision_ledger": {
     "path": "history/portfolio_decisions_v1.csv",
     "eligible_rows": 20,
-    "appended_rows": 6,
-    "total_rows": 23
+    "appended_rows": 10,
+    "total_rows": 33
   }
 }

@@ -1,14 +1,14 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-09-30T03:33:00.828288+00:00",
+  "generated_at": "2026-09-30T15:48:31.881507+00:00",
   "status": "WARN",
   "identity": {
     "platform_version": "7.4.0",
     "model_version": "7.1.0",
     "season": 2026,
     "week": 5,
-    "model_generated_at": "2026-09-30T03:32:59.996052+00:00",
-    "updated_at_ct": "Sep 29, 2026 \u00b7 10:32 PM CT",
+    "model_generated_at": "2026-09-30T15:48:31.111123+00:00",
+    "updated_at_ct": "Sep 30, 2026 \u00b7 10:48 AM CT",
     "prediction_rows": 56
   },
   "release": {
@@ -84,7 +84,7 @@
       {
         "name": "live_monitoring",
         "passed": true,
-        "value": 91.8,
+        "value": 93.3,
         "requirement": "live readiness >= 90/100",
         "detail": ""
       },
@@ -183,7 +183,7 @@
   },
   "monitoring": {
     "status": "OK",
-    "live_readiness_score": 91.8,
+    "live_readiness_score": 93.3,
     "scores": {
       "market_coverage": 100.0,
       "advanced_coverage": 100.0,
@@ -195,7 +195,7 @@
       "drift_total": 89.3,
       "drift_probability": 97.2,
       "distribution_stability": 93.6,
-      "output_completeness": 73.1833195706028
+      "output_completeness": 88.06771263418662
     },
     "drift": {
       "margin": {
@@ -238,7 +238,7 @@
       "probability": 97.2
     },
     "alerts": [],
-    "recent_readiness_delta": -0.6499999999999915
+    "recent_readiness_delta": 1.5
   },
   "data_quality": {
     "status": "PASS",
@@ -274,11 +274,11 @@
       "reason": "no independent graded live/shadow betting history; unit throttle is neutral outside production"
     },
     "production_block_reason": "",
-    "proposed_units": 7.6,
-    "risk_adjusted_proposed_units": 7.6,
+    "proposed_units": 7.57,
+    "risk_adjusted_proposed_units": 7.57,
     "approved_units": 0.0,
-    "paper_allocated_units": 4.44,
-    "paper_or_shadow_allocated_units": 4.44,
+    "paper_allocated_units": 4.43,
+    "paper_or_shadow_allocated_units": 4.43,
     "bets": 20,
     "approved_bets": 0,
     "execution_blocked_bets": 43,
@@ -316,25 +316,25 @@
       "max_book_units": 2.0
     },
     "allocated_by_market": {
-      "moneyline": 2.44,
+      "moneyline": 2.45,
       "spread": 1.35,
-      "total": 0.65
+      "total": 0.63
     },
     "allocated_by_book": {
       "ActionNetwork book 30": 2.0,
       "ActionNetwork book 69": 0.39,
-      "DraftKings": 0.34,
-      "ActionNetwork book 75": 0.38,
-      "ActionNetwork book 71": 0.73,
-      "ActionNetwork book 49": 0.47,
-      "ActionNetwork book 68": 0.13
+      "Draft Kings": 0.33,
+      "ActionNetwork book 15": 0.26,
+      "ActionNetwork book 71": 0.84,
+      "ActionNetwork book 49": 0.36,
+      "ActionNetwork book 75": 0.25
     },
     "allocated_by_kickoff_window": {
-      "2026-10-03 15:00:00+00:00": 1.93,
-      "2026-10-03 18:00:00+00:00": 0.74,
-      "2026-10-03 21:00:00+00:00": 0.94,
+      "2026-10-03 15:00:00+00:00": 1.92,
+      "2026-10-03 18:00:00+00:00": 0.86,
+      "2026-10-03 21:00:00+00:00": 0.93,
       "2026-10-02 00:00:00+00:00": 0.39,
-      "2026-10-04 00:00:00+00:00": 0.44
+      "2026-10-04 00:00:00+00:00": 0.33
     },
     "allocated_by_team_exposure": {
       "UConn": 0.31,
@@ -345,21 +345,21 @@
       "San Diego State": 0.2,
       "Iowa State": 0.34,
       "Buffalo": 0.29,
+      "South Florida": 0.26,
       "Air Force": 0.27,
       "Navy": 0.27,
-      "South Florida": 0.27,
-      "Georgia": 0.24,
-      "Vanderbilt": 0.24,
-      "Ohio": 0.32,
+      "Ohio": 0.33,
+      "Georgia": 0.23,
+      "Vanderbilt": 0.23,
       "Miami": 0.19,
-      "Coastal Carolina": 0.14,
       "Iowa": 0.18,
+      "Coastal Carolina": 0.13,
       "Western Kentucky": 0.11,
-      "Arizona State": 0.14,
-      "Baylor": 0.14,
+      "Texas Tech": 0.14,
       "Boston College": 0.13,
-      "Texas Tech": 0.13,
-      "Fresno State": 0.1
+      "Arizona State": 0.13,
+      "Baylor": 0.13,
+      "Old Dominion": 0.11
     },
     "limit_hit_counts": {
       "book cap": 8,
@@ -432,7 +432,7 @@
         "name": "monitor_reconciled",
         "passed": true,
         "severity": "ERROR",
-        "detail": "metadata=91.8 output=91.8"
+        "detail": "metadata=93.3 output=93.3"
       },
       {
         "name": "data_contracts_publishable",
@@ -450,7 +450,7 @@
         "name": "approved_not_above_allocation",
         "passed": true,
         "severity": "ERROR",
-        "detail": "approved=0.00 allocated=4.44"
+        "detail": "approved=0.00 allocated=4.43"
       }
     ],
     "errors": []
@@ -478,6 +478,19 @@
       "release_state": "RESEARCH",
       "publication_status": "WARN",
       "live_readiness_score": 91.3,
+      "distribution_stability": 93.6,
+      "approved_units": 0.0,
+      "data_quality_status": "PASS"
+    },
+    {
+      "generated_at": "2026-09-30T03:33:00.828288+00:00",
+      "model_generated_at": "2026-09-30T03:32:59.996052+00:00",
+      "season": 2026,
+      "week": 5,
+      "platform_version": "7.4.0",
+      "release_state": "RESEARCH",
+      "publication_status": "WARN",
+      "live_readiness_score": 91.8,
       "distribution_stability": 93.6,
       "approved_units": 0.0,
       "data_quality_status": "PASS"
