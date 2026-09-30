@@ -8,19 +8,19 @@
         1
       ],
       "lean": {
-        "min_ev": 0.02,
-        "min_edge": 3,
-        "min_prob": 0.6
+        "min_ev": 0.1,
+        "min_edge": 6,
+        "min_prob": 0.56
       },
       "bet": {
-        "min_ev": 0.04,
-        "min_edge": 3.75,
-        "min_prob": 0.615
+        "min_ev": 0.115,
+        "min_edge": 6.75,
+        "min_prob": 0.5750000000000001
       },
       "strong": {
-        "min_ev": 0.07,
-        "min_edge": 5.0,
-        "min_prob": 0.63
+        "min_ev": 0.14,
+        "min_edge": 8.0,
+        "min_prob": 0.5900000000000001
       }
     },
     "spread": {
@@ -76,16 +76,16 @@
   "split": "season<2025 / season=2025",
   "diagnostics": {
     "moneyline": {
-      "train_bets": 492,
-      "holdout_bets": 257,
+      "train_bets": 463,
+      "holdout_bets": 252,
       "selected": [
-        0.02,
-        3,
-        0.6,
+        0.1,
+        6,
+        0.56,
         {
-          "n": 214,
-          "roi": 0.08749409143122694,
-          "lcb": 0.020156038444711324,
+          "n": 131,
+          "roi": 0.03713089389139214,
+          "lcb": -0.06550862117667205,
           "avg_clv": 0.0
         }
       ],
@@ -94,17 +94,17 @@
       ]
     },
     "spread": {
-      "train_bets": 1022,
-      "holdout_bets": 523,
+      "train_bets": 1034,
+      "holdout_bets": 518,
       "selected": [
         0.1,
         6,
         0.6,
         {
           "n": 174,
-          "roi": 0.1138975966562174,
-          "lcb": 0.022578568690292414,
-          "avg_clv": 0.028454892912086485
+          "roi": 0.10292580982236159,
+          "lcb": 0.011431870679778855,
+          "avg_clv": 0.0297947042209618
         }
       ],
       "excluded_weeks": [
@@ -112,8 +112,8 @@
       ]
     },
     "total": {
-      "train_bets": 766,
-      "holdout_bets": 401,
+      "train_bets": 776,
+      "holdout_bets": 393,
       "selected": null
     }
   }
