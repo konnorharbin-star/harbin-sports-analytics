@@ -37,13 +37,18 @@ def test_data_contract_catches_duplicate_game():
     assert any(x["code"]=="identity.duplicate_game_id" for x in r["issues"])
 
 
-def test_release_gate_cannot_go_production_without_evidence(tmp_path):
-    meta={
+def _engineering_ready_meta(multi_book):
+    return {
         "market_coverage":{"games":10,"moneyline":10,"spread":10,"total":10},
-        "advanced_features":{"live_coverage":1.0},"current_context":{"coverage":1.0,"sources":["x"]},
-        "market_intelligence":{"multi_book_coverage":1.0},
+        "advanced_features":{"live_coverage":1.0,"dynamic_coverage":1.0},
+        "current_context":{"coverage":1.0,"sources":["x"]},
+        "market_intelligence":{"multi_book_coverage":multi_book},
         "metrics":{"margin_release_guard_passed":True,"total_release_guard_passed":True,"total_release_weight":.4,"win_brier":.15,"win_ece":.03},
     }
+
+
+def test_release_gate_cannot_go_production_without_evidence(tmp_path):
+    meta=_engineering_ready_meta(1.0)
     gate=build_release_gate(meta,{"live_readiness_score":95},{"status":"PASS"},tmp_path/"missing.json",tmp_path/"missing-live.json")
     assert gate["release_state"]=="PAPER"
     assert not gate["production_eligible"]
@@ -53,7 +58,7 @@ def test_release_gate_production_requires_history_and_live(tmp_path):
     evidence={"overall":{"bets":1500,"roi_ci_95":[.01,.08],"avg_clv":.02},"by_market":{"spread":{"roi":.03,"avg_clv":.01},"moneyline":{"roi":.02,"avg_clv":.01}},"by_season":{"2024":{"roi":.02,"avg_clv":.01},"2025":{"roi":.03,"avg_clv":.01}}}
     live={"graded_bets":350,"roi":.02,"avg_clv_proxy":.01}
     ep=tmp_path/"e.json"; lp=tmp_path/"l.json"; ep.write_text(json.dumps(evidence)); lp.write_text(json.dumps(live))
-    meta={"market_coverage":{"games":10,"moneyline":10,"spread":10,"total":10},"advanced_features":{"live_coverage":1.0},"current_context":{"coverage":1.0,"sources":["x"]},"market_intelligence":{"multi_book_coverage":.9},"metrics":{"margin_release_guard_passed":True,"total_release_guard_passed":True,"total_release_weight":.5,"win_brier":.15,"win_ece":.03}}
+    meta=_engineering_ready_meta(.9)
     gate=build_release_gate(meta,{"live_readiness_score":95},{"status":"PASS"},ep,lp)
     assert gate["release_state"]=="PRODUCTION"
     assert gate["production_eligible"]
