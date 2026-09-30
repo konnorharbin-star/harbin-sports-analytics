@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import math
 import re
+import time
 from pathlib import Path
 
 import numpy as np
@@ -33,14 +34,44 @@ def canon_id(v):
         return str(v).strip()
 
 
-def _cached(url, path):
-    if path.exists() and path.stat().st_size > 100:
+def _cache_is_fresh(path: Path, max_age_hours: float | None) -> bool:
+    if not path.exists() or path.stat().st_size <= 100:
+        return False
+    if max_age_hours is None:
+        return True
+    age_hours = max(0.0, (time.time() - path.stat().st_mtime) / 3600.0)
+    return age_hours <= float(max_age_hours)
+
+
+def _cached(url, path, max_age_hours=None, diagnostics=None):
+    """Read-through CSV cache with stale-on-error protection.
+
+    Historical seasons are immutable enough to cache indefinitely. Current-season and
+    preseason-prior files get finite TTLs so a long-lived GitHub cache never freezes the
+    feature set for the rest of the season. If a refresh fails, a previously valid file
+    is used and the stale fallback is surfaced in metadata rather than silently discarded.
+    """
+    path = Path(path)
+    diagnostics = diagnostics if diagnostics is not None else []
+    if _cache_is_fresh(path, max_age_hours):
+        diagnostics.append({"path": str(path), "status": "cache_hit", "max_age_hours": max_age_hours})
         return pd.read_csv(path, low_memory=False)
+
     path.parent.mkdir(parents=True, exist_ok=True)
-    r = requests.get(url, timeout=40, headers={"User-Agent": "HarbinSportsAnalytics/7.0"})
-    r.raise_for_status()
-    path.write_bytes(r.content)
-    return pd.read_csv(path, low_memory=False)
+    try:
+        r = requests.get(url, timeout=40, headers={"User-Agent": "HarbinSportsAnalytics/7.1"})
+        r.raise_for_status()
+        path.write_bytes(r.content)
+        diagnostics.append({"path": str(path), "status": "refreshed", "max_age_hours": max_age_hours})
+        return pd.read_csv(path, low_memory=False)
+    except Exception as exc:
+        if path.exists() and path.stat().st_size > 100:
+            diagnostics.append({
+                "path": str(path), "status": "stale_fallback", "max_age_hours": max_age_hours,
+                "error": f"{type(exc).__name__}: {exc}",
+            })
+            return pd.read_csv(path, low_memory=False)
+        raise
 
 
 def _col(cols, *choices):
@@ -65,15 +96,9 @@ def _numeric_ratio(series: pd.Series) -> float:
 
 
 def identify_team_columns(df: pd.DataFrame) -> tuple[str | None, str | None]:
-    """Return (numeric ESPN-team-id column, textual team-name column).
-
-    SportsDataverse schemas have changed over time and `pos_team` has existed as both
-    a team identifier and a human-readable team field in adjacent datasets.  The old
-    loader selected it before `team_id`, which could silently produce 0% live dynamic
-    coverage.  We now choose by both semantic name and observed value type.
-    """
+    """Return (numeric ESPN-team-id column, textual team-name column)."""
     cols = list(df.columns)
-    exact_id = ["team_id", "teamId", "pos_team_id", "posTeamId", "team.id", "teamId"]
+    exact_id = ["team_id", "teamId", "pos_team_id", "posTeamId", "team.id"]
     exact_name = ["team", "team_name", "school", "display_name", "pos_team", "posTeam"]
 
     id_col = None
@@ -102,7 +127,6 @@ def identify_team_columns(df: pd.DataFrame) -> tuple[str | None, str | None]:
                 name_col = c
                 break
 
-    # Last-resort compatibility: a textual pos_team is a name, a numeric pos_team is an id.
     pos = next((x for x in cols if str(x).lower() in {"pos_team", "posteam"}), None)
     if pos is not None:
         ratio = _numeric_ratio(df[pos])
@@ -114,7 +138,12 @@ def identify_team_columns(df: pd.DataFrame) -> tuple[str | None, str | None]:
 
 
 class AdvancedFeatureStore:
-    """Pregame as-of advanced efficiency plus roster priors, keyed by ESPN team ID/name."""
+    """Leakage-safe pregame efficiency and roster priors keyed by ESPN team identity.
+
+    Dynamic features are materialized strictly as-of the start of a week. For each raw
+    metric we expose both season-to-date mean and an EWMA recent-form version. Week W
+    never sees data from week W or later.
+    """
 
     KEYWORDS = (
         "epa", "success", "explos", "line_yard", "stuff", "power", "first_down",
@@ -125,6 +154,9 @@ class AdvancedFeatureStore:
         "game_id", "season", "week", "team", "pos_team", "opponent", "opp_team",
         "home", "away", "score", "points", "win", "result", "id",
     )
+    RECENT_ALPHA = 0.35
+    CURRENT_SEASON_TTL_HOURS = 6.0
+    STATIC_PRIOR_TTL_HOURS = 24.0
 
     def __init__(self, start_season, end_season, cache_dir="cache/advanced"):
         self.start_season = int(start_season)
@@ -132,20 +164,30 @@ class AdvancedFeatureStore:
         self.cache = Path(cache_dir)
         self.errors = []
         self.sources = []
+        self.cache_diagnostics = []
         self.id_lookup = {}
         self.name_lookup = {}
         self.static_lookup = {}
         self.feature_names = []
         self.dynamic_names = []
         self.identity_diagnostics = {}
+        self.source_rows = {}
         self._build()
 
     def _load_adv(self):
         frames = []
         for season in range(self.start_season, self.end_season + 1):
             try:
-                d = _cached(ADV_TEAM_URL.format(season=season), self.cache / f"adv_team_{season}.csv")
+                ttl = self.CURRENT_SEASON_TTL_HOURS if season == self.end_season else None
+                d = _cached(
+                    ADV_TEAM_URL.format(season=season), self.cache / f"adv_team_{season}.csv",
+                    max_age_hours=ttl, diagnostics=self.cache_diagnostics,
+                )
                 if len(d):
+                    d = d.copy()
+                    if "season" not in d.columns:
+                        d["season"] = season
+                    self.source_rows[str(season)] = int(len(d))
                     frames.append(d)
             except Exception as e:
                 self.errors.append(f"adv_team {season}: {type(e).__name__}: {e}")
@@ -202,36 +244,66 @@ class AdvancedFeatureStore:
         work.week = work.week.astype(int)
         metrics = list(vals.columns)
 
-        # Average duplicate team/week rows first (some source seasons contain multiple splits).
-        wr = work.groupby(["season", "week", "team_id", "team_name"], as_index=False, dropna=False)[metrics].mean(numeric_only=True)
-        wr = wr.sort_values(["season", "week"])
+        wr = work.groupby(
+            ["season", "week", "team_id", "team_name"], as_index=False, dropna=False
+        )[metrics].mean(numeric_only=True)
+        wr = wr.sort_values(["season", "week", "team_id", "team_name"])
+
         prior = {}
         for season in sorted(wr.season.unique()):
             states = {}
             sub = wr[wr.season == season]
             for _, row in sub.iterrows():
-                # Prefer numeric ID as the persistent key, otherwise canonical name.
                 persistent = ("id", str(row.team_id)) if str(row.team_id) else ("name", str(row.team_name))
-                st = states.setdefault(persistent, {m: [0.0, 0] for m in metrics})
+                st = states.setdefault(
+                    persistent,
+                    {m: {"sum": 0.0, "count": 0, "recent": np.nan} for m in metrics},
+                )
                 carry = prior.get(persistent, {})
-                pre = {
-                    m: (st[m][0] / st[m][1] if st[m][1] else (.62 * carry[m] if m in carry and pd.notna(carry[m]) else np.nan))
-                    for m in metrics
-                }
+                pre = {}
+                for m in metrics:
+                    state = st[m]
+                    carry_mean = carry.get(m, {}).get("mean", np.nan)
+                    carry_recent = carry.get(m, {}).get("recent", np.nan)
+                    mean_value = (
+                        state["sum"] / state["count"] if state["count"]
+                        else (0.62 * carry_mean if pd.notna(carry_mean) else np.nan)
+                    )
+                    recent_value = (
+                        state["recent"] if pd.notna(state["recent"])
+                        else (0.62 * carry_recent if pd.notna(carry_recent) else np.nan)
+                    )
+                    pre[m] = mean_value
+                    pre["recent_" + m] = recent_value
+
                 if str(row.team_id):
-                    self.id_lookup[(int(season), int(row.week), str(row.team_id))] = pre
+                    self.id_lookup[(int(season), int(row.week), str(row.team_id))] = dict(pre)
                 if str(row.team_name):
-                    self.name_lookup[(int(season), int(row.week), str(row.team_name))] = pre
+                    self.name_lookup[(int(season), int(row.week), str(row.team_name))] = dict(pre)
+
                 for m in metrics:
                     v = row.get(m)
                     if pd.notna(v) and math.isfinite(float(v)):
-                        st[m][0] += float(v)
-                        st[m][1] += 1
-            for key, st in states.items():
-                prior[key] = {m: (v[0] / v[1] if v[1] else prior.get(key, {}).get(m, np.nan)) for m, v in st.items()}
+                        v = float(v)
+                        state = st[m]
+                        state["sum"] += v
+                        state["count"] += 1
+                        state["recent"] = v if pd.isna(state["recent"]) else (
+                            (1 - self.RECENT_ALPHA) * float(state["recent"]) + self.RECENT_ALPHA * v
+                        )
 
-        self.dynamic_names = metrics
-        self.feature_names = list(metrics)
+            for key, st in states.items():
+                prior[key] = {}
+                for m, state in st.items():
+                    previous = prior.get(key, {}).get(m, {})
+                    prior[key][m] = {
+                        "mean": state["sum"] / state["count"] if state["count"] else previous.get("mean", np.nan),
+                        "recent": state["recent"] if pd.notna(state["recent"]) else previous.get("recent", np.nan),
+                    }
+
+        recent = ["recent_" + m for m in metrics]
+        self.dynamic_names = metrics + recent
+        self.feature_names = list(self.dynamic_names)
 
     def _load_static(self):
         files = {
@@ -241,13 +313,18 @@ class AdvancedFeatureStore:
         }
         for label, fn in files.items():
             try:
-                d = _cached(f"{RAW_BASE}/{fn}", self.cache / fn)
+                d = _cached(
+                    f"{RAW_BASE}/{fn}", self.cache / fn,
+                    max_age_hours=self.STATIC_PRIOR_TTL_HOURS,
+                    diagnostics=self.cache_diagnostics,
+                )
             except Exception as e:
                 self.errors.append(f"{label}: {type(e).__name__}: {e}")
                 continue
             sc = _col(d.columns, "season", "year")
             tc = _col(d.columns, "team", "school", "team_name")
             if sc is None or tc is None:
+                self.errors.append(f"{label}: missing season/team keys")
                 continue
             nums = []
             for c in d.columns:
@@ -271,7 +348,9 @@ class AdvancedFeatureStore:
     def _build(self):
         self._build_asof(self._load_adv())
         self._load_static()
-        self.feature_names = list(dict.fromkeys(self.feature_names + [k for v in self.static_lookup.values() for k in v]))
+        self.feature_names = list(dict.fromkeys(
+            self.feature_names + [k for v in self.static_lookup.values() for k in v]
+        ))
 
     def _team(self, season, week, team, team_id=""):
         out = {}
@@ -290,18 +369,45 @@ class AdvancedFeatureStore:
             "feature_count": len(self.feature_names),
             "dynamic_feature_count": len(self.dynamic_names),
             "identity": self.identity_diagnostics,
+            "source_rows": self.source_rows,
+            "cache": self.cache_diagnostics[-30:],
+            "asof_policy": "week W receives only observations from weeks < W; prior-season carry is regressed 38% toward missing/neutral",
+            "recent_form_alpha": self.RECENT_ALPHA,
+            "lookup_keys": int(len(self.id_lookup) + len(self.name_lookup)),
+            "static_team_seasons": int(len(self.static_lookup)),
         }
         if frame.empty:
-            return frame.copy(), {**base_meta, "coverage": 0.0, "dynamic_coverage": 0.0}
+            return frame.copy(), {
+                **base_meta, "coverage": 0.0, "dynamic_coverage": 0.0,
+                "pair_feature_coverage": 0.0,
+            }
 
         out = frame.copy()
         hits = dynamic_hits = 0
-        names = set(self.feature_names)
+        names = list(dict.fromkeys(self.feature_names))
+        dyn = set(self.dynamic_names)
+        pair_cov = []
+        dyn_pair_cov = []
+
         for i, r in out.iterrows():
             hv = self._team(int(r.season), int(r.week), str(r.home_team), r.get("home_id", ""))
             av = self._team(int(r.season), int(r.week), str(r.away_team), r.get("away_id", ""))
             hits += int(bool(hv or av))
-            dynamic_hits += int(any(k in hv or k in av for k in self.dynamic_names))
+            dynamic_hits += int(any(k in hv or k in av for k in dyn))
+
+            home_available = sum(pd.notna(hv.get(n, np.nan)) for n in names)
+            away_available = sum(pd.notna(av.get(n, np.nan)) for n in names)
+            pair_available = sum(pd.notna(hv.get(n, np.nan)) and pd.notna(av.get(n, np.nan)) for n in names)
+            dyn_pair_available = sum(pd.notna(hv.get(n, np.nan)) and pd.notna(av.get(n, np.nan)) for n in dyn)
+            denom = max(1, len(names))
+            dyn_denom = max(1, len(dyn))
+            out.at[i, "advanced_home_coverage"] = home_available / denom
+            out.at[i, "advanced_away_coverage"] = away_available / denom
+            out.at[i, "advanced_pair_coverage"] = pair_available / denom
+            out.at[i, "advanced_dynamic_pair_coverage"] = dyn_pair_available / dyn_denom
+            pair_cov.append(pair_available / denom)
+            dyn_pair_cov.append(dyn_pair_available / dyn_denom)
+
             for n in names:
                 h, a = hv.get(n, np.nan), av.get(n, np.nan)
                 out.at[i, "home_" + n] = h
@@ -312,8 +418,11 @@ class AdvancedFeatureStore:
                 else:
                     out.at[i, "diff_" + n] = np.nan
                     out.at[i, "avg_" + n] = np.nan
+
         return out, {
             **base_meta,
             "coverage": hits / len(out),
             "dynamic_coverage": dynamic_hits / len(out),
+            "pair_feature_coverage": float(np.mean(pair_cov)) if pair_cov else 0.0,
+            "dynamic_pair_feature_coverage": float(np.mean(dyn_pair_cov)) if dyn_pair_cov else 0.0,
         }
