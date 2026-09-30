@@ -8,7 +8,7 @@ import numpy as np
 import pandas as pd
 
 DEFAULT_POLICY = {
-    "version": 3,
+    "version": 4,
     "deployment_mode": "paper",
     "markets": {
         "moneyline": {"enabled": True, "excluded_weeks": [], "lean": {"min_ev": .02, "min_edge": 1.5, "min_prob": .52}, "bet": {"min_ev": .04, "min_edge": 2.5, "min_prob": .54}, "strong": {"min_ev": .07, "min_edge": 4.0, "min_prob": .56}},
@@ -36,6 +36,8 @@ DEFAULT_POLICY = {
         "adverse_run_multiplier": .50,
         "require_executable_book": True,
         "min_market_book_count_for_execution": 1,
+        "require_quote_timestamp_for_execution": True,
+        "max_quote_age_minutes": 60,
         "require_live_history_for_production": True,
     },
     "source": "conservative defaults",
@@ -74,15 +76,15 @@ def thresholds_for(market: str, path="reports/production_policy.json"):
 def market_allowed(market: str, week=None, path="reports/production_policy.json") -> tuple[bool, str]:
     cfg = thresholds_for(market, path)
     if not bool(cfg.get("enabled", True)):
-        return False, str(cfg.get("disabled_reason") or "market did not pass out-of-sample policy validation")
+        return False, str(cfg.get("disabled_reason") or "market did not pass untouched evaluation")
     if week is not None:
         try:
             w = int(week)
             if w in {int(x) for x in cfg.get("excluded_weeks", [])}:
-                return False, f"week {w} failed repeated prior/holdout validation"
+                return False, f"week {w} failed repeated development/tuning validation"
         except Exception:
             pass
-    return True, "validated policy path"
+    return True, "validated nested policy path"
 
 
 def signal_from_policy(ev: float, edge: float, probability: float, market: str, path="reports/production_policy.json", week=None) -> str:
@@ -115,13 +117,50 @@ def _profit_stats(df: pd.DataFrame):
     return {"n": int(len(p)), "roi": roi, "lcb": float(roi - 1.28 * se), "avg_clv": float(clv.mean()) if len(clv) else None}
 
 
-def _split_time(df: pd.DataFrame):
-    if "season" in df.columns and df["season"].nunique() >= 2:
-        last = int(pd.to_numeric(df["season"], errors="coerce").dropna().max())
-        return df[df["season"] < last].copy(), df[df["season"] == last].copy(), f"season<{last} / season={last}"
-    n = len(df)
-    cut = max(1, int(n * .7))
-    return df.iloc[:cut].copy(), df.iloc[cut:].copy(), "chronological 70/30"
+def _promotion_sample(df: pd.DataFrame) -> pd.DataFrame:
+    """Only timestamp-safe archived opening entries may calibrate production policy."""
+    if "entry_quote_verified" in df.columns:
+        flag = df["entry_quote_verified"].fillna(False).astype(bool)
+        return df[flag].copy()
+    if "used_distinct_open" in df.columns:
+        flag = df["used_distinct_open"].fillna(False).astype(bool)
+        return df[flag].copy()
+    return df.iloc[0:0].copy()
+
+
+def _chronological_blocks(df: pd.DataFrame):
+    cols = [c for c in ("season", "week", "game_id") if c in df.columns]
+    d = df.sort_values(cols, kind="mergesort").reset_index(drop=True) if cols else df.reset_index(drop=True)
+    if {"season", "week"}.issubset(d.columns):
+        blocks = list(d.groupby(["season", "week"], sort=True, dropna=False))
+        return d, blocks
+    return d, []
+
+
+def _nested_split(df: pd.DataFrame):
+    """Development -> tune -> untouched evaluation. Evaluation never selects policy."""
+    d, blocks = _chronological_blocks(df)
+    seasons = sorted(pd.to_numeric(d.get("season"), errors="coerce").dropna().astype(int).unique()) if "season" in d else []
+    if len(seasons) >= 3:
+        tune_season, eval_season = seasons[-2], seasons[-1]
+        dev = d[pd.to_numeric(d.season, errors="coerce") < tune_season].copy()
+        tune = d[pd.to_numeric(d.season, errors="coerce") == tune_season].copy()
+        evaluation = d[pd.to_numeric(d.season, errors="coerce") == eval_season].copy()
+        return dev, tune, evaluation, f"season<{tune_season} / tune={tune_season} / untouched={eval_season}"
+    if len(blocks) >= 8:
+        n = len(blocks)
+        i1 = max(1, int(round(.50 * n)))
+        i2 = max(i1 + 1, int(round(.75 * n)))
+        i2 = min(i2, n - 1)
+        dev_keys = {k for k, _ in blocks[:i1]}
+        tune_keys = {k for k, _ in blocks[i1:i2]}
+        keys = list(zip(pd.to_numeric(d.season, errors="coerce"), pd.to_numeric(d.week, errors="coerce")))
+        dev = d[[k in dev_keys for k in keys]].copy()
+        tune = d[[k in tune_keys for k in keys]].copy()
+        evaluation = d[[k not in dev_keys and k not in tune_keys for k in keys]].copy()
+        return dev, tune, evaluation, "whole-week 50/25/25 nested chronology"
+    n = len(d); a = max(1, int(.50 * n)); b = min(n - 1, max(a + 1, int(.75 * n)))
+    return d.iloc[:a].copy(), d.iloc[a:b].copy(), d.iloc[b:].copy(), "chronological 50/25/25 fallback"
 
 
 def _filtered(df, ev, edge, prob):
@@ -132,18 +171,11 @@ def _filtered(df, ev, edge, prob):
     ].copy()
 
 
-def _repeated_weak_weeks(train: pd.DataFrame, hold: pd.DataFrame, ev: float, edge: float, prob: float) -> list[int]:
-    """Exclude only weeks that are negative in both prior seasons and untouched holdout.
-
-    This is deliberately conservative: a week needs adequate sample in each side of the
-    time split and must be negative twice. It prevents one historically bad week from
-    being hard-coded after looking at the complete sample.
-    """
-    if "week" not in train.columns or "week" not in hold.columns:
+def _repeated_weak_weeks(dev: pd.DataFrame, tune: pd.DataFrame, ev: float, edge: float, prob: float) -> list[int]:
+    """Week exclusions are selected before the untouched evaluation period."""
+    if "week" not in dev.columns or "week" not in tune.columns:
         return []
-    tr = _filtered(train, ev, edge, prob)
-    va = _filtered(hold, ev, edge, prob)
-    out = []
+    tr = _filtered(dev, ev, edge, prob); va = _filtered(tune, ev, edge, prob); out = []
     weeks = sorted(set(pd.to_numeric(tr.week, errors="coerce").dropna().astype(int)) & set(pd.to_numeric(va.week, errors="coerce").dropna().astype(int)))
     for w in weeks:
         a = _profit_stats(tr[pd.to_numeric(tr.week, errors="coerce") == w])
@@ -153,29 +185,38 @@ def _repeated_weak_weeks(train: pd.DataFrame, hold: pd.DataFrame, ev: float, edg
     return out
 
 
-def derive_production_policy(bets_path="reports/backtest_bets.csv", summary_path="reports/backtest_summary.json", out_path="reports/production_policy.json"):
-    policy = _deepcopy_default()
-    bp = Path(bets_path)
-    if not bp.exists():
-        Path(out_path).write_text(json.dumps(policy, indent=2))
-        return policy
-    bets = pd.read_csv(bp, low_memory=False)
-    if bets.empty or not {"market", "ev", "edge", "probability", "profit"}.issubset(bets.columns):
-        Path(out_path).write_text(json.dumps(policy, indent=2))
-        return policy
-    bets = bets.sort_values([c for c in ("season", "week", "game_id") if c in bets.columns]).reset_index(drop=True)
-    train, hold, split_desc = _split_time(bets)
-    diagnostics = {}
-    grids = {
-        "moneyline": ([.02, .03, .04, .05, .06, .07, .08, .10], [1.5, 2, 2.5, 3, 4, 5, 6], [.52, .54, .56, .58, .60]),
-        "spread": ([.02, .03, .04, .05, .06, .07, .08, .10], [2, 2.5, 3, 3.5, 4, 5, 6], [.52, .54, .56, .58, .60]),
-        "total": ([.02, .03, .04, .05, .06, .07, .08, .10], [2.5, 3, 3.5, 4, 5, 6, 7], [.52, .54, .56, .58, .60]),
-    }
+def _candidate_grid(market):
+    if market == "moneyline": return ([.02,.03,.04,.05,.06,.07,.08,.10],[1.5,2,2.5,3,4,5,6],[.52,.54,.56,.58,.60])
+    if market == "spread": return ([.02,.03,.04,.05,.06,.07,.08,.10],[2,2.5,3,3.5,4,5,6],[.52,.54,.56,.58,.60])
+    return ([.02,.03,.04,.05,.06,.07,.08,.10],[2.5,3,3.5,4,5,6,7],[.52,.54,.56,.58,.60])
 
-    for market, (evs, edges, probs) in grids.items():
-        tr = train[train.market.astype(str).str.lower() == market].copy()
-        va = hold[hold.market.astype(str).str.lower() == market].copy()
+
+def derive_production_policy(
+    bets_path="reports/backtest_bets.csv",
+    summary_path="reports/backtest_summary.json",
+    out_path="reports/production_policy.json",
+    evidence_path="reports/evidence_report.json",
+):
+    policy = _deepcopy_default(); bp = Path(bets_path)
+    if not bp.exists():
+        Path(out_path).write_text(json.dumps(policy, indent=2)); return policy
+    raw = pd.read_csv(bp, low_memory=False)
+    bets = _promotion_sample(raw)
+    required = {"market", "ev", "edge", "probability", "profit"}
+    if bets.empty or not required.issubset(bets.columns):
+        policy["source"] = "paper only; no verified archived opening-entry sample"
+        Path(out_path).write_text(json.dumps(policy, indent=2)); return policy
+    bets, _ = _chronological_blocks(bets)
+    dev, tune, evaluation, split_desc = _nested_split(bets)
+    diagnostics = {"selection_uses_evaluation": False, "promotion_rows": int(len(bets)), "raw_archive_rows": int(len(raw))}
+
+    passed_markets = 0
+    for market in ("moneyline", "spread", "total"):
+        tr = dev[dev.market.astype(str).str.lower() == market].copy()
+        va = tune[tune.market.astype(str).str.lower() == market].copy()
+        evl = evaluation[evaluation.market.astype(str).str.lower() == market].copy()
         candidates = []
+        evs, edges, probs = _candidate_grid(market)
         for ev in evs:
             for edge in edges:
                 for prob in probs:
@@ -186,57 +227,37 @@ def derive_production_policy(bets_path="reports/backtest_bets.csv", summary_path
         chosen = None
         for _, _, _, ev, edge, prob in candidates[:25]:
             hs = _profit_stats(_filtered(va, ev, edge, prob))
-            if hs["n"] >= 20 and (hs["roi"] or -1) >= 0 and (hs["avg_clv"] is None or hs["avg_clv"] >= 0):
-                chosen = (ev, edge, prob, hs)
-                break
+            if hs["n"] >= 20 and hs["roi"] is not None and hs["roi"] >= 0 and hs["avg_clv"] is not None and hs["avg_clv"] >= 0:
+                chosen = (ev, edge, prob, hs); break
 
-        diagnostics[market] = {"train_bets": int(len(tr)), "holdout_bets": int(len(va)), "selected": chosen}
         cfg = policy["markets"][market]
+        diag = {"development_bets": int(len(tr)), "tune_bets": int(len(va)), "evaluation_bets": int(len(evl)), "selected": chosen}
         if not chosen:
-            cfg["enabled"] = False
-            cfg["disabled_reason"] = "no threshold passed the independent time holdout with non-negative ROI and CLV"
-            cfg["excluded_weeks"] = []
-            continue
+            cfg["enabled"] = False; cfg["disabled_reason"] = "no threshold passed pre-evaluation development/tuning validation"; cfg["excluded_weeks"] = []
+            diag["evaluation"] = None; diag["evaluation_passed"] = False; diagnostics[market] = diag; continue
 
-        ev, edge, prob, hs = chosen
-        d = DEFAULT_POLICY["markets"][market]
-        floor = {
-            "min_ev": max(float(d["lean"]["min_ev"]), ev),
-            "min_edge": max(float(d["lean"]["min_edge"]), edge),
-            "min_prob": max(float(d["lean"]["min_prob"]), prob),
-        }
-        cfg["enabled"] = True
-        cfg.pop("disabled_reason", None)
+        ev, edge, prob, _ = chosen; d = DEFAULT_POLICY["markets"][market]
+        floor = {"min_ev": max(float(d["lean"]["min_ev"]), ev), "min_edge": max(float(d["lean"]["min_edge"]), edge), "min_prob": max(float(d["lean"]["min_prob"]), prob)}
         cfg["lean"] = floor
-        cfg["bet"] = {
-            "min_ev": max(float(d["bet"]["min_ev"]), floor["min_ev"] + .015),
-            "min_edge": max(float(d["bet"]["min_edge"]), floor["min_edge"] + .75),
-            "min_prob": max(float(d["bet"]["min_prob"]), floor["min_prob"] + .015),
-        }
-        cfg["strong"] = {
-            "min_ev": max(float(d["strong"]["min_ev"]), floor["min_ev"] + .04),
-            "min_edge": max(float(d["strong"]["min_edge"]), floor["min_edge"] + 2.0),
-            "min_prob": max(float(d["strong"]["min_prob"]), floor["min_prob"] + .03),
-        }
+        cfg["bet"] = {"min_ev": max(float(d["bet"]["min_ev"]), floor["min_ev"] + .015), "min_edge": max(float(d["bet"]["min_edge"]), floor["min_edge"] + .75), "min_prob": max(float(d["bet"]["min_prob"]), floor["min_prob"] + .015)}
+        cfg["strong"] = {"min_ev": max(float(d["strong"]["min_ev"]), floor["min_ev"] + .04), "min_edge": max(float(d["strong"]["min_edge"]), floor["min_edge"] + 2.0), "min_prob": max(float(d["strong"]["min_prob"]), floor["min_prob"] + .03)}
         cfg["excluded_weeks"] = _repeated_weak_weeks(tr, va, floor["min_ev"], floor["min_edge"], floor["min_prob"])
-        diagnostics[market]["excluded_weeks"] = cfg["excluded_weeks"]
+        eval_filtered = _filtered(evl, floor["min_ev"], floor["min_edge"], floor["min_prob"])
+        if cfg["excluded_weeks"] and "week" in eval_filtered:
+            eval_filtered = eval_filtered[~pd.to_numeric(eval_filtered.week, errors="coerce").isin(cfg["excluded_weeks"])]
+        es = _profit_stats(eval_filtered)
+        passed = es["n"] >= 20 and es["roi"] is not None and es["roi"] >= 0 and es["avg_clv"] is not None and es["avg_clv"] >= 0
+        cfg["enabled"] = bool(passed)
+        if not passed: cfg["disabled_reason"] = "frozen threshold failed untouched chronological evaluation"
+        else: cfg.pop("disabled_reason", None); passed_markets += 1
+        diag.update({"excluded_weeks": cfg["excluded_weeks"], "evaluation": es, "evaluation_passed": bool(passed)})
+        diagnostics[market] = diag
 
-    summary = {}
-    try:
-        summary = json.loads(Path(summary_path).read_text())
-    except Exception:
-        pass
-    overall = summary.get("overall") or {}
-    ci = overall.get("roi_ci_95") or [None, None]
-    robust = (
-        int(overall.get("bets", 0) or 0) >= 500
-        and ci[0] is not None and float(ci[0]) > 0
-        and overall.get("avg_clv") is not None and float(overall["avg_clv"]) > 0
-    )
-    policy["deployment_mode"] = "production" if robust else "paper"
-    policy["source"] = "time-split backtest policy calibration with fail-closed market/week gates plus Stage 5 portfolio risk defaults"
+    try: evidence = json.loads(Path(evidence_path).read_text())
+    except Exception: evidence = {}
+    robust = str(evidence.get("status") or "").upper() == "ROBUST" and bool((evidence.get("promotion_sample") or {}).get("entry_quote_verified", False))
+    policy["deployment_mode"] = "production" if robust and passed_markets >= 2 else "paper"
+    policy["source"] = "nested chronological policy calibration on verified archived opening entries; untouched evaluation is release-only; Stage 5/7 execution defaults fail closed"
     policy["split"] = split_desc
     policy["diagnostics"] = diagnostics
-    Path(out_path).parent.mkdir(parents=True, exist_ok=True)
-    Path(out_path).write_text(json.dumps(policy, indent=2))
-    return policy
+    Path(out_path).parent.mkdir(parents=True, exist_ok=True); Path(out_path).write_text(json.dumps(policy, indent=2)); return policy

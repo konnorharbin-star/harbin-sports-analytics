@@ -3,7 +3,7 @@ import argparse
 import json
 from pathlib import Path
 
-from harbin.backtest_runtime import run_backtest
+from harbin.backtest_audit import run_backtest
 from harbin.policy import derive_production_policy, DEFAULT_POLICY
 from harbin.proof import build_evidence_report
 
@@ -15,37 +15,36 @@ a=p.parse_args()
 
 bets,summary=run_backtest(a.start_season,a.end_season,a.history_start)
 
-# Never promote a model because evidence generation itself failed. If a source
-# produces no historical candidate bets, keep the system in PAPER mode and
-# write explicit diagnostics instead of crashing the workflow.
+# Evidence is frozen before policy calibration. The policy may read that evidence,
+# but the untouched policy-evaluation block can never rewrite historical outcomes.
 if bets.empty:
-    policy=json.loads(json.dumps(DEFAULT_POLICY))
-    policy["deployment_mode"]="paper"
-    policy["source"]="conservative defaults; no matched historical betting sample"
-    Path("reports/production_policy.json").write_text(json.dumps(policy,indent=2))
     evidence={
         "status":"UNPROVEN",
         "overall":summary.get("overall",{}),
+        "all_archive_overall":summary.get("overall",{}),
+        "promotion_sample":{"entry_quote_verified":False,"verified_bets":0,"all_archive_bets":0,"excluded_unverified_bets":0},
         "by_market":{},"by_signal":{},"by_season":{},"by_week":{},
         "criteria":{
-            "robust":"1000+ bets, positive ROI 95% CI lower bound, positive CLV, breadth across markets and seasons",
-            "validated":"500+ bets with positive ROI and CLV",
-            "developing":"150+ bets",
-            "unproven":"below developing sample"
+            "robust":"1000+ verified opening-entry bets, positive week-block ROI 95% CI lower bound, positive CLV and breadth across markets/seasons",
+            "validated":"500+ verified opening-entry bets with positive ROI and CLV",
+            "developing":"150+ verified opening-entry bets",
+            "unproven":"below developing sample or unverified entry timing"
         },
         "note":"No matched historical wager sample was produced; production wagering remains disabled."
     }
     Path("reports/evidence_report.json").write_text(json.dumps(evidence,indent=2))
+    policy=json.loads(json.dumps(DEFAULT_POLICY)); policy["deployment_mode"]="paper"; policy["source"]="conservative defaults; no verified historical betting sample"
+    Path("reports/production_policy.json").write_text(json.dumps(policy,indent=2))
 else:
-    policy=derive_production_policy()
     evidence=build_evidence_report()
+    policy=derive_production_policy()
 
 print(f"Backtest complete: {a.start_season}-{a.end_season}")
-print("Bets:",summary["overall"]["bets"])
-print("ROI:",summary["overall"]["roi"])
-print("Units:",summary["overall"]["units"])
-print("Average CLV:",summary["overall"]["avg_clv"])
-print("ROI 95% bootstrap CI:",summary["overall"]["roi_ci_95"])
+print("Archive bets:",summary["overall"]["bets"])
+print("Promotion bets:",evidence.get("overall",{}).get("bets"))
+print("Promotion ROI:",evidence.get("overall",{}).get("roi"))
+print("Promotion CLV:",evidence.get("overall",{}).get("avg_clv"))
+print("Promotion ROI 95% week-block CI:",evidence.get("overall",{}).get("roi_ci_95"))
 print("Evidence:",evidence["status"])
 print("Deployment mode:",policy["deployment_mode"])
 print("Open reports/backtest_summary.json, reports/evidence_report.json, and reports/production_policy.json.")

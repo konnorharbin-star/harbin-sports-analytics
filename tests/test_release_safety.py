@@ -55,8 +55,14 @@ def test_release_gate_cannot_go_production_without_evidence(tmp_path):
 
 
 def test_release_gate_production_requires_history_and_live(tmp_path):
-    evidence={"overall":{"bets":1500,"roi_ci_95":[.01,.08],"avg_clv":.02},"by_market":{"spread":{"roi":.03,"avg_clv":.01},"moneyline":{"roi":.02,"avg_clv":.01}},"by_season":{"2024":{"roi":.02,"avg_clv":.01},"2025":{"roi":.03,"avg_clv":.01}}}
-    live={"graded_bets":350,"roi":.02,"avg_clv_proxy":.01}
+    evidence={
+        "status":"ROBUST",
+        "overall":{"bets":1500,"roi_ci_95":[.01,.08],"avg_clv":.02},
+        "promotion_sample":{"entry_quote_verified":True,"verified_bets":1500,"positive_markets":2,"positive_seasons":2,"min_segment_bets":50},
+        "by_market":{"spread":{"bets":750,"roi":.03,"avg_clv":.01},"moneyline":{"bets":750,"roi":.02,"avg_clv":.01}},
+        "by_season":{"2024":{"bets":750,"roi":.02,"avg_clv":.01},"2025":{"bets":750,"roi":.03,"avg_clv":.01}},
+    }
+    live={"graded_bets":350,"roi":.02,"avg_clv_proxy":.01,"portfolio_verified":True,"evidence_source":"portfolio_decisions_v1"}
     ep=tmp_path/"e.json"; lp=tmp_path/"l.json"; ep.write_text(json.dumps(evidence)); lp.write_text(json.dumps(live))
     meta=_engineering_ready_meta(.9)
     gate=build_release_gate(meta,{"live_readiness_score":95},{"status":"PASS"},ep,lp)
