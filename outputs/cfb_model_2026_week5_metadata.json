@@ -6,117 +6,178 @@
   "historical_games": 4079,
   "training_rows": 4079,
   "upcoming_games": 56,
-  "validation": "nested chronological core/tune/calibration/release holdout + leak-free expanding-season walk-forward + fail-closed baseline fallback",
+  "validation": "nested whole-week chronology: core fit -> tune weight -> OOF calibration -> untouched evaluation; final refit keeps the tune-selected weight and uses OOF probability calibration",
   "metrics": {
-    "margin_baseline_mae": 13.720203965537888,
-    "margin_tuned_model_mae": 13.065113293678154,
-    "margin_mae": 13.065113293678154,
-    "margin_rmse": 16.04756108647362,
-    "margin_tuned_weight": 0.5,
-    "margin_release_weight": 0.5,
-    "margin_blend_weight": 0.5,
+    "temporal_partition": {
+      "core": {
+        "rows": 2343,
+        "start": [
+          2021,
+          1
+        ],
+        "end": [
+          2024,
+          1
+        ]
+      },
+      "tune": {
+        "rows": 574,
+        "start": [
+          2024,
+          2
+        ],
+        "end": [
+          2024,
+          12
+        ]
+      },
+      "calibration": {
+        "rows": 596,
+        "start": [
+          2024,
+          13
+        ],
+        "end": [
+          2025,
+          8
+        ]
+      },
+      "evaluation": {
+        "rows": 566,
+        "start": [
+          2025,
+          9
+        ],
+        "end": [
+          2026,
+          4
+        ]
+      },
+      "whole_week_boundaries": true,
+      "selection_uses_evaluation": false
+    },
+    "selection_uses_evaluation": false,
+    "margin_tuning_rows": 574,
+    "margin_tuning_baseline_mae": 13.354821112893191,
+    "margin_tuning_mae": 13.05767181356274,
+    "margin_tuned_weight": 0.65,
+    "margin_calibration_rows": 596,
+    "margin_calibration_mae": 12.472050669195184,
+    "margin_baseline_mae": 13.22104338022683,
+    "margin_tuned_model_mae": 12.657079769201356,
+    "margin_mae": 12.657079769201356,
+    "margin_rmse": 15.661306554641623,
+    "margin_release_weight": 0.65,
+    "margin_blend_weight": 0.65,
     "margin_release_guard_passed": true,
-    "margin_release_guard_reason": "learned residual passed release holdout and 100% of leak-free season folds",
-    "margin_eval_rows": 368,
+    "margin_release_guard_reason": "selected residual beat baseline on untouched chronological evaluation",
+    "margin_eval_rows": 566,
     "margin_walkforward_folds": [
       {
         "season": 2023,
         "rows": 792,
-        "mae": 12.892332917603875,
-        "rmse": 16.26612361312397,
+        "mae": 12.900581723923983,
+        "rmse": 16.256164262948037,
         "baseline_mae": 13.183179942636782,
-        "weight": 0.4,
-        "weight_tuned_on": "prior-season chronological tail"
+        "weight": 0.5,
+        "weight_tuned_on": "strictly prior whole-week tune block"
       },
       {
         "season": 2024,
         "rows": 798,
-        "mae": 13.02979718125123,
-        "rmse": 16.449213644576012,
+        "mae": 12.88384613738527,
+        "rmse": 16.246149757462625,
         "baseline_mae": 13.22842366531436,
-        "weight": 0.30000000000000004,
-        "weight_tuned_on": "prior-season chronological tail"
+        "weight": 0.7000000000000001,
+        "weight_tuned_on": "strictly prior whole-week tune block"
       },
       {
         "season": 2025,
         "rows": 808,
-        "mae": 12.725540278875101,
-        "rmse": 16.168934927307646,
+        "mae": 12.666070646195536,
+        "rmse": 16.1245616087454,
         "baseline_mae": 13.026608931009665,
-        "weight": 0.7000000000000001,
-        "weight_tuned_on": "prior-season chronological tail"
+        "weight": 0.30000000000000004,
+        "weight_tuned_on": "strictly prior whole-week tune block"
       },
       {
         "season": 2026,
         "rows": 215,
-        "mae": 13.334027588909514,
-        "rmse": 16.553001411471783,
+        "mae": 12.891880369516082,
+        "rmse": 16.00642606511088,
         "baseline_mae": 14.439117971947091,
-        "weight": 0.6000000000000001,
-        "weight_tuned_on": "prior-season chronological tail"
+        "weight": 1.0,
+        "weight_tuned_on": "strictly prior whole-week tune block"
       }
     ],
-    "margin_walkforward_mae_mean": 12.99542449165993,
-    "margin_walkforward_mae_std": 0.22321452697382438,
+    "margin_walkforward_mae_mean": 12.835594719255218,
+    "margin_walkforward_mae_std": 0.0980535515667484,
     "margin_walkforward_improved_folds": 4,
     "margin_walkforward_fold_count": 4,
-    "total_baseline_mae": 12.778014944283827,
-    "total_tuned_model_mae": 12.889203610662932,
-    "total_mae": 12.778014944283827,
-    "total_rmse": 15.687832775187584,
-    "total_tuned_weight": 0.45,
-    "total_release_weight": 0.0,
-    "total_blend_weight": 0.0,
-    "total_release_guard_passed": false,
-    "total_release_guard_reason": "release holdout did not beat baseline; only 25% of leak-free season folds beat baseline",
-    "total_eval_rows": 368,
+    "total_tuning_rows": 574,
+    "total_tuning_baseline_mae": 12.731774042141415,
+    "total_tuning_mae": 12.731066260302976,
+    "total_tuned_weight": 0.05,
+    "total_calibration_rows": 596,
+    "total_calibration_mae": 12.924722975862737,
+    "total_baseline_mae": 12.693581407531097,
+    "total_tuned_model_mae": 12.681388088386885,
+    "total_mae": 12.681388088386885,
+    "total_rmse": 15.634935545218639,
+    "total_release_weight": 0.05,
+    "total_blend_weight": 0.05,
+    "total_release_guard_passed": true,
+    "total_release_guard_reason": "selected residual beat baseline on untouched chronological evaluation",
+    "total_eval_rows": 566,
     "total_walkforward_folds": [
       {
         "season": 2023,
         "rows": 792,
-        "mae": 13.183006578281455,
-        "rmse": 16.30167917237441,
+        "mae": 13.170229846680924,
+        "rmse": 16.291555749460617,
         "baseline_mae": 13.171288637289225,
-        "weight": 0.15000000000000002,
-        "weight_tuned_on": "prior-season chronological tail"
+        "weight": 0.25,
+        "weight_tuned_on": "strictly prior whole-week tune block"
       },
       {
         "season": 2024,
         "rows": 798,
-        "mae": 12.999489076508667,
-        "rmse": 16.465241970841667,
+        "mae": 13.009719665843507,
+        "rmse": 16.48324609700696,
         "baseline_mae": 12.964033987572272,
-        "weight": 0.45,
-        "weight_tuned_on": "prior-season chronological tail"
+        "weight": 0.7000000000000001,
+        "weight_tuned_on": "strictly prior whole-week tune block"
       },
       {
         "season": 2025,
         "rows": 808,
-        "mae": 12.889084625162337,
-        "rmse": 15.927551906466531,
+        "mae": 12.893439330076346,
+        "rmse": 15.920610565591266,
         "baseline_mae": 12.910666790164145,
-        "weight": 0.30000000000000004,
-        "weight_tuned_on": "prior-season chronological tail"
+        "weight": 0.45,
+        "weight_tuned_on": "strictly prior whole-week tune block"
       },
       {
         "season": 2026,
         "rows": 215,
-        "mae": 12.365248217809132,
-        "rmse": 15.466732208237508,
+        "mae": 12.255284514656681,
+        "rmse": 15.370254536129547,
         "baseline_mae": 12.290736967103378,
-        "weight": 0.25,
-        "weight_tuned_on": "prior-season chronological tail"
+        "weight": 0.15000000000000002,
+        "weight_tuned_on": "strictly prior whole-week tune block"
       }
     ],
-    "total_walkforward_mae_mean": 12.859207124440397,
-    "total_walkforward_mae_std": 0.3038968488128811,
-    "total_walkforward_improved_folds": 1,
+    "total_walkforward_mae_mean": 12.832168339314364,
+    "total_walkforward_mae_std": 0.3472603986117045,
+    "total_walkforward_improved_folds": 3,
     "total_walkforward_fold_count": 4,
-    "win_brier": 0.16380027003104383,
-    "win_log_loss": 0.50326040793291,
-    "win_ece": 0.05974734104448807,
-    "win_calibration_eval_rows": 368,
-    "win_calibration_weight": 0.5,
+    "win_brier": 0.171944284202318,
+    "win_log_loss": 0.5159324399742528,
+    "win_ece": 0.0636411720732171,
+    "win_calibration_eval_rows": 566,
+    "win_calibration_fit_rows": 596,
+    "win_calibration_weight": 0.65,
+    "win_calibration_source": "out-of-sample calibration block; evaluated on untouched final block",
     "feature_count": 292,
     "feature_columns": [
       "neutral_site",
@@ -411,16 +472,17 @@
       "away_prior_def_rtprod",
       "diff_prior_def_rtprod",
       "avg_prior_def_rtprod"
-    ]
+    ],
+    "win_production_calibration_oof_rows": 1162
   },
   "model_selection": {
-    "margin_blend_weight": 0.5,
-    "total_blend_weight": 0.0
+    "margin_blend_weight": 0.65,
+    "total_blend_weight": 0.05
   },
-  "calibrated_margin_sigma": 15.955793995874858,
-  "calibrated_total_sigma": 15.696990609626486,
-  "generated_at": "2026-09-30T00:39:53.429549+00:00",
-  "updated_at_ct": "Sep 29, 2026 \u00b7 7:39 PM CT",
+  "calibrated_margin_sigma": 16.242754639563632,
+  "calibrated_total_sigma": 16.224718521007322,
+  "generated_at": "2026-09-30T00:59:02.288869+00:00",
+  "updated_at_ct": "Sep 29, 2026 \u00b7 7:59 PM CT",
   "schedule_source": "sportsdataverse/cfbfastR-data",
   "odds_source": "ESPN live (site.web.api.espn.com) + ESPN Core supplement",
   "odds_errors": [],
@@ -490,9 +552,9 @@
     "source": "prediction_snapshot_fallback"
   },
   "quant_picks": {
-    "strong": 31,
-    "bet": 11,
-    "lean": 0
+    "strong": 15,
+    "bet": 8,
+    "lean": 1
   },
   "snapshot_appended": true,
   "live_performance": {
@@ -520,17 +582,17 @@
     "status": "live/shadow evidence only; not historical backtest evidence"
   },
   "health": {
-    "system_health_score": 94.0,
+    "system_health_score": 93.6,
     "meaning": "engineering/model-readiness score only; not a profitability or win-rate guarantee",
     "components": {
       "pipeline_and_data": 100.0,
       "market_coverage": 100.0,
       "advanced_features": 100.0,
-      "model_validation": 94.3,
-      "probability_calibration": 88.1,
+      "model_validation": 92.8,
+      "probability_calibration": 87.3,
       "market_intelligence": 99.4,
       "current_context": 100.0,
-      "live_monitoring": 96.2,
+      "live_monitoring": 95.3,
       "historical_betting_proof": 80
     },
     "betting_proof_status": "DEVELOPING",
@@ -598,35 +660,35 @@
       {
         "name": "margin_release_guard",
         "passed": true,
-        "value": 0.5,
+        "value": 0.65,
         "requirement": "learned margin correction passes release guard or safely falls back",
         "detail": ""
       },
       {
         "name": "total_release_safety",
         "passed": true,
-        "value": 0.0,
+        "value": 0.05,
         "requirement": "total correction passes release guard or automatically falls back to baseline",
-        "detail": "release holdout did not beat baseline; only 25% of leak-free season folds beat baseline"
+        "detail": "selected residual beat baseline on untouched chronological evaluation"
       },
       {
         "name": "probability_brier",
         "passed": true,
-        "value": 0.16380027003104383,
+        "value": 0.171944284202318,
         "requirement": "Brier <= 0.18 on chronological release holdout",
         "detail": ""
       },
       {
         "name": "probability_ece",
         "passed": false,
-        "value": 0.05974734104448807,
+        "value": 0.0636411720732171,
         "requirement": "ECE <= 0.05 on chronological release holdout",
         "detail": ""
       },
       {
         "name": "live_monitoring",
         "passed": true,
-        "value": 95.3,
+        "value": 94.7,
         "requirement": "live readiness >= 90/100",
         "detail": ""
       },
@@ -641,14 +703,14 @@
         "name": "historical_market_edge",
         "passed": false,
         "value": {
-          "bets": 3498,
+          "bets": 3461,
           "roi_ci_95": [
-            -0.041975316024076816,
-            0.030342083481762438
+            -0.039339257304028145,
+            0.0269930423423975
           ],
-          "avg_clv": 0.00936335638345933,
+          "avg_clv": 0.009571047761541404,
           "positive_markets": 1,
-          "positive_seasons": 2
+          "positive_seasons": 1
         },
         "requirement": ">=1000 bets, ROI 95% CI lower bound >0, positive CLV, >=2 positive markets and >=2 positive seasons",
         "detail": ""
@@ -677,19 +739,19 @@
     "meaning": "Hard deployment gate. PRODUCTION requires engineering quality, dynamic advanced data, multi-book pricing, robust historical edge and independent live evidence; it is not a guarantee of future profit."
   },
   "live_monitoring": {
-    "live_readiness_score": 95.3,
+    "live_readiness_score": 94.7,
     "scores": {
       "market_coverage": 100.0,
       "advanced_coverage": 100.0,
       "multi_book": 98.21428571428571,
       "context": 100.0,
-      "calibration": 85.06316473887799,
+      "calibration": 84.08970698169573,
       "freshness": 100.0,
-      "drift_margin": 95.4,
-      "drift_total": 90.0,
-      "drift_probability": 98.4,
+      "drift_margin": 96.8,
+      "drift_total": 89.4,
+      "drift_probability": 97.5,
       "distribution_stability": 94.6,
-      "output_completeness": 89.11830357142857
+      "output_completeness": 84.59821428571428
     },
     "alerts": [],
     "meaning": "operational/model-monitoring score; not a profitability guarantee"
@@ -699,10 +761,10 @@
     "policy_mode": "paper",
     "release_state": "RESEARCH",
     "production_eligible": false,
-    "proposed_units": 7.61,
+    "proposed_units": 5.51,
     "approved_units": 0.0,
-    "paper_allocated_units": 4.98,
-    "paper_or_shadow_allocated_units": 4.98,
+    "paper_allocated_units": 5.0,
+    "paper_or_shadow_allocated_units": 5.0,
     "bets": 21,
     "limits": {
       "max_slate_units": 5.0,
@@ -714,16 +776,16 @@
       "kickoff_window_hours": 3
     },
     "allocated_by_market": {
-      "moneyline": 1.86,
-      "spread": 2.27,
-      "total": 0.85
+      "moneyline": 2.5,
+      "spread": 2.5
     },
     "allocated_by_kickoff_window": {
-      "2026-10-03 15:00:00+00:00": 2.0,
-      "2026-10-03 21:00:00+00:00": 1.03,
-      "2026-10-04 00:00:00+00:00": 0.24,
-      "2026-10-02 00:00:00+00:00": 0.28,
-      "2026-10-03 18:00:00+00:00": 1.43
+      "2026-10-03 15:00:00+00:00": 1.7,
+      "2026-10-02 00:00:00+00:00": 0.3,
+      "2026-10-04 00:00:00+00:00": 0.21,
+      "2026-10-03 21:00:00+00:00": 1.02,
+      "2026-10-03 18:00:00+00:00": 1.64,
+      "2026-10-04 03:00:00+00:00": 0.13
     },
     "release_blockers": [
       "probability_ece: ECE <= 0.05 on chronological release holdout",

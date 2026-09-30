@@ -3,10 +3,10 @@
   "policy_mode": "paper",
   "release_state": "RESEARCH",
   "production_eligible": false,
-  "proposed_units": 7.61,
+  "proposed_units": 5.51,
   "approved_units": 0.0,
-  "paper_allocated_units": 4.98,
-  "paper_or_shadow_allocated_units": 4.98,
+  "paper_allocated_units": 5.0,
+  "paper_or_shadow_allocated_units": 5.0,
   "bets": 21,
   "limits": {
     "max_slate_units": 5.0,
@@ -18,16 +18,16 @@
     "kickoff_window_hours": 3
   },
   "allocated_by_market": {
-    "moneyline": 1.86,
-    "spread": 2.27,
-    "total": 0.85
+    "moneyline": 2.5,
+    "spread": 2.5
   },
   "allocated_by_kickoff_window": {
-    "2026-10-03 15:00:00+00:00": 2.0,
-    "2026-10-03 21:00:00+00:00": 1.03,
-    "2026-10-04 00:00:00+00:00": 0.24,
-    "2026-10-02 00:00:00+00:00": 0.28,
-    "2026-10-03 18:00:00+00:00": 1.43
+    "2026-10-03 15:00:00+00:00": 1.7,
+    "2026-10-02 00:00:00+00:00": 0.3,
+    "2026-10-04 00:00:00+00:00": 0.21,
+    "2026-10-03 21:00:00+00:00": 1.02,
+    "2026-10-03 18:00:00+00:00": 1.64,
+    "2026-10-04 03:00:00+00:00": 0.13
   },
   "release_blockers": [
     "probability_ece: ECE <= 0.05 on chronological release holdout",

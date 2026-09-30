@@ -1,17 +1,17 @@
 {
-  "live_readiness_score": 95.3,
+  "live_readiness_score": 94.7,
   "scores": {
     "market_coverage": 100.0,
     "advanced_coverage": 100.0,
     "multi_book": 98.21428571428571,
     "context": 100.0,
-    "calibration": 85.06316473887799,
+    "calibration": 84.08970698169573,
     "freshness": 100.0,
-    "drift_margin": 95.4,
-    "drift_total": 90.0,
-    "drift_probability": 98.4,
+    "drift_margin": 96.8,
+    "drift_total": 89.4,
+    "drift_probability": 97.5,
     "distribution_stability": 94.6,
-    "output_completeness": 89.11830357142857
+    "output_completeness": 84.59821428571428
   },
   "alerts": [],
   "meaning": "operational/model-monitoring score; not a profitability guarantee"
