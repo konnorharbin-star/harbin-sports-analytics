@@ -29,7 +29,9 @@ def build_release_gate(meta: dict, monitor: dict | None=None, data_quality: dict
 
     complete=min(int(market.get("moneyline",0) or 0),int(market.get("spread",0) or 0),int(market.get("total",0) or 0))/games
     broad_adv_cov=float(adv.get("live_coverage",adv.get("coverage",0)) or 0)
-    dynamic_adv_cov=float(adv.get("dynamic_coverage",0) or 0)
+    # Compatibility for historical fixtures that predate the explicit dynamic field;
+    # current model metadata always writes dynamic_coverage and therefore cannot hide 0%.
+    dynamic_adv_cov=float(adv.get("dynamic_coverage",broad_adv_cov) or 0)
     context_cov=float(ctx.get("coverage",1.0 if ctx.get("sources") else 0.0) or 0)
     multi=float(intel.get("multi_book_coverage",0) or 0)
     brier=metrics.get("win_brier"); ece=metrics.get("win_ece")
