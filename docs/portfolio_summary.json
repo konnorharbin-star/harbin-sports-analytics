@@ -18,8 +18,8 @@
     "reason": "live betting ledger unreadable: EmptyDataError"
   },
   "production_block_reason": "",
-  "proposed_units": 4.56,
-  "risk_adjusted_proposed_units": 4.56,
+  "proposed_units": 4.57,
+  "risk_adjusted_proposed_units": 4.57,
   "approved_units": 0.0,
   "paper_allocated_units": 3.9,
   "paper_or_shadow_allocated_units": 3.9,
@@ -58,13 +58,13 @@
     "max_book_units": 2.0
   },
   "allocated_by_market": {
-    "moneyline": 2.45,
-    "spread": 1.45
+    "moneyline": 2.46,
+    "spread": 1.44
   },
   "allocated_by_book": {
     "ActionNetwork book 30": 2.0,
     "ActionNetwork book 69": 0.4,
-    "DraftKings": 0.45,
+    "Draft Kings": 0.45,
     "ActionNetwork book 71": 0.61,
     "ActionNetwork book 15": 0.21,
     "ActionNetwork book 75": 0.12,
@@ -72,23 +72,23 @@
   },
   "allocated_by_kickoff_window": {
     "2026-10-03 15:00:00+00:00": 1.56,
-    "2026-10-03 18:00:00+00:00": 0.97,
+    "2026-10-03 18:00:00+00:00": 0.96,
     "2026-10-03 21:00:00+00:00": 0.64,
-    "2026-10-02 00:00:00+00:00": 0.41,
+    "2026-10-02 00:00:00+00:00": 0.42,
     "2026-10-04 00:00:00+00:00": 0.32
   },
   "allocated_by_team_exposure": {
     "UConn": 0.33,
     "NC State": 0.25,
     "Colorado State": 0.22,
-    "North Texas": 0.29,
+    "North Texas": 0.3,
     "Middle Tennessee": 0.37,
     "San Diego State": 0.21,
     "Iowa State": 0.35,
     "Buffalo": 0.3,
     "South Florida": 0.28,
     "Ohio": 0.33,
-    "UNLV": 0.11,
+    "UNLV": 0.1,
     "Vanderbilt": 0.21,
     "Coastal Carolina": 0.14,
     "Iowa": 0.18,
