@@ -9,12 +9,12 @@
   "validation": "nested chronological core/tune/calibration/release holdout + leak-free expanding-season walk-forward + fail-closed baseline fallback",
   "metrics": {
     "margin_baseline_mae": 13.720203965537888,
-    "margin_tuned_model_mae": 12.87413430192907,
-    "margin_mae": 12.87413430192907,
-    "margin_rmse": 15.872411915565795,
-    "margin_tuned_weight": 0.55,
-    "margin_release_weight": 0.55,
-    "margin_blend_weight": 0.55,
+    "margin_tuned_model_mae": 13.055453901495502,
+    "margin_mae": 13.055453901495502,
+    "margin_rmse": 16.048403351024668,
+    "margin_tuned_weight": 0.45,
+    "margin_release_weight": 0.45,
+    "margin_blend_weight": 0.45,
     "margin_release_guard_passed": true,
     "margin_release_guard_reason": "learned residual passed release holdout and 100% of leak-free season folds",
     "margin_eval_rows": 368,
@@ -22,26 +22,26 @@
       {
         "season": 2023,
         "rows": 792,
-        "mae": 12.88528590395,
-        "rmse": 16.20121924535951,
+        "mae": 12.871209223231281,
+        "rmse": 16.280554964281006,
         "baseline_mae": 13.183179942636782,
-        "weight": 0.5,
+        "weight": 0.35000000000000003,
         "weight_tuned_on": "prior-season chronological tail"
       },
       {
         "season": 2024,
         "rows": 798,
-        "mae": 13.012717516182487,
-        "rmse": 16.45730119870881,
+        "mae": 12.985892840600126,
+        "rmse": 16.347474790204657,
         "baseline_mae": 13.22842366531436,
-        "weight": 0.35000000000000003,
+        "weight": 0.45,
         "weight_tuned_on": "prior-season chronological tail"
       },
       {
         "season": 2025,
         "rows": 808,
-        "mae": 12.40466400521695,
-        "rmse": 15.886197711266817,
+        "mae": 12.610918130935023,
+        "rmse": 16.09885562402921,
         "baseline_mae": 13.026608931009665,
         "weight": 0.7000000000000001,
         "weight_tuned_on": "prior-season chronological tail"
@@ -49,83 +49,83 @@
       {
         "season": 2026,
         "rows": 215,
-        "mae": 12.826058112973417,
-        "rmse": 16.081150433784536,
+        "mae": 13.19905395747769,
+        "rmse": 16.3403437518396,
         "baseline_mae": 14.439117971947091,
-        "weight": 0.8500000000000001,
+        "weight": 0.7000000000000001,
         "weight_tuned_on": "prior-season chronological tail"
       }
     ],
-    "margin_walkforward_mae_mean": 12.782181384580714,
-    "margin_walkforward_mae_std": 0.2281567382877461,
+    "margin_walkforward_mae_mean": 12.916768538061028,
+    "margin_walkforward_mae_std": 0.21218114308513397,
     "margin_walkforward_improved_folds": 4,
     "margin_walkforward_fold_count": 4,
     "total_baseline_mae": 12.778014944283827,
-    "total_tuned_model_mae": 12.841705909584391,
+    "total_tuned_model_mae": 12.916782682319536,
     "total_mae": 12.778014944283827,
     "total_rmse": 15.687832775187584,
-    "total_tuned_weight": 1.0,
+    "total_tuned_weight": 0.45,
     "total_release_weight": 0.0,
     "total_blend_weight": 0.0,
     "total_release_guard_passed": false,
-    "total_release_guard_reason": "release holdout did not beat baseline",
+    "total_release_guard_reason": "release holdout did not beat baseline; only 25% of leak-free season folds beat baseline",
     "total_eval_rows": 368,
     "total_walkforward_folds": [
       {
         "season": 2023,
         "rows": 792,
-        "mae": 13.170247123362483,
-        "rmse": 16.296317575320447,
+        "mae": 13.17640405051547,
+        "rmse": 16.28154072426897,
         "baseline_mae": 13.171288637289225,
-        "weight": 0.05,
+        "weight": 0.15000000000000002,
         "weight_tuned_on": "prior-season chronological tail"
       },
       {
         "season": 2024,
         "rows": 798,
-        "mae": 12.936490490117182,
-        "rmse": 16.37095765796847,
+        "mae": 13.014675650253528,
+        "rmse": 16.448942251905038,
         "baseline_mae": 12.964033987572272,
-        "weight": 0.4,
+        "weight": 0.6000000000000001,
         "weight_tuned_on": "prior-season chronological tail"
       },
       {
         "season": 2025,
         "rows": 808,
-        "mae": 12.97951972818711,
-        "rmse": 16.083888398982804,
+        "mae": 12.896217601166201,
+        "rmse": 15.931971137032518,
         "baseline_mae": 12.910666790164145,
-        "weight": 1.0,
+        "weight": 0.30000000000000004,
         "weight_tuned_on": "prior-season chronological tail"
       },
       {
         "season": 2026,
         "rows": 215,
-        "mae": 12.276578916701599,
-        "rmse": 15.379144160457672,
+        "mae": 12.35650702396013,
+        "rmse": 15.451528454670033,
         "baseline_mae": 12.290736967103378,
         "weight": 0.15000000000000002,
         "weight_tuned_on": "prior-season chronological tail"
       }
     ],
-    "total_walkforward_mae_mean": 12.840709064592094,
-    "total_walkforward_mae_std": 0.33737243431422154,
-    "total_walkforward_improved_folds": 3,
+    "total_walkforward_mae_mean": 12.860951081473832,
+    "total_walkforward_mae_std": 0.3077536974984165,
+    "total_walkforward_improved_folds": 1,
     "total_walkforward_fold_count": 4,
-    "win_brier": 0.15521981084870629,
-    "win_log_loss": 0.47480234411642086,
-    "win_ece": 0.027826389963499763,
+    "win_brier": 0.1595422323490443,
+    "win_log_loss": 0.4863440933049298,
+    "win_ece": 0.031110866289941825,
     "win_calibration_eval_rows": 368,
-    "win_calibration_weight": 0.55
+    "win_calibration_weight": 0.45
   },
   "model_selection": {
-    "margin_blend_weight": 0.55,
+    "margin_blend_weight": 0.45,
     "total_blend_weight": 0.0
   },
-  "calibrated_margin_sigma": 15.833774095892851,
+  "calibrated_margin_sigma": 15.936045782910531,
   "calibrated_total_sigma": 15.696990609626486,
-  "generated_at": "2026-09-29T23:50:51.119374+00:00",
-  "updated_at_ct": "Sep 29, 2026 \u00b7 6:50 PM CT",
+  "generated_at": "2026-09-30T00:12:42.482977+00:00",
+  "updated_at_ct": "Sep 29, 2026 \u00b7 7:12 PM CT",
   "schedule_source": "sportsdataverse/cfbfastR-data",
   "odds_source": "ESPN live (site.web.api.espn.com) + ESPN Core supplement",
   "odds_errors": [],
@@ -138,7 +138,7 @@
   },
   "market_status": "LIVE MARKET DATA \u2014 all 56 games have verified market data from ESPN live (site.web.api.espn.com) + ESPN Core supplement.",
   "advanced_features": {
-    "train_coverage": 0.9982838931110566,
+    "train_coverage": 1.0,
     "live_coverage": 1.0,
     "feature_count": 37,
     "sources": [
@@ -177,8 +177,8 @@
     "source": "prediction_snapshot_fallback"
   },
   "quant_picks": {
-    "strong": 21,
-    "bet": 11,
+    "strong": 22,
+    "bet": 19,
     "lean": 8
   },
   "snapshot_appended": true,
@@ -207,14 +207,14 @@
     "status": "live/shadow evidence only; not historical backtest evidence"
   },
   "health": {
-    "system_health_score": 91.5,
+    "system_health_score": 90.8,
     "meaning": "engineering/model-readiness score only; not a profitability or win-rate guarantee",
     "components": {
       "pipeline_and_data": 100.0,
       "market_coverage": 100.0,
       "advanced_features": 100.0,
-      "model_validation": 98.5,
-      "probability_calibration": 94.4,
+      "model_validation": 94.5,
+      "probability_calibration": 93.8,
       "market_intelligence": 65.0,
       "current_context": 100.0,
       "live_monitoring": 87.6,
@@ -278,7 +278,7 @@
       {
         "name": "margin_release_guard",
         "passed": true,
-        "value": 0.55,
+        "value": 0.45,
         "requirement": "learned margin correction passes release guard or safely falls back",
         "detail": ""
       },
@@ -287,26 +287,26 @@
         "passed": true,
         "value": 0.0,
         "requirement": "total correction passes release guard or automatically falls back to baseline",
-        "detail": "release holdout did not beat baseline"
+        "detail": "release holdout did not beat baseline; only 25% of leak-free season folds beat baseline"
       },
       {
         "name": "probability_brier",
         "passed": true,
-        "value": 0.15521981084870629,
+        "value": 0.1595422323490443,
         "requirement": "Brier <= 0.18 on chronological release holdout",
         "detail": ""
       },
       {
         "name": "probability_ece",
         "passed": true,
-        "value": 0.027826389963499763,
+        "value": 0.031110866289941825,
         "requirement": "ECE <= 0.05 on chronological release holdout",
         "detail": ""
       },
       {
         "name": "live_monitoring",
         "passed": false,
-        "value": 87.6,
+        "value": 87.8,
         "requirement": "live readiness >= 90/100",
         "detail": ""
       },
@@ -321,14 +321,14 @@
         "name": "historical_market_edge",
         "passed": false,
         "value": {
-          "bets": 3523,
+          "bets": 3498,
           "roi_ci_95": [
-            -0.04817911055314652,
-            0.03236795430604397
+            -0.041975316024076816,
+            0.030342083481762438
           ],
-          "avg_clv": 0.009166021805394949,
+          "avg_clv": 0.00936335638345933,
           "positive_markets": 1,
-          "positive_seasons": 0
+          "positive_seasons": 2
         },
         "requirement": ">=1000 bets, ROI 95% CI lower bound >0, positive CLV, >=2 positive markets and >=2 positive seasons",
         "detail": ""
@@ -359,19 +359,19 @@
     "meaning": "Hard deployment gate. PRODUCTION requires engineering quality, multi-book pricing, robust historical edge and independent live evidence; it is not a guarantee of future profit."
   },
   "live_monitoring": {
-    "live_readiness_score": 87.6,
+    "live_readiness_score": 87.8,
     "scores": {
       "market_coverage": 100.0,
       "advanced_coverage": 100.0,
       "multi_book": 0.0,
       "context": 100.0,
-      "calibration": 93.04340250912506,
+      "calibration": 92.22228342751454,
       "freshness": 100.0,
-      "drift_margin": 92.7,
-      "drift_total": 89.6,
-      "drift_probability": 96.6,
-      "distribution_stability": 93.0,
-      "output_completeness": 88.62199747155499
+      "drift_margin": 93.3,
+      "drift_total": 90.0,
+      "drift_probability": 98.8,
+      "distribution_stability": 94.0,
+      "output_completeness": 90.04424778761062
     },
     "alerts": [
       "multi-book consensus is limited; configure THE_ODDS_API_KEY for free multi-book supplementation"
@@ -383,11 +383,11 @@
     "policy_mode": "paper",
     "release_state": "RESEARCH",
     "production_eligible": false,
-    "proposed_units": 23.94,
+    "proposed_units": 30.86,
     "approved_units": 0.0,
     "paper_allocated_units": 5.0,
     "paper_or_shadow_allocated_units": 5.0,
-    "bets": 11,
+    "bets": 10,
     "limits": {
       "max_slate_units": 5.0,
       "max_game_units": 1.0,

@@ -36,7 +36,7 @@
     {
       "name": "margin_release_guard",
       "passed": true,
-      "value": 0.55,
+      "value": 0.45,
       "requirement": "learned margin correction passes release guard or safely falls back",
       "detail": ""
     },
@@ -45,26 +45,26 @@
       "passed": true,
       "value": 0.0,
       "requirement": "total correction passes release guard or automatically falls back to baseline",
-      "detail": "release holdout did not beat baseline"
+      "detail": "release holdout did not beat baseline; only 25% of leak-free season folds beat baseline"
     },
     {
       "name": "probability_brier",
       "passed": true,
-      "value": 0.15521981084870629,
+      "value": 0.1595422323490443,
       "requirement": "Brier <= 0.18 on chronological release holdout",
       "detail": ""
     },
     {
       "name": "probability_ece",
       "passed": true,
-      "value": 0.027826389963499763,
+      "value": 0.031110866289941825,
       "requirement": "ECE <= 0.05 on chronological release holdout",
       "detail": ""
     },
     {
       "name": "live_monitoring",
       "passed": false,
-      "value": 87.6,
+      "value": 87.8,
       "requirement": "live readiness >= 90/100",
       "detail": ""
     },
@@ -79,14 +79,14 @@
       "name": "historical_market_edge",
       "passed": false,
       "value": {
-        "bets": 3523,
+        "bets": 3498,
         "roi_ci_95": [
-          -0.04817911055314652,
-          0.03236795430604397
+          -0.041975316024076816,
+          0.030342083481762438
         ],
-        "avg_clv": 0.009166021805394949,
+        "avg_clv": 0.00936335638345933,
         "positive_markets": 1,
-        "positive_seasons": 0
+        "positive_seasons": 2
       },
       "requirement": ">=1000 bets, ROI 95% CI lower bound >0, positive CLV, >=2 positive markets and >=2 positive seasons",
       "detail": ""
