@@ -35,8 +35,8 @@
     },
     {
       "name": "context_coverage",
-      "passed": true,
-      "value": 1.0,
+      "passed": false,
+      "value": 0.75,
       "requirement": ">= 90% current context coverage",
       "detail": ""
     },
@@ -57,21 +57,21 @@
     {
       "name": "probability_brier",
       "passed": true,
-      "value": 0.17194428420231783,
+      "value": 0.171944284202318,
       "requirement": "Brier <= 0.18 on chronological release holdout",
       "detail": ""
     },
     {
       "name": "probability_ece",
       "passed": false,
-      "value": 0.06364117207321737,
+      "value": 0.0636411720732171,
       "requirement": "ECE <= 0.05 on chronological release holdout",
       "detail": ""
     },
     {
       "name": "live_monitoring",
       "passed": true,
-      "value": 93.6,
+      "value": 91.3,
       "requirement": "live readiness >= 90/100",
       "detail": ""
     },
@@ -83,19 +83,40 @@
       "detail": "Configure THE_ODDS_API_KEY if ESPN exposes only one provider."
     },
     {
+      "name": "historical_entry_integrity",
+      "passed": false,
+      "value": {
+        "verified_bets": null,
+        "excluded_unverified_bets": null
+      },
+      "requirement": "historical promotion sample uses explicit verified opening-entry fields only",
+      "detail": ""
+    },
+    {
       "name": "historical_market_edge",
       "passed": false,
       "value": {
+        "status": "DEVELOPING",
         "bets": 3436,
         "roi_ci_95": [
           -0.04241932687416665,
           0.03152934536380288
         ],
         "avg_clv": 0.009486274108133894,
-        "positive_markets": 1,
-        "positive_seasons": 1
+        "positive_markets": 0,
+        "positive_seasons": 0
       },
-      "requirement": ">=1000 bets, ROI 95% CI lower bound >0, positive CLV, >=2 positive markets and >=2 positive seasons",
+      "requirement": "ROBUST evidence: >=1000 verified opening-entry bets, ROI 95% CI lower bound >0, positive CLV, >=2 positive markets and >=2 positive seasons with minimum segment samples",
+      "detail": ""
+    },
+    {
+      "name": "portfolio_verified_forward_ledger",
+      "passed": false,
+      "value": {
+        "source": "legacy_raw_quant_signals",
+        "graded_bets": 0
+      },
+      "requirement": "forward evidence comes from execution-ready cap-constrained portfolio decisions",
       "detail": ""
     },
     {
@@ -104,20 +125,25 @@
       "value": {
         "graded_bets": 0,
         "roi": null,
-        "avg_clv": null
+        "avg_clv": null,
+        "portfolio_verified": false
       },
-      "requirement": ">=300 graded live bets, non-negative ROI and positive pre-kickoff CLV proxy",
+      "requirement": ">=300 portfolio-verified graded live/shadow bets, non-negative ROI and positive pre-kickoff CLV proxy",
       "detail": ""
     }
   ],
   "blockers": [
+    "context_coverage: >= 90% current context coverage",
     "probability_ece: ECE <= 0.05 on chronological release holdout",
-    "historical_market_edge: >=1000 bets, ROI 95% CI lower bound >0, positive CLV, >=2 positive markets and >=2 positive seasons",
-    "live_shadow_evidence: >=300 graded live bets, non-negative ROI and positive pre-kickoff CLV proxy"
+    "historical_entry_integrity: historical promotion sample uses explicit verified opening-entry fields only",
+    "historical_market_edge: ROBUST evidence: >=1000 verified opening-entry bets, ROI 95% CI lower bound >0, positive CLV, >=2 positive markets and >=2 positive seasons with minimum segment samples",
+    "portfolio_verified_forward_ledger: forward evidence comes from execution-ready cap-constrained portfolio decisions",
+    "live_shadow_evidence: >=300 portfolio-verified graded live/shadow bets, non-negative ROI and positive pre-kickoff CLV proxy"
   ],
   "next_requirements": [
-    "Keep paper testing until the walk-forward ROI confidence interval clears zero with positive CLV across markets and seasons.",
-    "Accumulate graded live/shadow bets and pre-kickoff line snapshots; do not infer live profitability from historical backtests."
+    "Regenerate historical evidence with explicit archived opening-entry provenance; archive-final fallbacks cannot promote the system.",
+    "Keep paper testing until verified-entry walk-forward ROI confidence clears zero with positive CLV across markets and seasons.",
+    "Accumulate portfolio-verified graded live/shadow decisions and pre-kickoff line snapshots; do not infer live profitability from historical backtests."
   ],
-  "meaning": "Hard deployment gate. PRODUCTION requires engineering quality, dynamic advanced data, multi-book pricing, robust historical edge and independent live evidence; it is not a guarantee of future profit."
+  "meaning": "Hard deployment gate. PRODUCTION requires engineering quality, verified historical entry timing, dynamic advanced data, multi-book pricing, robust historical edge and portfolio-verified independent live evidence; it is not a guarantee of future profit."
 }

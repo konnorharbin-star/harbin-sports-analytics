@@ -59,14 +59,14 @@
     "selection_uses_evaluation": false,
     "margin_tuning_rows": 574,
     "margin_tuning_baseline_mae": 13.354821112893191,
-    "margin_tuning_mae": 13.057671813562738,
+    "margin_tuning_mae": 13.05767181356274,
     "margin_tuned_weight": 0.65,
     "margin_calibration_rows": 596,
     "margin_calibration_mae": 12.472050669195184,
     "margin_baseline_mae": 13.22104338022683,
-    "margin_tuned_model_mae": 12.657079769201353,
-    "margin_mae": 12.657079769201353,
-    "margin_rmse": 15.66130655464162,
+    "margin_tuned_model_mae": 12.657079769201356,
+    "margin_mae": 12.657079769201356,
+    "margin_rmse": 15.661306554641623,
     "margin_release_weight": 0.65,
     "margin_blend_weight": 0.65,
     "margin_release_guard_passed": true,
@@ -77,7 +77,7 @@
         "season": 2023,
         "rows": 792,
         "mae": 12.900581723923983,
-        "rmse": 16.25616426294804,
+        "rmse": 16.256164262948037,
         "baseline_mae": 13.183179942636782,
         "weight": 0.5,
         "weight_tuned_on": "strictly prior whole-week tune block"
@@ -85,8 +85,8 @@
       {
         "season": 2024,
         "rows": 798,
-        "mae": 12.883846137385262,
-        "rmse": 16.246149757462618,
+        "mae": 12.88384613738527,
+        "rmse": 16.246149757462625,
         "baseline_mae": 13.22842366531436,
         "weight": 0.7000000000000001,
         "weight_tuned_on": "strictly prior whole-week tune block"
@@ -94,7 +94,7 @@
       {
         "season": 2025,
         "rows": 808,
-        "mae": 12.666070646195537,
+        "mae": 12.666070646195536,
         "rmse": 16.1245616087454,
         "baseline_mae": 13.026608931009665,
         "weight": 0.30000000000000004,
@@ -103,15 +103,15 @@
       {
         "season": 2026,
         "rows": 215,
-        "mae": 12.891880369516109,
-        "rmse": 16.00642606511091,
+        "mae": 12.891880369516082,
+        "rmse": 16.00642606511088,
         "baseline_mae": 14.439117971947091,
         "weight": 1.0,
         "weight_tuned_on": "strictly prior whole-week tune block"
       }
     ],
-    "margin_walkforward_mae_mean": 12.835594719255223,
-    "margin_walkforward_mae_std": 0.09805355156675058,
+    "margin_walkforward_mae_mean": 12.835594719255218,
+    "margin_walkforward_mae_std": 0.0980535515667484,
     "margin_walkforward_improved_folds": 4,
     "margin_walkforward_fold_count": 4,
     "total_tuning_rows": 574,
@@ -119,7 +119,7 @@
     "total_tuning_mae": 12.731066260302976,
     "total_tuned_weight": 0.05,
     "total_calibration_rows": 596,
-    "total_calibration_mae": 12.92472297586274,
+    "total_calibration_mae": 12.924722975862737,
     "total_baseline_mae": 12.693581407531097,
     "total_tuned_model_mae": 12.681388088386885,
     "total_mae": 12.681388088386885,
@@ -143,7 +143,7 @@
         "season": 2024,
         "rows": 798,
         "mae": 13.009719665843507,
-        "rmse": 16.483246097006955,
+        "rmse": 16.48324609700696,
         "baseline_mae": 12.964033987572272,
         "weight": 0.7000000000000001,
         "weight_tuned_on": "strictly prior whole-week tune block"
@@ -160,20 +160,20 @@
       {
         "season": 2026,
         "rows": 215,
-        "mae": 12.25528451465668,
-        "rmse": 15.370254536129545,
+        "mae": 12.255284514656681,
+        "rmse": 15.370254536129547,
         "baseline_mae": 12.290736967103378,
         "weight": 0.15000000000000002,
         "weight_tuned_on": "strictly prior whole-week tune block"
       }
     ],
     "total_walkforward_mae_mean": 12.832168339314364,
-    "total_walkforward_mae_std": 0.3472603986117052,
+    "total_walkforward_mae_std": 0.3472603986117045,
     "total_walkforward_improved_folds": 3,
     "total_walkforward_fold_count": 4,
-    "win_brier": 0.17194428420231783,
-    "win_log_loss": 0.5159324399742522,
-    "win_ece": 0.06364117207321737,
+    "win_brier": 0.171944284202318,
+    "win_log_loss": 0.5159324399742528,
+    "win_ece": 0.0636411720732171,
     "win_calibration_eval_rows": 566,
     "win_calibration_fit_rows": 596,
     "win_calibration_weight": 0.65,
@@ -481,8 +481,8 @@
   },
   "calibrated_margin_sigma": 16.242754639563632,
   "calibrated_total_sigma": 16.224718521007322,
-  "generated_at": "2026-09-30T02:52:56.824404+00:00",
-  "updated_at_ct": "Sep 29, 2026 \u00b7 9:52 PM CT",
+  "generated_at": "2026-09-30T03:19:07.764038+00:00",
+  "updated_at_ct": "Sep 29, 2026 \u00b7 10:19 PM CT",
   "schedule_source": "sportsdataverse/cfbfastR-data",
   "odds_source": "ESPN live (site.web.api.espn.com) + ESPN Core supplement",
   "odds_errors": [],
@@ -540,7 +540,7 @@
     ]
   },
   "current_context": {
-    "coverage": 1.0,
+    "coverage": 0.75,
     "weather_coverage": 1.0,
     "sources": [
       "SportsDataverse ESPN injuries",
@@ -590,12 +590,16 @@
     "by_market": {},
     "by_signal": {},
     "by_season": {},
-    "clv_method": "latest timestamp-valid snapshot strictly before kickoff; spread/total use consensus close when available; moneyline uses consensus no-vig probability; execution CLV retains the actual bet price",
+    "clv_method": "first execution-ready cap-constrained portfolio decision strictly before kickoff; close is latest timestamp-valid market snapshot strictly before kickoff",
     "verified_close_clv_samples": 0,
+    "portfolio_verified": false,
+    "evidence_source": "legacy_raw_quant_signals",
+    "eligible_decisions": 824,
+    "timing_excluded_rows": 0,
     "status": "live/shadow evidence only; not historical backtest evidence"
   },
   "health": {
-    "system_health_score": 93.4,
+    "system_health_score": 92.2,
     "meaning": "engineering/model-readiness score only; not a profitability or win-rate guarantee",
     "components": {
       "pipeline_and_data": 100.0,
@@ -604,16 +608,17 @@
       "model_validation": 92.8,
       "probability_calibration": 87.3,
       "market_intelligence": 99.4,
-      "current_context": 100.0,
+      "current_context": 75.0,
       "live_monitoring": 93.6,
       "historical_betting_proof": 80
     },
     "betting_proof_status": "DEVELOPING",
     "blockers": [
+      "current context quality/coverage below 90%",
       "historical market edge is not yet validated"
     ]
   },
-  "platform_version": "7.3.0",
+  "platform_version": "7.4.0",
   "data_quality": {
     "status": "PASS",
     "errors": 0,
@@ -665,8 +670,8 @@
       },
       {
         "name": "context_coverage",
-        "passed": true,
-        "value": 1.0,
+        "passed": false,
+        "value": 0.75,
         "requirement": ">= 90% current context coverage",
         "detail": ""
       },
@@ -687,21 +692,21 @@
       {
         "name": "probability_brier",
         "passed": true,
-        "value": 0.17194428420231783,
+        "value": 0.171944284202318,
         "requirement": "Brier <= 0.18 on chronological release holdout",
         "detail": ""
       },
       {
         "name": "probability_ece",
         "passed": false,
-        "value": 0.06364117207321737,
+        "value": 0.0636411720732171,
         "requirement": "ECE <= 0.05 on chronological release holdout",
         "detail": ""
       },
       {
         "name": "live_monitoring",
         "passed": true,
-        "value": 93.6,
+        "value": 91.3,
         "requirement": "live readiness >= 90/100",
         "detail": ""
       },
@@ -713,19 +718,40 @@
         "detail": "Configure THE_ODDS_API_KEY if ESPN exposes only one provider."
       },
       {
+        "name": "historical_entry_integrity",
+        "passed": false,
+        "value": {
+          "verified_bets": null,
+          "excluded_unverified_bets": null
+        },
+        "requirement": "historical promotion sample uses explicit verified opening-entry fields only",
+        "detail": ""
+      },
+      {
         "name": "historical_market_edge",
         "passed": false,
         "value": {
+          "status": "DEVELOPING",
           "bets": 3436,
           "roi_ci_95": [
             -0.04241932687416665,
             0.03152934536380288
           ],
           "avg_clv": 0.009486274108133894,
-          "positive_markets": 1,
-          "positive_seasons": 1
+          "positive_markets": 0,
+          "positive_seasons": 0
         },
-        "requirement": ">=1000 bets, ROI 95% CI lower bound >0, positive CLV, >=2 positive markets and >=2 positive seasons",
+        "requirement": "ROBUST evidence: >=1000 verified opening-entry bets, ROI 95% CI lower bound >0, positive CLV, >=2 positive markets and >=2 positive seasons with minimum segment samples",
+        "detail": ""
+      },
+      {
+        "name": "portfolio_verified_forward_ledger",
+        "passed": false,
+        "value": {
+          "source": "legacy_raw_quant_signals",
+          "graded_bets": 0
+        },
+        "requirement": "forward evidence comes from execution-ready cap-constrained portfolio decisions",
         "detail": ""
       },
       {
@@ -734,47 +760,52 @@
         "value": {
           "graded_bets": 0,
           "roi": null,
-          "avg_clv": null
+          "avg_clv": null,
+          "portfolio_verified": false
         },
-        "requirement": ">=300 graded live bets, non-negative ROI and positive pre-kickoff CLV proxy",
+        "requirement": ">=300 portfolio-verified graded live/shadow bets, non-negative ROI and positive pre-kickoff CLV proxy",
         "detail": ""
       }
     ],
     "blockers": [
+      "context_coverage: >= 90% current context coverage",
       "probability_ece: ECE <= 0.05 on chronological release holdout",
-      "historical_market_edge: >=1000 bets, ROI 95% CI lower bound >0, positive CLV, >=2 positive markets and >=2 positive seasons",
-      "live_shadow_evidence: >=300 graded live bets, non-negative ROI and positive pre-kickoff CLV proxy"
+      "historical_entry_integrity: historical promotion sample uses explicit verified opening-entry fields only",
+      "historical_market_edge: ROBUST evidence: >=1000 verified opening-entry bets, ROI 95% CI lower bound >0, positive CLV, >=2 positive markets and >=2 positive seasons with minimum segment samples",
+      "portfolio_verified_forward_ledger: forward evidence comes from execution-ready cap-constrained portfolio decisions",
+      "live_shadow_evidence: >=300 portfolio-verified graded live/shadow bets, non-negative ROI and positive pre-kickoff CLV proxy"
     ],
     "next_requirements": [
-      "Keep paper testing until the walk-forward ROI confidence interval clears zero with positive CLV across markets and seasons.",
-      "Accumulate graded live/shadow bets and pre-kickoff line snapshots; do not infer live profitability from historical backtests."
+      "Regenerate historical evidence with explicit archived opening-entry provenance; archive-final fallbacks cannot promote the system.",
+      "Keep paper testing until verified-entry walk-forward ROI confidence clears zero with positive CLV across markets and seasons.",
+      "Accumulate portfolio-verified graded live/shadow decisions and pre-kickoff line snapshots; do not infer live profitability from historical backtests."
     ],
-    "meaning": "Hard deployment gate. PRODUCTION requires engineering quality, dynamic advanced data, multi-book pricing, robust historical edge and independent live evidence; it is not a guarantee of future profit."
+    "meaning": "Hard deployment gate. PRODUCTION requires engineering quality, verified historical entry timing, dynamic advanced data, multi-book pricing, robust historical edge and portfolio-verified independent live evidence; it is not a guarantee of future profit."
   },
   "live_monitoring": {
     "status": "OK",
-    "live_readiness_score": 93.6,
+    "live_readiness_score": 91.3,
     "scores": {
       "market_coverage": 100.0,
       "advanced_coverage": 100.0,
       "multi_book": 98.21428571428571,
-      "context": 100.0,
-      "calibration": 84.08970698169566,
+      "context": 83.75,
+      "calibration": 84.08970698169573,
       "freshness": 100.0,
       "drift_margin": 94.3,
       "drift_total": 89.3,
       "drift_probability": 97.2,
       "distribution_stability": 93.6,
-      "output_completeness": 75.0645438898451
+      "output_completeness": 67.98100743187447
     },
     "drift_details": {
       "margin": {
         "stability_score": 94.3,
         "mean_z": 0.1445,
         "std_ratio": 0.9187,
-        "live_mean": 2.360171247005251,
+        "live_mean": 2.3601712470052596,
         "reference_mean": 4.100499006560597,
-        "live_std": 11.065037711253112,
+        "live_std": 11.065037711253103,
         "reference_std": 12.044605341632783,
         "live_n": 56,
         "reference_n": 2398
@@ -783,9 +814,9 @@
         "stability_score": 89.3,
         "mean_z": 0.09,
         "std_ratio": 0.7124,
-        "live_mean": 53.19163365793078,
+        "live_mean": 53.1916336579308,
         "reference_mean": 53.75101747438638,
-        "live_std": 4.4277033591603,
+        "live_std": 4.427703359160299,
         "reference_std": 6.215453749287007,
         "live_n": 56,
         "reference_n": 2398
@@ -823,17 +854,17 @@
       "trailing_avg_clv": null,
       "risk_multiplier": 1.0,
       "hard_stop": false,
-      "reason": "live betting ledger unreadable: EmptyDataError"
+      "reason": "no independent graded live/shadow betting history; unit throttle is neutral outside production"
     },
     "production_block_reason": "",
-    "proposed_units": 4.57,
-    "risk_adjusted_proposed_units": 4.57,
+    "proposed_units": 4.38,
+    "risk_adjusted_proposed_units": 4.38,
     "approved_units": 0.0,
-    "paper_allocated_units": 3.9,
-    "paper_or_shadow_allocated_units": 3.9,
+    "paper_allocated_units": 3.83,
+    "paper_or_shadow_allocated_units": 3.83,
     "bets": 17,
     "approved_bets": 0,
-    "execution_blocked_bets": 0,
+    "execution_blocked_bets": 20,
     "limits": {
       "max_slate_units": 5.0,
       "max_game_units": 1.0,
@@ -855,6 +886,8 @@
       "adverse_run_multiplier": 0.5,
       "require_executable_book": true,
       "min_market_book_count_for_execution": 1,
+      "require_quote_timestamp_for_execution": true,
+      "max_quote_age_minutes": 60,
       "require_live_history_for_production": true
     },
     "effective_unit_caps": {
@@ -866,51 +899,60 @@
       "max_book_units": 2.0
     },
     "allocated_by_market": {
-      "moneyline": 2.46,
-      "spread": 1.44
+      "moneyline": 2.35,
+      "spread": 1.48
     },
     "allocated_by_book": {
       "ActionNetwork book 30": 2.0,
-      "ActionNetwork book 69": 0.4,
-      "Draft Kings": 0.45,
-      "ActionNetwork book 71": 0.61,
-      "ActionNetwork book 15": 0.21,
-      "ActionNetwork book 75": 0.12,
-      "ActionNetwork book 49": 0.11
+      "ActionNetwork book 69": 0.39,
+      "DraftKings": 0.44,
+      "ActionNetwork book 71": 0.59,
+      "ActionNetwork book 15": 0.2,
+      "ActionNetwork book 75": 0.11,
+      "ActionNetwork book 49": 0.1
     },
     "allocated_by_kickoff_window": {
-      "2026-10-03 15:00:00+00:00": 1.56,
-      "2026-10-03 18:00:00+00:00": 0.96,
-      "2026-10-03 21:00:00+00:00": 0.64,
-      "2026-10-02 00:00:00+00:00": 0.42,
-      "2026-10-04 00:00:00+00:00": 0.32
+      "2026-10-03 15:00:00+00:00": 1.49,
+      "2026-10-03 18:00:00+00:00": 1.03,
+      "2026-10-03 21:00:00+00:00": 0.62,
+      "2026-10-02 00:00:00+00:00": 0.39,
+      "2026-10-04 00:00:00+00:00": 0.3
     },
     "allocated_by_team_exposure": {
-      "UConn": 0.33,
-      "NC State": 0.25,
-      "Colorado State": 0.22,
-      "North Texas": 0.3,
-      "Middle Tennessee": 0.37,
-      "San Diego State": 0.21,
-      "Iowa State": 0.35,
-      "Buffalo": 0.3,
-      "South Florida": 0.28,
-      "Ohio": 0.33,
-      "UNLV": 0.1,
-      "Vanderbilt": 0.21,
+      "UConn": 0.31,
+      "NC State": 0.24,
+      "Colorado State": 0.21,
+      "North Texas": 0.28,
+      "Middle Tennessee": 0.35,
+      "San Diego State": 0.2,
+      "Iowa State": 0.34,
+      "Buffalo": 0.29,
+      "South Florida": 0.27,
+      "Ohio": 0.32,
+      "UNLV": 0.19,
+      "Vanderbilt": 0.2,
       "Coastal Carolina": 0.14,
       "Iowa": 0.18,
-      "Western Kentucky": 0.12,
-      "Fresno State": 0.11,
+      "Western Kentucky": 0.11,
+      "Fresno State": 0.1,
       "Old Dominion": 0.1
     },
     "limit_hit_counts": {
       "book cap": 4
     },
     "release_blockers": [
+      "context_coverage: >= 90% current context coverage",
       "probability_ece: ECE <= 0.05 on chronological release holdout",
-      "historical_market_edge: >=1000 bets, ROI 95% CI lower bound >0, positive CLV, >=2 positive markets and >=2 positive seasons",
-      "live_shadow_evidence: >=300 graded live bets, non-negative ROI and positive pre-kickoff CLV proxy"
+      "historical_entry_integrity: historical promotion sample uses explicit verified opening-entry fields only",
+      "historical_market_edge: ROBUST evidence: >=1000 verified opening-entry bets, ROI 95% CI lower bound >0, positive CLV, >=2 positive markets and >=2 positive seasons with minimum segment samples",
+      "portfolio_verified_forward_ledger: forward evidence comes from execution-ready cap-constrained portfolio decisions",
+      "live_shadow_evidence: >=300 portfolio-verified graded live/shadow bets, non-negative ROI and positive pre-kickoff CLV proxy"
     ]
+  },
+  "decision_ledger": {
+    "path": "history/portfolio_decisions_v1.csv",
+    "eligible_rows": 17,
+    "appended_rows": 17,
+    "total_rows": 17
   }
 }
