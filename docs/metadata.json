@@ -59,14 +59,14 @@
     "selection_uses_evaluation": false,
     "margin_tuning_rows": 574,
     "margin_tuning_baseline_mae": 13.354821112893191,
-    "margin_tuning_mae": 13.05767181356274,
+    "margin_tuning_mae": 13.057671813562738,
     "margin_tuned_weight": 0.65,
     "margin_calibration_rows": 596,
     "margin_calibration_mae": 12.472050669195184,
     "margin_baseline_mae": 13.22104338022683,
-    "margin_tuned_model_mae": 12.657079769201355,
-    "margin_mae": 12.657079769201355,
-    "margin_rmse": 15.661306554641621,
+    "margin_tuned_model_mae": 12.657079769201353,
+    "margin_mae": 12.657079769201353,
+    "margin_rmse": 15.66130655464162,
     "margin_release_weight": 0.65,
     "margin_blend_weight": 0.65,
     "margin_release_guard_passed": true,
@@ -85,8 +85,8 @@
       {
         "season": 2024,
         "rows": 798,
-        "mae": 12.883846137385264,
-        "rmse": 16.246149757462625,
+        "mae": 12.883846137385262,
+        "rmse": 16.246149757462618,
         "baseline_mae": 13.22842366531436,
         "weight": 0.7000000000000001,
         "weight_tuned_on": "strictly prior whole-week tune block"
@@ -103,15 +103,15 @@
       {
         "season": 2026,
         "rows": 215,
-        "mae": 12.891880369516095,
-        "rmse": 16.006426065110897,
+        "mae": 12.891880369516109,
+        "rmse": 16.00642606511091,
         "baseline_mae": 14.439117971947091,
         "weight": 1.0,
         "weight_tuned_on": "strictly prior whole-week tune block"
       }
     ],
-    "margin_walkforward_mae_mean": 12.83559471925522,
-    "margin_walkforward_mae_std": 0.09805355156674876,
+    "margin_walkforward_mae_mean": 12.835594719255223,
+    "margin_walkforward_mae_std": 0.09805355156675058,
     "margin_walkforward_improved_folds": 4,
     "margin_walkforward_fold_count": 4,
     "total_tuning_rows": 574,
@@ -151,7 +151,7 @@
       {
         "season": 2025,
         "rows": 808,
-        "mae": 12.893439330076347,
+        "mae": 12.893439330076346,
         "rmse": 15.920610565591266,
         "baseline_mae": 12.910666790164145,
         "weight": 0.45,
@@ -161,19 +161,19 @@
         "season": 2026,
         "rows": 215,
         "mae": 12.25528451465668,
-        "rmse": 15.370254536129547,
+        "rmse": 15.370254536129545,
         "baseline_mae": 12.290736967103378,
         "weight": 0.15000000000000002,
         "weight_tuned_on": "strictly prior whole-week tune block"
       }
     ],
     "total_walkforward_mae_mean": 12.832168339314364,
-    "total_walkforward_mae_std": 0.3472603986117053,
+    "total_walkforward_mae_std": 0.3472603986117052,
     "total_walkforward_improved_folds": 3,
     "total_walkforward_fold_count": 4,
-    "win_brier": 0.1719442842023178,
-    "win_log_loss": 0.5159324399742523,
-    "win_ece": 0.06364117207321734,
+    "win_brier": 0.17194428420231783,
+    "win_log_loss": 0.5159324399742522,
+    "win_ece": 0.06364117207321737,
     "win_calibration_eval_rows": 566,
     "win_calibration_fit_rows": 596,
     "win_calibration_weight": 0.65,
@@ -481,8 +481,8 @@
   },
   "calibrated_margin_sigma": 16.242754639563632,
   "calibrated_total_sigma": 16.224718521007322,
-  "generated_at": "2026-09-30T01:41:37.288367+00:00",
-  "updated_at_ct": "Sep 29, 2026 \u00b7 8:41 PM CT",
+  "generated_at": "2026-09-30T02:10:23.707270+00:00",
+  "updated_at_ct": "Sep 29, 2026 \u00b7 9:10 PM CT",
   "schedule_source": "sportsdataverse/cfbfastR-data",
   "odds_source": "ESPN live (site.web.api.espn.com) + ESPN Core supplement",
   "odds_errors": [],
@@ -594,7 +594,7 @@
     "status": "live/shadow evidence only; not historical backtest evidence"
   },
   "health": {
-    "system_health_score": 93.5,
+    "system_health_score": 93.4,
     "meaning": "engineering/model-readiness score only; not a profitability or win-rate guarantee",
     "components": {
       "pipeline_and_data": 100.0,
@@ -604,7 +604,7 @@
       "probability_calibration": 87.3,
       "market_intelligence": 99.4,
       "current_context": 100.0,
-      "live_monitoring": 94.7,
+      "live_monitoring": 93.7,
       "historical_betting_proof": 80
     },
     "betting_proof_status": "DEVELOPING",
@@ -686,14 +686,14 @@
       {
         "name": "probability_brier",
         "passed": true,
-        "value": 0.1719442842023178,
+        "value": 0.17194428420231783,
         "requirement": "Brier <= 0.18 on chronological release holdout",
         "detail": ""
       },
       {
         "name": "probability_ece",
         "passed": false,
-        "value": 0.06364117207321734,
+        "value": 0.06364117207321737,
         "requirement": "ECE <= 0.05 on chronological release holdout",
         "detail": ""
       },
@@ -720,7 +720,7 @@
             -0.04241932687416665,
             0.03152934536380288
           ],
-          "avg_clv": 0.00948627410813389,
+          "avg_clv": 0.009486274108133894,
           "positive_markets": 1,
           "positive_seasons": 1
         },
