@@ -1,14 +1,14 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-09-30T16:51:41.885722+00:00",
+  "generated_at": "2026-09-30T21:27:53.425281+00:00",
   "status": "WARN",
   "identity": {
     "platform_version": "7.4.0",
     "model_version": "7.1.0",
     "season": 2026,
     "week": 5,
-    "model_generated_at": "2026-09-30T16:51:41.093763+00:00",
-    "updated_at_ct": "Sep 30, 2026 \u00b7 11:51 AM CT",
+    "model_generated_at": "2026-09-30T21:27:52.582203+00:00",
+    "updated_at_ct": "Sep 30, 2026 \u00b7 4:27 PM CT",
     "prediction_rows": 56
   },
   "release": {
@@ -70,14 +70,14 @@
       {
         "name": "probability_brier",
         "passed": true,
-        "value": 0.171944284202318,
+        "value": 0.1719442842023178,
         "requirement": "Brier <= 0.18 on chronological release holdout",
         "detail": ""
       },
       {
         "name": "probability_ece",
         "passed": false,
-        "value": 0.0636411720732171,
+        "value": 0.06364117207321734,
         "requirement": "ECE <= 0.05 on chronological release holdout",
         "detail": ""
       },
@@ -160,15 +160,15 @@
   },
   "model": {
     "validation": "nested whole-week chronology: core fit -> tune weight -> OOF calibration -> untouched evaluation; final refit keeps the tune-selected weight and uses OOF probability calibration",
-    "margin_mae": 12.657079769201356,
+    "margin_mae": 12.657079769201355,
     "margin_baseline_mae": 13.22104338022683,
     "margin_release_weight": 0.65,
     "total_mae": 12.681388088386885,
     "total_baseline_mae": 12.693581407531097,
     "total_release_weight": 0.05,
-    "win_brier": 0.171944284202318,
-    "win_log_loss": 0.5159324399742528,
-    "win_ece": 0.0636411720732171,
+    "win_brier": 0.1719442842023178,
+    "win_log_loss": 0.5159324399742523,
+    "win_ece": 0.06364117207321734,
     "selection_uses_evaluation": false
   },
   "coverage": {
@@ -189,7 +189,7 @@
       "advanced_coverage": 100.0,
       "multi_book": 98.21428571428571,
       "context": 83.75,
-      "calibration": 84.08970698169573,
+      "calibration": 84.08970698169566,
       "freshness": 100.0,
       "drift_margin": 94.3,
       "drift_total": 89.3,
@@ -202,9 +202,9 @@
         "stability_score": 94.3,
         "mean_z": 0.1445,
         "std_ratio": 0.9187,
-        "live_mean": 2.3601712470052596,
+        "live_mean": 2.3601712470052605,
         "reference_mean": 4.100499006560598,
-        "live_std": 11.065037711253103,
+        "live_std": 11.065037711253115,
         "reference_std": 12.044605341632783,
         "live_n": 56,
         "reference_n": 2398
@@ -215,7 +215,7 @@
         "std_ratio": 0.7124,
         "live_mean": 53.1916336579308,
         "reference_mean": 53.75101747438637,
-        "live_std": 4.427703359160299,
+        "live_std": 4.4277033591603,
         "reference_std": 6.215453749287005,
         "live_n": 56,
         "reference_n": 2398
@@ -238,7 +238,7 @@
       "probability": 97.2
     },
     "alerts": [],
-    "recent_readiness_delta": 0.75
+    "recent_readiness_delta": 0.0
   },
   "data_quality": {
     "status": "PASS",
@@ -274,11 +274,11 @@
       "reason": "no independent graded live/shadow betting history; unit throttle is neutral outside production"
     },
     "production_block_reason": "",
-    "proposed_units": 7.58,
-    "risk_adjusted_proposed_units": 7.58,
+    "proposed_units": 7.59,
+    "risk_adjusted_proposed_units": 7.59,
     "approved_units": 0.0,
-    "paper_allocated_units": 4.45,
-    "paper_or_shadow_allocated_units": 4.45,
+    "paper_allocated_units": 4.44,
+    "paper_or_shadow_allocated_units": 4.44,
     "bets": 20,
     "approved_bets": 0,
     "execution_blocked_bets": 43,
@@ -317,49 +317,49 @@
     },
     "allocated_by_market": {
       "moneyline": 2.45,
-      "spread": 1.37,
+      "spread": 1.36,
       "total": 0.63
     },
     "allocated_by_book": {
       "ActionNetwork book 30": 2.0,
-      "ActionNetwork book 69": 0.55,
-      "DraftKings": 0.33,
-      "ActionNetwork book 15": 0.26,
-      "ActionNetwork book 71": 0.84,
-      "ActionNetwork book 49": 0.36,
-      "ActionNetwork book 75": 0.11
+      "ActionNetwork book 69": 0.61,
+      "ActionNetwork book 71": 0.21,
+      "ActionNetwork book 15": 0.44,
+      "ActionNetwork book 49": 0.68,
+      "Draft Kings": 0.24,
+      "ActionNetwork book 75": 0.26
     },
     "allocated_by_kickoff_window": {
-      "2026-10-03 15:00:00+00:00": 1.91,
-      "2026-10-03 18:00:00+00:00": 0.86,
-      "2026-10-03 21:00:00+00:00": 0.95,
-      "2026-10-02 00:00:00+00:00": 0.4,
-      "2026-10-04 00:00:00+00:00": 0.33
+      "2026-10-03 15:00:00+00:00": 1.92,
+      "2026-10-03 18:00:00+00:00": 0.85,
+      "2026-10-03 21:00:00+00:00": 1.07,
+      "2026-10-04 00:00:00+00:00": 0.21,
+      "2026-10-02 00:00:00+00:00": 0.39
     },
     "allocated_by_team_exposure": {
       "UConn": 0.31,
       "NC State": 0.24,
       "Colorado State": 0.21,
-      "North Texas": 0.29,
+      "San Diego State": 0.21,
+      "North Texas": 0.28,
       "Middle Tennessee": 0.35,
-      "San Diego State": 0.2,
-      "Iowa State": 0.33,
+      "Iowa State": 0.34,
       "Buffalo": 0.29,
-      "South Florida": 0.26,
       "Air Force": 0.27,
       "Navy": 0.27,
-      "Ohio": 0.33,
+      "South Florida": 0.26,
       "Georgia": 0.23,
       "Vanderbilt": 0.23,
+      "Ohio": 0.32,
       "Miami": 0.19,
       "Iowa": 0.18,
       "Coastal Carolina": 0.13,
-      "Texas Tech": 0.16,
+      "Texas Tech": 0.15,
+      "Old Dominion": 0.11,
       "Western Kentucky": 0.11,
       "Boston College": 0.13,
-      "Arizona State": 0.13,
-      "Baylor": 0.13,
-      "Old Dominion": 0.11
+      "Texas A&M": 0.13,
+      "Arkansas": 0.13
     },
     "limit_hit_counts": {
       "book cap": 8,
@@ -450,7 +450,7 @@
         "name": "approved_not_above_allocation",
         "passed": true,
         "severity": "ERROR",
-        "detail": "approved=0.00 allocated=4.45"
+        "detail": "approved=0.00 allocated=4.44"
       }
     ],
     "errors": []
@@ -498,6 +498,19 @@
     {
       "generated_at": "2026-09-30T15:48:31.881507+00:00",
       "model_generated_at": "2026-09-30T15:48:31.111123+00:00",
+      "season": 2026,
+      "week": 5,
+      "platform_version": "7.4.0",
+      "release_state": "RESEARCH",
+      "publication_status": "WARN",
+      "live_readiness_score": 93.3,
+      "distribution_stability": 93.6,
+      "approved_units": 0.0,
+      "data_quality_status": "PASS"
+    },
+    {
+      "generated_at": "2026-09-30T16:51:41.885722+00:00",
+      "model_generated_at": "2026-09-30T16:51:41.093763+00:00",
       "season": 2026,
       "week": 5,
       "platform_version": "7.4.0",

@@ -2,7 +2,7 @@
 
 **Model:** v7.1.0  
 **Season / Week:** 2026 / 5  
-**Updated:** Sep 30, 2026 · 11:51 AM CT  
+**Updated:** Sep 30, 2026 · 4:27 PM CT  
 **Market:** LIVE MARKET DATA — all 56 games have verified market data from ESPN live (site.web.api.espn.com) + ESPN Core supplement.  
 **Dynamic advanced-feature live coverage:** 100%  
 **System health:** 83.3/100 *(readiness, not predicted profitability)*
