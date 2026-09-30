@@ -37,7 +37,7 @@ def _cached(url, path):
     if path.exists() and path.stat().st_size > 100:
         return pd.read_csv(path, low_memory=False)
     path.parent.mkdir(parents=True, exist_ok=True)
-    r = requests.get(url, timeout=40, headers={"User-Agent": "HarbinSportsAnalytics/7.0"})
+    r = requests.get(url, timeout=40, headers={"User-Agent": "HarbinSportsAnalytics/7.2"})
     r.raise_for_status()
     path.write_bytes(r.content)
     return pd.read_csv(path, low_memory=False)
@@ -68,12 +68,11 @@ def identify_team_columns(df: pd.DataFrame) -> tuple[str | None, str | None]:
     """Return (numeric ESPN-team-id column, textual team-name column).
 
     SportsDataverse schemas have changed over time and `pos_team` has existed as both
-    a team identifier and a human-readable team field in adjacent datasets.  The old
-    loader selected it before `team_id`, which could silently produce 0% live dynamic
-    coverage.  We now choose by both semantic name and observed value type.
+    a team identifier and a human-readable team field in adjacent datasets. The loader
+    chooses by both semantic name and observed value type instead of guessing.
     """
     cols = list(df.columns)
-    exact_id = ["team_id", "teamId", "pos_team_id", "posTeamId", "team.id", "teamId"]
+    exact_id = ["team_id", "teamId", "pos_team_id", "posTeamId", "team.id"]
     exact_name = ["team", "team_name", "school", "display_name", "pos_team", "posTeam"]
 
     id_col = None
@@ -102,7 +101,6 @@ def identify_team_columns(df: pd.DataFrame) -> tuple[str | None, str | None]:
                 name_col = c
                 break
 
-    # Last-resort compatibility: a textual pos_team is a name, a numeric pos_team is an id.
     pos = next((x for x in cols if str(x).lower() in {"pos_team", "posteam"}), None)
     if pos is not None:
         ratio = _numeric_ratio(df[pos])
@@ -114,7 +112,7 @@ def identify_team_columns(df: pd.DataFrame) -> tuple[str | None, str | None]:
 
 
 class AdvancedFeatureStore:
-    """Pregame as-of advanced efficiency plus roster priors, keyed by ESPN team ID/name."""
+    """Leak-free pregame advanced efficiency plus roster priors, keyed by ESPN team ID/name."""
 
     KEYWORDS = (
         "epa", "success", "explos", "line_yard", "stuff", "power", "first_down",
@@ -172,6 +170,16 @@ class AdvancedFeatureStore:
             out[name] = pd.to_numeric(df[c], errors="coerce")
         return out
 
+    @staticmethod
+    def _state_mean(st, metrics):
+        return {m: (st[m][0] / st[m][1] if st[m][1] else np.nan) for m in metrics}
+
+    def _store(self, season, week, team_id, team_name, values):
+        if str(team_id):
+            self.id_lookup[(int(season), int(week), str(team_id))] = dict(values)
+        if str(team_name):
+            self.name_lookup[(int(season), int(week), str(team_name))] = dict(values)
+
     def _build_asof(self, df):
         if df.empty:
             return
@@ -202,31 +210,38 @@ class AdvancedFeatureStore:
         work.week = work.week.astype(int)
         metrics = list(vals.columns)
 
-        # Average duplicate team/week rows first (some source seasons contain multiple splits).
+        # Some source seasons contain more than one split for the same team/week.
         wr = work.groupby(["season", "week", "team_id", "team_name"], as_index=False, dropna=False)[metrics].mean(numeric_only=True)
-        wr = wr.sort_values(["season", "week"])
+        wr = wr.sort_values(["season", "week", "team_id", "team_name"])
         prior = {}
         for season in sorted(wr.season.unique()):
             states = {}
             sub = wr[wr.season == season]
             for _, row in sub.iterrows():
-                # Prefer numeric ID as the persistent key, otherwise canonical name.
                 persistent = ("id", str(row.team_id)) if str(row.team_id) else ("name", str(row.team_name))
                 st = states.setdefault(persistent, {m: [0.0, 0] for m in metrics})
                 carry = prior.get(persistent, {})
+
+                # Exact game-week lookup is strictly pregame: current-week metrics are
+                # not incorporated until after this snapshot is stored.
                 pre = {
                     m: (st[m][0] / st[m][1] if st[m][1] else (.62 * carry[m] if m in carry and pd.notna(carry[m]) else np.nan))
                     for m in metrics
                 }
-                if str(row.team_id):
-                    self.id_lookup[(int(season), int(row.week), str(row.team_id))] = pre
-                if str(row.team_name):
-                    self.name_lookup[(int(season), int(row.week), str(row.team_name))] = pre
+                self._store(season, int(row.week), row.team_id, row.team_name, pre)
+
                 for m in metrics:
                     v = row.get(m)
                     if pd.notna(v) and math.isfinite(float(v)):
                         st[m][0] += float(v)
                         st[m][1] += 1
+
+                # A future schedule week may not yet have a source row. Store the
+                # just-completed cumulative state at week+1 so live week N uses data
+                # through week N-1 without waiting for an N-row to appear upstream.
+                post = self._state_mean(st, metrics)
+                self._store(season, int(row.week) + 1, row.team_id, row.team_name, post)
+
             for key, st in states.items():
                 prior[key] = {m: (v[0] / v[1] if v[1] else prior.get(key, {}).get(m, np.nan)) for m, v in st.items()}
 
@@ -275,12 +290,25 @@ class AdvancedFeatureStore:
 
     def _team(self, season, week, team, team_id=""):
         out = {}
+        season, week = int(season), int(week)
         cid = canon_id(team_id)
+        cname = canon_team(team)
+
+        # Exact lookup first. For byes or lagging upstream weekly files, walk backward
+        # to the most recent leak-free snapshot instead of dropping all dynamics.
         if cid:
-            out.update(self.id_lookup.get((int(season), int(week), cid), {}))
-        if not out:
-            out.update(self.name_lookup.get((int(season), int(week), canon_team(team)), {}))
-        out.update(self.static_lookup.get((int(season), canon_team(team)), {}))
+            for w in range(week, 0, -1):
+                hit = self.id_lookup.get((season, w, cid))
+                if hit is not None:
+                    out.update(hit)
+                    break
+        if not any(k in out for k in self.dynamic_names):
+            for w in range(week, 0, -1):
+                hit = self.name_lookup.get((season, w, cname))
+                if hit is not None:
+                    out.update(hit)
+                    break
+        out.update(self.static_lookup.get((season, cname), {}))
         return out
 
     def enrich(self, frame):
