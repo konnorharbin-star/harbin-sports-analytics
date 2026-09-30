@@ -8,14 +8,36 @@ import numpy as np
 import pandas as pd
 
 DEFAULT_POLICY = {
-    "version": 2,
+    "version": 3,
     "deployment_mode": "paper",
     "markets": {
         "moneyline": {"enabled": True, "excluded_weeks": [], "lean": {"min_ev": .02, "min_edge": 1.5, "min_prob": .52}, "bet": {"min_ev": .04, "min_edge": 2.5, "min_prob": .54}, "strong": {"min_ev": .07, "min_edge": 4.0, "min_prob": .56}},
         "spread": {"enabled": True, "excluded_weeks": [], "lean": {"min_ev": .02, "min_edge": 2.0, "min_prob": .52}, "bet": {"min_ev": .04, "min_edge": 3.0, "min_prob": .54}, "strong": {"min_ev": .07, "min_edge": 5.0, "min_prob": .57}},
         "total": {"enabled": True, "excluded_weeks": [], "lean": {"min_ev": .02, "min_edge": 2.5, "min_prob": .52}, "bet": {"min_ev": .04, "min_edge": 4.0, "min_prob": .54}, "strong": {"min_ev": .07, "min_edge": 6.0, "min_prob": .57}},
     },
-    "portfolio": {"max_slate_units": 5.0, "max_game_units": 1.0, "max_team_units": 1.5, "max_market_units": 2.5, "kelly_fraction": .20},
+    "portfolio": {
+        "max_slate_units": 5.0,
+        "max_game_units": 1.0,
+        "max_team_units": 1.5,
+        "max_market_units": 2.5,
+        "max_kickoff_window_units": 2.0,
+        "kickoff_window_hours": 3,
+        "max_book_units": 2.0,
+        "max_bets": 20,
+        "min_allocation_units": .05,
+        "kelly_fraction": .20,
+        "drawdown_soft_stop_units": 8.0,
+        "drawdown_hard_stop_units": 15.0,
+        "drawdown_floor_multiplier": .25,
+        "trailing_window_bets": 50,
+        "min_trailing_bets_for_throttle": 30,
+        "trailing_roi_throttle": -.10,
+        "trailing_clv_throttle": 0.0,
+        "adverse_run_multiplier": .50,
+        "require_executable_book": True,
+        "min_market_book_count_for_execution": 1,
+        "require_live_history_for_production": True,
+    },
     "source": "conservative defaults",
 }
 
@@ -33,7 +55,10 @@ def load_policy(path="reports/production_policy.json"):
     except Exception:
         return _deepcopy_default()
     base = _deepcopy_default()
-    base.update({k: v for k, v in data.items() if k != "markets"})
+    base.update({k: v for k, v in data.items() if k not in {"markets", "portfolio"}})
+    incoming_portfolio = data.get("portfolio") or {}
+    if isinstance(incoming_portfolio, dict):
+        base["portfolio"].update(incoming_portfolio)
     for market in base["markets"]:
         incoming = (data.get("markets") or {}).get(market, {})
         base["markets"][market].update({k: v for k, v in incoming.items() if k not in {"lean", "bet", "strong"}})
@@ -168,8 +193,6 @@ def derive_production_policy(bets_path="reports/backtest_bets.csv", summary_path
         diagnostics[market] = {"train_bets": int(len(tr)), "holdout_bets": int(len(va)), "selected": chosen}
         cfg = policy["markets"][market]
         if not chosen:
-            # Critical fail-closed behavior: an unvalidated market cannot emit live
-            # LEAN/BET/STRONG labels merely because conservative defaults exist.
             cfg["enabled"] = False
             cfg["disabled_reason"] = "no threshold passed the independent time holdout with non-negative ROI and CLV"
             cfg["excluded_weeks"] = []
@@ -211,7 +234,7 @@ def derive_production_policy(bets_path="reports/backtest_bets.csv", summary_path
         and overall.get("avg_clv") is not None and float(overall["avg_clv"]) > 0
     )
     policy["deployment_mode"] = "production" if robust else "paper"
-    policy["source"] = "time-split backtest policy calibration with fail-closed market and repeated-week gates"
+    policy["source"] = "time-split backtest policy calibration with fail-closed market/week gates plus Stage 5 portfolio risk defaults"
     policy["split"] = split_desc
     policy["diagnostics"] = diagnostics
     Path(out_path).parent.mkdir(parents=True, exist_ok=True)
