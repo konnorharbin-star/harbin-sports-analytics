@@ -64,9 +64,9 @@
     "margin_calibration_rows": 596,
     "margin_calibration_mae": 12.472050669195184,
     "margin_baseline_mae": 13.22104338022683,
-    "margin_tuned_model_mae": 12.657079769201356,
-    "margin_mae": 12.657079769201356,
-    "margin_rmse": 15.661306554641623,
+    "margin_tuned_model_mae": 12.657079769201355,
+    "margin_mae": 12.657079769201355,
+    "margin_rmse": 15.661306554641621,
     "margin_release_weight": 0.65,
     "margin_blend_weight": 0.65,
     "margin_release_guard_passed": true,
@@ -77,7 +77,7 @@
         "season": 2023,
         "rows": 792,
         "mae": 12.900581723923983,
-        "rmse": 16.256164262948037,
+        "rmse": 16.25616426294804,
         "baseline_mae": 13.183179942636782,
         "weight": 0.5,
         "weight_tuned_on": "strictly prior whole-week tune block"
@@ -85,7 +85,7 @@
       {
         "season": 2024,
         "rows": 798,
-        "mae": 12.88384613738527,
+        "mae": 12.883846137385264,
         "rmse": 16.246149757462625,
         "baseline_mae": 13.22842366531436,
         "weight": 0.7000000000000001,
@@ -94,7 +94,7 @@
       {
         "season": 2025,
         "rows": 808,
-        "mae": 12.666070646195536,
+        "mae": 12.666070646195537,
         "rmse": 16.1245616087454,
         "baseline_mae": 13.026608931009665,
         "weight": 0.30000000000000004,
@@ -103,15 +103,15 @@
       {
         "season": 2026,
         "rows": 215,
-        "mae": 12.891880369516082,
-        "rmse": 16.00642606511088,
+        "mae": 12.891880369516095,
+        "rmse": 16.006426065110897,
         "baseline_mae": 14.439117971947091,
         "weight": 1.0,
         "weight_tuned_on": "strictly prior whole-week tune block"
       }
     ],
-    "margin_walkforward_mae_mean": 12.835594719255218,
-    "margin_walkforward_mae_std": 0.0980535515667484,
+    "margin_walkforward_mae_mean": 12.83559471925522,
+    "margin_walkforward_mae_std": 0.09805355156674876,
     "margin_walkforward_improved_folds": 4,
     "margin_walkforward_fold_count": 4,
     "total_tuning_rows": 574,
@@ -119,7 +119,7 @@
     "total_tuning_mae": 12.731066260302976,
     "total_tuned_weight": 0.05,
     "total_calibration_rows": 596,
-    "total_calibration_mae": 12.924722975862737,
+    "total_calibration_mae": 12.92472297586274,
     "total_baseline_mae": 12.693581407531097,
     "total_tuned_model_mae": 12.681388088386885,
     "total_mae": 12.681388088386885,
@@ -143,7 +143,7 @@
         "season": 2024,
         "rows": 798,
         "mae": 13.009719665843507,
-        "rmse": 16.48324609700696,
+        "rmse": 16.483246097006955,
         "baseline_mae": 12.964033987572272,
         "weight": 0.7000000000000001,
         "weight_tuned_on": "strictly prior whole-week tune block"
@@ -151,7 +151,7 @@
       {
         "season": 2025,
         "rows": 808,
-        "mae": 12.893439330076346,
+        "mae": 12.893439330076347,
         "rmse": 15.920610565591266,
         "baseline_mae": 12.910666790164145,
         "weight": 0.45,
@@ -160,7 +160,7 @@
       {
         "season": 2026,
         "rows": 215,
-        "mae": 12.255284514656681,
+        "mae": 12.25528451465668,
         "rmse": 15.370254536129547,
         "baseline_mae": 12.290736967103378,
         "weight": 0.15000000000000002,
@@ -168,12 +168,12 @@
       }
     ],
     "total_walkforward_mae_mean": 12.832168339314364,
-    "total_walkforward_mae_std": 0.3472603986117045,
+    "total_walkforward_mae_std": 0.3472603986117053,
     "total_walkforward_improved_folds": 3,
     "total_walkforward_fold_count": 4,
-    "win_brier": 0.171944284202318,
-    "win_log_loss": 0.5159324399742528,
-    "win_ece": 0.0636411720732171,
+    "win_brier": 0.1719442842023178,
+    "win_log_loss": 0.5159324399742523,
+    "win_ece": 0.06364117207321734,
     "win_calibration_eval_rows": 566,
     "win_calibration_fit_rows": 596,
     "win_calibration_weight": 0.65,
@@ -481,8 +481,8 @@
   },
   "calibrated_margin_sigma": 16.242754639563632,
   "calibrated_total_sigma": 16.224718521007322,
-  "generated_at": "2026-09-30T01:05:50.846280+00:00",
-  "updated_at_ct": "Sep 29, 2026 \u00b7 8:05 PM CT",
+  "generated_at": "2026-09-30T01:41:37.288367+00:00",
+  "updated_at_ct": "Sep 29, 2026 \u00b7 8:41 PM CT",
   "schedule_source": "sportsdataverse/cfbfastR-data",
   "odds_source": "ESPN live (site.web.api.espn.com) + ESPN Core supplement",
   "odds_errors": [],
@@ -529,6 +529,14 @@
       "best_away_spread",
       "best_over_total",
       "best_under_total"
+    ],
+    "best_line_provenance_fields": [
+      "best_home_ml_book",
+      "best_away_ml_book",
+      "best_home_spread_book",
+      "best_away_spread_book",
+      "best_over_book",
+      "best_under_book"
     ]
   },
   "current_context": {
@@ -549,12 +557,13 @@
     "snapshot_rows": 0,
     "hourly_snapshot_games": 0,
     "legacy_fallback_games": 56,
+    "consensus_close_games": 0,
     "source": "prediction_snapshot_fallback"
   },
   "quant_picks": {
-    "strong": 15,
+    "strong": 12,
     "bet": 8,
-    "lean": 1
+    "lean": 0
   },
   "snapshot_appended": true,
   "live_performance": {
@@ -569,6 +578,9 @@
     "avg_clv_proxy": null,
     "positive_clv_rate": null,
     "clv_samples": 0,
+    "avg_execution_clv": null,
+    "positive_execution_clv_rate": null,
+    "execution_clv_samples": 0,
     "roi_ci_95": [
       null,
       null
@@ -577,7 +589,7 @@
     "by_market": {},
     "by_signal": {},
     "by_season": {},
-    "clv_method": "latest hourly market snapshot strictly before kickoff; moneyline uses no-vig probability movement when both sides are stored",
+    "clv_method": "latest timestamp-valid snapshot strictly before kickoff; spread/total use consensus close when available; moneyline uses consensus no-vig probability; execution CLV retains the actual bet price",
     "verified_close_clv_samples": 0,
     "status": "live/shadow evidence only; not historical backtest evidence"
   },
@@ -674,21 +686,21 @@
       {
         "name": "probability_brier",
         "passed": true,
-        "value": 0.171944284202318,
+        "value": 0.1719442842023178,
         "requirement": "Brier <= 0.18 on chronological release holdout",
         "detail": ""
       },
       {
         "name": "probability_ece",
         "passed": false,
-        "value": 0.0636411720732171,
+        "value": 0.06364117207321734,
         "requirement": "ECE <= 0.05 on chronological release holdout",
         "detail": ""
       },
       {
         "name": "live_monitoring",
         "passed": true,
-        "value": 94.7,
+        "value": 93.7,
         "requirement": "live readiness >= 90/100",
         "detail": ""
       },
@@ -703,12 +715,12 @@
         "name": "historical_market_edge",
         "passed": false,
         "value": {
-          "bets": 3461,
+          "bets": 3436,
           "roi_ci_95": [
-            -0.039339257304028145,
-            0.0269930423423975
+            -0.04241932687416665,
+            0.03152934536380288
           ],
-          "avg_clv": 0.009571047761541404,
+          "avg_clv": 0.00948627410813389,
           "positive_markets": 1,
           "positive_seasons": 1
         },
@@ -739,19 +751,19 @@
     "meaning": "Hard deployment gate. PRODUCTION requires engineering quality, dynamic advanced data, multi-book pricing, robust historical edge and independent live evidence; it is not a guarantee of future profit."
   },
   "live_monitoring": {
-    "live_readiness_score": 94.7,
+    "live_readiness_score": 93.7,
     "scores": {
       "market_coverage": 100.0,
       "advanced_coverage": 100.0,
       "multi_book": 98.21428571428571,
       "context": 100.0,
-      "calibration": 84.08970698169573,
+      "calibration": 84.08970698169566,
       "freshness": 100.0,
-      "drift_margin": 96.8,
-      "drift_total": 89.4,
-      "drift_probability": 97.5,
-      "distribution_stability": 94.6,
-      "output_completeness": 84.59821428571428
+      "drift_margin": 94.3,
+      "drift_total": 89.3,
+      "drift_probability": 97.2,
+      "distribution_stability": 93.6,
+      "output_completeness": 76.57142857142857
     },
     "alerts": [],
     "meaning": "operational/model-monitoring score; not a profitability guarantee"
@@ -761,11 +773,11 @@
     "policy_mode": "paper",
     "release_state": "RESEARCH",
     "production_eligible": false,
-    "proposed_units": 5.51,
+    "proposed_units": 4.58,
     "approved_units": 0.0,
-    "paper_allocated_units": 5.0,
-    "paper_or_shadow_allocated_units": 5.0,
-    "bets": 21,
+    "paper_allocated_units": 4.58,
+    "paper_or_shadow_allocated_units": 4.58,
+    "bets": 20,
     "limits": {
       "max_slate_units": 5.0,
       "max_game_units": 1.0,
@@ -776,16 +788,15 @@
       "kickoff_window_hours": 3
     },
     "allocated_by_market": {
-      "moneyline": 2.5,
-      "spread": 2.5
+      "moneyline": 2.46,
+      "spread": 2.12
     },
     "allocated_by_kickoff_window": {
-      "2026-10-03 15:00:00+00:00": 1.7,
-      "2026-10-02 00:00:00+00:00": 0.3,
-      "2026-10-04 00:00:00+00:00": 0.21,
-      "2026-10-03 21:00:00+00:00": 1.02,
+      "2026-10-03 15:00:00+00:00": 1.57,
       "2026-10-03 18:00:00+00:00": 1.64,
-      "2026-10-04 03:00:00+00:00": 0.13
+      "2026-10-03 21:00:00+00:00": 0.64,
+      "2026-10-02 00:00:00+00:00": 0.41,
+      "2026-10-04 00:00:00+00:00": 0.32
     },
     "release_blockers": [
       "probability_ece: ECE <= 0.05 on chronological release holdout",

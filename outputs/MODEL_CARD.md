@@ -2,9 +2,9 @@
 
 ## Identity
 - Core model version: **7.1.0**
-- Repository revision: `e6ac724fefcd211535da4f28199162e572a209ed`
+- Repository revision: `48bde39118c0767d8b168cd9a452c3c7f9eef222`
 - Season / Week: **2026 / 5**
-- Generated: **Sep 29, 2026 · 8:05 PM CT**
+- Generated: **Sep 29, 2026 · 8:41 PM CT**
 
 ## Intended use
 Independent CFB score, margin, total and win-probability estimation; sportsbook comparison; paper/production betting research with explicit uncertainty and risk controls. The Cooper-style table is a presentation layer, not the proprietary formula of any third party.
@@ -19,16 +19,16 @@ Independent CFB score, margin, total and win-probability estimation; sportsbook 
 
 ## Validation
 - Method: nested whole-week chronology: core fit -> tune weight -> OOF calibration -> untouched evaluation; final refit keeps the tune-selected weight and uses OOF probability calibration
-- Margin MAE: **12.657079769201356** vs baseline **13.22104338022683**
+- Margin MAE: **12.657079769201355** vs baseline **13.22104338022683**
 - Total MAE: **12.681388088386885** vs baseline **12.693581407531097**
-- Win-probability Brier: **0.171944284202318**
-- Calibration ECE: **0.0636411720732171**
+- Win-probability Brier: **0.1719442842023178**
+- Calibration ECE: **0.06364117207321734**
 
 ## Operational controls
-- Live monitoring score: **94.7/100**
+- Live monitoring score: **93.7/100**
 - Portfolio mode: **PAPER**
 - Approved units: **0.0**
-- Proposed/paper units: **5.51**
+- Proposed/paper units: **4.58**
 
 ## Leakage controls
 Features are generated pregame from prior games only; model training is chronological; tuning/calibration/evaluation are separated; historical market evidence is walk-forward. Sportsbook prices are excluded from the score-generation model and are used only after fair scores/probabilities are produced.
