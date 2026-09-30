@@ -9,7 +9,12 @@ def _clip(x,lo=0.0,hi=100.0): return max(lo,min(hi,float(x)))
 
 def build_health_report(meta: dict, pred=None, reports_dir="reports") -> dict:
     c=meta.get("market_coverage") or {}; games=max(1,int(c.get("games",0) or 0)); market_score=100*min(c.get("moneyline",0),c.get("spread",0),c.get("total",0))/games
-    adv=meta.get("advanced_features") or {}; advanced_score=100*float(adv.get("live_coverage",adv.get("coverage",0)) or 0)
+    adv=meta.get("advanced_features") or {}
+    # Dynamic efficiency is the material live input. Static talent/returning-production
+    # coverage alone must not earn a perfect advanced-feature score.
+    dynamic_cov=float(adv.get("dynamic_coverage",0) or 0)
+    broad_cov=float(adv.get("live_coverage",adv.get("coverage",0)) or 0)
+    advanced_score=100*(.80*dynamic_cov+.20*broad_cov)
     metrics=meta.get("metrics") or {}; base=metrics.get("margin_baseline_mae"); model=metrics.get("margin_mae"); improvement=max(0,(float(base)-float(model))/float(base)) if base and model is not None else 0
     folds=metrics.get("margin_walkforward_folds") or []; fold_improved=sum(1 for f in folds if f.get("mae",999)<=f.get("baseline_mae",-999))/len(folds) if folds else 0; validation_score=_clip(55+300*improvement+25*fold_improved)
     brier=metrics.get("win_brier"); ece=metrics.get("win_ece"); calibration_score=45 if brier is None else .7*_clip((.28-float(brier))/.10*100)+.3*_clip((.15-float(ece or .15))/.15*100)
@@ -32,7 +37,7 @@ def build_health_report(meta: dict, pred=None, reports_dir="reports") -> dict:
     scores={"pipeline_and_data":100.,"market_coverage":round(market_score,1),"advanced_features":round(advanced_score,1),"model_validation":round(validation_score,1),"probability_calibration":round(calibration_score,1),"market_intelligence":round(intelligence_score,1),"current_context":round(context_score,1),"live_monitoring":round(monitor_score,1),"historical_betting_proof":round(proof_score,1)}
     weighted=.08*scores["pipeline_and_data"]+.10*scores["market_coverage"]+.14*scores["advanced_features"]+.16*scores["model_validation"]+.12*scores["probability_calibration"]+.09*scores["market_intelligence"]+.05*scores["current_context"]+.10*scores["live_monitoring"]+.16*scores["historical_betting_proof"]
     blockers=[]
-    if advanced_score<80: blockers.append("advanced feature coverage below 80%")
+    if dynamic_cov<.80: blockers.append("dynamic advanced-efficiency coverage below 80%")
     if market_score<90: blockers.append("complete verified market coverage below 90%")
     if not folds: blockers.append("season walk-forward diagnostic folds unavailable")
     if brier is None: blockers.append("out-of-sample probability calibration metrics unavailable")
