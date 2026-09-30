@@ -1,19 +1,21 @@
 {
-  "system_health_score": 90.7,
+  "system_health_score": 77.8,
   "meaning": "engineering/model-readiness score only; not a profitability or win-rate guarantee",
   "components": {
     "pipeline_and_data": 100.0,
     "market_coverage": 100.0,
-    "advanced_features": 100.0,
+    "advanced_features": 20.0,
     "model_validation": 94.5,
     "probability_calibration": 93.8,
     "market_intelligence": 65.0,
     "current_context": 100.0,
-    "live_monitoring": 87.2,
+    "live_monitoring": 70.2,
     "historical_betting_proof": 80
   },
   "betting_proof_status": "DEVELOPING",
   "blockers": [
-    "historical market edge is not yet validated"
+    "dynamic advanced-efficiency coverage below 80%",
+    "historical market edge is not yet validated",
+    "live operational monitoring score below 75"
   ]
 }
