@@ -317,8 +317,12 @@ def apply_portfolio_controls(
         if issue:
             execution_blocked += 1
             out.at[i, "portfolio_limit_reason"] = issue
-            continue
-        out.at[i, "execution_ready"] = True
+            # Paper/shadow planning may still exercise concentration logic on legacy
+            # candidates that predate executable-book fields. Production may not.
+            if production_gate_open:
+                continue
+        else:
+            out.at[i, "execution_ready"] = True
 
         if allocated_bets >= max_bets:
             out.at[i, "portfolio_limit_reason"] = "max bet count"
