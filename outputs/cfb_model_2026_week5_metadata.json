@@ -481,8 +481,8 @@
   },
   "calibrated_margin_sigma": 16.242754639563632,
   "calibrated_total_sigma": 16.224718521007322,
-  "generated_at": "2026-09-30T00:59:02.288869+00:00",
-  "updated_at_ct": "Sep 29, 2026 \u00b7 7:59 PM CT",
+  "generated_at": "2026-09-30T01:05:50.846280+00:00",
+  "updated_at_ct": "Sep 29, 2026 \u00b7 8:05 PM CT",
   "schedule_source": "sportsdataverse/cfbfastR-data",
   "odds_source": "ESPN live (site.web.api.espn.com) + ESPN Core supplement",
   "odds_errors": [],
@@ -582,7 +582,7 @@
     "status": "live/shadow evidence only; not historical backtest evidence"
   },
   "health": {
-    "system_health_score": 93.6,
+    "system_health_score": 93.5,
     "meaning": "engineering/model-readiness score only; not a profitability or win-rate guarantee",
     "components": {
       "pipeline_and_data": 100.0,
@@ -592,7 +592,7 @@
       "probability_calibration": 87.3,
       "market_intelligence": 99.4,
       "current_context": 100.0,
-      "live_monitoring": 95.3,
+      "live_monitoring": 94.7,
       "historical_betting_proof": 80
     },
     "betting_proof_status": "DEVELOPING",
