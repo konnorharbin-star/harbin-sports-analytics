@@ -10,6 +10,9 @@
   "avg_clv_proxy": null,
   "positive_clv_rate": null,
   "clv_samples": 0,
+  "avg_execution_clv": null,
+  "positive_execution_clv_rate": null,
+  "execution_clv_samples": 0,
   "roi_ci_95": [
     null,
     null
@@ -18,7 +21,7 @@
   "by_market": {},
   "by_signal": {},
   "by_season": {},
-  "clv_method": "latest hourly market snapshot strictly before kickoff; moneyline uses no-vig probability movement when both sides are stored",
+  "clv_method": "latest timestamp-valid snapshot strictly before kickoff; spread/total use consensus close when available; moneyline uses consensus no-vig probability; execution CLV retains the actual bet price",
   "verified_close_clv_samples": 0,
   "status": "live/shadow evidence only; not historical backtest evidence"
 }
