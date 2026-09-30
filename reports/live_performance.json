@@ -18,14 +18,10 @@
     null
   ],
   "max_drawdown": 0.0,
-  "by_market": {},
-  "by_signal": {},
-  "by_season": {},
-  "clv_method": "first execution-ready cap-constrained portfolio decision strictly before kickoff; close is latest timestamp-valid market snapshot strictly before kickoff",
-  "verified_close_clv_samples": 0,
-  "portfolio_verified": false,
-  "evidence_source": "legacy_raw_quant_signals",
-  "eligible_decisions": 824,
+  "portfolio_verified": true,
+  "evidence_source": "portfolio_decisions_v1",
+  "eligible_decisions": 0,
   "timing_excluded_rows": 0,
-  "status": "live/shadow evidence only; not historical backtest evidence"
+  "status": "live/shadow evidence only; not historical backtest evidence",
+  "clv_method": "first execution-ready cap-constrained portfolio decision strictly before kickoff; close is latest timestamp-valid market snapshot strictly before kickoff"
 }
