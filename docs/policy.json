@@ -1,51 +1,47 @@
 {
-  "version": 3,
+  "version": 4,
   "deployment_mode": "paper",
   "markets": {
     "moneyline": {
       "enabled": true,
-      "excluded_weeks": [
-        1
-      ],
+      "excluded_weeks": [],
       "lean": {
-        "min_ev": 0.1,
-        "min_edge": 6,
-        "min_prob": 0.56
+        "min_ev": 0.02,
+        "min_edge": 1.5,
+        "min_prob": 0.52
       },
       "bet": {
-        "min_ev": 0.115,
-        "min_edge": 6.75,
-        "min_prob": 0.5750000000000001
+        "min_ev": 0.04,
+        "min_edge": 2.5,
+        "min_prob": 0.54
       },
       "strong": {
-        "min_ev": 0.14,
-        "min_edge": 8.0,
-        "min_prob": 0.5900000000000001
+        "min_ev": 0.07,
+        "min_edge": 4.0,
+        "min_prob": 0.56
       }
     },
     "spread": {
       "enabled": true,
-      "excluded_weeks": [
-        1
-      ],
+      "excluded_weeks": [],
       "lean": {
-        "min_ev": 0.1,
-        "min_edge": 6,
-        "min_prob": 0.6
+        "min_ev": 0.02,
+        "min_edge": 2.0,
+        "min_prob": 0.52
       },
       "bet": {
-        "min_ev": 0.115,
-        "min_edge": 6.75,
-        "min_prob": 0.615
+        "min_ev": 0.04,
+        "min_edge": 3.0,
+        "min_prob": 0.54
       },
       "strong": {
-        "min_ev": 0.14,
-        "min_edge": 8.0,
-        "min_prob": 0.63
+        "min_ev": 0.07,
+        "min_edge": 5.0,
+        "min_prob": 0.57
       }
     },
     "total": {
-      "enabled": false,
+      "enabled": true,
       "excluded_weeks": [],
       "lean": {
         "min_ev": 0.02,
@@ -61,8 +57,7 @@
         "min_ev": 0.07,
         "min_edge": 6.0,
         "min_prob": 0.57
-      },
-      "disabled_reason": "no threshold passed the independent time holdout with non-negative ROI and CLV"
+      }
     }
   },
   "portfolio": {
@@ -86,51 +81,9 @@
     "adverse_run_multiplier": 0.5,
     "require_executable_book": true,
     "min_market_book_count_for_execution": 1,
+    "require_quote_timestamp_for_execution": true,
+    "max_quote_age_minutes": 60,
     "require_live_history_for_production": true
   },
-  "source": "time-split backtest policy calibration with fail-closed market/week gates plus Stage 5 portfolio risk defaults",
-  "split": "season<2025 / season=2025",
-  "diagnostics": {
-    "moneyline": {
-      "train_bets": 463,
-      "holdout_bets": 252,
-      "selected": [
-        0.1,
-        6,
-        0.56,
-        {
-          "n": 131,
-          "roi": 0.03713089389139214,
-          "lcb": -0.06550862117667205,
-          "avg_clv": 0.0
-        }
-      ],
-      "excluded_weeks": [
-        1
-      ]
-    },
-    "spread": {
-      "train_bets": 1034,
-      "holdout_bets": 518,
-      "selected": [
-        0.1,
-        6,
-        0.6,
-        {
-          "n": 174,
-          "roi": 0.10292580982236159,
-          "lcb": 0.011431870679778855,
-          "avg_clv": 0.02979470422096181
-        }
-      ],
-      "excluded_weeks": [
-        1
-      ]
-    },
-    "total": {
-      "train_bets": 776,
-      "holdout_bets": 393,
-      "selected": null
-    }
-  }
+  "source": "paper only; no verified archived opening-entry sample"
 }

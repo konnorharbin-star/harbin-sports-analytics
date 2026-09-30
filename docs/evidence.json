@@ -1,6 +1,23 @@
 {
-  "status": "DEVELOPING",
+  "status": "UNPROVEN",
   "overall": {
+    "bets": 0,
+    "wins": 0,
+    "losses": 0,
+    "pushes": 0,
+    "win_rate": null,
+    "units": 0.0,
+    "roi": null,
+    "max_drawdown": 0.0,
+    "avg_clv": null,
+    "positive_clv_rate": null,
+    "clv_samples": 0,
+    "roi_ci_95": [
+      null,
+      null
+    ]
+  },
+  "all_archive_overall": {
     "bets": 3436,
     "wins": 1838,
     "losses": 1561,
@@ -9,7 +26,7 @@
     "units": -16.303198909379198,
     "roi": -0.004744819240215133,
     "max_drawdown": 68.32112758715358,
-    "avg_clv": 0.009486274108133894,
+    "avg_clv": 0.00948627410813389,
     "avg_clv_raw": 0.4071594877764843,
     "positive_clv_rate": 0.24476135040745053,
     "clv_samples": 3436,
@@ -19,169 +36,25 @@
     ],
     "profitable_week_rate": 0.5106382978723404
   },
-  "by_market": {
-    "moneyline": {
-      "bets": 715,
-      "roi": -0.007035624666646076,
-      "units": -5.030471636651944,
-      "avg_clv": 0.0
-    },
-    "spread": {
-      "bets": 1552,
-      "roi": 0.0067947516401125115,
-      "units": 10.545454545454618,
-      "avg_clv": 0.02053056818824017
-    },
-    "total": {
-      "bets": 1169,
-      "roi": -0.018663970759779103,
-      "units": -21.81818181818177,
-      "avg_clv": 0.0006256595443963206
-    }
+  "promotion_sample": {
+    "entry_quote_verified": false,
+    "provenance_field": "entry_quote_verified",
+    "verified_bets": 0,
+    "all_archive_bets": 3436,
+    "excluded_unverified_bets": 3436,
+    "positive_markets": 0,
+    "positive_seasons": 0,
+    "min_segment_bets": 50
   },
-  "by_signal": {
-    "BET": {
-      "bets": 1050,
-      "roi": -0.018691705555189668,
-      "units": -19.626290832949152,
-      "avg_clv": 0.008710061364159923
-    },
-    "LEAN": {
-      "bets": 973,
-      "roi": -0.05311644200003372,
-      "units": -51.682298066032814,
-      "avg_clv": 0.0021583791036908755
-    },
-    "STRONG": {
-      "bets": 1413,
-      "roi": 0.038928089164616306,
-      "units": 55.00538998960284,
-      "avg_clv": 0.01510910865908627
-    }
-  },
-  "by_season": {
-    "2023": {
-      "bets": 1122,
-      "roi": -0.016433936116422635,
-      "units": -18.438876322626196,
-      "avg_clv": 0.004533954789420264
-    },
-    "2024": {
-      "bets": 1151,
-      "roi": -0.007115901455244221,
-      "units": -8.190402574986098,
-      "avg_clv": 0.01320793390476658
-    },
-    "2025": {
-      "bets": 1163,
-      "roi": 0.008878830600372466,
-      "units": 10.326079988233177,
-      "avg_clv": 0.010580746893750794
-    }
-  },
-  "by_week": {
-    "1": {
-      "bets": 446,
-      "roi": -0.13724724742425767,
-      "units": -61.21227235121892,
-      "avg_clv": 0.002017884207068894
-    },
-    "2": {
-      "bets": 232,
-      "roi": 0.0001381682184594668,
-      "units": 0.0320550266825963,
-      "avg_clv": 0.0017705498359062986
-    },
-    "3": {
-      "bets": 237,
-      "roi": -0.024641464394610745,
-      "units": -5.840027061522747,
-      "avg_clv": -0.001508945250777583
-    },
-    "4": {
-      "bets": 228,
-      "roi": 0.05147619612274346,
-      "units": 11.73657271598551,
-      "avg_clv": 0.009461116928911368
-    },
-    "5": {
-      "bets": 212,
-      "roi": 0.06975806926579357,
-      "units": 14.788710684348239,
-      "avg_clv": 0.006787952158164335
-    },
-    "6": {
-      "bets": 201,
-      "roi": 0.046391116741212,
-      "units": 9.324614464983611,
-      "avg_clv": 0.014547294123297198
-    },
-    "7": {
-      "bets": 224,
-      "roi": 0.09275321196773337,
-      "units": 20.776719480772275,
-      "avg_clv": 0.007711686417287847
-    },
-    "8": {
-      "bets": 251,
-      "roi": -0.027987512343979448,
-      "units": -7.024865598338842,
-      "avg_clv": 0.01510811264574491
-    },
-    "9": {
-      "bets": 228,
-      "roi": -0.0173799765617208,
-      "units": -3.9626346560723427,
-      "avg_clv": 0.007968343218878045
-    },
-    "10": {
-      "bets": 225,
-      "roi": -0.14737006072947378,
-      "units": -33.1582636641316,
-      "avg_clv": 0.012006088432721662
-    },
-    "11": {
-      "bets": 215,
-      "roi": 0.07880182162420103,
-      "units": 16.942391649203223,
-      "avg_clv": 0.019374471794855484
-    },
-    "12": {
-      "bets": 232,
-      "roi": -0.017174780823784666,
-      "units": -3.984549151118043,
-      "avg_clv": 0.013355146362985201
-    },
-    "13": {
-      "bets": 268,
-      "roi": 0.07727832002117142,
-      "units": 20.71058976567394,
-      "avg_clv": 0.0177755085241723
-    },
-    "14": {
-      "bets": 209,
-      "roi": 0.09145078627190689,
-      "units": 19.11321433082854,
-      "avg_clv": 0.014081689429150999
-    },
-    "15": {
-      "bets": 26,
-      "roi": -0.5559440559440559,
-      "units": -14.454545454545453,
-      "avg_clv": -0.0018356047561754922
-    },
-    "16": {
-      "bets": 2,
-      "roi": -0.045454545454545414,
-      "units": -0.09090909090909083,
-      "avg_clv": 0.08036603957814355
-    }
-  },
+  "by_market": {},
+  "by_signal": {},
+  "by_season": {},
+  "by_week": {},
   "criteria": {
-    "robust": "1000+ bets, ROI 95% CI lower bound > 0, positive CLV, positive evidence across >=2 markets and >=2 seasons",
-    "validated": "500+ bets with positive ROI and CLV",
-    "developing": "150+ bets",
-    "unproven": "below developing sample"
+    "robust": "1000+ verified opening-entry bets, week-block ROI 95% CI lower bound > 0, positive CLV, and >=2 markets plus >=2 seasons each with 50+ bets, positive ROI and positive CLV",
+    "validated": "500+ verified opening-entry bets with positive ROI and CLV; not sufficient for PRODUCTION",
+    "developing": "150+ verified opening-entry bets",
+    "unproven": "below developing sample or entry timing is not independently verified"
   },
-  "note": "Historical evidence can fail to persist out of sample; this report does not guarantee future profit."
+  "note": "Only time-valid archived opening entries qualify for promotion evidence. Archive-final fallbacks remain research diagnostics and cannot establish production readiness. Historical results do not guarantee future profit."
 }
