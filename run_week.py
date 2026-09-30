@@ -8,7 +8,7 @@ from harbin.model_card import write_model_card
 from harbin.contracts import write_data_quality
 from harbin.release_gate import write_release_gate
 
-PLATFORM_VERSION="7.0.0"
+PLATFORM_VERSION="7.1.0"
 
 p=argparse.ArgumentParser(description="Run Harbin Sports Analytics CFB model")
 p.add_argument("--season",type=int)
@@ -33,7 +33,7 @@ monitor=write_live_monitoring(pred,meta)
 release_gate=write_release_gate(meta,monitor,data_quality)
 meta["data_quality"]=data_quality; meta["release_gate"]=release_gate; meta["live_monitoring"]=monitor
 
-# Portfolio controls now require BOTH a historically validated policy and a PRODUCTION release gate.
+# Portfolio controls require BOTH a historically validated policy and a PRODUCTION release gate.
 pred,portfolio=write_portfolio_outputs(pred,release_gate_path="outputs/release_gate.json")
 meta["portfolio"]=portfolio
 write_model_card(meta,monitor,portfolio)
@@ -48,8 +48,8 @@ for src,dst in (
     if src.exists(): shutil.copyfile(src,dst)
 readme=out/"README.md"
 with readme.open("a") as f:
-    f.write("\n## v7 release / evidence layer\n- [Portfolio card](portfolio_card.csv)\n- [Portfolio summary](portfolio_summary.json)\n- [Live monitoring](live_monitoring.json)\n- [Release gate](release_gate.json)\n- [Data-quality contracts](data_quality.json)\n- [Model card](MODEL_CARD.md)\n- [System audit dashboard](../docs/audit.html)\n- Real approved stake remains **0** unless every hard PRODUCTION gate is satisfied.\n")
-print(f"Harbin CFB platform v7 / core v{meta['model_version']} complete: {meta['season']} Week {meta['week']} — {len(pred)} games")
+    f.write("\n## v7.1 release / evidence layer\n- [Portfolio card](portfolio_card.csv)\n- [Portfolio summary](portfolio_summary.json)\n- [Live monitoring](live_monitoring.json)\n- [Release gate](release_gate.json)\n- [Data-quality contracts](data_quality.json)\n- [Model card](MODEL_CARD.md)\n- [System audit dashboard](../docs/audit.html)\n- Real approved stake remains **0** unless every hard PRODUCTION gate is satisfied.\n")
+print(f"Harbin CFB platform v{PLATFORM_VERSION} / core v{meta['model_version']} complete: {meta['season']} Week {meta['week']} — {len(pred)} games")
 print("Validation:",meta["validation"])
 print("Margin MAE:",meta["metrics"].get("margin_mae"),"| Total MAE:",meta["metrics"].get("total_mae"))
 print("Release weights — margin:",meta["metrics"].get("margin_release_weight"),"total:",meta["metrics"].get("total_release_weight"))
