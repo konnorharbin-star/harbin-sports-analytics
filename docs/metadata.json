@@ -1,5 +1,5 @@
 {
-  "model_version": "4.0.0",
+  "model_version": "7.1.0",
   "season": 2026,
   "week": 5,
   "history_start": 2021,
@@ -11,7 +11,7 @@
     "margin_baseline_mae": 13.720203965537888,
     "margin_tuned_model_mae": 13.055453901495502,
     "margin_mae": 13.055453901495502,
-    "margin_rmse": 16.048403351024668,
+    "margin_rmse": 16.04840335102467,
     "margin_tuned_weight": 0.45,
     "margin_release_weight": 0.45,
     "margin_blend_weight": 0.45,
@@ -40,7 +40,7 @@
       {
         "season": 2025,
         "rows": 808,
-        "mae": 12.61091813093502,
+        "mae": 12.610918130935023,
         "rmse": 16.09885562402921,
         "baseline_mae": 13.026608931009665,
         "weight": 0.7000000000000001,
@@ -50,18 +50,18 @@
         "season": 2026,
         "rows": 215,
         "mae": 13.199053957477693,
-        "rmse": 16.340343751839608,
+        "rmse": 16.340343751839605,
         "baseline_mae": 14.439117971947091,
         "weight": 0.7000000000000001,
         "weight_tuned_on": "prior-season chronological tail"
       }
     ],
     "margin_walkforward_mae_mean": 12.91676853806103,
-    "margin_walkforward_mae_std": 0.21218114308513641,
+    "margin_walkforward_mae_std": 0.21218114308513514,
     "margin_walkforward_improved_folds": 4,
     "margin_walkforward_fold_count": 4,
     "total_baseline_mae": 12.778014944283827,
-    "total_tuned_model_mae": 12.916782682319536,
+    "total_tuned_model_mae": 12.916782682319537,
     "total_mae": 12.778014944283827,
     "total_rmse": 15.687832775187584,
     "total_tuned_weight": 0.45,
@@ -83,8 +83,8 @@
       {
         "season": 2024,
         "rows": 798,
-        "mae": 13.014675650253531,
-        "rmse": 16.448942251905038,
+        "mae": 13.01442731745411,
+        "rmse": 16.448801421367676,
         "baseline_mae": 12.964033987572272,
         "weight": 0.6000000000000001,
         "weight_tuned_on": "prior-season chronological tail"
@@ -108,13 +108,13 @@
         "weight_tuned_on": "prior-season chronological tail"
       }
     ],
-    "total_walkforward_mae_mean": 12.860951081473834,
-    "total_walkforward_mae_std": 0.3077536974984146,
+    "total_walkforward_mae_mean": 12.860888998273978,
+    "total_walkforward_mae_std": 0.3077227038433537,
     "total_walkforward_improved_folds": 1,
     "total_walkforward_fold_count": 4,
     "win_brier": 0.1595422323490443,
-    "win_log_loss": 0.4863440933049297,
-    "win_ece": 0.031110866289941794,
+    "win_log_loss": 0.4863440933049296,
+    "win_ece": 0.031110866289941846,
     "win_calibration_eval_rows": 368,
     "win_calibration_weight": 0.45
   },
@@ -124,8 +124,8 @@
   },
   "calibrated_margin_sigma": 15.936045782910531,
   "calibrated_total_sigma": 15.696990609626486,
-  "generated_at": "2026-09-30T00:18:43.153999+00:00",
-  "updated_at_ct": "Sep 29, 2026 \u00b7 7:18 PM CT",
+  "generated_at": "2026-09-30T00:23:42.099595+00:00",
+  "updated_at_ct": "Sep 29, 2026 \u00b7 7:23 PM CT",
   "schedule_source": "sportsdataverse/cfbfastR-data",
   "odds_source": "ESPN live (site.web.api.espn.com) + ESPN Core supplement",
   "odds_errors": [],
@@ -140,7 +140,14 @@
   "advanced_features": {
     "train_coverage": 1.0,
     "live_coverage": 1.0,
+    "dynamic_coverage": 0.0,
     "feature_count": 37,
+    "dynamic_feature_count": 32,
+    "identity": {
+      "id_column": "pos_team_id",
+      "name_column": "pos_team",
+      "id_numeric_ratio": 1.0
+    },
     "sources": [
       "SportsDataverse espn_cfb_adv_team",
       "SportsDataverse cfb_matchup_roster_talent.csv",
@@ -185,9 +192,9 @@
     "source": "prediction_snapshot_fallback"
   },
   "quant_picks": {
-    "strong": 22,
-    "bet": 13,
-    "lean": 2
+    "strong": 0,
+    "bet": 0,
+    "lean": 0
   },
   "snapshot_appended": true,
   "live_performance": {
@@ -307,14 +314,14 @@
       {
         "name": "probability_ece",
         "passed": true,
-        "value": 0.031110866289941794,
+        "value": 0.031110866289941846,
         "requirement": "ECE <= 0.05 on chronological release holdout",
         "detail": ""
       },
       {
         "name": "live_monitoring",
         "passed": false,
-        "value": 87.2,
+        "value": 70.2,
         "requirement": "live readiness >= 90/100",
         "detail": ""
       },
@@ -367,21 +374,22 @@
     "meaning": "Hard deployment gate. PRODUCTION requires engineering quality, multi-book pricing, robust historical edge and independent live evidence; it is not a guarantee of future profit."
   },
   "live_monitoring": {
-    "live_readiness_score": 87.2,
+    "live_readiness_score": 70.2,
     "scores": {
       "market_coverage": 100.0,
-      "advanced_coverage": 100.0,
+      "advanced_coverage": 0.0,
       "multi_book": 0.0,
       "context": 100.0,
-      "calibration": 92.22228342751455,
+      "calibration": 92.22228342751454,
       "freshness": 100.0,
       "drift_margin": 93.3,
       "drift_total": 90.0,
       "drift_probability": 98.8,
       "distribution_stability": 94.0,
-      "output_completeness": 84.52380952380952
+      "output_completeness": 84.765625
     },
     "alerts": [
+      "real pregame advanced-efficiency coverage below target",
       "multi-book consensus is limited; configure THE_ODDS_API_KEY for free multi-book supplementation"
     ],
     "meaning": "operational/model-monitoring score; not a profitability guarantee"
@@ -391,11 +399,11 @@
     "policy_mode": "paper",
     "release_state": "RESEARCH",
     "production_eligible": false,
-    "proposed_units": 6.21,
+    "proposed_units": 0.0,
     "approved_units": 0.0,
-    "paper_allocated_units": 5.0,
-    "paper_or_shadow_allocated_units": 5.0,
-    "bets": 28,
+    "paper_allocated_units": 0.0,
+    "paper_or_shadow_allocated_units": 0.0,
+    "bets": 0,
     "limits": {
       "max_slate_units": 5.0,
       "max_game_units": 1.0,
@@ -405,19 +413,8 @@
       "max_kickoff_window_units": 2.0,
       "kickoff_window_hours": 3
     },
-    "allocated_by_market": {
-      "moneyline": 1.53,
-      "total": 0.97,
-      "spread": 2.5
-    },
-    "allocated_by_kickoff_window": {
-      "2026-10-03 15:00:00+00:00": 2.0,
-      "2026-10-03 21:00:00+00:00": 1.13,
-      "2026-10-04 00:00:00+00:00": 0.31,
-      "2026-10-02 00:00:00+00:00": 0.22,
-      "2026-10-03 18:00:00+00:00": 1.24,
-      "2026-10-02 21:00:00+00:00": 0.1
-    },
+    "allocated_by_market": {},
+    "allocated_by_kickoff_window": {},
     "release_blockers": [
       "live_monitoring: live readiness >= 90/100",
       "multi_book_consensus: >= 75% of games covered by 2+ books",

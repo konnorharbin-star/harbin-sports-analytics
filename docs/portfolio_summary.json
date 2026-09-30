@@ -3,11 +3,11 @@
   "policy_mode": "paper",
   "release_state": "RESEARCH",
   "production_eligible": false,
-  "proposed_units": 6.21,
+  "proposed_units": 0.0,
   "approved_units": 0.0,
-  "paper_allocated_units": 5.0,
-  "paper_or_shadow_allocated_units": 5.0,
-  "bets": 28,
+  "paper_allocated_units": 0.0,
+  "paper_or_shadow_allocated_units": 0.0,
+  "bets": 0,
   "limits": {
     "max_slate_units": 5.0,
     "max_game_units": 1.0,
@@ -17,19 +17,8 @@
     "max_kickoff_window_units": 2.0,
     "kickoff_window_hours": 3
   },
-  "allocated_by_market": {
-    "moneyline": 1.53,
-    "total": 0.97,
-    "spread": 2.5
-  },
-  "allocated_by_kickoff_window": {
-    "2026-10-03 15:00:00+00:00": 2.0,
-    "2026-10-03 21:00:00+00:00": 1.13,
-    "2026-10-04 00:00:00+00:00": 0.31,
-    "2026-10-02 00:00:00+00:00": 0.22,
-    "2026-10-03 18:00:00+00:00": 1.24,
-    "2026-10-02 21:00:00+00:00": 0.1
-  },
+  "allocated_by_market": {},
+  "allocated_by_kickoff_window": {},
   "release_blockers": [
     "live_monitoring: live readiness >= 90/100",
     "multi_book_consensus: >= 75% of games covered by 2+ books",

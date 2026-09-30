@@ -1,19 +1,20 @@
 {
-  "live_readiness_score": 87.2,
+  "live_readiness_score": 70.2,
   "scores": {
     "market_coverage": 100.0,
-    "advanced_coverage": 100.0,
+    "advanced_coverage": 0.0,
     "multi_book": 0.0,
     "context": 100.0,
-    "calibration": 92.22228342751455,
+    "calibration": 92.22228342751454,
     "freshness": 100.0,
     "drift_margin": 93.3,
     "drift_total": 90.0,
     "drift_probability": 98.8,
     "distribution_stability": 94.0,
-    "output_completeness": 84.52380952380952
+    "output_completeness": 84.765625
   },
   "alerts": [
+    "real pregame advanced-efficiency coverage below target",
     "multi-book consensus is limited; configure THE_ODDS_API_KEY for free multi-book supplementation"
   ],
   "meaning": "operational/model-monitoring score; not a profitability guarantee"
