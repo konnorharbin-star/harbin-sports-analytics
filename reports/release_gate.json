@@ -23,7 +23,14 @@
       "name": "advanced_feature_coverage",
       "passed": true,
       "value": 1.0,
-      "requirement": ">= 95% live advanced-feature coverage",
+      "requirement": ">= 95% live advanced/static feature coverage",
+      "detail": ""
+    },
+    {
+      "name": "dynamic_advanced_feature_coverage",
+      "passed": true,
+      "value": 1.0,
+      "requirement": ">= 90% live opponent-adjusted dynamic efficiency coverage",
       "detail": ""
     },
     {
@@ -50,21 +57,21 @@
     {
       "name": "probability_brier",
       "passed": true,
-      "value": 0.15954223234904427,
+      "value": 0.15710434541934948,
       "requirement": "Brier <= 0.18 on chronological release holdout",
       "detail": ""
     },
     {
       "name": "probability_ece",
       "passed": true,
-      "value": 0.031110866289941787,
+      "value": 0.03836681310786973,
       "requirement": "ECE <= 0.05 on chronological release holdout",
       "detail": ""
     },
     {
       "name": "live_monitoring",
       "passed": false,
-      "value": 70.2,
+      "value": 86.9,
       "requirement": "live readiness >= 90/100",
       "detail": ""
     },
@@ -114,5 +121,5 @@
     "Keep paper testing until the walk-forward ROI confidence interval clears zero with positive CLV across markets and seasons.",
     "Accumulate graded live/shadow bets and pre-kickoff line snapshots; do not infer live profitability from historical backtests."
   ],
-  "meaning": "Hard deployment gate. PRODUCTION requires engineering quality, multi-book pricing, robust historical edge and independent live evidence; it is not a guarantee of future profit."
+  "meaning": "Hard deployment gate. PRODUCTION requires engineering quality, dynamic advanced data, multi-book pricing, robust historical edge and independent live evidence; it is not a guarantee of future profit."
 }
