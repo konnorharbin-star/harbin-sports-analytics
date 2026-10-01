@@ -1,14 +1,14 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-10-01T17:25:34.771196+00:00",
+  "generated_at": "2026-10-01T23:07:33.098347+00:00",
   "status": "WARN",
   "identity": {
     "platform_version": "7.4.0",
     "model_version": "7.1.0",
     "season": 2026,
     "week": 5,
-    "model_generated_at": "2026-10-01T17:25:33.711765+00:00",
-    "updated_at_ct": "Oct 1, 2026 \u00b7 12:25 PM CT",
+    "model_generated_at": "2026-10-01T23:07:32.191943+00:00",
+    "updated_at_ct": "Oct 1, 2026 \u00b7 6:07 PM CT",
     "prediction_rows": 56
   },
   "release": {
@@ -70,21 +70,21 @@
       {
         "name": "probability_brier",
         "passed": true,
-        "value": 0.17197778171506628,
+        "value": 0.1723034335605436,
         "requirement": "Brier <= 0.18 on chronological release holdout",
         "detail": ""
       },
       {
         "name": "probability_ece",
-        "passed": false,
-        "value": 0.06519002169340637,
+        "passed": true,
+        "value": 0.04855093637710354,
         "requirement": "ECE <= 0.05 on chronological release holdout",
         "detail": ""
       },
       {
         "name": "live_monitoring",
         "passed": true,
-        "value": 93.2,
+        "value": 93.9,
         "requirement": "live readiness >= 90/100",
         "detail": ""
       },
@@ -147,7 +147,6 @@
     ],
     "blockers": [
       "context_coverage: >= 90% current context coverage",
-      "probability_ece: ECE <= 0.05 on chronological release holdout",
       "historical_entry_integrity: historical promotion sample uses explicit verified opening-entry fields only",
       "historical_market_edge: ROBUST evidence: >=1000 verified opening-entry bets, ROI 95% CI lower bound >0, positive CLV, >=2 positive markets and >=2 positive seasons with minimum segment samples",
       "live_shadow_evidence: >=300 portfolio-verified graded live/shadow bets, non-negative ROI and positive pre-kickoff CLV proxy"
@@ -160,15 +159,15 @@
   },
   "model": {
     "validation": "nested whole-week chronology: core fit -> tune weight -> OOF calibration -> untouched evaluation; final refit keeps the tune-selected weight and uses OOF probability calibration",
-    "margin_mae": 12.655832523703026,
+    "margin_mae": 12.653252499042942,
     "margin_baseline_mae": 13.22104338022683,
     "margin_release_weight": 0.65,
-    "total_mae": 12.680714036397184,
+    "total_mae": 12.683082753555178,
     "total_baseline_mae": 12.693581407531097,
     "total_release_weight": 0.05,
-    "win_brier": 0.17197778171506628,
-    "win_log_loss": 0.5159764908768742,
-    "win_ece": 0.06519002169340637,
+    "win_brier": 0.1723034335605436,
+    "win_log_loss": 0.5171549127553334,
+    "win_ece": 0.04855093637710354,
     "selection_uses_evaluation": false
   },
   "coverage": {
@@ -183,62 +182,62 @@
   },
   "monitoring": {
     "status": "OK",
-    "live_readiness_score": 93.2,
+    "live_readiness_score": 93.9,
     "scores": {
       "market_coverage": 100.0,
       "advanced_coverage": 100.0,
       "multi_book": 98.21428571428571,
       "context": 83.75,
-      "calibration": 83.7024945766484,
+      "calibration": 87.86226590572412,
       "freshness": 100.0,
-      "drift_margin": 94.1,
-      "drift_total": 89.3,
-      "drift_probability": 97.1,
-      "distribution_stability": 93.5,
-      "output_completeness": 87.9232039636664
+      "drift_margin": 93.5,
+      "drift_total": 89.4,
+      "drift_probability": 96.7,
+      "distribution_stability": 93.2,
+      "output_completeness": 88.06771263418662
     },
     "drift": {
       "margin": {
-        "stability_score": 94.1,
-        "mean_z": 0.1479,
-        "std_ratio": 0.9139,
-        "live_mean": 2.3188859108614444,
+        "stability_score": 93.5,
+        "mean_z": 0.1627,
+        "std_ratio": 0.9068,
+        "live_mean": 2.141279807390075,
         "reference_mean": 4.100499006560598,
-        "live_std": 11.00751503583943,
+        "live_std": 10.92156776674533,
         "reference_std": 12.044605341632783,
         "live_n": 56,
         "reference_n": 2398
       },
       "total": {
-        "stability_score": 89.3,
-        "mean_z": 0.0909,
-        "std_ratio": 0.7143,
-        "live_mean": 53.185961334728084,
+        "stability_score": 89.4,
+        "mean_z": 0.0886,
+        "std_ratio": 0.7142,
+        "live_mean": 53.20028533060239,
         "reference_mean": 53.75101747438637,
-        "live_std": 4.439778527566023,
+        "live_std": 4.439163231299906,
         "reference_std": 6.215453749287005,
         "live_n": 56,
         "reference_n": 2398
       },
       "probability": {
-        "stability_score": 97.1,
-        "mean_z": 0.0569,
-        "std_ratio": 1.06,
-        "live_mean": 0.5691895168893301,
+        "stability_score": 96.7,
+        "mean_z": 0.0808,
+        "std_ratio": 1.0533,
+        "live_mean": 0.5634319966867088,
         "reference_mean": 0.5828976891400242,
-        "live_std": 0.25551737076378495,
+        "live_std": 0.25389749015697294,
         "reference_std": 0.24106023965033238,
         "live_n": 56,
         "reference_n": 2398
       }
     },
     "drift_scores": {
-      "margin": 94.1,
-      "total": 89.3,
-      "probability": 97.1
+      "margin": 93.5,
+      "total": 89.4,
+      "probability": 96.7
     },
     "alerts": [],
-    "recent_readiness_delta": -0.09999999999999432
+    "recent_readiness_delta": 0.6000000000000085
   },
   "data_quality": {
     "status": "PASS",
@@ -274,11 +273,11 @@
       "reason": "no independent graded live/shadow betting history; unit throttle is neutral outside production"
     },
     "production_block_reason": "",
-    "proposed_units": 7.48,
-    "risk_adjusted_proposed_units": 7.48,
+    "proposed_units": 7.46,
+    "risk_adjusted_proposed_units": 7.46,
     "approved_units": 0.0,
-    "paper_allocated_units": 4.49,
-    "paper_or_shadow_allocated_units": 4.49,
+    "paper_allocated_units": 4.38,
+    "paper_or_shadow_allocated_units": 4.38,
     "bets": 20,
     "approved_bets": 0,
     "execution_blocked_bets": 42,
@@ -316,58 +315,58 @@
       "max_book_units": 2.0
     },
     "allocated_by_market": {
-      "moneyline": 2.46,
-      "spread": 1.39,
-      "total": 0.64
+      "moneyline": 1.68,
+      "spread": 2.17,
+      "total": 0.53
     },
     "allocated_by_book": {
       "ActionNetwork book 30": 2.0,
-      "ActionNetwork book 69": 0.22,
-      "ActionNetwork book 71": 0.89,
-      "ActionNetwork book 75": 0.37,
-      "ActionNetwork book 49": 0.47,
-      "ActionNetwork book 15": 0.33,
-      "Draft Kings": 0.21
+      "ActionNetwork book 71": 1.03,
+      "ActionNetwork book 75": 0.27,
+      "ActionNetwork book 68": 0.24,
+      "ActionNetwork book 15": 0.32,
+      "ActionNetwork book 69": 0.27,
+      "ActionNetwork book 49": 0.14,
+      "DraftKings": 0.11
     },
     "allocated_by_kickoff_window": {
-      "2026-10-03 15:00:00+00:00": 1.95,
-      "2026-10-03 18:00:00+00:00": 0.85,
-      "2026-10-04 00:00:00+00:00": 0.22,
-      "2026-10-03 21:00:00+00:00": 1.06,
-      "2026-10-02 00:00:00+00:00": 0.41
+      "2026-10-03 15:00:00+00:00": 1.89,
+      "2026-10-04 00:00:00+00:00": 0.49,
+      "2026-10-02 00:00:00+00:00": 0.32,
+      "2026-10-03 21:00:00+00:00": 0.96,
+      "2026-10-03 18:00:00+00:00": 0.72
     },
     "allocated_by_team_exposure": {
-      "UConn": 0.31,
-      "NC State": 0.24,
+      "UConn": 0.29,
       "San Diego State": 0.22,
-      "Colorado State": 0.22,
-      "North Texas": 0.3,
-      "Iowa State": 0.34,
-      "Middle Tennessee": 0.35,
-      "Buffalo": 0.3,
+      "North Texas": 0.32,
+      "Colorado State": 0.19,
+      "Middle Tennessee": 0.34,
+      "Iowa State": 0.32,
+      "Buffalo": 0.29,
       "South Florida": 0.27,
       "Air Force": 0.27,
       "Navy": 0.27,
-      "Georgia": 0.24,
       "Vanderbilt": 0.24,
-      "Ohio": 0.33,
-      "Miami": 0.16,
+      "Ohio": 0.22,
+      "Wyoming": 0.21,
+      "Miami": 0.23,
       "Iowa": 0.18,
-      "Coastal Carolina": 0.13,
-      "Texas Tech": 0.15,
+      "Arkansas State": 0.14,
+      "Boston College": 0.14,
+      "Texas Tech": 0.14,
       "Texas A&M": 0.13,
       "Arkansas": 0.13,
-      "Western Kentucky": 0.11,
-      "Boston College": 0.14,
-      "Old Dominion": 0.1
+      "Old Dominion": 0.11,
+      "Arizona State": 0.13,
+      "Baylor": 0.13
     },
     "limit_hit_counts": {
-      "book cap": 8,
-      "max bet count": 15
+      "book cap": 9,
+      "max bet count": 14
     },
     "release_blockers": [
       "context_coverage: >= 90% current context coverage",
-      "probability_ece: ECE <= 0.05 on chronological release holdout",
       "historical_entry_integrity: historical promotion sample uses explicit verified opening-entry fields only",
       "historical_market_edge: ROBUST evidence: >=1000 verified opening-entry bets, ROI 95% CI lower bound >0, positive CLV, >=2 positive markets and >=2 positive seasons with minimum segment samples",
       "live_shadow_evidence: >=300 portfolio-verified graded live/shadow bets, non-negative ROI and positive pre-kickoff CLV proxy"
@@ -432,7 +431,7 @@
         "name": "monitor_reconciled",
         "passed": true,
         "severity": "ERROR",
-        "detail": "metadata=93.2 output=93.2"
+        "detail": "metadata=93.9 output=93.9"
       },
       {
         "name": "data_contracts_publishable",
@@ -450,7 +449,7 @@
         "name": "approved_not_above_allocation",
         "passed": true,
         "severity": "ERROR",
-        "detail": "approved=0.00 allocated=4.49"
+        "detail": "approved=0.00 allocated=4.38"
       }
     ],
     "errors": []
@@ -546,11 +545,23 @@
       "distribution_stability": 93.6,
       "approved_units": 0.0,
       "data_quality_status": "PASS"
+    },
+    {
+      "generated_at": "2026-10-01T17:25:34.771196+00:00",
+      "model_generated_at": "2026-10-01T17:25:33.711765+00:00",
+      "season": 2026,
+      "week": 5,
+      "platform_version": "7.4.0",
+      "release_state": "RESEARCH",
+      "publication_status": "WARN",
+      "live_readiness_score": 93.2,
+      "distribution_stability": 93.5,
+      "approved_units": 0.0,
+      "data_quality_status": "PASS"
     }
   ],
   "warnings": [
     "context_coverage: >= 90% current context coverage",
-    "probability_ece: ECE <= 0.05 on chronological release holdout",
     "historical_entry_integrity: historical promotion sample uses explicit verified opening-entry fields only",
     "historical_market_edge: ROBUST evidence: >=1000 verified opening-entry bets, ROI 95% CI lower bound >0, positive CLV, >=2 positive markets and >=2 positive seasons with minimum segment samples",
     "live_shadow_evidence: >=300 portfolio-verified graded live/shadow bets, non-negative ROI and positive pre-kickoff CLV proxy"

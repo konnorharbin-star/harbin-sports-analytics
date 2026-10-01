@@ -57,21 +57,21 @@
     {
       "name": "probability_brier",
       "passed": true,
-      "value": 0.17197778171506628,
+      "value": 0.1723034335605436,
       "requirement": "Brier <= 0.18 on chronological release holdout",
       "detail": ""
     },
     {
       "name": "probability_ece",
-      "passed": false,
-      "value": 0.06519002169340637,
+      "passed": true,
+      "value": 0.04855093637710354,
       "requirement": "ECE <= 0.05 on chronological release holdout",
       "detail": ""
     },
     {
       "name": "live_monitoring",
       "passed": true,
-      "value": 93.2,
+      "value": 93.9,
       "requirement": "live readiness >= 90/100",
       "detail": ""
     },
@@ -134,7 +134,6 @@
   ],
   "blockers": [
     "context_coverage: >= 90% current context coverage",
-    "probability_ece: ECE <= 0.05 on chronological release holdout",
     "historical_entry_integrity: historical promotion sample uses explicit verified opening-entry fields only",
     "historical_market_edge: ROBUST evidence: >=1000 verified opening-entry bets, ROI 95% CI lower bound >0, positive CLV, >=2 positive markets and >=2 positive seasons with minimum segment samples",
     "live_shadow_evidence: >=300 portfolio-verified graded live/shadow bets, non-negative ROI and positive pre-kickoff CLV proxy"
