@@ -57,21 +57,21 @@
     {
       "name": "probability_brier",
       "passed": true,
-      "value": 0.171944284202318,
+      "value": 0.17197778171506628,
       "requirement": "Brier <= 0.18 on chronological release holdout",
       "detail": ""
     },
     {
       "name": "probability_ece",
       "passed": false,
-      "value": 0.0636411720732171,
+      "value": 0.06519002169340637,
       "requirement": "ECE <= 0.05 on chronological release holdout",
       "detail": ""
     },
     {
       "name": "live_monitoring",
       "passed": true,
-      "value": 93.3,
+      "value": 93.2,
       "requirement": "live readiness >= 90/100",
       "detail": ""
     },

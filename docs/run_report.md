@@ -7,14 +7,14 @@
 **Reconciliation:** PASS  
 
 ## Model validation
-- Margin MAE: **12.657** vs baseline **13.221**; release weight **0.65**.
+- Margin MAE: **12.656** vs baseline **13.221**; release weight **0.65**.
 - Total MAE: **12.681** vs baseline **12.694**; release weight **0.05**.
-- Brier / log loss / ECE: **0.1719 / 0.5159 / 0.0636**.
+- Brier / log loss / ECE: **0.1720 / 0.5160 / 0.0652**.
 - Selection uses untouched evaluation outcomes: **False**.
 
 ## Monitoring and execution
-- Live readiness: **93.3/100**; distribution stability **93.6/100**.
-- Portfolio mode: **PAPER**; proposed **7.49u**; approved **0.00u**.
+- Live readiness: **93.2/100**; distribution stability **93.5/100**.
+- Portfolio mode: **PAPER**; proposed **7.48u**; approved **0.00u**.
 - Historical evidence: **0 bets**, ROI **—**, CLV **—**.
 - Independent live evidence: **0 bets**, ROI **—**, CLV **—**.
 
