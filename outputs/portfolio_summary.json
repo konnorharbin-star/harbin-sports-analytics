@@ -18,14 +18,14 @@
     "reason": "no independent graded live/shadow betting history; unit throttle is neutral outside production"
   },
   "production_block_reason": "",
-  "proposed_units": 7.77,
-  "risk_adjusted_proposed_units": 7.77,
+  "proposed_units": 7.68,
+  "risk_adjusted_proposed_units": 7.68,
   "approved_units": 0.0,
   "paper_allocated_units": 4.51,
   "paper_or_shadow_allocated_units": 4.51,
   "bets": 20,
   "approved_bets": 0,
-  "execution_blocked_bets": 44,
+  "execution_blocked_bets": 43,
   "limits": {
     "max_slate_units": 5.0,
     "max_game_units": 1.0,
@@ -60,23 +60,24 @@
     "max_book_units": 2.0
   },
   "allocated_by_market": {
-    "moneyline": 2.04,
+    "moneyline": 2.03,
     "spread": 2.07,
-    "total": 0.4
+    "total": 0.41
   },
   "allocated_by_book": {
-    "ActionNetwork book 30": 1.99,
-    "ActionNetwork book 71": 0.91,
-    "ActionNetwork book 75": 0.69,
-    "ActionNetwork book 49": 0.38,
-    "ActionNetwork book 68": 0.24,
-    "ActionNetwork book 69": 0.3
+    "ActionNetwork book 30": 2.0,
+    "ActionNetwork book 71": 0.82,
+    "DraftKings": 0.23,
+    "ActionNetwork book 75": 0.43,
+    "ActionNetwork book 69": 0.27,
+    "ActionNetwork book 49": 0.52,
+    "ActionNetwork book 68": 0.24
   },
   "allocated_by_kickoff_window": {
-    "2026-10-03 15:00:00+00:00": 1.91,
-    "2026-10-04 00:00:00+00:00": 0.37,
+    "2026-10-03 15:00:00+00:00": 1.93,
+    "2026-10-04 00:00:00+00:00": 0.36,
     "2026-10-03 18:00:00+00:00": 0.71,
-    "2026-10-03 21:00:00+00:00": 0.96,
+    "2026-10-03 21:00:00+00:00": 0.95,
     "2026-10-02 00:00:00+00:00": 0.41,
     "2026-10-02 21:00:00+00:00": 0.15
   },
@@ -87,26 +88,26 @@
     "Colorado State": 0.23,
     "North Texas": 0.3,
     "Middle Tennessee": 0.36,
-    "Buffalo": 0.3,
+    "Buffalo": 0.31,
     "Iowa State": 0.3,
     "South Florida": 0.29,
     "Pittsburgh": 0.15,
-    "Air Force": 0.26,
-    "Navy": 0.26,
+    "Air Force": 0.27,
+    "Navy": 0.27,
     "Ohio": 0.24,
     "Vanderbilt": 0.24,
     "Iowa": 0.2,
-    "Coastal Carolina": 0.15,
-    "Arkansas State": 0.15,
+    "Coastal Carolina": 0.14,
     "Texas A&M": 0.14,
     "Arkansas": 0.14,
     "Texas Tech": 0.15,
     "Boston College": 0.14,
-    "Western Kentucky": 0.11
+    "Western Kentucky": 0.11,
+    "Arkansas State": 0.14
   },
   "limit_hit_counts": {
     "book cap": 9,
-    "max bet count": 15
+    "max bet count": 14
   },
   "release_blockers": [
     "historical_entry_integrity: historical promotion sample uses explicit verified opening-entry fields only",
