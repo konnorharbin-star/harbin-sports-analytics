@@ -62,11 +62,11 @@
     "margin_tuning_mae": 13.078172029368483,
     "margin_tuned_weight": 0.7000000000000001,
     "margin_calibration_rows": 596,
-    "margin_calibration_mae": 12.47789263949743,
+    "margin_calibration_mae": 12.477892639497432,
     "margin_baseline_mae": 13.22104338022683,
-    "margin_tuned_model_mae": 12.656183046421095,
-    "margin_mae": 12.656183046421095,
-    "margin_rmse": 15.638188544956943,
+    "margin_tuned_model_mae": 12.656183046421097,
+    "margin_mae": 12.656183046421097,
+    "margin_rmse": 15.638188544956945,
     "margin_release_weight": 0.7000000000000001,
     "margin_blend_weight": 0.7000000000000001,
     "margin_release_guard_passed": true,
@@ -76,7 +76,7 @@
       {
         "season": 2023,
         "rows": 792,
-        "mae": 12.934841760772498,
+        "mae": 12.934841760772496,
         "rmse": 16.318441414250053,
         "baseline_mae": 13.183179942636782,
         "weight": 0.45,
@@ -85,8 +85,8 @@
       {
         "season": 2024,
         "rows": 798,
-        "mae": 12.90271907112892,
-        "rmse": 16.265668260276044,
+        "mae": 12.902719071128926,
+        "rmse": 16.265668260276048,
         "baseline_mae": 13.22842366531436,
         "weight": 0.75,
         "weight_tuned_on": "strictly prior whole-week tune block"
@@ -94,7 +94,7 @@
       {
         "season": 2025,
         "rows": 808,
-        "mae": 12.726153256877565,
+        "mae": 12.726153256877563,
         "rmse": 16.184770016641796,
         "baseline_mae": 13.026608931009665,
         "weight": 0.25,
@@ -103,15 +103,15 @@
       {
         "season": 2026,
         "rows": 215,
-        "mae": 12.917076086569846,
-        "rmse": 16.038168211598443,
+        "mae": 12.91707608656984,
+        "rmse": 16.038168211598432,
         "baseline_mae": 14.439117971947091,
         "weight": 0.9,
         "weight_tuned_on": "strictly prior whole-week tune block"
       }
     ],
-    "margin_walkforward_mae_mean": 12.870197543837207,
-    "margin_walkforward_mae_std": 0.08393878557468282,
+    "margin_walkforward_mae_mean": 12.870197543837206,
+    "margin_walkforward_mae_std": 0.08393878557468301,
     "margin_walkforward_improved_folds": 4,
     "margin_walkforward_fold_count": 4,
     "total_tuning_rows": 574,
@@ -133,7 +133,7 @@
       {
         "season": 2023,
         "rows": 792,
-        "mae": 13.159185850546157,
+        "mae": 13.159185850546153,
         "rmse": 16.27604579315393,
         "baseline_mae": 13.171288637289225,
         "weight": 0.2,
@@ -142,8 +142,8 @@
       {
         "season": 2024,
         "rows": 798,
-        "mae": 12.972165681619023,
-        "rmse": 16.427815042267948,
+        "mae": 12.972165681619027,
+        "rmse": 16.42781504226795,
         "baseline_mae": 12.964033987572272,
         "weight": 0.65,
         "weight_tuned_on": "strictly prior whole-week tune block"
@@ -151,8 +151,8 @@
       {
         "season": 2025,
         "rows": 808,
-        "mae": 12.889249702979736,
-        "rmse": 15.921204059226516,
+        "mae": 12.889249702979734,
+        "rmse": 15.921204059226515,
         "baseline_mae": 12.910666790164145,
         "weight": 0.45,
         "weight_tuned_on": "strictly prior whole-week tune block"
@@ -160,20 +160,20 @@
       {
         "season": 2026,
         "rows": 215,
-        "mae": 12.25437734262063,
-        "rmse": 15.368321699303404,
+        "mae": 12.254377342620632,
+        "rmse": 15.368321699303406,
         "baseline_mae": 12.290736967103378,
         "weight": 0.30000000000000004,
         "weight_tuned_on": "strictly prior whole-week tune block"
       }
     ],
-    "total_walkforward_mae_mean": 12.818744644441386,
-    "total_walkforward_mae_std": 0.3401909919834258,
+    "total_walkforward_mae_mean": 12.818744644441388,
+    "total_walkforward_mae_std": 0.34019099198342445,
     "total_walkforward_improved_folds": 3,
     "total_walkforward_fold_count": 4,
-    "win_brier": 0.1698076479580908,
-    "win_log_loss": 0.5112674859970454,
-    "win_ece": 0.04979509724742311,
+    "win_brier": 0.16980764795809078,
+    "win_log_loss": 0.5112674859970452,
+    "win_ece": 0.049795097247422745,
     "win_calibration_eval_rows": 566,
     "win_calibration_fit_rows": 596,
     "win_calibration_weight": 0.7000000000000001,
@@ -481,8 +481,8 @@
   },
   "calibrated_margin_sigma": 16.24362458887965,
   "calibrated_total_sigma": 16.207722423858996,
-  "generated_at": "2026-10-02T17:43:26.962803+00:00",
-  "updated_at_ct": "Oct 2, 2026 \u00b7 12:43 PM CT",
+  "generated_at": "2026-10-02T17:58:35.425695+00:00",
+  "updated_at_ct": "Oct 2, 2026 \u00b7 12:58 PM CT",
   "schedule_source": "sportsdataverse/cfbfastR-data",
   "odds_source": "ESPN live (site.web.api.espn.com) + ESPN Core supplement",
   "odds_errors": [],
@@ -563,7 +563,7 @@
   },
   "quant_picks": {
     "strong": 29,
-    "bet": 12,
+    "bet": 13,
     "lean": 2
   },
   "snapshot_appended": true,
@@ -687,14 +687,14 @@
       {
         "name": "probability_brier",
         "passed": true,
-        "value": 0.1698076479580908,
+        "value": 0.16980764795809078,
         "requirement": "Brier <= 0.18 on chronological release holdout",
         "detail": ""
       },
       {
         "name": "probability_ece",
         "passed": true,
-        "value": 0.04979509724742311,
+        "value": 0.049795097247422745,
         "requirement": "ECE <= 0.05 on chronological release holdout",
         "detail": ""
       },
@@ -782,7 +782,7 @@
       "advanced_coverage": 100.0,
       "multi_book": 98.21428571428571,
       "context": 98.28571428571429,
-      "calibration": 87.55122568814423,
+      "calibration": 87.55122568814431,
       "freshness": 100.0,
       "drift_margin": 93.9,
       "drift_total": 88.5,
@@ -795,9 +795,9 @@
         "stability_score": 93.9,
         "mean_z": 0.166,
         "std_ratio": 0.9236,
-        "live_mean": 2.1012817767683027,
+        "live_mean": 2.1012817767682987,
         "reference_mean": 4.100499006560598,
-        "live_std": 11.123885143816198,
+        "live_std": 11.123885143816196,
         "reference_std": 12.044605341632783,
         "live_n": 56,
         "reference_n": 2398
@@ -806,9 +806,9 @@
         "stability_score": 88.5,
         "mean_z": 0.1025,
         "std_ratio": 0.6987,
-        "live_mean": 53.11365397407305,
+        "live_mean": 53.113653974073046,
         "reference_mean": 53.75101747438637,
-        "live_std": 4.342739884806673,
+        "live_std": 4.342739884806672,
         "reference_std": 6.215453749287005,
         "live_n": 56,
         "reference_n": 2398
@@ -849,14 +849,14 @@
       "reason": "no independent graded live/shadow betting history; unit throttle is neutral outside production"
     },
     "production_block_reason": "",
-    "proposed_units": 7.68,
-    "risk_adjusted_proposed_units": 7.68,
+    "proposed_units": 7.77,
+    "risk_adjusted_proposed_units": 7.77,
     "approved_units": 0.0,
-    "paper_allocated_units": 4.51,
-    "paper_or_shadow_allocated_units": 4.51,
+    "paper_allocated_units": 4.68,
+    "paper_or_shadow_allocated_units": 4.68,
     "bets": 20,
     "approved_bets": 0,
-    "execution_blocked_bets": 43,
+    "execution_blocked_bets": 44,
     "limits": {
       "max_slate_units": 5.0,
       "max_game_units": 1.0,
@@ -891,24 +891,24 @@
       "max_book_units": 2.0
     },
     "allocated_by_market": {
-      "moneyline": 2.03,
-      "spread": 2.07,
+      "moneyline": 2.34,
+      "spread": 1.93,
       "total": 0.41
     },
     "allocated_by_book": {
+      "ActionNetwork book 71": 0.99,
       "ActionNetwork book 30": 2.0,
-      "ActionNetwork book 71": 0.82,
-      "DraftKings": 0.23,
-      "ActionNetwork book 75": 0.43,
+      "Draft Kings": 0.23,
+      "ActionNetwork book 49": 0.81,
       "ActionNetwork book 69": 0.27,
-      "ActionNetwork book 49": 0.52,
-      "ActionNetwork book 68": 0.24
+      "ActionNetwork book 68": 0.24,
+      "ActionNetwork book 75": 0.14
     },
     "allocated_by_kickoff_window": {
       "2026-10-03 15:00:00+00:00": 1.93,
-      "2026-10-04 00:00:00+00:00": 0.36,
+      "2026-10-04 00:00:00+00:00": 0.22,
       "2026-10-03 18:00:00+00:00": 0.71,
-      "2026-10-03 21:00:00+00:00": 0.95,
+      "2026-10-03 21:00:00+00:00": 1.26,
       "2026-10-02 00:00:00+00:00": 0.41,
       "2026-10-02 21:00:00+00:00": 0.15
     },
@@ -921,24 +921,24 @@
       "Middle Tennessee": 0.36,
       "Buffalo": 0.31,
       "Iowa State": 0.3,
-      "South Florida": 0.29,
       "Pittsburgh": 0.15,
+      "South Florida": 0.29,
       "Air Force": 0.27,
       "Navy": 0.27,
       "Ohio": 0.24,
       "Vanderbilt": 0.24,
+      "Miami": 0.31,
       "Iowa": 0.2,
       "Coastal Carolina": 0.14,
       "Texas A&M": 0.14,
       "Arkansas": 0.14,
       "Texas Tech": 0.15,
       "Boston College": 0.14,
-      "Western Kentucky": 0.11,
-      "Arkansas State": 0.14
+      "Western Kentucky": 0.11
     },
     "limit_hit_counts": {
       "book cap": 9,
-      "max bet count": 14
+      "max bet count": 16
     },
     "release_blockers": [
       "historical_entry_integrity: historical promotion sample uses explicit verified opening-entry fields only",
@@ -949,7 +949,7 @@
   "decision_ledger": {
     "path": "history/portfolio_decisions_v1.csv",
     "eligible_rows": 20,
-    "appended_rows": 5,
-    "total_rows": 121
+    "appended_rows": 4,
+    "total_rows": 125
   }
 }
