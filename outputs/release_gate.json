@@ -64,7 +64,7 @@
     {
       "name": "probability_ece",
       "passed": false,
-      "value": 0.05329137027587658,
+      "value": 0.05329137027587666,
       "requirement": "ECE <= 0.05 on chronological release holdout",
       "detail": ""
     },

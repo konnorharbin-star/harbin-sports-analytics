@@ -21,8 +21,8 @@
   "proposed_units": 7.95,
   "risk_adjusted_proposed_units": 7.95,
   "approved_units": 0.0,
-  "paper_allocated_units": 4.51,
-  "paper_or_shadow_allocated_units": 4.51,
+  "paper_allocated_units": 4.5,
+  "paper_or_shadow_allocated_units": 4.5,
   "bets": 20,
   "approved_bets": 0,
   "execution_blocked_bets": 45,
@@ -60,14 +60,13 @@
     "max_book_units": 2.0
   },
   "allocated_by_market": {
-    "moneyline": 2.02,
+    "moneyline": 2.01,
     "spread": 2.11,
     "total": 0.38
   },
   "allocated_by_book": {
     "ActionNetwork book 30": 2.0,
-    "ActionNetwork book 71": 0.69,
-    "DraftKings": 0.23,
+    "ActionNetwork book 71": 0.91,
     "ActionNetwork book 49": 0.81,
     "ActionNetwork book 68": 0.25,
     "ActionNetwork book 69": 0.24,
@@ -76,14 +75,14 @@
   },
   "allocated_by_kickoff_window": {
     "2026-10-03 15:00:00+00:00": 1.94,
-    "2026-10-04 00:00:00+00:00": 0.38,
+    "2026-10-04 00:00:00+00:00": 0.37,
     "2026-10-03 18:00:00+00:00": 0.96,
     "2026-10-03 21:00:00+00:00": 0.8,
     "2026-10-02 00:00:00+00:00": 0.43
   },
   "allocated_by_team_exposure": {
     "UConn": 0.3,
-    "San Diego State": 0.23,
+    "San Diego State": 0.22,
     "NC State": 0.22,
     "Colorado State": 0.23,
     "North Texas": 0.31,
