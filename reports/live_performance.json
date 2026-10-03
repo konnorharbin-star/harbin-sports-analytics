@@ -18,10 +18,10 @@
     null
   ],
   "max_drawdown": 0.0,
-  "portfolio_verified": true,
-  "evidence_source": "portfolio_decisions_v1",
-  "eligible_decisions": 0,
-  "timing_excluded_rows": 8,
-  "status": "live/shadow evidence only; not historical backtest evidence",
-  "clv_method": "first execution-ready cap-constrained portfolio decision strictly before kickoff; close is latest timestamp-valid market snapshot strictly before kickoff"
+  "by_market": {},
+  "by_signal": {},
+  "by_season": {},
+  "clv_method": "latest timestamp-valid snapshot strictly before kickoff; spread/total use consensus close when available; moneyline uses consensus no-vig probability; execution CLV retains the actual bet price",
+  "verified_close_clv_samples": 0,
+  "status": "live/shadow evidence only; not historical backtest evidence"
 }
