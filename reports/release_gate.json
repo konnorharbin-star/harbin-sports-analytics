@@ -36,7 +36,7 @@
     {
       "name": "context_coverage",
       "passed": true,
-      "value": 1.0,
+      "value": 0.9778,
       "requirement": ">= 90% current context coverage",
       "detail": ""
     },
@@ -71,7 +71,7 @@
     {
       "name": "live_monitoring",
       "passed": true,
-      "value": 95.3,
+      "value": 94.7,
       "requirement": "live readiness >= 90/100",
       "detail": ""
     },
