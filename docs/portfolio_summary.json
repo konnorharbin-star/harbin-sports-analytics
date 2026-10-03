@@ -18,11 +18,11 @@
     "reason": "no independent graded live/shadow betting history; unit throttle is neutral outside production"
   },
   "production_block_reason": "",
-  "proposed_units": 7.95,
-  "risk_adjusted_proposed_units": 7.95,
+  "proposed_units": 8.28,
+  "risk_adjusted_proposed_units": 8.28,
   "approved_units": 0.0,
-  "paper_allocated_units": 4.5,
-  "paper_or_shadow_allocated_units": 4.5,
+  "paper_allocated_units": 4.78,
+  "paper_or_shadow_allocated_units": 4.78,
   "bets": 20,
   "approved_bets": 0,
   "execution_blocked_bets": 45,
@@ -60,29 +60,34 @@
     "max_book_units": 2.0
   },
   "allocated_by_market": {
-    "moneyline": 2.01,
-    "spread": 2.11,
+    "moneyline": 2.45,
+    "spread": 1.95,
     "total": 0.38
   },
   "allocated_by_book": {
+    "ActionNetwork book 71": 1.0,
+    "Draft Kings - Live Odds": 0.26,
     "ActionNetwork book 30": 2.0,
-    "ActionNetwork book 71": 0.91,
-    "ActionNetwork book 49": 0.81,
-    "ActionNetwork book 68": 0.25,
+    "Draft Kings": 0.23,
+    "ActionNetwork book 49": 0.66,
     "ActionNetwork book 69": 0.24,
-    "ActionNetwork book 15": 0.15,
+    "ActionNetwork book 68": 0.25,
     "ActionNetwork book 75": 0.14
   },
   "allocated_by_kickoff_window": {
-    "2026-10-03 15:00:00+00:00": 1.94,
-    "2026-10-04 00:00:00+00:00": 0.37,
-    "2026-10-03 18:00:00+00:00": 0.96,
+    "2026-10-03 00:00:00+00:00": 0.28,
+    "2026-10-02 21:00:00+00:00": 0.26,
+    "2026-10-04 00:00:00+00:00": 0.38,
+    "2026-10-03 15:00:00+00:00": 1.8,
+    "2026-10-03 18:00:00+00:00": 0.95,
     "2026-10-03 21:00:00+00:00": 0.8,
-    "2026-10-02 00:00:00+00:00": 0.43
+    "2026-10-02 00:00:00+00:00": 0.31
   },
   "allocated_by_team_exposure": {
-    "UConn": 0.3,
-    "San Diego State": 0.22,
+    "Penn State": 0.28,
+    "Virginia Tech": 0.26,
+    "San Diego State": 0.23,
+    "UConn": 0.31,
     "NC State": 0.22,
     "Colorado State": 0.23,
     "North Texas": 0.31,
@@ -90,23 +95,21 @@
     "Iowa State": 0.32,
     "Buffalo": 0.32,
     "South Florida": 0.29,
-    "Vanderbilt": 0.25,
     "Air Force": 0.24,
     "Navy": 0.24,
+    "Vanderbilt": 0.25,
     "Ohio": 0.23,
-    "Wyoming": 0.17,
+    "Wyoming": 0.16,
     "Old Dominion": 0.15,
     "Iowa": 0.19,
     "Coastal Carolina": 0.14,
     "Arkansas State": 0.15,
     "Texas A&M": 0.14,
-    "Arkansas": 0.14,
-    "Western Kentucky": 0.12,
-    "Boston College": 0.15
+    "Arkansas": 0.14
   },
   "limit_hit_counts": {
-    "book cap": 8,
-    "max bet count": 18
+    "book cap": 6,
+    "max bet count": 20
   },
   "release_blockers": [
     "probability_ece: ECE <= 0.05 on chronological release holdout",
