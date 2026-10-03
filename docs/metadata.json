@@ -481,8 +481,8 @@
   },
   "calibrated_margin_sigma": 16.222170274437826,
   "calibrated_total_sigma": 16.200309859776205,
-  "generated_at": "2026-10-03T14:16:06.665168+00:00",
-  "updated_at_ct": "Oct 3, 2026 \u00b7 9:16 AM CT",
+  "generated_at": "2026-10-03T15:10:48.256171+00:00",
+  "updated_at_ct": "Oct 3, 2026 \u00b7 10:10 AM CT",
   "schedule_source": "sportsdataverse/cfbfastR-data",
   "odds_source": "ESPN live (site.web.api.espn.com) + ESPN Core supplement",
   "odds_errors": [],
@@ -563,8 +563,8 @@
   },
   "quant_picks": {
     "strong": 30,
-    "bet": 11,
-    "lean": 3
+    "bet": 12,
+    "lean": 2
   },
   "snapshot_appended": true,
   "live_performance": {
@@ -605,7 +605,7 @@
       "probability_calibration": 89.3,
       "market_intelligence": 99.4,
       "current_context": 98.2,
-      "live_monitoring": 95.0,
+      "live_monitoring": 94.7,
       "historical_betting_proof": 25.0
     },
     "betting_proof_status": "UNPROVEN",
@@ -789,7 +789,7 @@
       "drift_total": 87.7,
       "drift_probability": 96.9,
       "distribution_stability": 92.8,
-      "output_completeness": 87.40710156895129
+      "output_completeness": 87.42774566473989
     },
     "drift_details": {
       "margin": {
@@ -850,8 +850,8 @@
       "reason": "no independent graded live/shadow betting history; unit throttle is neutral outside production"
     },
     "production_block_reason": "",
-    "proposed_units": 7.65,
-    "risk_adjusted_proposed_units": 7.65,
+    "proposed_units": 7.7,
+    "risk_adjusted_proposed_units": 7.7,
     "approved_units": 0.0,
     "paper_allocated_units": 4.52,
     "paper_or_shadow_allocated_units": 4.52,
@@ -899,11 +899,11 @@
     "allocated_by_book": {
       "ActionNetwork book 71": 0.84,
       "ActionNetwork book 30": 2.0,
-      "DraftKings": 0.23,
-      "ActionNetwork book 68": 0.54,
-      "ActionNetwork book 69": 0.4,
-      "ActionNetwork book 49": 0.37,
-      "ActionNetwork book 75": 0.14
+      "Draft Kings": 0.23,
+      "ActionNetwork book 68": 0.29,
+      "ActionNetwork book 69": 0.26,
+      "ActionNetwork book 75": 0.53,
+      "ActionNetwork book 49": 0.37
     },
     "allocated_by_kickoff_window": {
       "2026-10-04 00:00:00+00:00": 0.38,
@@ -922,18 +922,18 @@
       "Iowa State": 0.32,
       "Buffalo": 0.32,
       "South Florida": 0.29,
+      "Vanderbilt": 0.26,
       "Air Force": 0.24,
       "Navy": 0.24,
-      "Vanderbilt": 0.25,
       "Ohio": 0.23,
       "Wyoming": 0.17,
       "Old Dominion": 0.15,
       "Iowa": 0.19,
       "Coastal Carolina": 0.14,
-      "Boston College": 0.16,
       "Arkansas State": 0.15,
       "Texas A&M": 0.14,
       "Arkansas": 0.14,
+      "Boston College": 0.15,
       "Western Kentucky": 0.12
     },
     "limit_hit_counts": {
@@ -950,7 +950,7 @@
   "decision_ledger": {
     "path": "history/portfolio_decisions_v1.csv",
     "eligible_rows": 20,
-    "appended_rows": 6,
-    "total_rows": 156
+    "appended_rows": 5,
+    "total_rows": 161
   }
 }

@@ -18,8 +18,8 @@
     "reason": "no independent graded live/shadow betting history; unit throttle is neutral outside production"
   },
   "production_block_reason": "",
-  "proposed_units": 7.65,
-  "risk_adjusted_proposed_units": 7.65,
+  "proposed_units": 7.7,
+  "risk_adjusted_proposed_units": 7.7,
   "approved_units": 0.0,
   "paper_allocated_units": 4.52,
   "paper_or_shadow_allocated_units": 4.52,
@@ -67,11 +67,11 @@
   "allocated_by_book": {
     "ActionNetwork book 71": 0.84,
     "ActionNetwork book 30": 2.0,
-    "DraftKings": 0.23,
-    "ActionNetwork book 68": 0.54,
-    "ActionNetwork book 69": 0.4,
-    "ActionNetwork book 49": 0.37,
-    "ActionNetwork book 75": 0.14
+    "Draft Kings": 0.23,
+    "ActionNetwork book 68": 0.29,
+    "ActionNetwork book 69": 0.26,
+    "ActionNetwork book 75": 0.53,
+    "ActionNetwork book 49": 0.37
   },
   "allocated_by_kickoff_window": {
     "2026-10-04 00:00:00+00:00": 0.38,
@@ -90,18 +90,18 @@
     "Iowa State": 0.32,
     "Buffalo": 0.32,
     "South Florida": 0.29,
+    "Vanderbilt": 0.26,
     "Air Force": 0.24,
     "Navy": 0.24,
-    "Vanderbilt": 0.25,
     "Ohio": 0.23,
     "Wyoming": 0.17,
     "Old Dominion": 0.15,
     "Iowa": 0.19,
     "Coastal Carolina": 0.14,
-    "Boston College": 0.16,
     "Arkansas State": 0.15,
     "Texas A&M": 0.14,
     "Arkansas": 0.14,
+    "Boston College": 0.15,
     "Western Kentucky": 0.12
   },
   "limit_hit_counts": {
