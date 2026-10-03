@@ -1,14 +1,14 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-10-03T15:10:49.482107+00:00",
+  "generated_at": "2026-10-03T18:19:29.596116+00:00",
   "status": "WARN",
   "identity": {
     "platform_version": "7.4.0",
     "model_version": "7.1.0",
     "season": 2026,
     "week": 5,
-    "model_generated_at": "2026-10-03T15:10:48.256171+00:00",
-    "updated_at_ct": "Oct 3, 2026 \u00b7 10:10 AM CT",
+    "model_generated_at": "2026-10-03T18:19:28.378879+00:00",
+    "updated_at_ct": "Oct 3, 2026 \u00b7 1:19 PM CT",
     "prediction_rows": 56
   },
   "release": {
@@ -194,7 +194,7 @@
       "drift_total": 87.7,
       "drift_probability": 96.9,
       "distribution_stability": 92.8,
-      "output_completeness": 87.42774566473989
+      "output_completeness": 87.28323699421965
     },
     "drift": {
       "margin": {
@@ -273,12 +273,12 @@
       "reason": "no independent graded live/shadow betting history; unit throttle is neutral outside production"
     },
     "production_block_reason": "",
-    "proposed_units": 7.7,
-    "risk_adjusted_proposed_units": 7.7,
+    "proposed_units": 9.17,
+    "risk_adjusted_proposed_units": 9.17,
     "approved_units": 0.0,
-    "paper_allocated_units": 4.52,
-    "paper_or_shadow_allocated_units": 4.52,
-    "bets": 20,
+    "paper_allocated_units": 4.96,
+    "paper_or_shadow_allocated_units": 4.96,
+    "bets": 19,
     "approved_bets": 0,
     "execution_blocked_bets": 44,
     "limits": {
@@ -315,53 +315,55 @@
       "max_book_units": 2.0
     },
     "allocated_by_market": {
-      "moneyline": 2.03,
-      "spread": 2.11,
-      "total": 0.38
+      "moneyline": 2.31,
+      "spread": 1.58,
+      "total": 1.07
     },
     "allocated_by_book": {
-      "ActionNetwork book 71": 0.84,
-      "ActionNetwork book 30": 2.0,
+      "ActionNetwork book 75": 0.76,
+      "Draft Kings - Live Odds": 0.43,
+      "ActionNetwork book 71": 0.37,
+      "ActionNetwork book 30": 1.47,
       "Draft Kings": 0.23,
-      "ActionNetwork book 68": 0.29,
-      "ActionNetwork book 69": 0.26,
-      "ActionNetwork book 75": 0.53,
-      "ActionNetwork book 49": 0.37
+      "ActionNetwork book 68": 0.62,
+      "ActionNetwork book 69": 0.62,
+      "ActionNetwork book 49": 0.46
     },
     "allocated_by_kickoff_window": {
-      "2026-10-04 00:00:00+00:00": 0.38,
-      "2026-10-03 15:00:00+00:00": 1.95,
-      "2026-10-03 18:00:00+00:00": 0.96,
-      "2026-10-03 21:00:00+00:00": 0.8,
-      "2026-10-02 00:00:00+00:00": 0.43
+      "2026-10-03 15:00:00+00:00": 2.0,
+      "2026-10-04 00:00:00+00:00": 0.22,
+      "2026-10-03 18:00:00+00:00": 1.61,
+      "2026-10-03 21:00:00+00:00": 0.82,
+      "2026-10-02 00:00:00+00:00": 0.31
     },
     "allocated_by_team_exposure": {
-      "San Diego State": 0.23,
-      "UConn": 0.31,
+      "UConn": 0.23,
+      "Houston": 0.43,
+      "San Diego State": 0.22,
       "NC State": 0.22,
       "Colorado State": 0.23,
+      "Stanford": 0.45,
       "North Texas": 0.31,
-      "Middle Tennessee": 0.35,
-      "Iowa State": 0.32,
-      "Buffalo": 0.32,
+      "Air Force": 0.34,
+      "Navy": 0.34,
+      "North Carolina": 0.33,
+      "Notre Dame": 0.33,
+      "Iowa State": 0.22,
       "South Florida": 0.29,
-      "Vanderbilt": 0.26,
-      "Air Force": 0.24,
-      "Navy": 0.24,
       "Ohio": 0.23,
-      "Wyoming": 0.17,
+      "Wyoming": 0.22,
+      "Miami": 0.3,
       "Old Dominion": 0.15,
+      "UNLV": 0.2,
       "Iowa": 0.19,
-      "Coastal Carolina": 0.14,
-      "Arkansas State": 0.15,
-      "Texas A&M": 0.14,
-      "Arkansas": 0.14,
-      "Boston College": 0.15,
-      "Western Kentucky": 0.12
+      "Charlotte": 0.23,
+      "Memphis": 0.23,
+      "Miami (OH)": 0.17,
+      "Bowling Green": 0.17
     },
     "limit_hit_counts": {
-      "book cap": 6,
-      "max bet count": 19
+      "kickoff-cluster cap": 7,
+      "slate cap": 19
     },
     "release_blockers": [
       "probability_ece: ECE <= 0.05 on chronological release holdout",
@@ -447,25 +449,12 @@
         "name": "approved_not_above_allocation",
         "passed": true,
         "severity": "ERROR",
-        "detail": "approved=0.00 allocated=4.52"
+        "detail": "approved=0.00 allocated=4.96"
       }
     ],
     "errors": []
   },
   "trend": [
-    {
-      "generated_at": "2026-09-30T21:27:53.425281+00:00",
-      "model_generated_at": "2026-09-30T21:27:52.582203+00:00",
-      "season": 2026,
-      "week": 5,
-      "platform_version": "7.4.0",
-      "release_state": "RESEARCH",
-      "publication_status": "WARN",
-      "live_readiness_score": 93.3,
-      "distribution_stability": 93.6,
-      "approved_units": 0.0,
-      "data_quality_status": "PASS"
-    },
     {
       "generated_at": "2026-10-01T02:13:12.120301+00:00",
       "model_generated_at": "2026-10-01T02:13:11.242511+00:00",
@@ -599,6 +588,19 @@
     {
       "generated_at": "2026-10-03T14:16:07.763751+00:00",
       "model_generated_at": "2026-10-03T14:16:06.665168+00:00",
+      "season": 2026,
+      "week": 5,
+      "platform_version": "7.4.0",
+      "release_state": "RESEARCH",
+      "publication_status": "WARN",
+      "live_readiness_score": 94.7,
+      "distribution_stability": 92.8,
+      "approved_units": 0.0,
+      "data_quality_status": "PASS"
+    },
+    {
+      "generated_at": "2026-10-03T15:10:49.482107+00:00",
+      "model_generated_at": "2026-10-03T15:10:48.256171+00:00",
       "season": 2026,
       "week": 5,
       "platform_version": "7.4.0",
