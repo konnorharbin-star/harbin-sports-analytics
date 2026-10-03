@@ -21,7 +21,7 @@
   "portfolio_verified": true,
   "evidence_source": "portfolio_decisions_v1",
   "eligible_decisions": 0,
-  "timing_excluded_rows": 8,
+  "timing_excluded_rows": 14,
   "status": "live/shadow evidence only; not historical backtest evidence",
   "clv_method": "first execution-ready cap-constrained portfolio decision strictly before kickoff; close is latest timestamp-valid market snapshot strictly before kickoff"
 }

@@ -12,14 +12,14 @@
     "drift_total": 87.7,
     "drift_probability": 96.9,
     "distribution_stability": 92.8,
-    "output_completeness": 87.28323699421965
+    "output_completeness": 87.09744013212222
   },
   "drift_details": {
     "margin": {
       "stability_score": 93.7,
       "mean_z": 0.1611,
       "std_ratio": 0.9149,
-      "live_mean": 2.1365776126473,
+      "live_mean": 2.1365776126472933,
       "reference_mean": 4.066749456810405,
       "live_std": 10.962533614620234,
       "reference_std": 11.981886455756545,
@@ -32,7 +32,7 @@
       "std_ratio": 0.6822,
       "live_mean": 53.02676206294016,
       "reference_mean": 53.718786022052456,
-      "live_std": 4.264383506156672,
+      "live_std": 4.264383506156677,
       "reference_std": 6.250698215086027,
       "live_n": 56,
       "reference_n": 2398
@@ -41,9 +41,9 @@
       "stability_score": 96.9,
       "mean_z": 0.056,
       "std_ratio": 1.0688,
-      "live_mean": 0.5678972294587241,
+      "live_mean": 0.5678972294587242,
       "reference_mean": 0.581315756705897,
-      "live_std": 0.2562818170903389,
+      "live_std": 0.2562818170903387,
       "reference_std": 0.23978545491197784,
       "live_n": 56,
       "reference_n": 2398
