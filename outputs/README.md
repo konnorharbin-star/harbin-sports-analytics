@@ -2,8 +2,8 @@
 
 **Model:** v7.1.0  
 **Season / Week:** 2026 / 5  
-**Updated:** Oct 3, 2026 · 2:01 PM CT  
-**Market:** LIVE MARKET DATA — all 56 games have verified market data from ESPN live (site.web.api.espn.com) + ESPN Core supplement.  
+**Updated:** Oct 3, 2026 · 2:58 PM CT  
+**Market:** LIVE MARKET DATA — all 45 games have verified market data from ESPN live (site.web.api.espn.com) + ESPN Core supplement.  
 **Dynamic advanced-feature live coverage:** 100%  
 **System health:** 84.8/100 *(readiness, not predicted profitability)*
 
@@ -16,10 +16,10 @@
 - [System health report](system_health.json)
 
 ## Fresh PNGs for mobile
-- [Fresh page 1 — cache-safe](cfb_model_2026_week5_run_20261003_140139_CT_page1.png)
-- [Fresh page 2 — cache-safe](cfb_model_2026_week5_run_20261003_140139_CT_page2.png)
-- [Fresh page 3 — cache-safe](cfb_model_2026_week5_run_20261003_140139_CT_page3.png)
-- [Fresh page 4 — cache-safe](cfb_model_2026_week5_run_20261003_140139_CT_page4.png)
+- [Fresh page 1 — cache-safe](cfb_model_2026_week5_run_20261003_145828_CT_page1.png)
+- [Fresh page 2 — cache-safe](cfb_model_2026_week5_run_20261003_145828_CT_page2.png)
+- [Fresh page 3 — cache-safe](cfb_model_2026_week5_run_20261003_145828_CT_page3.png)
+- [Fresh page 4 — cache-safe](cfb_model_2026_week5_run_20261003_145828_CT_page4.png)
 
 These filenames change on every run so GitHub mobile cannot reuse an old image preview.
 
