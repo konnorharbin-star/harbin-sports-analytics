@@ -1,18 +1,18 @@
 {
-  "captured_at": "2026-10-03T23:05:02.031911+00:00",
+  "captured_at": "2026-10-04T02:39:45.860778+00:00",
   "season": 2026,
   "week": 5,
-  "games": 45,
-  "rows_appended": 45,
+  "games": 24,
+  "rows_appended": 24,
   "odds_source": "ESPN live (site.web.api.espn.com) + ESPN Core supplement",
   "market_intelligence": {
     "coverage": 1.0,
-    "multi_book_coverage": 0.9777777777777777,
+    "multi_book_coverage": 0.9583333333333334,
     "odds_api_configured": false,
     "odds_api_used": false,
     "action_network_enabled": true,
     "action_network_used": true,
-    "action_network_match_coverage": 0.9777777777777777,
+    "action_network_match_coverage": 0.9583333333333334,
     "errors": [],
     "best_line_fields": [
       "best_home_ml",
