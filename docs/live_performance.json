@@ -142,6 +142,90 @@
       "max_drawdown": 3.1818181818181817
     }
   },
+  "by_book": {
+    "ActionNetwork book 30": {
+      "graded_bets": 1,
+      "wins": 0,
+      "losses": 1,
+      "pushes": 0,
+      "units": -1.0,
+      "roi": -1.0,
+      "win_rate": 0.0,
+      "avg_clv_proxy": -0.012305315877049194,
+      "positive_clv_rate": 0.0,
+      "clv_samples": 1,
+      "avg_execution_clv": -0.019679395959939394,
+      "positive_execution_clv_rate": 0.0,
+      "execution_clv_samples": 1,
+      "roi_ci_95": [
+        null,
+        null
+      ],
+      "max_drawdown": 1.0
+    }
+  },
+  "by_edge_bucket": {
+    "2-4%": {
+      "graded_bets": 7,
+      "wins": 5,
+      "losses": 2,
+      "pushes": 0,
+      "units": 2.5454545454545454,
+      "roi": 0.36363636363636365,
+      "win_rate": 0.7142857142857143,
+      "avg_clv_proxy": 0.14285714285714285,
+      "positive_clv_rate": 0.42857142857142855,
+      "clv_samples": 7,
+      "avg_execution_clv": 0.14285714285714285,
+      "positive_execution_clv_rate": 0.42857142857142855,
+      "execution_clv_samples": 7,
+      "roi_ci_95": [
+        null,
+        null
+      ],
+      "max_drawdown": 2.0
+    },
+    "4-6%": {
+      "graded_bets": 9,
+      "wins": 6,
+      "losses": 3,
+      "pushes": 0,
+      "units": 2.454545454545454,
+      "roi": 0.2727272727272727,
+      "win_rate": 0.6666666666666666,
+      "avg_clv_proxy": 0.8888888888888888,
+      "positive_clv_rate": 0.5555555555555556,
+      "clv_samples": 9,
+      "avg_execution_clv": 0.8888888888888888,
+      "positive_execution_clv_rate": 0.5555555555555556,
+      "execution_clv_samples": 9,
+      "roi_ci_95": [
+        null,
+        null
+      ],
+      "max_drawdown": 2.0
+    },
+    ">=6%": {
+      "graded_bets": 16,
+      "wins": 4,
+      "losses": 10,
+      "pushes": 2,
+      "units": -2.2318181818181824,
+      "roi": -0.1394886363636364,
+      "win_rate": 0.2857142857142857,
+      "avg_clv_proxy": 0.12655789654746188,
+      "positive_clv_rate": 0.4375,
+      "clv_samples": 16,
+      "avg_execution_clv": 0.12089103922163079,
+      "positive_execution_clv_rate": 0.3125,
+      "execution_clv_samples": 16,
+      "roi_ci_95": [
+        null,
+        null
+      ],
+      "max_drawdown": 5.331818181818182
+    }
+  },
   "by_season": {
     "2026": {
       "graded_bets": 32,
