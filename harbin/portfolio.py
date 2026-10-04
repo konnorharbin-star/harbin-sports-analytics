@@ -6,6 +6,7 @@ import math
 
 import pandas as pd
 
+from .performance_feedback import build_performance_feedback, performance_feedback_for_row
 from .policy import load_policy
 
 
@@ -232,6 +233,7 @@ def apply_portfolio_controls(
     policy_mode = str(policy.get("deployment_mode", "paper")).lower()
     production_gate_open = bool(gate.get("production_eligible")) and policy_mode == "production"
     bankroll = build_bankroll_risk_state(live_bets_path, limits)
+    feedback = build_performance_feedback(live_bets_path, limits)
     require_live_history = bool(limits.get("require_live_history_for_production", True))
     production_history_ok = bankroll["history_available"] or not require_live_history
     production_allowed = production_gate_open and production_history_ok and not bankroll["hard_stop"]
@@ -251,6 +253,7 @@ def apply_portfolio_controls(
         "production_gate_open": production_gate_open,
         "production_eligible": production_allowed,
         "bankroll_risk": bankroll,
+        "performance_feedback": feedback,
     }
     if out.empty:
         return out, {
@@ -267,7 +270,11 @@ def apply_portfolio_controls(
 
     out["paper_stake_units"] = pd.to_numeric(out.get("stake_units", 0), errors="coerce").fillna(0.0).clip(lower=0.0)
     bankroll_mult = float(bankroll.get("risk_multiplier", 1.0) or 0.0)
+    feedback_rows = [performance_feedback_for_row(row.to_dict(), feedback) for _, row in out.iterrows()]
+    out["performance_multiplier"] = [float(item["multiplier"]) for item in feedback_rows]
+    out["performance_feedback_reason"] = [str(item["reason"]) for item in feedback_rows]
     out["bankroll_adjusted_units"] = (out["paper_stake_units"] * bankroll_mult).round(6)
+    out["performance_adjusted_units"] = (out["bankroll_adjusted_units"] * out["performance_multiplier"]).round(6)
     out["portfolio_candidate_units"] = 0.0
     out["portfolio_stake_units"] = 0.0
     out["portfolio_action"] = "PASS"
@@ -276,6 +283,7 @@ def apply_portfolio_controls(
     out["portfolio_rank_score"] = (
         pd.to_numeric(out.get("quant_ev", 0), errors="coerce").fillna(0.0)
         * pd.to_numeric(out.get("risk_multiplier", 1), errors="coerce").fillna(0.0)
+        * pd.to_numeric(out.get("performance_multiplier", 1), errors="coerce").fillna(1.0)
     )
 
     order_frame = pd.DataFrame(
@@ -311,7 +319,7 @@ def apply_portfolio_controls(
         if bankroll_mult <= 0:
             out.at[i, "portfolio_limit_reason"] = bankroll.get("reason") or "bankroll risk multiplier is zero"
             continue
-        proposed = max(0.0, _num(r.get("bankroll_adjusted_units"), 0.0))
+        proposed = max(0.0, _num(r.get("performance_adjusted_units"), 0.0))
 
         issue = _execution_issue(r, limits)
         if issue:
@@ -388,6 +396,7 @@ def apply_portfolio_controls(
         "production_block_reason": production_block,
         "proposed_units": round(float(out["paper_stake_units"].sum()), 2),
         "risk_adjusted_proposed_units": round(float(out["bankroll_adjusted_units"].sum()), 2),
+        "performance_adjusted_proposed_units": round(float(out["performance_adjusted_units"].sum()), 2),
         "approved_units": round(float(out["portfolio_stake_units"].sum()), 2),
         "paper_allocated_units": allocated,
         "paper_or_shadow_allocated_units": allocated,
@@ -443,6 +452,9 @@ def write_portfolio_outputs(
             "data_quality_score",
             "paper_stake_units",
             "bankroll_adjusted_units",
+            "performance_multiplier",
+            "performance_feedback_reason",
+            "performance_adjusted_units",
             "portfolio_candidate_units",
             "portfolio_stake_units",
             "execution_ready",
