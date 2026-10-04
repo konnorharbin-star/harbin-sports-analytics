@@ -1,14 +1,14 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-10-04T14:26:48.176229+00:00",
+  "generated_at": "2026-10-04T14:32:19.932186+00:00",
   "status": "WARN",
   "identity": {
     "platform_version": "7.4.0",
     "model_version": "7.1.0",
     "season": 2026,
     "week": 6,
-    "model_generated_at": "2026-10-04T14:26:46.947595+00:00",
-    "updated_at_ct": "Oct 4, 2026 \u00b7 9:26 AM CT",
+    "model_generated_at": "2026-10-04T14:32:18.542702+00:00",
+    "updated_at_ct": "Oct 4, 2026 \u00b7 9:32 AM CT",
     "prediction_rows": 58
   },
   "release": {
@@ -84,7 +84,7 @@
       {
         "name": "live_monitoring",
         "passed": false,
-        "value": 79.7,
+        "value": 80.7,
         "requirement": "live readiness >= 90/100",
         "detail": ""
       },
@@ -186,7 +186,7 @@
   },
   "monitoring": {
     "status": "WARN",
-    "live_readiness_score": 79.7,
+    "live_readiness_score": 80.7,
     "scores": {
       "market_coverage": 41.37931034482759,
       "advanced_coverage": 100.0,
@@ -198,7 +198,7 @@
       "drift_total": 90.5,
       "drift_probability": 98.9,
       "distribution_stability": 95.8,
-      "output_completeness": 35.23583036068173
+      "output_completeness": 45.48156956004756
     },
     "drift": {
       "margin": {
@@ -243,7 +243,7 @@
     "alerts": [
       "verified ML/spread/total coverage below 90%"
     ],
-    "recent_readiness_delta": -15.0
+    "recent_readiness_delta": -14.0
   },
   "data_quality": {
     "status": "WARN",
@@ -464,7 +464,7 @@
         "name": "monitor_reconciled",
         "passed": true,
         "severity": "ERROR",
-        "detail": "metadata=79.7 output=79.7"
+        "detail": "metadata=80.7 output=80.7"
       },
       {
         "name": "data_contracts_publishable",
@@ -488,19 +488,6 @@
     "errors": []
   },
   "trend": [
-    {
-      "generated_at": "2026-10-02T17:43:27.682799+00:00",
-      "model_generated_at": "2026-10-02T17:43:26.962803+00:00",
-      "season": 2026,
-      "week": 5,
-      "platform_version": "7.4.0",
-      "release_state": "PAPER",
-      "publication_status": "WARN",
-      "live_readiness_score": 95.2,
-      "distribution_stability": 93.1,
-      "approved_units": 0.0,
-      "data_quality_status": "PASS"
-    },
     {
       "generated_at": "2026-10-02T17:58:36.736450+00:00",
       "model_generated_at": "2026-10-02T17:58:35.425695+00:00",
@@ -643,6 +630,19 @@
       "distribution_stability": 93.5,
       "approved_units": 0.0,
       "data_quality_status": "PASS"
+    },
+    {
+      "generated_at": "2026-10-04T14:26:48.176229+00:00",
+      "model_generated_at": "2026-10-04T14:26:46.947595+00:00",
+      "season": 2026,
+      "week": 6,
+      "platform_version": "7.4.0",
+      "release_state": "RESEARCH",
+      "publication_status": "WARN",
+      "live_readiness_score": 79.7,
+      "distribution_stability": 95.8,
+      "approved_units": 0.0,
+      "data_quality_status": "WARN"
     }
   ],
   "warnings": [
@@ -653,8 +653,7 @@
     "multi_book_consensus: >= 75% of games covered by 2+ books",
     "historical_entry_integrity: historical promotion sample uses explicit verified opening-entry fields only",
     "historical_market_edge: ROBUST evidence: >=1000 verified opening-entry bets, ROI 95% CI lower bound >0, positive CLV, >=2 positive markets and >=2 positive seasons with minimum segment samples",
-    "live_shadow_evidence: >=300 portfolio-verified graded live/shadow bets, non-negative ROI and positive pre-kickoff CLV proxy",
-    "live readiness dropped 15.0 points versus the recent median"
+    "live_shadow_evidence: >=300 portfolio-verified graded live/shadow bets, non-negative ROI and positive pre-kickoff CLV proxy"
   ],
   "meaning": "Publication/audit snapshot. Readiness and evidence are reported separately; this is not a guarantee of future profitability."
 }

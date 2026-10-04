@@ -481,8 +481,8 @@
   },
   "calibrated_margin_sigma": 16.28877707158025,
   "calibrated_total_sigma": 16.102959927363244,
-  "generated_at": "2026-10-04T14:26:46.947595+00:00",
-  "updated_at_ct": "Oct 4, 2026 \u00b7 9:26 AM CT",
+  "generated_at": "2026-10-04T14:32:18.542702+00:00",
+  "updated_at_ct": "Oct 4, 2026 \u00b7 9:32 AM CT",
   "schedule_source": "sportsdataverse/cfbfastR-data",
   "odds_source": "ESPN live (site.web.api.espn.com) + ESPN Core supplement",
   "odds_errors": [],
@@ -553,13 +553,13 @@
     "source_available": true
   },
   "line_history": {
-    "tracked_games": 0,
-    "coverage": 0.0,
+    "tracked_games": 58,
+    "coverage": 1.0,
     "snapshot_rows": 1012,
     "hourly_snapshot_games": 0,
-    "legacy_fallback_games": 0,
+    "legacy_fallback_games": 58,
     "consensus_close_games": 0,
-    "source": "none"
+    "source": "prediction_snapshot_fallback"
   },
   "quant_picks": {
     "strong": 20,
@@ -595,7 +595,7 @@
     "clv_method": "first execution-ready cap-constrained portfolio decision strictly before kickoff; close is latest timestamp-valid market snapshot strictly before kickoff"
   },
   "health": {
-    "system_health_score": 77.8,
+    "system_health_score": 76.4,
     "meaning": "engineering/model-readiness score only; not a profitability or win-rate guarantee",
     "components": {
       "pipeline_and_data": 100.0,
@@ -605,7 +605,7 @@
       "probability_calibration": 87.6,
       "market_intelligence": 89.1,
       "current_context": 100.0,
-      "live_monitoring": 94.0,
+      "live_monitoring": 79.7,
       "historical_betting_proof": 25.0
     },
     "betting_proof_status": "UNPROVEN",
@@ -709,7 +709,7 @@
       {
         "name": "live_monitoring",
         "passed": false,
-        "value": 79.7,
+        "value": 80.7,
         "requirement": "live readiness >= 90/100",
         "detail": ""
       },
@@ -789,7 +789,7 @@
   },
   "live_monitoring": {
     "status": "WARN",
-    "live_readiness_score": 79.7,
+    "live_readiness_score": 80.7,
     "scores": {
       "market_coverage": 41.37931034482759,
       "advanced_coverage": 100.0,
@@ -801,7 +801,7 @@
       "drift_total": 90.5,
       "drift_probability": 98.9,
       "distribution_stability": 95.8,
-      "output_completeness": 35.23583036068173
+      "output_completeness": 45.48156956004756
     },
     "drift_details": {
       "margin": {
@@ -986,7 +986,7 @@
   "decision_ledger": {
     "path": "history/portfolio_decisions_v1.csv",
     "eligible_rows": 20,
-    "appended_rows": 20,
-    "total_rows": 253
+    "appended_rows": 1,
+    "total_rows": 254
   }
 }
