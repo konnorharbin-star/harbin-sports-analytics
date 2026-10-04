@@ -18,30 +18,30 @@
     ]
   },
   "all_archive_overall": {
-    "bets": 3432,
-    "wins": 1831,
-    "losses": 1564,
-    "pushes": 37,
-    "win_rate": 0.5393225331369661,
-    "units": -21.36374990136826,
-    "roi": -0.006224868852380029,
-    "max_drawdown": 83.35963407869718,
-    "avg_clv": 0.00953872663703195,
-    "avg_clv_raw": 0.40865384615384615,
-    "positive_clv_rate": 0.24621212121212122,
-    "clv_samples": 3432,
+    "bets": 3439,
+    "wins": 1807,
+    "losses": 1594,
+    "pushes": 38,
+    "win_rate": 0.5313143193178477,
+    "units": -70.29847662659017,
+    "roi": -0.02044154598039842,
+    "max_drawdown": 108.4361409157234,
+    "avg_clv": 0.009867483034241209,
+    "avg_clv_raw": 0.42207036929339925,
+    "positive_clv_rate": 0.24920034893864496,
+    "clv_samples": 3439,
     "roi_ci_95": [
-      -0.04308832934150848,
-      0.028187837499950096
+      -0.05828757160192026,
+      0.01565911413283075
     ],
-    "profitable_week_rate": 0.44680851063829785
+    "profitable_week_rate": 0.40425531914893614
   },
   "promotion_sample": {
     "entry_quote_verified": false,
     "provenance_field": "entry_quote_verified",
     "verified_bets": 0,
-    "all_archive_bets": 3432,
-    "excluded_unverified_bets": 3432,
+    "all_archive_bets": 3439,
+    "excluded_unverified_bets": 3439,
     "positive_markets": 0,
     "positive_seasons": 0,
     "min_segment_bets": 50
