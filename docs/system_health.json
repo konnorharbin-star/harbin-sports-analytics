@@ -1,5 +1,5 @@
 {
-  "system_health_score": 76.4,
+  "system_health_score": 76.5,
   "meaning": "engineering/model-readiness score only; not a profitability or win-rate guarantee",
   "components": {
     "pipeline_and_data": 100.0,
@@ -9,7 +9,7 @@
     "probability_calibration": 87.6,
     "market_intelligence": 89.1,
     "current_context": 100.0,
-    "live_monitoring": 79.7,
+    "live_monitoring": 80.7,
     "historical_betting_proof": 25.0
   },
   "betting_proof_status": "UNPROVEN",
