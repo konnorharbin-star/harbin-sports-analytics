@@ -58,6 +58,18 @@ def quant_signal(ev, edge_value, probability, market: str, policy_path=None, wee
     return signal_from_policy(ev,edge_value,probability,market,path=policy_path,week=week)
 
 
+def _market_reliability_multiplier(market, side):
+    """Conservative prior from the large historical diagnostic sample.
+
+    This is deliberately one-sided: weak historical segments can reduce sizing but
+    never create an edge or increase a stake.  The live performance-feedback layer
+    remains the authority once enough timestamp-safe forward bets accumulate.
+    """
+    if market == "total" and str(side).upper() == "O":
+        return 0.65
+    return 1.0
+
+
 def select_best_market(row, risk_multiplier=1.0, policy_path=PRODUCTION_POLICY_PATH):
     """Select only markets with an actual executable price and carry quote provenance."""
     candidates=[]; week=row.get("week")
@@ -104,11 +116,13 @@ def select_best_market(row, risk_multiplier=1.0, policy_path=PRODUCTION_POLICY_P
         return {"quant_signal":"PASS","quant_market":None,"quant_side":None,"quant_book":None,"quant_quote_at":None,"quant_ev":0.0,"stake_units":0.0,"quant_probability":np.nan,"quant_odds":np.nan,"policy_block_reason":" | ".join(blocked)}
 
     best=max(candidates,key=lambda x:x["ev"])
-    units=fractional_kelly_units(best["p"],best["odds"],risk_multiplier,policy_path=policy_path)
+    segment_multiplier=_market_reliability_multiplier(best["market"],best["side"])
+    units=fractional_kelly_units(best["p"],best["odds"],risk_multiplier*segment_multiplier,policy_path=policy_path)
     return {
         "quant_signal":best["signal"],"quant_market":best["market"],"quant_side":best["side"],"quant_book":best.get("book"),"quant_quote_at":best.get("quote_at"),
         "quant_price":best["line"],"quant_odds":best["odds"],"quant_ev":best["ev"],
         "quant_probability":best["p"],"quant_edge":best["edge"],"stake_units":round(units,2),
+        "historical_segment_multiplier":segment_multiplier,
         "policy_block_reason":"",
     }
 
