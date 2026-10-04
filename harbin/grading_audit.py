@@ -12,8 +12,9 @@ from . import grading as _g
 _GRADED_COLUMNS = [
     "game_id","season","week","away_team","home_team","projected_margin_home","actual_margin_home",
     "projected_total","actual_total","quant_signal","quant_market","quant_side","quant_book","quant_price",
-    "quant_odds","portfolio_candidate_units","portfolio_action","result","profit","clv_proxy","execution_clv",
-    "clv_source","close_market_book_count","close_snapshot_at","decision_at","kickoff",
+    "quant_odds","quant_edge","data_quality_score","context_risk","risk_multiplier","market_disagreement",
+    "performance_multiplier","performance_feedback_reason","edge_bucket","portfolio_candidate_units","portfolio_action",
+    "result","profit","clv_proxy","execution_clv","clv_source","close_market_book_count","close_snapshot_at","decision_at","kickoff",
 ]
 
 
@@ -95,6 +96,8 @@ def grade_prediction_history(client, history_dir="history", reports_dir="reports
             "game_id":gid,"season":entry.get("season"),"week":entry.get("week"),"away_team":entry.get("away_team"),"home_team":entry.get("home_team"),
             "projected_margin_home":entry.get("model_margin_home"),"actual_margin_home":actual_margin,"projected_total":entry.get("model_total"),"actual_total":actual_total,
             "quant_signal":entry.get("quant_signal"),"quant_market":market,"quant_side":entry.get("quant_side"),"quant_book":entry.get("quant_book"),"quant_price":entry.get("quant_price"),"quant_odds":odds,
+            "quant_edge":entry.get("quant_edge", np.nan),"data_quality_score":entry.get("data_quality_score", np.nan),"context_risk":entry.get("context_risk", np.nan),"risk_multiplier":entry.get("risk_multiplier", np.nan),"market_disagreement":entry.get("market_disagreement", np.nan),
+            "performance_multiplier":entry.get("performance_multiplier", np.nan),"performance_feedback_reason":entry.get("performance_feedback_reason"),"edge_bucket":_g._edge_bucket(entry.get("quant_edge")),
             "portfolio_candidate_units":entry.get("portfolio_candidate_units", np.nan),"portfolio_action":entry.get("portfolio_action"),"result":result,"profit":profit,"clv_proxy":clv,"execution_clv":execution_clv,"clv_source":clv_source,
             "close_market_book_count":close.get("market_book_count", np.nan) if close is not None else np.nan,"close_snapshot_at":close.get("captured_at") if close is not None else None,
             "decision_at":entry.get(ts_col),"kickoff":entry.get("date"),
@@ -102,7 +105,7 @@ def grade_prediction_history(client, history_dir="history", reports_dir="reports
 
     df = pd.DataFrame(rows, columns=_GRADED_COLUMNS); df.to_csv(reports/"live_graded_predictions.csv", index=False)
     bets = df[df.result.notna()].copy() if len(df) else pd.DataFrame(columns=_GRADED_COLUMNS); bets.to_csv(reports/"live_graded_bets.csv", index=False)
-    overall = _g._summary(bets); by_market = {str(k):_g._summary(v) for k,v in bets.groupby("quant_market")} if len(bets) else {}; by_signal = {str(k):_g._summary(v) for k,v in bets.groupby("quant_signal")} if len(bets) else {}; by_season = {str(k):_g._summary(v) for k,v in bets.groupby("season")} if len(bets) else {}
+    overall = _g._summary(bets); by_market = {str(k):_g._summary(v) for k,v in bets.groupby("quant_market")} if len(bets) else {}; by_signal = {str(k):_g._summary(v) for k,v in bets.groupby("quant_signal")} if len(bets) else {}; by_book = {str(k):_g._summary(v) for k,v in bets.dropna(subset=["quant_book"]).groupby("quant_book")} if len(bets) else {}; by_edge_bucket = {str(k):_g._summary(v) for k,v in bets.groupby("edge_bucket")} if len(bets) else {}; by_season = {str(k):_g._summary(v) for k,v in bets.groupby("season")} if len(bets) else {}
     verified_close = int(pd.to_numeric(bets.get("clv_proxy"), errors="coerce").notna().sum()) if len(bets) else 0
-    report = {"graded_games":int(len(df)), **overall, "by_market":by_market,"by_signal":by_signal,"by_season":by_season,"clv_method":method,"verified_close_clv_samples":verified_close,"portfolio_verified":bool(portfolio_verified),"evidence_source":evidence_source,"eligible_decisions":int(len(entries)),"timing_excluded_rows":int(timing_excluded),"status":"live/shadow evidence only; not historical backtest evidence"}
+    report = {"graded_games":int(len(df)), **overall, "by_market":by_market,"by_signal":by_signal,"by_book":by_book,"by_edge_bucket":by_edge_bucket,"by_season":by_season,"clv_method":method,"verified_close_clv_samples":verified_close,"portfolio_verified":bool(portfolio_verified),"evidence_source":evidence_source,"eligible_decisions":int(len(entries)),"timing_excluded_rows":int(timing_excluded),"status":"live/shadow evidence only; not historical backtest evidence"}
     (reports/"live_performance.json").write_text(json.dumps(report, indent=2)); return report
