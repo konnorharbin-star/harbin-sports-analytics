@@ -5,10 +5,7 @@ import json
 
 import pandas as pd
 
-from harbin.performance_feedback import (
-    build_performance_feedback,
-    performance_feedback_for_row,
-)
+from harbin.performance_feedback import build_performance_feedback, performance_feedback_for_row
 from harbin.policy import DEFAULT_POLICY
 from harbin.portfolio import apply_portfolio_controls
 
