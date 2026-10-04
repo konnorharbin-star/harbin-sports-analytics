@@ -1,21 +1,14 @@
 {
-  "status": "WARN",
+  "status": "PASS",
   "errors": 0,
-  "warnings": 1,
-  "issues": [
-    {
-      "code": "market.coverage",
-      "severity": "WARNING",
-      "count": 16,
-      "message": "Only 72.4% of games have complete ML/spread/total markets."
-    }
-  ],
+  "warnings": 0,
+  "issues": [],
   "checks": {
     "unique_game_ids": true,
     "required_schema": true,
     "finite_core_predictions": true,
     "sanity_ranges": true,
-    "complete_market_rate": 0.724138
+    "complete_market_rate": 0.931034
   },
   "rows": 58
 }

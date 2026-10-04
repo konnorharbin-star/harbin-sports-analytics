@@ -8,14 +8,14 @@
     {
       "name": "data_contracts",
       "passed": true,
-      "value": "WARN",
+      "value": "PASS",
       "requirement": "no ERROR-level data-contract violations",
       "detail": ""
     },
     {
       "name": "complete_market_coverage",
       "passed": false,
-      "value": 0.7241,
+      "value": 0.9483,
       "requirement": ">= 95% games with ML + spread + total",
       "detail": ""
     },
@@ -57,28 +57,28 @@
     {
       "name": "probability_brier",
       "passed": true,
-      "value": 0.17476492013360306,
+      "value": 0.17476492013360373,
       "requirement": "Brier <= 0.18 on chronological release holdout",
       "detail": ""
     },
     {
       "name": "probability_ece",
       "passed": false,
-      "value": 0.06218232013495895,
+      "value": 0.06218232013495953,
       "requirement": "ECE <= 0.05 on chronological release holdout",
       "detail": ""
     },
     {
       "name": "live_monitoring",
-      "passed": false,
-      "value": 88.7,
+      "passed": true,
+      "value": 93.9,
       "requirement": "live readiness >= 90/100",
       "detail": ""
     },
     {
       "name": "multi_book_consensus",
       "passed": true,
-      "value": 0.8448,
+      "value": 0.9828,
       "requirement": ">= 75% of games covered by 2+ books",
       "detail": "Configure THE_ODDS_API_KEY if ESPN exposes only one provider."
     },
@@ -135,7 +135,6 @@
   "blockers": [
     "complete_market_coverage: >= 95% games with ML + spread + total",
     "probability_ece: ECE <= 0.05 on chronological release holdout",
-    "live_monitoring: live readiness >= 90/100",
     "historical_entry_integrity: historical promotion sample uses explicit verified opening-entry fields only",
     "historical_market_edge: ROBUST evidence: >=1000 verified opening-entry bets, ROI 95% CI lower bound >0, positive CLV, >=2 positive markets and >=2 positive seasons with minimum segment samples",
     "live_shadow_evidence: >=300 portfolio-verified graded live/shadow bets, non-negative ROI and positive pre-kickoff CLV proxy"

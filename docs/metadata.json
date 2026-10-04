@@ -62,10 +62,10 @@
     "margin_tuning_mae": 12.754104344461481,
     "margin_tuned_weight": 0.75,
     "margin_calibration_rows": 587,
-    "margin_calibration_mae": 12.527666428853086,
+    "margin_calibration_mae": 12.527666428853088,
     "margin_baseline_mae": 13.50210922129303,
-    "margin_tuned_model_mae": 12.95850296244939,
-    "margin_mae": 12.95850296244939,
+    "margin_tuned_model_mae": 12.958502962449392,
+    "margin_mae": 12.958502962449392,
     "margin_rmse": 16.129968397145504,
     "margin_release_weight": 0.75,
     "margin_blend_weight": 0.75,
@@ -85,7 +85,7 @@
       {
         "season": 2024,
         "rows": 798,
-        "mae": 12.9092489421025,
+        "mae": 12.909248942102506,
         "rmse": 16.273787331983822,
         "baseline_mae": 13.22842366531436,
         "weight": 0.75,
@@ -95,7 +95,7 @@
         "season": 2025,
         "rows": 808,
         "mae": 12.768553403602079,
-        "rmse": 16.23423220007751,
+        "rmse": 16.234232200077514,
         "baseline_mae": 13.026608931009665,
         "weight": 0.2,
         "weight_tuned_on": "strictly prior whole-week tune block"
@@ -103,15 +103,15 @@
       {
         "season": 2026,
         "rows": 271,
-        "mae": 13.257931979769973,
-        "rmse": 16.71315775591011,
+        "mae": 13.25793197976997,
+        "rmse": 16.7131577559101,
         "baseline_mae": 14.44875383389422,
         "weight": 0.8500000000000001,
         "weight_tuned_on": "strictly prior whole-week tune block"
       }
     ],
-    "margin_walkforward_mae_mean": 12.968946642295837,
-    "margin_walkforward_mae_std": 0.17893342132431123,
+    "margin_walkforward_mae_mean": 12.968946642295839,
+    "margin_walkforward_mae_std": 0.17893342132430934,
     "margin_walkforward_improved_folds": 4,
     "margin_walkforward_fold_count": 4,
     "total_tuning_rows": 587,
@@ -121,8 +121,8 @@
     "total_calibration_rows": 587,
     "total_calibration_mae": 12.949223806309355,
     "total_baseline_mae": 12.648615389536973,
-    "total_tuned_model_mae": 12.59160433487721,
-    "total_mae": 12.59160433487721,
+    "total_tuned_model_mae": 12.591604334877209,
+    "total_mae": 12.591604334877209,
     "total_rmse": 15.490811419847217,
     "total_release_weight": 0.30000000000000004,
     "total_blend_weight": 0.30000000000000004,
@@ -142,7 +142,7 @@
       {
         "season": 2024,
         "rows": 798,
-        "mae": 12.98480897445291,
+        "mae": 12.984808974452912,
         "rmse": 16.443573519291032,
         "baseline_mae": 12.964033987572272,
         "weight": 0.65,
@@ -161,19 +161,19 @@
         "season": 2026,
         "rows": 271,
         "mae": 12.475385933726857,
-        "rmse": 15.493632539500563,
+        "rmse": 15.493632539500565,
         "baseline_mae": 12.513362267855985,
         "weight": 0.30000000000000004,
         "weight_tuned_on": "strictly prior whole-week tune block"
       }
     ],
     "total_walkforward_mae_mean": 12.878052873600529,
-    "total_walkforward_mae_std": 0.2516776733978215,
+    "total_walkforward_mae_std": 0.25167767339782166,
     "total_walkforward_improved_folds": 3,
     "total_walkforward_fold_count": 4,
-    "win_brier": 0.17476492013360306,
-    "win_log_loss": 0.5222806383629722,
-    "win_ece": 0.06218232013495895,
+    "win_brier": 0.17476492013360373,
+    "win_log_loss": 0.5222806383629738,
+    "win_ece": 0.06218232013495953,
     "win_calibration_eval_rows": 569,
     "win_calibration_fit_rows": 587,
     "win_calibration_weight": 0.75,
@@ -481,19 +481,19 @@
   },
   "calibrated_margin_sigma": 16.288777071580245,
   "calibrated_total_sigma": 16.102959927363244,
-  "generated_at": "2026-10-04T15:50:10.055628+00:00",
-  "updated_at_ct": "Oct 4, 2026 \u00b7 10:50 AM CT",
+  "generated_at": "2026-10-04T20:13:23.303208+00:00",
+  "updated_at_ct": "Oct 4, 2026 \u00b7 3:13 PM CT",
   "schedule_source": "sportsdataverse/cfbfastR-data",
   "odds_source": "ESPN live (site.web.api.espn.com) + ESPN Core supplement",
   "odds_errors": [],
   "market_coverage": {
     "games": 58,
-    "any_market": 45,
-    "moneyline": 42,
-    "spread": 45,
-    "total": 50
+    "any_market": 58,
+    "moneyline": 55,
+    "spread": 57,
+    "total": 58
   },
-  "market_status": "PARTIAL MARKET DATA \u2014 45/58 games have at least one verified market from ESPN live (site.web.api.espn.com) + ESPN Core supplement.",
+  "market_status": "LIVE MARKET DATA \u2014 all 58 games have verified market data from ESPN live (site.web.api.espn.com) + ESPN Core supplement.",
   "advanced_features": {
     "train_coverage": 1.0,
     "live_coverage": 1.0,
@@ -515,12 +515,12 @@
   },
   "market_intelligence": {
     "coverage": 1.0,
-    "multi_book_coverage": 0.8448275862068966,
+    "multi_book_coverage": 0.9827586206896551,
     "odds_api_configured": false,
     "odds_api_used": false,
     "action_network_enabled": true,
     "action_network_used": true,
-    "action_network_match_coverage": 0.8448275862068966,
+    "action_network_match_coverage": 0.9827586206896551,
     "errors": [],
     "best_line_fields": [
       "best_home_ml",
@@ -555,15 +555,15 @@
   "line_history": {
     "tracked_games": 58,
     "coverage": 1.0,
-    "snapshot_rows": 1070,
+    "snapshot_rows": 1128,
     "hourly_snapshot_games": 58,
     "legacy_fallback_games": 0,
-    "consensus_close_games": 47,
+    "consensus_close_games": 58,
     "source": "hourly_market_snapshots"
   },
   "quant_picks": {
-    "strong": 21,
-    "bet": 9,
+    "strong": 24,
+    "bet": 14,
     "lean": 2
   },
   "snapshot_appended": true,
@@ -595,44 +595,36 @@
     "clv_method": "first execution-ready cap-constrained portfolio decision strictly before kickoff; close is latest timestamp-valid market snapshot strictly before kickoff"
   },
   "health": {
-    "system_health_score": 80.1,
+    "system_health_score": 83.5,
     "meaning": "engineering/model-readiness score only; not a profitability or win-rate guarantee",
     "components": {
       "pipeline_and_data": 100.0,
-      "market_coverage": 72.4,
+      "market_coverage": 94.8,
       "advanced_features": 100.0,
       "model_validation": 92.1,
       "probability_calibration": 87.6,
-      "market_intelligence": 94.6,
+      "market_intelligence": 99.4,
       "current_context": 100.0,
-      "live_monitoring": 80.8,
+      "live_monitoring": 88.7,
       "historical_betting_proof": 25.0
     },
     "betting_proof_status": "UNPROVEN",
     "blockers": [
-      "complete verified market coverage below 90%",
       "historical market edge is not yet validated"
     ]
   },
   "platform_version": "7.4.0",
   "data_quality": {
-    "status": "WARN",
+    "status": "PASS",
     "errors": 0,
-    "warnings": 1,
-    "issues": [
-      {
-        "code": "market.coverage",
-        "severity": "WARNING",
-        "count": 16,
-        "message": "Only 72.4% of games have complete ML/spread/total markets."
-      }
-    ],
+    "warnings": 0,
+    "issues": [],
     "checks": {
       "unique_game_ids": true,
       "required_schema": true,
       "finite_core_predictions": true,
       "sanity_ranges": true,
-      "complete_market_rate": 0.724138
+      "complete_market_rate": 0.931034
     },
     "rows": 58
   },
@@ -646,14 +638,14 @@
       {
         "name": "data_contracts",
         "passed": true,
-        "value": "WARN",
+        "value": "PASS",
         "requirement": "no ERROR-level data-contract violations",
         "detail": ""
       },
       {
         "name": "complete_market_coverage",
         "passed": false,
-        "value": 0.7241,
+        "value": 0.9483,
         "requirement": ">= 95% games with ML + spread + total",
         "detail": ""
       },
@@ -695,28 +687,28 @@
       {
         "name": "probability_brier",
         "passed": true,
-        "value": 0.17476492013360306,
+        "value": 0.17476492013360373,
         "requirement": "Brier <= 0.18 on chronological release holdout",
         "detail": ""
       },
       {
         "name": "probability_ece",
         "passed": false,
-        "value": 0.06218232013495895,
+        "value": 0.06218232013495953,
         "requirement": "ECE <= 0.05 on chronological release holdout",
         "detail": ""
       },
       {
         "name": "live_monitoring",
-        "passed": false,
-        "value": 88.7,
+        "passed": true,
+        "value": 93.9,
         "requirement": "live readiness >= 90/100",
         "detail": ""
       },
       {
         "name": "multi_book_consensus",
         "passed": true,
-        "value": 0.8448,
+        "value": 0.9828,
         "requirement": ">= 75% of games covered by 2+ books",
         "detail": "Configure THE_ODDS_API_KEY if ESPN exposes only one provider."
       },
@@ -773,7 +765,6 @@
     "blockers": [
       "complete_market_coverage: >= 95% games with ML + spread + total",
       "probability_ece: ECE <= 0.05 on chronological release holdout",
-      "live_monitoring: live readiness >= 90/100",
       "historical_entry_integrity: historical promotion sample uses explicit verified opening-entry fields only",
       "historical_market_edge: ROBUST evidence: >=1000 verified opening-entry bets, ROI 95% CI lower bound >0, positive CLV, >=2 positive markets and >=2 positive seasons with minimum segment samples",
       "live_shadow_evidence: >=300 portfolio-verified graded live/shadow bets, non-negative ROI and positive pre-kickoff CLV proxy"
@@ -786,29 +777,29 @@
     "meaning": "Hard deployment gate. PRODUCTION requires engineering quality, verified historical entry timing, dynamic advanced data, multi-book pricing, robust historical edge and portfolio-verified independent live evidence; it is not a guarantee of future profit."
   },
   "live_monitoring": {
-    "status": "WARN",
-    "live_readiness_score": 88.7,
+    "status": "OK",
+    "live_readiness_score": 93.9,
     "scores": {
-      "market_coverage": 72.41379310344827,
+      "market_coverage": 94.82758620689656,
       "advanced_coverage": 100.0,
-      "multi_book": 84.48275862068965,
+      "multi_book": 98.27586206896551,
       "context": 100.0,
-      "calibration": 84.45441996626026,
+      "calibration": 84.45441996626012,
       "freshness": 100.0,
       "drift_margin": 98.1,
       "drift_total": 90.5,
       "drift_probability": 98.9,
       "distribution_stability": 95.8,
-      "output_completeness": 70.88783194609591
+      "output_completeness": 81.58937772493063
     },
     "drift_details": {
       "margin": {
         "stability_score": 98.1,
         "mean_z": 0.0357,
         "std_ratio": 0.9611,
-        "live_mean": 4.435628935745982,
+        "live_mean": 4.435628935745981,
         "reference_mean": 4.007587882019204,
-        "live_std": 11.528003723089096,
+        "live_std": 11.528003723089103,
         "reference_std": 11.994090061385588,
         "live_n": 58,
         "reference_n": 2398
@@ -817,9 +808,9 @@
         "stability_score": 90.5,
         "mean_z": 0.1809,
         "std_ratio": 0.8201,
-        "live_mean": 52.57237629079858,
+        "live_mean": 52.572376290798594,
         "reference_mean": 53.69890163853031,
-        "live_std": 5.107323454231745,
+        "live_std": 5.1073234542317385,
         "reference_std": 6.2275175246996115,
         "live_n": 58,
         "reference_n": 2398
@@ -837,9 +828,7 @@
       }
     },
     "drift_reference": "reports/backtest_predictions.csv",
-    "alerts": [
-      "verified ML/spread/total coverage below 90%"
-    ],
+    "alerts": [],
     "meaning": "operational/model-monitoring score; not a profitability guarantee"
   },
   "portfolio": {
@@ -869,15 +858,15 @@
       "reason": "graded history has no usable profit rows"
     },
     "production_block_reason": "",
-    "proposed_units": 5.04,
-    "risk_adjusted_proposed_units": 5.04,
-    "performance_adjusted_proposed_units": 5.04,
+    "proposed_units": 6.02,
+    "risk_adjusted_proposed_units": 6.02,
+    "performance_adjusted_proposed_units": 6.02,
     "approved_units": 0.0,
-    "paper_allocated_units": 3.84,
-    "paper_or_shadow_allocated_units": 3.84,
+    "paper_allocated_units": 3.9,
+    "paper_or_shadow_allocated_units": 3.9,
     "bets": 20,
     "approved_bets": 0,
-    "execution_blocked_bets": 32,
+    "execution_blocked_bets": 40,
     "limits": {
       "max_slate_units": 5.0,
       "max_game_units": 1.0,
@@ -920,60 +909,60 @@
       "max_book_units": 2.0
     },
     "allocated_by_market": {
-      "moneyline": 0.95,
-      "spread": 2.29,
-      "total": 0.6
+      "moneyline": 1.04,
+      "spread": 2.0,
+      "total": 0.86
     },
     "allocated_by_book": {
-      "DraftKings": 0.78,
-      "ActionNetwork book 68": 0.26,
-      "ActionNetwork book 69": 0.78,
-      "ActionNetwork book 71": 0.17,
-      "ActionNetwork book 30": 1.65,
-      "ActionNetwork book 75": 0.2
+      "ActionNetwork book 71": 0.19,
+      "ActionNetwork book 68": 0.91,
+      "ActionNetwork book 49": 0.49,
+      "ActionNetwork book 30": 1.92,
+      "ActionNetwork book 75": 0.13,
+      "Draft Kings": 0.26
     },
     "allocated_by_kickoff_window": {
-      "2026-10-08 21:00:00+00:00": 0.42,
-      "2026-10-10 18:00:00+00:00": 1.14,
-      "2026-10-10 21:00:00+00:00": 0.64,
-      "2026-10-10 15:00:00+00:00": 0.9,
-      "2026-10-11 00:00:00+00:00": 0.4,
+      "2026-10-08 21:00:00+00:00": 0.38,
+      "2026-10-10 18:00:00+00:00": 1.24,
+      "2026-10-10 21:00:00+00:00": 0.62,
+      "2026-10-10 15:00:00+00:00": 0.93,
+      "2026-10-11 00:00:00+00:00": 0.39,
       "2026-10-09 21:00:00+00:00": 0.18,
       "2026-10-10 00:00:00+00:00": 0.16
     },
     "allocated_by_team_exposure": {
-      "South Florida": 0.21,
+      "South Florida": 0.19,
       "Vanderbilt": 0.26,
-      "San Diego State": 0.26,
       "Michigan State": 0.17,
+      "Oregon State": 0.24,
+      "San Diego State": 0.24,
+      "Temple": 0.29,
       "Alabama": 0.16,
       "Georgia": 0.16,
-      "UCF": 0.21,
+      "Texas A&M": 0.13,
+      "South Carolina": 0.22,
       "Oklahoma": 0.22,
       "Texas": 0.22,
       "Arizona": 0.26,
-      "South Carolina": 0.21,
-      "Hawai'i": 0.2,
       "Fresno State": 0.2,
-      "Liberty": 0.21,
       "Virginia": 0.22,
+      "Hawai'i": 0.19,
+      "UCF": 0.2,
+      "Liberty": 0.19,
+      "Georgia Tech": 0.12,
+      "Duke": 0.12,
       "Florida State": 0.18,
+      "California": 0.18,
       "Nebraska": 0.12,
       "Indiana": 0.12,
-      "California": 0.18,
-      "Iowa State": 0.16,
-      "Georgia Tech": 0.1,
-      "Duke": 0.1,
-      "Texas A&M": 0.1,
-      "Ohio": 0.21
+      "Iowa State": 0.16
     },
     "limit_hit_counts": {
-      "max bet count": 12
+      "max bet count": 20
     },
     "release_blockers": [
       "complete_market_coverage: >= 95% games with ML + spread + total",
       "probability_ece: ECE <= 0.05 on chronological release holdout",
-      "live_monitoring: live readiness >= 90/100",
       "historical_entry_integrity: historical promotion sample uses explicit verified opening-entry fields only",
       "historical_market_edge: ROBUST evidence: >=1000 verified opening-entry bets, ROI 95% CI lower bound >0, positive CLV, >=2 positive markets and >=2 positive seasons with minimum segment samples",
       "live_shadow_evidence: >=300 portfolio-verified graded live/shadow bets, non-negative ROI and positive pre-kickoff CLV proxy"
@@ -982,7 +971,7 @@
   "decision_ledger": {
     "path": "history/portfolio_decisions_v1.csv",
     "eligible_rows": 20,
-    "appended_rows": 10,
-    "total_rows": 268
+    "appended_rows": 11,
+    "total_rows": 279
   }
 }
