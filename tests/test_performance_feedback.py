@@ -9,7 +9,6 @@ from harbin.performance_feedback import build_performance_feedback, performance_
 from harbin.policy import DEFAULT_POLICY
 from harbin.portfolio import apply_portfolio_controls
 
-
 FIELDS = [
     "game_id",
     "quant_market",
