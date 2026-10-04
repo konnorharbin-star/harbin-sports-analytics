@@ -9,7 +9,7 @@ import requests
 from .advanced import AdvancedFeatureStore, canon_team
 from .calibration import brier_score, log_loss_score, expected_calibration_error, calibration_table
 from .data import SportsDataVerseClient
-from .market import no_vig, norm_cdf
+from .market import no_vig, norm_cdf, conditional_margin_sigma, conditional_total_sigma
 from .models import train_models, predict_models, predict_home_probabilities
 from .pro_market import quant_signal
 from .ratings import OpponentAdjustedRatings
@@ -103,12 +103,12 @@ def _market_bets(game,margin,total,p_home,sigma_m,sigma_t,q):
             result=1 if ((am>0 and side==game.home_team) or (am<0 and side==game.away_team)) else 0 if am==0 else -1; bets.append({"market":"moneyline","side":side,"line":odds,"probability":p,"edge":edge,"ev":ev,"signal":sig,"result":result,"profit":_bet_profit(result,odds),"clv":_clv_ml(side,game.home_team,q),"book":q["book"]})
     hs=q.get("open_home_spread",np.nan)
     if not pd.isna(hs):
-        eh=float(margin)+float(hs); side=game.home_team if eh>=0 else game.away_team; line=float(hs) if side==game.home_team else -float(hs); p=norm_cdf(abs(eh)/max(6,float(sigma_m))); odds=q.get("open_home_spread_odds") if side==game.home_team else q.get("open_away_spread_odds"); odds=-110 if pd.isna(odds) else float(odds); ev=p*_american_profit(odds)-(1-p); sig=quant_signal(ev,abs(eh),p,"spread")
+        eh=float(margin)+float(hs); side=game.home_team if eh>=0 else game.away_team; line=float(hs) if side==game.home_team else -float(hs); p=norm_cdf(abs(eh)/conditional_margin_sigma(sigma_m,margin)); odds=q.get("open_home_spread_odds") if side==game.home_team else q.get("open_away_spread_odds"); odds=-110 if pd.isna(odds) else float(odds); ev=p*_american_profit(odds)-(1-p); sig=quant_signal(ev,abs(eh),p,"spread")
         if sig!="PASS":
             res=_grade_spread(am,side,game.home_team,line); bets.append({"market":"spread","side":side,"line":line,"probability":p,"edge":abs(eh),"ev":ev,"signal":sig,"result":res,"profit":_bet_profit(res,odds),"odds":odds,"clv":_clv_spread(side,game.home_team,q.get("open_home_spread"),q.get("final_home_spread")),"book":q["book"]})
     ot=q.get("open_total",np.nan)
     if not pd.isna(ot):
-        edge=float(total)-float(ot); side="O" if edge>=0 else "U"; p=norm_cdf(abs(edge)/max(6,float(sigma_t))); odds=q.get("open_over_odds") if side=="O" else q.get("open_under_odds"); odds=-110 if pd.isna(odds) else float(odds); ev=p*_american_profit(odds)-(1-p); sig=quant_signal(ev,abs(edge),p,"total")
+        edge=float(total)-float(ot); side="O" if edge>=0 else "U"; p=norm_cdf(abs(edge)/conditional_total_sigma(sigma_t,total)); odds=q.get("open_over_odds") if side=="O" else q.get("open_under_odds"); odds=-110 if pd.isna(odds) else float(odds); ev=p*_american_profit(odds)-(1-p); sig=quant_signal(ev,abs(edge),p,"total")
         if sig!="PASS":
             res=_grade_total(at,side,float(ot)); bets.append({"market":"total","side":side,"line":float(ot),"probability":p,"edge":abs(edge),"ev":ev,"signal":sig,"result":res,"profit":_bet_profit(res,odds),"odds":odds,"clv":_clv_total(side,q.get("open_total"),q.get("final_total")),"book":q["book"]})
     return bets
