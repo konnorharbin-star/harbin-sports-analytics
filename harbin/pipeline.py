@@ -32,7 +32,7 @@ def build_predictions(games,frame,bundle):
     margins,totals=predict_models(bundle,frame); home_probs=predict_home_probabilities(bundle,margins); by_id={str(g.game_id):g for g in games}; rows=[]
     for i,r in frame.reset_index(drop=True).iterrows():
         g=by_id[str(r.game_id)]; m,t=float(margins[i]),float(totals[i]); hp,ap=(t+m)/2,(t-m)/2; winner=g.home_team if m>=0 else g.away_team; rp=replica_win_probability(m); sm=max(6,float(bundle["margin_sigma"])); st=max(6,float(bundle["total_sigma"])); ph=float(home_probs[i]); pw=ph if m>=0 else 1-ph; ml=g.home_ml if m>=0 else g.away_ml; mtag=""; medge=mroi=np.nan; fair=fair_american(pw)
-        if ml is not None: mtag,medge=replica_ml_label(rp,ml); mroi=roi(pw,ml)
+        if ml is not None:\n            # Display badges must use the calibrated probability used by the EV engine.\n            # The old replica probability could label expensive favorites as BET/STRONG\n            # even when their calibrated probability implied negative expected value.\n            medge=100*(pw-(abs(float(ml))/(abs(float(ml))+100) if float(ml)<0 else 100/(float(ml)+100)))\n            mroi=roi(pw,ml)\n            mtag=replica_ml_label(pw,ml)[0] if mroi>0 else ""
         spteam=spline=np.nan; stag=""; sedge=cp=np.nan
         if g.home_spread is not None:
             stag,eh=replica_spread_label(m,g.home_spread); sedge=abs(eh); spteam,spline=(g.home_team,float(g.home_spread)) if eh>=0 else (g.away_team,-float(g.home_spread)); cp=norm_cdf(abs(eh)/sm)
