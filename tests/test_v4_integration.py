@@ -5,6 +5,7 @@ from harbin.backtest import _grade_spread, _grade_total, _group_summary
 from harbin.health import build_health_report
 from harbin.market_intel import MarketIntelligence
 from harbin.line_history import attach_line_movement
+from harbin.market import conditional_margin_sigma, conditional_total_sigma
 
 class G:
     game_id="1"; provider="DraftKings"; home_ml=-150; away_ml=130; home_spread=-3.0; market_total=52.5
@@ -24,3 +25,11 @@ def test_health_report_is_readiness_not_profit_claim(tmp_path):
 
 def test_line_history_no_file_is_safe(tmp_path):
     p=pd.DataFrame([{"game_id":"1","home_ml":-150,"away_ml":130,"market_spread_home":-3,"market_total":52}]); out,m=attach_line_movement(p,tmp_path); assert m["coverage"]==0; assert "opening_home_spread" in out.columns
+
+
+def test_conditional_uncertainty_only_widens_supported_tail_buckets():
+    assert conditional_margin_sigma(16.0, 20.9) == 16.0
+    assert conditional_margin_sigma(16.0, 21.0) == 16.0 * 1.08
+    assert conditional_total_sigma(16.0, 51.9) == 16.0
+    assert conditional_total_sigma(16.0, 52.0) == 16.0 * 1.04
+    assert conditional_total_sigma(16.0, 60.0) == 16.0 * 1.08
