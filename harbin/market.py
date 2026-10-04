@@ -5,6 +5,29 @@ import math
 REPLICA_MARGIN_SIGMA = 16.41
 
 
+
+def conditional_margin_sigma(base_sigma, model_margin):
+    """Out-of-sample residual scale for extreme projected mismatches.
+
+    The 2023-25 walk-forward archive shows the |margin| >= 21 bucket has about
+    8% higher RMSE than the central buckets.  We only widen uncertainty; we do
+    not reduce sigma in easier buckets or change the fair-score projection.
+    """
+    base=max(6.0,float(base_sigma))
+    return base*(1.08 if abs(float(model_margin)) >= 21.0 else 1.0)
+
+
+def conditional_total_sigma(base_sigma, model_total):
+    """Out-of-sample residual scale for higher-scoring game environments.
+
+    Walk-forward total RMSE rises roughly 4% for projections 52-60 and 8% for
+    60+, so confidence is reduced in those regimes without increasing it below 52.
+    """
+    base=max(6.0,float(base_sigma)); total=float(model_total)
+    scale=1.08 if total >= 60.0 else 1.04 if total >= 52.0 else 1.0
+    return base*scale
+
+
 def norm_cdf(x):
     return .5*(1+math.erf(x/math.sqrt(2)))
 
