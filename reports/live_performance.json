@@ -1,254 +1,27 @@
 {
-  "graded_games": 32,
-  "graded_bets": 32,
-  "wins": 15,
-  "losses": 15,
-  "pushes": 2,
-  "units": 2.7681818181818176,
-  "roi": 0.0865056818181818,
-  "win_rate": 0.5,
-  "avg_clv_proxy": 0.34452894827373093,
-  "positive_clv_rate": 0.46875,
-  "clv_samples": 32,
-  "avg_execution_clv": 0.3416955196108154,
-  "positive_execution_clv_rate": 0.40625,
-  "execution_clv_samples": 32,
+  "graded_games": 0,
+  "graded_bets": 0,
+  "wins": 0,
+  "losses": 0,
+  "pushes": 0,
+  "units": 0.0,
+  "roi": null,
+  "win_rate": null,
+  "avg_clv_proxy": null,
+  "positive_clv_rate": null,
+  "clv_samples": 0,
+  "avg_execution_clv": null,
+  "positive_execution_clv_rate": null,
+  "execution_clv_samples": 0,
   "roi_ci_95": [
-    -0.3096590909090909,
-    0.532549715909091
+    null,
+    null
   ],
-  "max_drawdown": 5.090909090909091,
-  "by_market": {
-    "moneyline": {
-      "graded_bets": 9,
-      "wins": 2,
-      "losses": 7,
-      "pushes": 0,
-      "units": -1.0500000000000007,
-      "roi": -0.11666666666666675,
-      "win_rate": 0.2222222222222222,
-      "avg_clv_proxy": 0.0027695938621544857,
-      "positive_clv_rate": 0.5555555555555556,
-      "clv_samples": 9,
-      "avg_execution_clv": -0.007304819161545267,
-      "positive_execution_clv_rate": 0.3333333333333333,
-      "execution_clv_samples": 9,
-      "roi_ci_95": [
-        null,
-        null
-      ],
-      "max_drawdown": 5.15
-    },
-    "spread": {
-      "graded_bets": 14,
-      "wins": 7,
-      "losses": 5,
-      "pushes": 2,
-      "units": 1.3636363636363638,
-      "roi": 0.09740259740259741,
-      "win_rate": 0.5833333333333334,
-      "avg_clv_proxy": 0.4642857142857143,
-      "positive_clv_rate": 0.42857142857142855,
-      "clv_samples": 14,
-      "avg_execution_clv": 0.4642857142857143,
-      "positive_execution_clv_rate": 0.42857142857142855,
-      "execution_clv_samples": 14,
-      "roi_ci_95": [
-        null,
-        null
-      ],
-      "max_drawdown": 2.0
-    },
-    "total": {
-      "graded_bets": 9,
-      "wins": 6,
-      "losses": 3,
-      "pushes": 0,
-      "units": 2.454545454545454,
-      "roi": 0.2727272727272727,
-      "win_rate": 0.6666666666666666,
-      "avg_clv_proxy": 0.5,
-      "positive_clv_rate": 0.4444444444444444,
-      "clv_samples": 9,
-      "avg_execution_clv": 0.5,
-      "positive_execution_clv_rate": 0.4444444444444444,
-      "execution_clv_samples": 9,
-      "roi_ci_95": [
-        null,
-        null
-      ],
-      "max_drawdown": 2.090909090909091
-    }
-  },
-  "by_signal": {
-    "BET": {
-      "graded_bets": 18,
-      "wins": 10,
-      "losses": 8,
-      "pushes": 0,
-      "units": 5.222727272727273,
-      "roi": 0.29015151515151516,
-      "win_rate": 0.5555555555555556,
-      "avg_clv_proxy": 0.5028437153604248,
-      "positive_clv_rate": 0.6111111111111112,
-      "clv_samples": 18,
-      "avg_execution_clv": 0.4989877849025626,
-      "positive_execution_clv_rate": 0.5,
-      "execution_clv_samples": 18,
-      "roi_ci_95": [
-        null,
-        null
-      ],
-      "max_drawdown": 3.0
-    },
-    "LEAN": {
-      "graded_bets": 5,
-      "wins": 3,
-      "losses": 2,
-      "pushes": 0,
-      "units": 0.7272727272727273,
-      "roi": 0.14545454545454545,
-      "win_rate": 0.6,
-      "avg_clv_proxy": 0.0,
-      "positive_clv_rate": 0.4,
-      "clv_samples": 5,
-      "avg_execution_clv": 0.0,
-      "positive_execution_clv_rate": 0.4,
-      "execution_clv_samples": 5,
-      "roi_ci_95": [
-        null,
-        null
-      ],
-      "max_drawdown": 2.0
-    },
-    "STRONG": {
-      "graded_bets": 9,
-      "wins": 2,
-      "losses": 5,
-      "pushes": 2,
-      "units": -3.1818181818181817,
-      "roi": -0.35353535353535354,
-      "win_rate": 0.2857142857142857,
-      "avg_clv_proxy": 0.21930438536352734,
-      "positive_clv_rate": 0.2222222222222222,
-      "clv_samples": 9,
-      "avg_execution_clv": 0.21694183325555183,
-      "positive_execution_clv_rate": 0.2222222222222222,
-      "execution_clv_samples": 9,
-      "roi_ci_95": [
-        null,
-        null
-      ],
-      "max_drawdown": 3.1818181818181817
-    }
-  },
-  "by_book": {
-    "ActionNetwork book 30": {
-      "graded_bets": 1,
-      "wins": 0,
-      "losses": 1,
-      "pushes": 0,
-      "units": -1.0,
-      "roi": -1.0,
-      "win_rate": 0.0,
-      "avg_clv_proxy": -0.012305315877049194,
-      "positive_clv_rate": 0.0,
-      "clv_samples": 1,
-      "avg_execution_clv": -0.019679395959939394,
-      "positive_execution_clv_rate": 0.0,
-      "execution_clv_samples": 1,
-      "roi_ci_95": [
-        null,
-        null
-      ],
-      "max_drawdown": 1.0
-    }
-  },
-  "by_edge_bucket": {
-    "2-4%": {
-      "graded_bets": 7,
-      "wins": 5,
-      "losses": 2,
-      "pushes": 0,
-      "units": 2.5454545454545454,
-      "roi": 0.36363636363636365,
-      "win_rate": 0.7142857142857143,
-      "avg_clv_proxy": 0.14285714285714285,
-      "positive_clv_rate": 0.42857142857142855,
-      "clv_samples": 7,
-      "avg_execution_clv": 0.14285714285714285,
-      "positive_execution_clv_rate": 0.42857142857142855,
-      "execution_clv_samples": 7,
-      "roi_ci_95": [
-        null,
-        null
-      ],
-      "max_drawdown": 2.0
-    },
-    "4-6%": {
-      "graded_bets": 9,
-      "wins": 6,
-      "losses": 3,
-      "pushes": 0,
-      "units": 2.454545454545454,
-      "roi": 0.2727272727272727,
-      "win_rate": 0.6666666666666666,
-      "avg_clv_proxy": 0.8888888888888888,
-      "positive_clv_rate": 0.5555555555555556,
-      "clv_samples": 9,
-      "avg_execution_clv": 0.8888888888888888,
-      "positive_execution_clv_rate": 0.5555555555555556,
-      "execution_clv_samples": 9,
-      "roi_ci_95": [
-        null,
-        null
-      ],
-      "max_drawdown": 2.0
-    },
-    ">=6%": {
-      "graded_bets": 16,
-      "wins": 4,
-      "losses": 10,
-      "pushes": 2,
-      "units": -2.2318181818181824,
-      "roi": -0.1394886363636364,
-      "win_rate": 0.2857142857142857,
-      "avg_clv_proxy": 0.12655789654746188,
-      "positive_clv_rate": 0.4375,
-      "clv_samples": 16,
-      "avg_execution_clv": 0.12089103922163079,
-      "positive_execution_clv_rate": 0.3125,
-      "execution_clv_samples": 16,
-      "roi_ci_95": [
-        null,
-        null
-      ],
-      "max_drawdown": 5.331818181818182
-    }
-  },
-  "by_season": {
-    "2026": {
-      "graded_bets": 32,
-      "wins": 15,
-      "losses": 15,
-      "pushes": 2,
-      "units": 2.7681818181818176,
-      "roi": 0.0865056818181818,
-      "win_rate": 0.5,
-      "avg_clv_proxy": 0.34452894827373093,
-      "positive_clv_rate": 0.46875,
-      "clv_samples": 32,
-      "avg_execution_clv": 0.3416955196108154,
-      "positive_execution_clv_rate": 0.40625,
-      "execution_clv_samples": 32,
-      "roi_ci_95": [
-        -0.3096590909090909,
-        0.532549715909091
-      ],
-      "max_drawdown": 5.090909090909091
-    }
-  },
-  "clv_method": "latest timestamp-valid snapshot strictly before kickoff; spread/total use consensus close when available; moneyline uses consensus no-vig probability; execution CLV retains the actual bet price",
-  "verified_close_clv_samples": 32,
-  "status": "live/shadow evidence only; not historical backtest evidence"
+  "max_drawdown": 0.0,
+  "portfolio_verified": true,
+  "evidence_source": "portfolio_decisions_v1",
+  "eligible_decisions": 0,
+  "timing_excluded_rows": 64,
+  "status": "live/shadow evidence only; not historical backtest evidence",
+  "clv_method": "first execution-ready cap-constrained portfolio decision strictly before kickoff; close is latest timestamp-valid market snapshot strictly before kickoff"
 }

@@ -2,38 +2,38 @@
 
 ## Identity
 - Core model version: **7.1.0**
-- Repository revision: `bcb5c200eab7c8193bcaaa2ed0942953ae390efa`
-- Season / Week: **2026 / 5**
-- Generated: **Oct 3, 2026 · 9:44 PM CT**
+- Repository revision: `d21cfeaca9eaaa5766b5acf34300faf22f7dba3d`
+- Season / Week: **2026 / 6**
+- Generated: **Oct 4, 2026 · 9:26 AM CT**
 
 ## Intended use
 Independent CFB score, margin, total and win-probability estimation; sportsbook comparison; paper/production betting research with explicit uncertainty and risk controls. The Cooper-style table is a presentation layer, not the proprietary formula of any third party.
 
 ## Data
-- Historical games: **4079**
+- Historical games: **4135**
 - Schedule/results: sportsdataverse/cfbfastR-data
 - Live odds: ESPN live (site.web.api.espn.com) + ESPN Core supplement
 - Advanced feature coverage: **100.0%**
-- Multi-book coverage: **95.8%**
+- Multi-book coverage: **69.0%**
 - Current context sources: SportsDataverse ESPN injuries, SportsDataverse ESPN rosters, SportsDataverse ESPN teams, Open-Meteo forecast / indoor venue suppression, Venue geocoding / team metadata
 
 ## Validation
 - Method: nested whole-week chronology: core fit -> tune weight -> OOF calibration -> untouched evaluation; final refit keeps the tune-selected weight and uses OOF probability calibration
-- Margin MAE: **12.688028428102001** vs baseline **13.22104338022683**
-- Total MAE: **12.653442047810612** vs baseline **12.693581407531097**
-- Win-probability Brier: **0.17100482708738404**
-- Calibration ECE: **0.05329137027587666**
+- Margin MAE: **12.958502962449392** vs baseline **13.50210922129303**
+- Total MAE: **12.591604334877207** vs baseline **12.648615389536973**
+- Win-probability Brier: **0.1747649201336038**
+- Calibration ECE: **0.06218232013495966**
 
 ## Operational controls
-- Live monitoring score: **94.0/100**
+- Live monitoring score: **79.7/100**
 - Portfolio mode: **PAPER**
 - Approved units: **0.0**
-- Proposed units before bankroll/concentration controls: **3.89**
-- Paper/shadow allocated units after controls: **3.58**
+- Proposed units before bankroll/concentration controls: **4.59**
+- Paper/shadow allocated units after controls: **3.78**
 - Unit-risk multiplier: **1.0**
 - Current live/shadow drawdown: **0.0 units**
 - Portfolio hard stop active: **False**
-- Execution-blocked candidates: **21**
+- Execution-blocked candidates: **28**
 
 ## Leakage controls
 Features are generated pregame from prior games only; model training is chronological; tuning/calibration/evaluation are separated; historical market evidence is walk-forward. Sportsbook prices are excluded from the score-generation model and are used only after fair scores/probabilities are produced.
