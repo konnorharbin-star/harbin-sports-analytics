@@ -13,7 +13,7 @@ from .data import SportsDataVerseClient
 from .grading import grade_prediction_history
 from .health import build_health_report
 from .line_history import attach_line_movement
-from .market import norm_cdf, replica_win_probability, replica_ml_label, replica_spread_label, replica_total_label, no_vig, fair_american, roi
+from .market import norm_cdf, conditional_margin_sigma, conditional_total_sigma, replica_win_probability, replica_ml_label, replica_spread_label, replica_total_label, no_vig, fair_american, roi
 from .market_intel import MarketIntelligence
 from .models import train_models, predict_models, predict_home_probabilities
 from .pro_market import select_best_market, risk_multiplier
@@ -40,10 +40,10 @@ def build_predictions(games,frame,bundle):
             mtag=replica_ml_label(pw,ml)[0] if mroi>0 else ""
         spteam=spline=np.nan; stag=""; sedge=cp=np.nan
         if g.home_spread is not None:
-            stag,eh=replica_spread_label(m,g.home_spread); sedge=abs(eh); spteam,spline=(g.home_team,float(g.home_spread)) if eh>=0 else (g.away_team,-float(g.home_spread)); cp=norm_cdf(abs(eh)/sm)
+            stag,eh=replica_spread_label(m,g.home_spread); sedge=abs(eh); spteam,spline=(g.home_team,float(g.home_spread)) if eh>=0 else (g.away_team,-float(g.home_spread)); cp=norm_cdf(abs(eh)/conditional_margin_sigma(sm,m))
         tdir=np.nan; ttag=""; tedge=tp=np.nan
         if g.market_total is not None:
-            ttag,et=replica_total_label(t,g.market_total); tedge=abs(et); tdir="O" if et>=0 else "U"; tp=norm_cdf(abs(et)/st)
+            ttag,et=replica_total_label(t,g.market_total); tedge=abs(et); tdir="O" if et>=0 else "U"; tp=norm_cdf(abs(et)/conditional_total_sigma(st,t))
         nvw=qside=qedge=qroi=np.nan
         if g.away_ml is not None and g.home_ml is not None:
             pa,pmh=no_vig(g.away_ml,g.home_ml); eh=ph-pmh; ea=(1-ph)-pa
@@ -102,7 +102,7 @@ def _quantize(pred,bundle,adv_meta,ctx_meta):
                 edge=line-float(r.model_margin_home)
                 q["spread_team"],q["spread_line"]=r.away_team,line
                 q["spread_odds"]=float(r.best_away_spread_odds) if _finite(r.get("best_away_spread_odds")) else -110.0
-            q["spread_edge_pts"]=max(0.0,edge); q["cover_probability"]=norm_cdf(max(0.0,edge)/sm)
+            q["spread_edge_pts"]=max(0.0,edge); q["cover_probability"]=norm_cdf(max(0.0,edge)/conditional_margin_sigma(sm,r.model_margin_home))
 
         if _finite(r.get("consensus_total")):
             consensus=float(r.consensus_total); consensus_edge=float(r.model_total)-consensus
@@ -112,7 +112,7 @@ def _quantize(pred,bundle,adv_meta,ctx_meta):
             else:
                 line=float(r.best_under_total) if _finite(r.get("best_under_total")) else consensus
                 edge=line-float(r.model_total); q["total_dir"]="U"; q["total_odds"]=float(r.best_under_odds) if _finite(r.get("best_under_odds")) else -110.0
-            q["market_total"]=line; q["total_edge_pts"]=max(0.0,edge); q["total_probability"]=norm_cdf(max(0.0,edge)/st)
+            q["market_total"]=line; q["total_edge_pts"]=max(0.0,edge); q["total_probability"]=norm_cdf(max(0.0,edge)/conditional_total_sigma(st,r.model_total))
 
         mq=float(r.get("market_consensus_quality",.25) or .25); dq=max(.15,min(1,.58*ac+.27*mq+.15*ca)); cr=float(r.get("context_risk",r.get("availability_risk",0)) or 0); vol=float(r.get("volatility_avg",14)) if _finite(r.get("volatility_avg")) else 14.; rm=risk_multiplier(cr,dq,vol); disagreement=0.
         if _finite(r.get("consensus_home_spread")): disagreement=max(disagreement,abs(float(r.model_margin_home)+float(r.consensus_home_spread)))
