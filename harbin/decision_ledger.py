@@ -51,6 +51,8 @@ LEDGER_FIELDS = (
     "market_disagreement",
     "performance_multiplier",
     "performance_feedback_reason",
+    "paper_stake_units",
+    "bankroll_adjusted_units",
     "performance_adjusted_units",
     "portfolio_candidate_units",
     "portfolio_stake_units",
