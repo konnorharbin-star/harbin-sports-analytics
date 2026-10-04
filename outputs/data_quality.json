@@ -6,8 +6,8 @@
     {
       "code": "market.coverage",
       "severity": "WARNING",
-      "count": 34,
-      "message": "Only 41.4% of games have complete ML/spread/total markets."
+      "count": 16,
+      "message": "Only 72.4% of games have complete ML/spread/total markets."
     }
   ],
   "checks": {
@@ -15,7 +15,7 @@
     "required_schema": true,
     "finite_core_predictions": true,
     "sanity_ranges": true,
-    "complete_market_rate": 0.413793
+    "complete_market_rate": 0.724138
   },
   "rows": 58
 }

@@ -1,10 +1,10 @@
 {
   "status": "WARN",
-  "live_readiness_score": 80.8,
+  "live_readiness_score": 88.7,
   "scores": {
-    "market_coverage": 41.37931034482759,
+    "market_coverage": 72.41379310344827,
     "advanced_coverage": 100.0,
-    "multi_book": 68.96551724137932,
+    "multi_book": 84.48275862068965,
     "context": 100.0,
     "calibration": 84.45441996626026,
     "freshness": 100.0,
@@ -12,7 +12,7 @@
     "drift_total": 90.5,
     "drift_probability": 98.9,
     "distribution_stability": 95.8,
-    "output_completeness": 45.5410225921522
+    "output_completeness": 70.88783194609591
   },
   "drift_details": {
     "margin": {

@@ -25,15 +25,15 @@
     "reason": "graded history has no usable profit rows"
   },
   "production_block_reason": "",
-  "proposed_units": 4.56,
-  "risk_adjusted_proposed_units": 4.56,
-  "performance_adjusted_proposed_units": 4.56,
+  "proposed_units": 5.04,
+  "risk_adjusted_proposed_units": 5.04,
+  "performance_adjusted_proposed_units": 5.04,
   "approved_units": 0.0,
-  "paper_allocated_units": 3.76,
-  "paper_or_shadow_allocated_units": 3.76,
+  "paper_allocated_units": 3.84,
+  "paper_or_shadow_allocated_units": 3.84,
   "bets": 20,
   "approved_bets": 0,
-  "execution_blocked_bets": 28,
+  "execution_blocked_bets": 32,
   "limits": {
     "max_slate_units": 5.0,
     "max_game_units": 1.0,
@@ -76,62 +76,60 @@
     "max_book_units": 2.0
   },
   "allocated_by_market": {
-    "moneyline": 0.73,
-    "spread": 2.33,
-    "total": 0.7
+    "moneyline": 0.95,
+    "spread": 2.29,
+    "total": 0.6
   },
   "allocated_by_book": {
-    "ActionNetwork book 69": 0.51,
-    "ActionNetwork book 15": 1.15,
+    "DraftKings": 0.78,
     "ActionNetwork book 68": 0.26,
+    "ActionNetwork book 69": 0.78,
     "ActionNetwork book 71": 0.17,
-    "ActionNetwork book 30": 1.26,
-    "ActionNetwork book 75": 0.41
+    "ActionNetwork book 30": 1.65,
+    "ActionNetwork book 75": 0.2
   },
   "allocated_by_kickoff_window": {
-    "2026-10-08 21:00:00+00:00": 0.41,
-    "2026-10-10 21:00:00+00:00": 0.65,
-    "2026-10-10 18:00:00+00:00": 0.97,
-    "2026-10-10 15:00:00+00:00": 0.99,
+    "2026-10-08 21:00:00+00:00": 0.42,
+    "2026-10-10 18:00:00+00:00": 1.14,
+    "2026-10-10 21:00:00+00:00": 0.64,
+    "2026-10-10 15:00:00+00:00": 0.9,
     "2026-10-11 00:00:00+00:00": 0.4,
     "2026-10-09 21:00:00+00:00": 0.18,
     "2026-10-10 00:00:00+00:00": 0.16
   },
   "allocated_by_team_exposure": {
-    "South Florida": 0.2,
-    "San Diego State": 0.27,
+    "South Florida": 0.21,
     "Vanderbilt": 0.26,
+    "San Diego State": 0.26,
     "Michigan State": 0.17,
     "Alabama": 0.16,
     "Georgia": 0.16,
-    "South Carolina": 0.21,
     "UCF": 0.21,
     "Oklahoma": 0.22,
     "Texas": 0.22,
-    "California": 0.21,
-    "Fresno State": 0.2,
+    "Arizona": 0.26,
+    "South Carolina": 0.21,
     "Hawai'i": 0.2,
+    "Fresno State": 0.2,
     "Liberty": 0.21,
     "Virginia": 0.22,
-    "Arizona": 0.26,
     "Florida State": 0.18,
     "Nebraska": 0.12,
     "Indiana": 0.12,
-    "Georgia Tech": 0.11,
-    "Duke": 0.11,
+    "California": 0.18,
     "Iowa State": 0.16,
+    "Georgia Tech": 0.1,
+    "Duke": 0.1,
     "Texas A&M": 0.1,
-    "Pittsburgh": 0.09,
-    "North Carolina": 0.09
+    "Ohio": 0.21
   },
   "limit_hit_counts": {
-    "max bet count": 8
+    "max bet count": 12
   },
   "release_blockers": [
     "complete_market_coverage: >= 95% games with ML + spread + total",
     "probability_ece: ECE <= 0.05 on chronological release holdout",
     "live_monitoring: live readiness >= 90/100",
-    "multi_book_consensus: >= 75% of games covered by 2+ books",
     "historical_entry_integrity: historical promotion sample uses explicit verified opening-entry fields only",
     "historical_market_edge: ROBUST evidence: >=1000 verified opening-entry bets, ROI 95% CI lower bound >0, positive CLV, >=2 positive markets and >=2 positive seasons with minimum segment samples",
     "live_shadow_evidence: >=300 portfolio-verified graded live/shadow bets, non-negative ROI and positive pre-kickoff CLV proxy"
