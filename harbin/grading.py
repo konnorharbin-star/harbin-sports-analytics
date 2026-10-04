@@ -15,6 +15,17 @@ def _safe(v):
     except Exception: return np.nan
 
 
+def _edge_bucket(v):
+    edge=_safe(v)
+    if not math.isfinite(edge): return "missing"
+    edge=abs(edge)
+    if edge>1.0: edge/=100.0
+    if edge<.02: return "<2%"
+    if edge<.04: return "2-4%"
+    if edge<.06: return "4-6%"
+    return ">=6%"
+
+
 def _grade_row(r,actual_margin,actual_total):
     market=str(r.get("quant_market") or ""); side=r.get("quant_side")
     if market=="moneyline":
@@ -161,10 +172,12 @@ def grade_prediction_history(client,history_dir="history",reports_dir="reports")
             execution_odds=qodds if math.isfinite(_safe(qodds)) else qprice if market=="moneyline" else -110.0; profit=_profit(result,execution_odds,market)
             close=_latest_pre_kickoff_market(markets,gid,kick); clv,clv_source=_clv_from_market_snapshot(entry,close); execution_clv=_execution_clv_from_market_snapshot(entry,close)
             if close is not None: close_books=close.get("market_book_count",np.nan); close_ts=close.get("captured_at")
-        rows.append({"game_id":gid,"season":first.get("season"),"week":first.get("week"),"away_team":first.get("away_team"),"home_team":first.get("home_team"),"projected_margin_home":first.get("model_margin_home"),"actual_margin_home":am,"projected_total":first.get("model_total"),"actual_total":at,"quant_signal":signal,"quant_market":market,"quant_side":side,"quant_price":qprice,"quant_odds":qodds,"quant_book":qbook,"result":result,"profit":profit,"clv_proxy":clv,"execution_clv":execution_clv,"clv_source":clv_source,"close_market_book_count":close_books,"close_snapshot_at":close_ts,"first_snapshot":first.get("snapshot_at"),"bet_entry_snapshot":entry_ts,"kickoff":first.get("date")})
+        rows.append({"game_id":gid,"season":first.get("season"),"week":first.get("week"),"away_team":first.get("away_team"),"home_team":first.get("home_team"),"projected_margin_home":first.get("model_margin_home"),"actual_margin_home":am,"projected_total":first.get("model_total"),"actual_total":at,"quant_signal":signal,"quant_market":market,"quant_side":side,"quant_price":qprice,"quant_odds":qodds,"quant_book":qbook,"quant_edge":entry.get("quant_edge",np.nan) if entry is not None else np.nan,"data_quality_score":entry.get("data_quality_score",np.nan) if entry is not None else np.nan,"context_risk":entry.get("context_risk",np.nan) if entry is not None else np.nan,"risk_multiplier":entry.get("risk_multiplier",np.nan) if entry is not None else np.nan,"market_disagreement":entry.get("market_disagreement",np.nan) if entry is not None else np.nan,"performance_multiplier":entry.get("performance_multiplier",np.nan) if entry is not None else np.nan,"performance_feedback_reason":entry.get("performance_feedback_reason") if entry is not None else None,"result":result,"profit":profit,"clv_proxy":clv,"execution_clv":execution_clv,"clv_source":clv_source,"close_market_book_count":close_books,"close_snapshot_at":close_ts,"first_snapshot":first.get("snapshot_at"),"bet_entry_snapshot":entry_ts,"kickoff":first.get("date")})
 
-    df=pd.DataFrame(rows); df.to_csv(reports/"live_graded_predictions.csv",index=False); bets=df[(df.quant_signal!="PASS") & df.result.notna()].copy() if len(df) else pd.DataFrame(); bets.to_csv(reports/"live_graded_bets.csv",index=False)
-    overall=_summary(bets); by_market={str(k):_summary(v) for k,v in bets.groupby("quant_market")} if len(bets) else {}; by_signal={str(k):_summary(v) for k,v in bets.groupby("quant_signal")} if len(bets) else {}; by_season={str(k):_summary(v) for k,v in bets.groupby("season")} if len(bets) else {}
+    df=pd.DataFrame(rows); df.to_csv(reports/"live_graded_predictions.csv",index=False); bets=df[(df.quant_signal!="PASS") & df.result.notna()].copy() if len(df) else pd.DataFrame()
+    if len(bets): bets["edge_bucket"]=bets.get("quant_edge",pd.Series(index=bets.index,dtype=float)).apply(_edge_bucket)
+    bets.to_csv(reports/"live_graded_bets.csv",index=False)
+    overall=_summary(bets); by_market={str(k):_summary(v) for k,v in bets.groupby("quant_market")} if len(bets) else {}; by_signal={str(k):_summary(v) for k,v in bets.groupby("quant_signal")} if len(bets) else {}; by_season={str(k):_summary(v) for k,v in bets.groupby("season")} if len(bets) else {}; by_book={str(k):_summary(v) for k,v in bets.dropna(subset=["quant_book"]).groupby("quant_book")} if len(bets) and "quant_book" in bets.columns else {}; by_edge_bucket={str(k):_summary(v) for k,v in bets.groupby("edge_bucket")} if len(bets) and "edge_bucket" in bets.columns else {}
     verified=int((pd.to_numeric(bets.clv_proxy,errors="coerce").notna()).sum()) if len(bets) else 0
-    report={"graded_games":int(len(df)),**overall,"by_market":by_market,"by_signal":by_signal,"by_season":by_season,"clv_method":method,"verified_close_clv_samples":verified,"status":"live/shadow evidence only; not historical backtest evidence"}
+    report={"graded_games":int(len(df)),**overall,"by_market":by_market,"by_signal":by_signal,"by_book":by_book,"by_edge_bucket":by_edge_bucket,"by_season":by_season,"clv_method":method,"verified_close_clv_samples":verified,"status":"live/shadow evidence only; not historical backtest evidence"}
     (reports/"live_performance.json").write_text(json.dumps(report,indent=2)); return report
