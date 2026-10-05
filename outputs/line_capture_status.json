@@ -1,9 +1,9 @@
 {
-  "captured_at": "2026-10-05T02:01:12.999512+00:00",
+  "captured_at": "2026-10-05T09:04:12.519521+00:00",
   "season": 2026,
   "week": 6,
   "games": 58,
-  "rows_appended": 53,
+  "rows_appended": 58,
   "odds_source": "ESPN live (site.web.api.espn.com) + ESPN Core supplement",
   "market_intelligence": {
     "coverage": 1.0,
