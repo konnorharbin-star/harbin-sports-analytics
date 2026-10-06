@@ -25,15 +25,15 @@
     "reason": "graded history has no usable profit rows"
   },
   "production_block_reason": "",
-  "proposed_units": 6.08,
-  "risk_adjusted_proposed_units": 6.08,
-  "performance_adjusted_proposed_units": 6.08,
+  "proposed_units": 6.14,
+  "risk_adjusted_proposed_units": 6.14,
+  "performance_adjusted_proposed_units": 6.14,
   "approved_units": 0.0,
-  "paper_allocated_units": 3.82,
-  "paper_or_shadow_allocated_units": 3.82,
+  "paper_allocated_units": 3.81,
+  "paper_or_shadow_allocated_units": 3.81,
   "bets": 20,
   "approved_bets": 0,
-  "execution_blocked_bets": 40,
+  "execution_blocked_bets": 41,
   "limits": {
     "max_slate_units": 5.0,
     "max_game_units": 1.0,
@@ -76,36 +76,37 @@
     "max_book_units": 2.0
   },
   "allocated_by_market": {
-    "moneyline": 0.98,
+    "moneyline": 0.99,
     "spread": 2.03,
-    "total": 0.81
+    "total": 0.79
   },
   "allocated_by_book": {
-    "ActionNetwork book 71": 0.83,
+    "ActionNetwork book 71": 0.38,
+    "ActionNetwork book 69": 0.26,
     "ActionNetwork book 30": 2.0,
-    "DraftKings": 0.25,
+    "Draft Kings": 0.26,
     "ActionNetwork book 75": 0.56,
-    "ActionNetwork book 68": 0.18
+    "ActionNetwork book 68": 0.35
   },
   "allocated_by_kickoff_window": {
     "2026-10-08 21:00:00+00:00": 0.39,
-    "2026-10-10 21:00:00+00:00": 0.83,
-    "2026-10-10 18:00:00+00:00": 1.29,
-    "2026-10-10 00:00:00+00:00": 0.13,
-    "2026-10-10 15:00:00+00:00": 0.62,
-    "2026-10-11 00:00:00+00:00": 0.38,
+    "2026-10-10 21:00:00+00:00": 0.82,
+    "2026-10-10 18:00:00+00:00": 1.31,
+    "2026-10-10 00:00:00+00:00": 0.14,
+    "2026-10-10 15:00:00+00:00": 0.6,
+    "2026-10-11 00:00:00+00:00": 0.37,
     "2026-10-09 21:00:00+00:00": 0.18
   },
   "allocated_by_team_exposure": {
     "South Florida": 0.2,
-    "San Diego State": 0.27,
+    "San Diego State": 0.26,
     "Vanderbilt": 0.25,
     "Temple": 0.29,
     "Alabama": 0.16,
     "Georgia": 0.16,
     "Oklahoma": 0.22,
     "Texas": 0.22,
-    "Iowa": 0.13,
+    "Iowa": 0.14,
     "South Carolina": 0.2,
     "Fresno State": 0.2,
     "Liberty": 0.19,
@@ -113,19 +114,19 @@
     "Virginia": 0.22,
     "Georgia Tech": 0.13,
     "Duke": 0.13,
+    "Hawai'i": 0.17,
     "James Madison": 0.18,
     "Ohio": 0.24,
-    "Hawai'i": 0.18,
     "Florida State": 0.18,
-    "Nebraska": 0.12,
-    "Indiana": 0.12,
-    "California": 0.16,
+    "California": 0.18,
+    "Nebraska": 0.1,
+    "Indiana": 0.1,
     "Oklahoma State": 0.18,
     "UCF": 0.18
   },
   "limit_hit_counts": {
     "book cap": 1,
-    "max bet count": 20
+    "max bet count": 21
   },
   "release_blockers": [
     "complete_market_coverage: >= 95% games with ML + spread + total",

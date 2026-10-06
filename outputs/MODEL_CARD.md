@@ -2,9 +2,9 @@
 
 ## Identity
 - Core model version: **7.1.0**
-- Repository revision: `af133f5d3bd8c62f58b65b61aeebbf42eb159add`
+- Repository revision: `b40bc9d10ceac26d14ebd599865549568e5b8a56`
 - Season / Week: **2026 / 6**
-- Generated: **Oct 6, 2026 · 12:15 PM CT**
+- Generated: **Oct 6, 2026 · 4:42 PM CT**
 
 ## Intended use
 Independent CFB score, margin, total and win-probability estimation; sportsbook comparison; paper/production betting research with explicit uncertainty and risk controls. The Cooper-style table is a presentation layer, not the proprietary formula of any third party.
@@ -19,21 +19,21 @@ Independent CFB score, margin, total and win-probability estimation; sportsbook 
 
 ## Validation
 - Method: nested whole-week chronology: core fit -> tune weight -> OOF calibration -> untouched evaluation; final refit keeps the tune-selected weight and uses OOF probability calibration
-- Margin MAE: **12.95850296244939** vs baseline **13.50210922129303**
-- Total MAE: **12.59160433487721** vs baseline **12.648615389536973**
-- Win-probability Brier: **0.17476492013360306**
-- Calibration ECE: **0.06218232013495895**
+- Margin MAE: **12.958502962449392** vs baseline **13.50210922129303**
+- Total MAE: **12.591604334877209** vs baseline **12.648615389536973**
+- Win-probability Brier: **0.17476492013360373**
+- Calibration ECE: **0.06218232013495953**
 
 ## Operational controls
 - Live monitoring score: **94.0/100**
 - Portfolio mode: **PAPER**
 - Approved units: **0.0**
-- Proposed units before bankroll/concentration controls: **6.08**
-- Paper/shadow allocated units after controls: **3.82**
+- Proposed units before bankroll/concentration controls: **6.14**
+- Paper/shadow allocated units after controls: **3.81**
 - Unit-risk multiplier: **1.0**
 - Current live/shadow drawdown: **0.0 units**
 - Portfolio hard stop active: **False**
-- Execution-blocked candidates: **40**
+- Execution-blocked candidates: **41**
 
 ## Leakage controls
 Features are generated pregame from prior games only; model training is chronological; tuning/calibration/evaluation are separated; historical market evidence is walk-forward. Sportsbook prices are excluded from the score-generation model and are used only after fair scores/probabilities are produced.
