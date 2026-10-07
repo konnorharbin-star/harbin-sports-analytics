@@ -5,6 +5,7 @@ import numpy as np
 
 from .execution_market import install_execution_timestamp_patch
 from .edge_regimes import effective_edge_status, match_edge_regime, match_edge_subgroup
+from .edge_price import price_evidence
 from .market import roi
 from .policy import signal_from_policy, load_policy, DEFAULT_POLICY, market_allowed
 
@@ -134,6 +135,8 @@ def select_best_market(row, risk_multiplier=1.0, policy_path=PRODUCTION_POLICY_P
             row.get("away_team"),
         ) if edge_report else None
         effective=effective_edge_status(regime,subgroup)
+        evidence_stats=subgroup if effective=="SUPPORTED_SUBGROUP" else regime
+        candidate.update(price_evidence(candidate["odds"],evidence_stats))
         candidate["edge_regime_parent_status"]=(regime or {}).get("status","UNSUPPORTED")
         candidate["edge_regime_status"]=effective
         candidate["edge_regime_band"]=(regime or {}).get("edge_band","")
@@ -153,9 +156,11 @@ def select_best_market(row, risk_multiplier=1.0, policy_path=PRODUCTION_POLICY_P
         candidate["edge_subgroup_holdout_roi"]=(subgroup or {}).get("holdout_roi")
         candidate["edge_subgroup_holdout_win_rate"]=(subgroup or {}).get("holdout_win_rate")
         candidate["edge_subgroup_holdout_confirmed"]=bool((subgroup or {}).get("holdout_confirmed",False))
+        price_status=candidate.get("price_evidence_status","UNKNOWN")
         candidate["edge_promotion_rank"]=(
-            2 if effective=="SUPPORTED_SUBGROUP"
-            else 1 if effective=="PERSISTENT_PARENT_ONLY"
+            3 if effective=="SUPPORTED_SUBGROUP" and price_status=="CONFIRMED"
+            else 2 if effective=="SUPPORTED_SUBGROUP" and price_status=="PLAUSIBLE"
+            else 1 if effective=="PERSISTENT_PARENT_ONLY" and price_status=="CONFIRMED"
             else 0
         )
 
@@ -230,6 +235,14 @@ def select_best_market(row, risk_multiplier=1.0, policy_path=PRODUCTION_POLICY_P
         "edge_regime_profitable_seasons":best["edge_regime_profitable_seasons"],
         "edge_regime_season_count":best["edge_regime_season_count"],
         "edge_regime_candidate":best["edge_regime_status"] in {"SUPPORTED_SUBGROUP","PERSISTENT_PARENT_ONLY"},
+        "price_evidence_status":best.get("price_evidence_status","UNKNOWN"),
+        "price_evidence_sample":best.get("price_evidence_sample",0),
+        "historical_price_win_rate":best.get("historical_price_win_rate"),
+        "historical_price_wilson_lower":best.get("historical_price_wilson_lower"),
+        "current_break_even_probability":best.get("current_break_even_probability"),
+        "historical_price_margin":best.get("historical_price_margin"),
+        "conservative_price_margin":best.get("conservative_price_margin"),
+        "historical_fair_odds_lower_bound":best.get("historical_fair_odds_lower_bound"),
         "edge_subgroup_key":best["edge_subgroup_key"],
         "edge_subgroup_status":best["edge_subgroup_status"],
         "edge_subgroup_bets":best["edge_subgroup_bets"],
