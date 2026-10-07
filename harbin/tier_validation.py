@@ -219,8 +219,8 @@ def summarize_tier_rows(frame: pd.DataFrame) -> dict[str, object]:
     return summary
 
 
-def build_tier_performance(frame: pd.DataFrame) -> dict[str, object]:
-    """Build the market × tier forward-validation matrix."""
+def build_tier_performance(frame: pd.DataFrame, clean_frame: pd.DataFrame | None = None) -> dict[str, object]:
+    """Build posted and clean market × tier forward-validation matrices."""
 
     if frame.empty:
         return {
@@ -238,7 +238,7 @@ def build_tier_performance(frame: pd.DataFrame) -> dict[str, object]:
             "validated_cells": 0,
             "underperforming_cells": 0,
             "methodology": (
-                "first timestamp-safe displayed tier per game/market; flat 1u risk; "
+                "posted matrix uses the first timestamp-safe displayed tier per game/market; "
                 "actual American odds when available; spread/total use explicit -110 "
                 "fallback only when the stored display snapshot lacks a price"
             ),
@@ -254,7 +254,21 @@ def build_tier_performance(frame: pd.DataFrame) -> dict[str, object]:
         data["validation_eligible"] = True
     data["tier_consistent"] = data["tier_consistent"].fillna(False).astype(bool)
     data["validation_eligible"] = data["validation_eligible"].fillna(False).astype(bool)
-    clean = data[data["validation_eligible"]].copy()
+
+    if clean_frame is None:
+        clean = data[data["validation_eligible"]].copy()
+    else:
+        clean = clean_frame.copy()
+        if clean.empty:
+            clean = pd.DataFrame(columns=data.columns)
+        else:
+            clean["market"] = clean.get("market", "").astype(str).str.lower()
+            clean["tier"] = clean.get("tier", "").astype(str).str.upper()
+            clean = clean[
+                clean["market"].isin(MARKETS) & clean["tier"].isin(TIERS)
+            ].copy()
+            if "validation_eligible" in clean.columns:
+                clean = clean[clean["validation_eligible"].fillna(False).astype(bool)].copy()
 
     by_market = {
         market: summarize_tier_rows(data[data.market == market])
@@ -311,8 +325,10 @@ def build_tier_performance(frame: pd.DataFrame) -> dict[str, object]:
         "validated_cells": validated,
         "underperforming_cells": underperforming,
         "methodology": (
-            "first timestamp-safe displayed tier per game/market; flat 1u risk; "
-            "P/L is independent of Kelly/portfolio sizing; actual stored American "
+            "posted matrix uses the first timestamp-safe displayed tier per game/market; "
+            "clean matrix uses the first pre-kickoff tier that satisfies price provenance "
+            "and badge-consistency requirements; flat 1u risk; P/L is independent of "
+            "Kelly/portfolio sizing; actual stored American "
             "odds are used when available; spread/total fall back to -110 only when "
             "the stored display snapshot has no price; pushes are excluded from "
             "hit-rate/calibration denominators; VALIDATED requires >=100 bets, "
