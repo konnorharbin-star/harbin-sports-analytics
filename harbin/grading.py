@@ -177,6 +177,7 @@ def _display_market_entry(entry, market):
     book = None
     quote_at = None
     price_verified = False
+    quote_time_source = None
 
     if market == "moneyline":
         side = str(entry.get("ml_team") or "")
@@ -196,9 +197,11 @@ def _display_market_entry(entry, market):
         if side == home:
             book = entry.get("ml_book") or entry.get("best_home_ml_book")
             quote_at = entry.get("ml_quote_at") or entry.get("best_home_ml_quote_at")
+            quote_time_source = entry.get("ml_quote_time_source") or entry.get("best_home_ml_quote_time_source")
         else:
             book = entry.get("ml_book") or entry.get("best_away_ml_book")
             quote_at = entry.get("ml_quote_at") or entry.get("best_away_ml_quote_at")
+            quote_time_source = entry.get("ml_quote_time_source") or entry.get("best_away_ml_quote_time_source")
     elif market == "spread":
         side = str(entry.get("spread_team") or "")
         line = _safe(entry.get("spread_line"))
@@ -213,9 +216,11 @@ def _display_market_entry(entry, market):
         if side == home:
             book = entry.get("spread_book") or entry.get("best_home_spread_book")
             quote_at = entry.get("spread_quote_at") or entry.get("best_home_spread_quote_at")
+            quote_time_source = entry.get("spread_quote_time_source") or entry.get("best_home_spread_quote_time_source")
         else:
             book = entry.get("spread_book") or entry.get("best_away_spread_book")
             quote_at = entry.get("spread_quote_at") or entry.get("best_away_spread_quote_at")
+            quote_time_source = entry.get("spread_quote_time_source") or entry.get("best_away_spread_quote_time_source")
     else:
         side = str(entry.get("total_dir") or "").upper()
         line = _safe(entry.get("market_total"))
@@ -231,9 +236,11 @@ def _display_market_entry(entry, market):
         if side == "O":
             book = entry.get("total_book") or entry.get("best_over_book")
             quote_at = entry.get("total_quote_at") or entry.get("best_over_quote_at")
+            quote_time_source = entry.get("total_quote_time_source") or entry.get("best_over_quote_time_source")
         else:
             book = entry.get("total_book") or entry.get("best_under_book")
             quote_at = entry.get("total_quote_at") or entry.get("best_under_quote_at")
+            quote_time_source = entry.get("total_quote_time_source") or entry.get("best_under_quote_time_source")
 
     price_verified = (
         math.isfinite(_safe(odds))
@@ -251,6 +258,7 @@ def _display_market_entry(entry, market):
             "quant_odds": odds,
             "quant_book": book,
             "quant_quote_at": quote_at or entry.get("snapshot_at"),
+            "quote_time_source": quote_time_source,
             "model_probability": probability,
             "model_edge": edge,
             "model_ev": model_ev,
@@ -332,6 +340,7 @@ def _grade_display_tiers(hist, finals, markets):
                     "clv_source": clv_source,
                     "entry_snapshot": raw_entry.get("snapshot_at"),
                     "entry_quote_at": entry.get("quant_quote_at"),
+                    "quote_time_source": entry.get("quote_time_source"),
                     "kickoff": first.get("date"),
                 }
             )
