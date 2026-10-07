@@ -146,7 +146,7 @@ def build_edge_regime_report(bets):
     data = bets.copy() if isinstance(bets, pd.DataFrame) else pd.DataFrame(bets)
     if data.empty:
         return {
-            "schema_version": 1,
+            "schema_version": 2,
             "status": "NO_SAMPLE",
             "regimes": [],
             "persistent_regimes": 0,
@@ -215,7 +215,7 @@ def build_edge_regime_report(bets):
         )
     )
     return {
-        "schema_version": 1,
+        "schema_version": 2,
         "status": "TRACKING",
         "regimes": regimes,
         "persistent_regimes": int(
@@ -256,17 +256,23 @@ def write_edge_regime_report(bets, json_path, csv_path=None):
 
 
 def load_or_build_edge_regime_report(reports_dir="reports"):
+    """Load only current-schema evidence; rebuild stale reports from bet-level data."""
+
     reports = Path(reports_dir)
     path = reports / "edge_regimes.json"
     if path.exists():
         try:
-            return json.loads(path.read_text())
+            cached = json.loads(path.read_text())
+            if int(cached.get("schema_version", 0) or 0) >= 2:
+                return cached
         except Exception:
             pass
     bets_path = reports / "backtest_bets.csv"
     if bets_path.exists():
         try:
-            return build_edge_regime_report(pd.read_csv(bets_path, low_memory=False))
+            report = build_edge_regime_report(pd.read_csv(bets_path, low_memory=False))
+            path.write_text(json.dumps(report, indent=2))
+            return report
         except Exception:
             pass
     return build_edge_regime_report(pd.DataFrame())
