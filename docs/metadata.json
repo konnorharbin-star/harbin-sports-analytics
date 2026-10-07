@@ -59,10 +59,10 @@
     "selection_uses_evaluation": false,
     "margin_tuning_rows": 587,
     "margin_tuning_baseline_mae": 13.028227609973543,
-    "margin_tuning_mae": 12.75410434446148,
+    "margin_tuning_mae": 12.754104344461481,
     "margin_tuned_weight": 0.75,
     "margin_calibration_rows": 587,
-    "margin_calibration_mae": 12.527666428853092,
+    "margin_calibration_mae": 12.527666428853088,
     "margin_baseline_mae": 13.50210922129303,
     "margin_tuned_model_mae": 12.958502962449392,
     "margin_mae": 12.958502962449392,
@@ -86,7 +86,7 @@
         "season": 2024,
         "rows": 798,
         "mae": 12.909248942102506,
-        "rmse": 16.27378733198383,
+        "rmse": 16.273787331983822,
         "baseline_mae": 13.22842366531436,
         "weight": 0.75,
         "weight_tuned_on": "strictly prior whole-week tune block"
@@ -94,8 +94,8 @@
       {
         "season": 2025,
         "rows": 808,
-        "mae": 12.768553403602077,
-        "rmse": 16.23423220007751,
+        "mae": 12.768553403602079,
+        "rmse": 16.234232200077514,
         "baseline_mae": 13.026608931009665,
         "weight": 0.2,
         "weight_tuned_on": "strictly prior whole-week tune block"
@@ -103,15 +103,15 @@
       {
         "season": 2026,
         "rows": 271,
-        "mae": 13.257931979769962,
-        "rmse": 16.713157755910085,
+        "mae": 13.25793197976997,
+        "rmse": 16.7131577559101,
         "baseline_mae": 14.44875383389422,
         "weight": 0.8500000000000001,
         "weight_tuned_on": "strictly prior whole-week tune block"
       }
     ],
-    "margin_walkforward_mae_mean": 12.968946642295837,
-    "margin_walkforward_mae_std": 0.17893342132430698,
+    "margin_walkforward_mae_mean": 12.968946642295839,
+    "margin_walkforward_mae_std": 0.17893342132430934,
     "margin_walkforward_improved_folds": 4,
     "margin_walkforward_fold_count": 4,
     "total_tuning_rows": 587,
@@ -119,10 +119,10 @@
     "total_tuning_mae": 12.899079581800025,
     "total_tuned_weight": 0.30000000000000004,
     "total_calibration_rows": 587,
-    "total_calibration_mae": 12.949223806309357,
+    "total_calibration_mae": 12.949223806309355,
     "total_baseline_mae": 12.648615389536973,
-    "total_tuned_model_mae": 12.591604334877207,
-    "total_mae": 12.591604334877207,
+    "total_tuned_model_mae": 12.591604334877209,
+    "total_mae": 12.591604334877209,
     "total_rmse": 15.490811419847217,
     "total_release_weight": 0.30000000000000004,
     "total_blend_weight": 0.30000000000000004,
@@ -142,8 +142,8 @@
       {
         "season": 2024,
         "rows": 798,
-        "mae": 12.98480897445291,
-        "rmse": 16.443573519291036,
+        "mae": 12.984808974452912,
+        "rmse": 16.443573519291032,
         "baseline_mae": 12.964033987572272,
         "weight": 0.65,
         "weight_tuned_on": "strictly prior whole-week tune block"
@@ -151,7 +151,7 @@
       {
         "season": 2025,
         "rows": 808,
-        "mae": 12.891755800981255,
+        "mae": 12.891755800981256,
         "rmse": 15.927935878137175,
         "baseline_mae": 12.910666790164145,
         "weight": 0.55,
@@ -160,20 +160,20 @@
       {
         "season": 2026,
         "rows": 271,
-        "mae": 12.47538593372686,
-        "rmse": 15.493632539500567,
+        "mae": 12.475385933726857,
+        "rmse": 15.493632539500565,
         "baseline_mae": 12.513362267855985,
         "weight": 0.30000000000000004,
         "weight_tuned_on": "strictly prior whole-week tune block"
       }
     ],
     "total_walkforward_mae_mean": 12.878052873600529,
-    "total_walkforward_mae_std": 0.25167767339782005,
+    "total_walkforward_mae_std": 0.25167767339782166,
     "total_walkforward_improved_folds": 3,
     "total_walkforward_fold_count": 4,
-    "win_brier": 0.1747649201336038,
-    "win_log_loss": 0.522280638362974,
-    "win_ece": 0.06218232013495966,
+    "win_brier": 0.17476492013360373,
+    "win_log_loss": 0.5222806383629738,
+    "win_ece": 0.06218232013495953,
     "win_calibration_eval_rows": 569,
     "win_calibration_fit_rows": 587,
     "win_calibration_weight": 0.75,
@@ -479,10 +479,10 @@
     "margin_blend_weight": 0.75,
     "total_blend_weight": 0.30000000000000004
   },
-  "calibrated_margin_sigma": 16.28877707158025,
+  "calibrated_margin_sigma": 16.288777071580245,
   "calibrated_total_sigma": 16.102959927363244,
-  "generated_at": "2026-10-07T02:13:16.008831+00:00",
-  "updated_at_ct": "Oct 6, 2026 \u00b7 9:13 PM CT",
+  "generated_at": "2026-10-07T02:17:19.167458+00:00",
+  "updated_at_ct": "Oct 6, 2026 \u00b7 9:17 PM CT",
   "schedule_source": "sportsdataverse/cfbfastR-data",
   "odds_source": "ESPN live (site.web.api.espn.com) + ESPN Core supplement",
   "odds_errors": [],
@@ -533,10 +533,16 @@
     "best_line_provenance_fields": [
       "best_home_ml_book",
       "best_away_ml_book",
+      "best_home_ml_quote_at",
+      "best_away_ml_quote_at",
       "best_home_spread_book",
       "best_away_spread_book",
+      "best_home_spread_quote_at",
+      "best_away_spread_quote_at",
       "best_over_book",
-      "best_under_book"
+      "best_under_book",
+      "best_over_quote_at",
+      "best_under_quote_at"
     ]
   },
   "current_context": {
@@ -590,15 +596,15 @@
     "portfolio_verified": true,
     "evidence_source": "portfolio_decisions_v1",
     "eligible_decisions": 0,
-    "timing_excluded_rows": 65,
+    "timing_excluded_rows": 66,
     "status": "live/shadow evidence only; not historical backtest evidence",
     "clv_method": "first execution-ready cap-constrained portfolio decision strictly before kickoff; close is latest timestamp-valid market snapshot strictly before kickoff"
   },
   "tier_validation": {
-    "status": "TRACKING",
+    "status": "EARLY_SAMPLE",
     "graded_tier_bets": 144,
-    "validation_eligible_bets": 101,
-    "excluded_from_validation": 43,
+    "validation_eligible_bets": 0,
+    "excluded_from_validation": 144,
     "validated_cells": 0,
     "underperforming_cells": 0
   },
@@ -695,14 +701,14 @@
       {
         "name": "probability_brier",
         "passed": true,
-        "value": 0.1747649201336038,
+        "value": 0.17476492013360373,
         "requirement": "Brier <= 0.18 on chronological release holdout",
         "detail": ""
       },
       {
         "name": "probability_ece",
         "passed": false,
-        "value": 0.06218232013495966,
+        "value": 0.06218232013495953,
         "requirement": "ECE <= 0.05 on chronological release holdout",
         "detail": ""
       },
@@ -792,20 +798,20 @@
       "advanced_coverage": 100.0,
       "multi_book": 98.27586206896551,
       "context": 100.0,
-      "calibration": 84.45441996626009,
+      "calibration": 84.45441996626012,
       "freshness": 100.0,
       "drift_margin": 98.1,
       "drift_total": 90.5,
       "drift_probability": 98.9,
       "distribution_stability": 95.8,
-      "output_completeness": 79.55938697318008
+      "output_completeness": 79.57854406130268
     },
     "drift_details": {
       "margin": {
         "stability_score": 98.1,
         "mean_z": 0.0357,
         "std_ratio": 0.9611,
-        "live_mean": 4.435628935745989,
+        "live_mean": 4.435628935745981,
         "reference_mean": 4.007587882019208,
         "live_std": 11.528003723089103,
         "reference_std": 11.994090061385586,
@@ -818,7 +824,7 @@
         "std_ratio": 0.8201,
         "live_mean": 52.57237629079859,
         "reference_mean": 53.698901638530316,
-        "live_std": 5.10732345423173,
+        "live_std": 5.1073234542317385,
         "reference_std": 6.2275175246996115,
         "live_n": 58,
         "reference_n": 2398
@@ -866,12 +872,12 @@
       "reason": "graded history has no usable profit rows"
     },
     "production_block_reason": "",
-    "proposed_units": 6.45,
-    "risk_adjusted_proposed_units": 6.45,
-    "performance_adjusted_proposed_units": 6.45,
+    "proposed_units": 6.5,
+    "risk_adjusted_proposed_units": 6.5,
+    "performance_adjusted_proposed_units": 6.5,
     "approved_units": 0.0,
-    "paper_allocated_units": 3.96,
-    "paper_or_shadow_allocated_units": 3.96,
+    "paper_allocated_units": 4.01,
+    "paper_or_shadow_allocated_units": 4.01,
     "bets": 20,
     "approved_bets": 0,
     "execution_blocked_bets": 41,
@@ -918,22 +924,21 @@
     },
     "allocated_by_market": {
       "moneyline": 0.99,
-      "spread": 2.34,
-      "total": 0.63
+      "total": 0.97,
+      "spread": 2.05
     },
     "allocated_by_book": {
-      "ActionNetwork book 49": 0.2,
-      "ActionNetwork book 69": 0.29,
+      "ActionNetwork book 49": 0.54,
       "ActionNetwork book 71": 0.43,
       "ActionNetwork book 30": 2.0,
       "ActionNetwork book 15": 0.13,
       "ActionNetwork book 75": 0.61,
-      "DraftKings": 0.12,
+      "Draft Kings": 0.12,
       "ActionNetwork book 68": 0.18
     },
     "allocated_by_kickoff_window": {
       "2026-10-08 21:00:00+00:00": 0.39,
-      "2026-10-07 00:00:00+00:00": 0.29,
+      "2026-10-07 00:00:00+00:00": 0.34,
       "2026-10-10 21:00:00+00:00": 0.85,
       "2026-10-10 18:00:00+00:00": 1.29,
       "2026-10-10 00:00:00+00:00": 0.14,
@@ -943,7 +948,8 @@
     },
     "allocated_by_team_exposure": {
       "South Florida": 0.2,
-      "Southern Miss": 0.29,
+      "Troy": 0.34,
+      "Southern Miss": 0.34,
       "San Diego State": 0.29,
       "Vanderbilt": 0.25,
       "Temple": 0.29,
@@ -982,7 +988,7 @@
   "decision_ledger": {
     "path": "history/portfolio_decisions_v1.csv",
     "eligible_rows": 20,
-    "appended_rows": 1,
-    "total_rows": 329
+    "appended_rows": 2,
+    "total_rows": 331
   }
 }

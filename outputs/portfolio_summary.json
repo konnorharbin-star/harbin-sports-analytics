@@ -25,12 +25,12 @@
     "reason": "graded history has no usable profit rows"
   },
   "production_block_reason": "",
-  "proposed_units": 6.45,
-  "risk_adjusted_proposed_units": 6.45,
-  "performance_adjusted_proposed_units": 6.45,
+  "proposed_units": 6.5,
+  "risk_adjusted_proposed_units": 6.5,
+  "performance_adjusted_proposed_units": 6.5,
   "approved_units": 0.0,
-  "paper_allocated_units": 3.96,
-  "paper_or_shadow_allocated_units": 3.96,
+  "paper_allocated_units": 4.01,
+  "paper_or_shadow_allocated_units": 4.01,
   "bets": 20,
   "approved_bets": 0,
   "execution_blocked_bets": 41,
@@ -77,22 +77,21 @@
   },
   "allocated_by_market": {
     "moneyline": 0.99,
-    "spread": 2.34,
-    "total": 0.63
+    "total": 0.97,
+    "spread": 2.05
   },
   "allocated_by_book": {
-    "ActionNetwork book 49": 0.2,
-    "ActionNetwork book 69": 0.29,
+    "ActionNetwork book 49": 0.54,
     "ActionNetwork book 71": 0.43,
     "ActionNetwork book 30": 2.0,
     "ActionNetwork book 15": 0.13,
     "ActionNetwork book 75": 0.61,
-    "DraftKings": 0.12,
+    "Draft Kings": 0.12,
     "ActionNetwork book 68": 0.18
   },
   "allocated_by_kickoff_window": {
     "2026-10-08 21:00:00+00:00": 0.39,
-    "2026-10-07 00:00:00+00:00": 0.29,
+    "2026-10-07 00:00:00+00:00": 0.34,
     "2026-10-10 21:00:00+00:00": 0.85,
     "2026-10-10 18:00:00+00:00": 1.29,
     "2026-10-10 00:00:00+00:00": 0.14,
@@ -102,7 +101,8 @@
   },
   "allocated_by_team_exposure": {
     "South Florida": 0.2,
-    "Southern Miss": 0.29,
+    "Troy": 0.34,
+    "Southern Miss": 0.34,
     "San Diego State": 0.29,
     "Vanderbilt": 0.25,
     "Temple": 0.29,
