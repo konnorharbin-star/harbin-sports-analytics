@@ -149,7 +149,7 @@ def _write_output_readme(out,base,meta,pages,run_tag):
         for i in range(1,pages+1)
     )
     h=meta.get("health",{}); ac=meta.get("advanced_features",{}).get("dynamic_coverage",meta.get("advanced_features",{}).get("live_coverage",0))
-    (out/"README.md").write_text(f"# Latest CFB model output\n\n**Model:** v{meta['model_version']}  \n**Season / Week:** {meta['season']} / {meta['week']}  \n**Updated:** {meta['updated_at_ct']}  \n**Market:** {meta['market_status']}  \n**Dynamic advanced-feature live coverage:** {ac:.0%}  \n**System health:** {h.get('system_health_score','—')}/100 *(readiness, not predicted profitability)*\n\n## Use these\n- [Interactive Cooper-style table]({base}.html)\n- [Quant card](quant_card.html)\n- [Quant recommendations CSV](quant_recommendations.csv)\n- [Full model CSV]({base}.csv)\n- [Metadata / diagnostics]({base}_metadata.json)\n- [System health report](system_health.json)\n- [Market × tier forward validation](tier_performance.json)\n- [Flat-1u graded tier ledger](live_graded_tiers.csv)\n\n## Fresh PNGs for mobile\n{pngs}\n\nThese filenames change on every run so GitHub mobile cannot reuse an old image preview.\n\n## Stable PNG names\n{stable_pngs}\n\nThe Cooper-style table is the reconstructed presentation layer. The Quant card is the independent EV/risk layer. Missing verified markets display **NO LINE**. Run the separate **CFB Backtest** workflow before treating signals as historically established.\n")
+    (out/"README.md").write_text(f"# Latest CFB model output\n\n**Model:** v{meta['model_version']}  \n**Season / Week:** {meta['season']} / {meta['week']}  \n**Updated:** {meta['updated_at_ct']}  \n**Market:** {meta['market_status']}  \n**Dynamic advanced-feature live coverage:** {ac:.0%}  \n**System health:** {h.get('system_health_score','—')}/100 *(readiness, not predicted profitability)*\n\n## Use these\n- [Interactive Cooper-style table]({base}.html)\n- [Quant card](quant_card.html)\n- [Quant recommendations CSV](quant_recommendations.csv)\n- [Full model CSV]({base}.csv)\n- [Metadata / diagnostics]({base}_metadata.json)\n- [System health report](system_health.json)\n- [Market × tier forward validation](tier_performance.json)\n- [Market × tier matrix CSV](tier_performance.csv)\n- [Flat-1u graded tier ledger](live_graded_tiers.csv)\n\n## Fresh PNGs for mobile\n{pngs}\n\nThese filenames change on every run so GitHub mobile cannot reuse an old image preview.\n\n## Stable PNG names\n{stable_pngs}\n\nThe Cooper-style table is the reconstructed presentation layer. The Quant card is the independent EV/risk layer. Missing verified markets display **NO LINE**. Run the separate **CFB Backtest** workflow before treating signals as historically established.\n")
 
 
 def run_week(season=None,week=None,history_start=None,root="."):
@@ -174,10 +174,11 @@ def run_week(season=None,week=None,history_start=None,root="."):
             }
             for target in (out/"tier_performance.json",docs/"tier_performance.json"):
                 target.write_text(json.dumps(tier,indent=2))
-        tier_rows_path=reports/"live_graded_tiers.csv"
-        if tier_rows_path.exists():
-            (out/"live_graded_tiers.csv").write_text(tier_rows_path.read_text())
-            (docs/"live_graded_tiers.csv").write_text(tier_rows_path.read_text())
+        for name in ("tier_performance.csv","live_graded_tiers.csv"):
+            src=reports/name
+            if src.exists():
+                (out/name).write_text(src.read_text())
+                (docs/name).write_text(src.read_text())
     except Exception as exc:
         meta["live_performance"]={"error":f"{type(exc).__name__}: {exc}"}
         meta["tier_validation"]={"status":"ERROR","error":f"{type(exc).__name__}: {exc}"}
