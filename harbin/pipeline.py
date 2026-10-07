@@ -142,12 +142,13 @@ def _edge_evidence_html(row):
         key=str(row.get("edge_subgroup_key") or "")
         bets=int(float(row.get("edge_subgroup_bets") or 0))
         roi_value=float(row.get("edge_subgroup_roi")) if _finite(row.get("edge_subgroup_roi")) else 0.0
-        profitable=int(float(row.get("edge_subgroup_profitable_seasons") or 0))
-        seasons=int(float(row.get("edge_subgroup_season_count") or 0))
+        holdout_season=str(row.get("edge_subgroup_holdout_season") or "")
+        holdout_bets=int(float(row.get("edge_subgroup_holdout_bets") or 0))
+        holdout_roi=float(row.get("edge_subgroup_holdout_roi")) if _finite(row.get("edge_subgroup_holdout_roi")) else 0.0
         return (
-            f"<span class='edge supported'>SUPPORTED {key}</span>"
-            f"<div class='edge-sub'>{band} parent · {bets} subgroup bets · {roi_value:.1%} ROI · "
-            f"{profitable}/{seasons} profitable seasons{note}</div>"
+            f"<span class='edge supported'>HOLDOUT CONFIRMED {key}</span>"
+            f"<div class='edge-sub'>{band} parent · {bets} full-sample bets · {roi_value:.1%} ROI · "
+            f"{holdout_season} holdout {holdout_bets} bets / {holdout_roi:.1%} ROI{note}</div>"
         )
     if status=="PERSISTENT_PARENT_ONLY":
         bets=int(float(row.get("edge_regime_bets") or 0))
@@ -160,9 +161,12 @@ def _edge_evidence_html(row):
         key=str(row.get("edge_subgroup_key") or "")
         bets=int(float(row.get("edge_subgroup_bets") or 0))
         roi_value=float(row.get("edge_subgroup_roi")) if _finite(row.get("edge_subgroup_roi")) else 0.0
+        holdout_season=str(row.get("edge_subgroup_holdout_season") or "")
+        holdout_roi=float(row.get("edge_subgroup_holdout_roi")) if _finite(row.get("edge_subgroup_holdout_roi")) else 0.0
         return (
             f"<span class='edge contra'>CONTRA {key}</span>"
-            f"<div class='edge-sub'>{bets} subgroup bets · {roi_value:.1%} ROI · parent regime not promoted</div>"
+            f"<div class='edge-sub'>{bets} full-sample bets · {roi_value:.1%} ROI · "
+            f"{holdout_season} holdout {holdout_roi:.1%} · parent regime not promoted</div>"
         )
     if status=="WATCH":
         return f"<span class='edge watch'>WATCH {band}</span>"
@@ -197,7 +201,7 @@ def _write_quant_html(pred,path,updated):
         ".supported{background:#5fc468;color:#0c2c12}.parent{background:#235137;color:#b7f0c5}.contra{background:#5a2525;color:#ffb2b2}.watch{background:#483b1e;color:#e3b549}.raw{background:#25282c;color:#8f9499}"
         ".edge-sub{font-size:9px;color:#9da1a6;margin-top:4px;white-space:nowrap}</style></head><body><div class='wrap'>"
         f"<h1>HARBIN QUANT CARD</h1><p>Updated {updated}. Supported edges are historically persistent research candidates, not guaranteed profit. "
-        "Archive backtest evidence prioritizes market selection; clean forward validation remains required before production use.</p>"
+        "Subgroup promotion requires chronological latest-season holdout confirmation; clean live forward validation remains required before production use.</p>"
         "<table><thead><tr><th>GAME</th><th>SIGNAL</th><th>MARKET</th><th>SIDE</th><th>LINE</th><th>ODDS</th>"
         "<th>MODEL P</th><th>EV</th><th>EDGE EVIDENCE</th><th>UNITS</th><th>DATA QUALITY</th></tr></thead>"
         f"<tbody>{''.join(rows)}</tbody></table></div></body></html>"
@@ -298,7 +302,7 @@ def run_week(season=None,week=None,history_start=None,root="."):
     persistent_edges.to_csv(out/"edge_candidates.csv",index=False); persistent_edges.to_csv(docs/"edge_candidates.csv",index=False)
     _write_edge_html(persistent_edges,out/"edge_card.html",display); _write_edge_html(persistent_edges,docs/"edge.html",display)
     watch_edges.to_csv(out/"edge_watchlist.csv",index=False); watch_edges.to_csv(docs/"edge_watchlist.csv",index=False); excluded_edges.to_csv(out/"edge_exclusions.csv",index=False); excluded_edges.to_csv(docs/"edge_exclusions.csv",index=False)
-    qcols=[c for c in ["game_id","date","away_team","home_team","model_margin_home","model_total","quant_signal","quant_market","quant_side","quant_price","quant_odds","quant_probability","quant_ev","quant_edge","selection_basis","edge_selection_override","raw_ev_best_market","raw_ev_best_side","raw_ev_best_ev","edge_regime_parent_status","edge_regime_status","edge_regime_band","edge_regime_bets","edge_regime_roi","edge_regime_profitable_seasons","edge_regime_season_count","edge_regime_candidate","edge_subgroup_key","edge_subgroup_status","edge_subgroup_bets","edge_subgroup_roi","edge_subgroup_profitable_seasons","edge_subgroup_season_count","stake_units","risk_multiplier","data_quality_score","context_risk","market_book_count","policy_block_reason"] if c in pred.columns]
+    qcols=[c for c in ["game_id","date","away_team","home_team","model_margin_home","model_total","quant_signal","quant_market","quant_side","quant_price","quant_odds","quant_probability","quant_ev","quant_edge","selection_basis","edge_selection_override","raw_ev_best_market","raw_ev_best_side","raw_ev_best_ev","edge_regime_parent_status","edge_regime_status","edge_regime_band","edge_regime_bets","edge_regime_roi","edge_regime_profitable_seasons","edge_regime_season_count","edge_regime_candidate","edge_subgroup_key","edge_subgroup_status","edge_subgroup_bets","edge_subgroup_roi","edge_subgroup_profitable_seasons","edge_subgroup_season_count","edge_subgroup_discovery_roi","edge_subgroup_holdout_season","edge_subgroup_holdout_bets","edge_subgroup_holdout_roi","edge_subgroup_holdout_win_rate","edge_subgroup_holdout_confirmed","stake_units","risk_multiplier","data_quality_score","context_risk","market_book_count","policy_block_reason"] if c in pred.columns]
     q=pred[qcols].copy() if qcols else pd.DataFrame()
     if "quant_signal" in q.columns:
         q=q[q.quant_signal!="PASS"].copy()

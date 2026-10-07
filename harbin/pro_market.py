@@ -147,6 +147,12 @@ def select_best_market(row, risk_multiplier=1.0, policy_path=PRODUCTION_POLICY_P
         candidate["edge_subgroup_roi"]=(subgroup or {}).get("roi")
         candidate["edge_subgroup_profitable_seasons"]=int((subgroup or {}).get("profitable_seasons",0) or 0)
         candidate["edge_subgroup_season_count"]=int((subgroup or {}).get("season_count",0) or 0)
+        candidate["edge_subgroup_discovery_roi"]=(subgroup or {}).get("discovery_roi")
+        candidate["edge_subgroup_holdout_season"]=(subgroup or {}).get("holdout_season","")
+        candidate["edge_subgroup_holdout_bets"]=int((subgroup or {}).get("holdout_bets",0) or 0)
+        candidate["edge_subgroup_holdout_roi"]=(subgroup or {}).get("holdout_roi")
+        candidate["edge_subgroup_holdout_win_rate"]=(subgroup or {}).get("holdout_win_rate")
+        candidate["edge_subgroup_holdout_confirmed"]=bool((subgroup or {}).get("holdout_confirmed",False))
         candidate["edge_promotion_rank"]=(
             2 if effective=="SUPPORTED_SUBGROUP"
             else 1 if effective=="PERSISTENT_PARENT_ONLY"
@@ -190,6 +196,12 @@ def select_best_market(row, risk_multiplier=1.0, policy_path=PRODUCTION_POLICY_P
         "edge_subgroup_roi":best["edge_subgroup_roi"],
         "edge_subgroup_profitable_seasons":best["edge_subgroup_profitable_seasons"],
         "edge_subgroup_season_count":best["edge_subgroup_season_count"],
+        "edge_subgroup_discovery_roi":best["edge_subgroup_discovery_roi"],
+        "edge_subgroup_holdout_season":best["edge_subgroup_holdout_season"],
+        "edge_subgroup_holdout_bets":best["edge_subgroup_holdout_bets"],
+        "edge_subgroup_holdout_roi":best["edge_subgroup_holdout_roi"],
+        "edge_subgroup_holdout_win_rate":best["edge_subgroup_holdout_win_rate"],
+        "edge_subgroup_holdout_confirmed":best["edge_subgroup_holdout_confirmed"],
         "policy_block_reason":"",
     }
 

@@ -236,17 +236,20 @@ def test_supported_edge_label_is_explicit_about_subgroup_evidence():
             "edge_subgroup_roi": 0.408,
             "edge_subgroup_profitable_seasons": 3,
             "edge_subgroup_season_count": 3,
+            "edge_subgroup_holdout_season": "2025",
+            "edge_subgroup_holdout_bets": 21,
+            "edge_subgroup_holdout_roi": 0.727,
             "edge_selection_override": True,
         }
     )
 
     html = _edge_evidence_html(row)
 
-    assert "SUPPORTED favorite|home" in html
+    assert "HOLDOUT CONFIRMED favorite|home" in html
     assert "6-8 parent" in html
-    assert "59 subgroup bets" in html
+    assert "59 full-sample bets" in html
     assert "40.8% ROI" in html
-    assert "3/3 profitable seasons" in html
+    assert "2025 holdout 21 bets / 72.7% ROI" in html
     assert "selected over raw-EV alternative" in html
 
 
@@ -264,12 +267,67 @@ def test_spread_subgroups_separate_supported_and_contraindicated_children():
     assert favorite_home["status"] == "SUPPORTED_SUBGROUP"
     assert favorite_home["profitable_seasons"] == 3
     assert favorite_home["roi"] > 0.05
+    assert favorite_home["validation_design"] == "latest_season_holdout"
+    assert favorite_home["discovery_seasons"] == ["2023", "2024"]
+    assert favorite_home["holdout_season"] == "2025"
+    assert favorite_home["holdout_bets"] == 30
+    assert favorite_home["holdout_roi"] > 0
+    assert favorite_home["holdout_confirmed"] is True
     assert effective_edge_status(parent, favorite_home) == "SUPPORTED_SUBGROUP"
 
     assert underdog_home["status"] == "CONTRAINDICATED_SUBGROUP"
     assert underdog_home["profitable_seasons"] == 0
     assert underdog_home["roi"] < 0
+    assert underdog_home["holdout_season"] == "2025"
+    assert underdog_home["holdout_roi"] < 0
+    assert underdog_home["holdout_confirmed"] is True
     assert effective_edge_status(parent, underdog_home) == "CONTRAINDICATED_SUBGROUP"
+
+
+def test_positive_discovery_that_fails_latest_season_is_not_supported():
+    rows = []
+    rows += _role_rows(6.5, 2023, 30, 20, "favorite", "home", clv=0.03)
+    rows += _role_rows(6.5, 2024, 30, 20, "favorite", "home", clv=0.03)
+    rows += _role_rows(6.5, 2025, 30, 13, "favorite", "home", clv=0.03)
+    for season in (2023, 2024, 2025):
+        rows += _role_rows(6.5, season, 30, 20, "underdog", "away", clv=0.03)
+
+    report = build_edge_regime_report(pd.DataFrame(rows))
+    parent = match_edge_regime(report, "spread", 6.5)
+    subgroup = match_edge_subgroup(
+        report, "spread", 6.5, "Home", -3.5, "Home", "Away"
+    )
+
+    assert parent["status"] == "PERSISTENT_CANDIDATE"
+    assert subgroup["discovery_roi"] > 0.05
+    assert subgroup["holdout_season"] == "2025"
+    assert subgroup["holdout_bets"] == 30
+    assert subgroup["holdout_roi"] < 0
+    assert subgroup["status"] == "INCONCLUSIVE_SUBGROUP"
+    assert subgroup["holdout_confirmed"] is False
+    assert effective_edge_status(parent, subgroup) == "PERSISTENT_PARENT_ONLY"
+
+
+def test_negative_discovery_with_positive_holdout_is_not_contraindicated():
+    rows = []
+    rows += _role_rows(6.5, 2023, 30, 13, "underdog", "home", clv=0.02)
+    rows += _role_rows(6.5, 2024, 30, 13, "underdog", "home", clv=0.02)
+    rows += _role_rows(6.5, 2025, 30, 20, "underdog", "home", clv=0.02)
+    for season in (2023, 2024, 2025):
+        rows += _role_rows(6.5, season, 30, 20, "favorite", "home", clv=0.03)
+
+    report = build_edge_regime_report(pd.DataFrame(rows))
+    parent = match_edge_regime(report, "spread", 6.5)
+    subgroup = match_edge_subgroup(
+        report, "spread", 6.5, "Home", 7.5, "Home", "Away"
+    )
+
+    assert parent["status"] == "PERSISTENT_CANDIDATE"
+    assert subgroup["discovery_roi"] < -0.03
+    assert subgroup["holdout_roi"] > 0
+    assert subgroup["status"] == "INCONCLUSIVE_SUBGROUP"
+    assert subgroup["holdout_confirmed"] is False
+    assert effective_edge_status(parent, subgroup) == "PERSISTENT_PARENT_ONLY"
 
 
 def test_contraindicated_child_cannot_receive_persistent_override(tmp_path):
@@ -348,6 +406,10 @@ def test_supported_subgroup_outranks_higher_raw_ev_market(tmp_path):
     assert selected["edge_regime_status"] == "SUPPORTED_SUBGROUP"
     assert selected["edge_subgroup_key"] == "favorite|home"
     assert selected["edge_subgroup_status"] == "SUPPORTED_SUBGROUP"
+    assert selected["edge_subgroup_holdout_season"] == "2025"
+    assert selected["edge_subgroup_holdout_bets"] == 30
+    assert selected["edge_subgroup_holdout_roi"] > 0
+    assert selected["edge_subgroup_holdout_confirmed"] is True
 
 
 def test_current_edge_board_excludes_contraindicated_child_by_default():
@@ -415,12 +477,12 @@ def test_loader_rebuilds_stale_edge_regime_schema(tmp_path):
 
     rebuilt = load_or_build_edge_regime_report(reports)
 
-    assert rebuilt["schema_version"] == 2
+    assert rebuilt["schema_version"] == 3
     parent = match_edge_regime(rebuilt, "spread", 6.5)
     assert parent["subgroups"]["favorite|home"]["status"] == "SUPPORTED_SUBGROUP"
     assert parent["subgroups"]["underdog|home"]["status"] == "CONTRAINDICATED_SUBGROUP"
     persisted = json.loads((reports / "edge_regimes.json").read_text())
-    assert persisted["schema_version"] == 2
+    assert persisted["schema_version"] == 3
 
 
 def test_supported_edge_board_contains_forward_validation_warning(tmp_path):
