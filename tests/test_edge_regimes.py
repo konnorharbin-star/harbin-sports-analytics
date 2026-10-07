@@ -703,3 +703,120 @@ def test_supported_subgroup_at_plausible_price_can_still_outrank_raw_ev(tmp_path
     assert selected["edge_regime_status"] == "SUPPORTED_SUBGROUP"
     assert selected["price_evidence_status"] in {"CONFIRMED", "PLAUSIBLE"}
     assert selected["edge_selection_override"] is True
+
+
+def _watch_parent_supported_child_report():
+    rows = []
+    # Away underdogs: profitable discovery seasons and positive latest-season holdout.
+    rows += _role_rows(3.5, 2023, 31, 19, "underdog", "away", clv=0.02)
+    rows += _role_rows(3.5, 2024, 32, 18, "underdog", "away", clv=0.02)
+    rows += _role_rows(3.5, 2025, 31, 17, "underdog", "away", clv=0.02)
+    # Other rows keep the parent positive overall but make the latest parent season lose,
+    # so the broad 3-4 band is WATCH rather than PERSISTENT_CANDIDATE.
+    rows += _role_rows(3.5, 2023, 28, 15, "favorite", "home", clv=0.02)
+    rows += _role_rows(3.5, 2024, 31, 17, "favorite", "home", clv=0.02)
+    rows += _role_rows(3.5, 2025, 41, 18, "favorite", "home", clv=0.02)
+    return build_edge_regime_report(pd.DataFrame(rows))
+
+
+def test_holdout_supported_child_can_stand_under_watch_parent():
+    report = _watch_parent_supported_child_report()
+    parent = match_edge_regime(report, "spread", 3.5)
+    child = match_edge_subgroup(
+        report, "spread", 3.5, "Away", 7.5, "Home", "Away"
+    )
+
+    assert parent["status"] == "WATCH"
+    assert child["status"] == "SUPPORTED_SUBGROUP"
+    assert child["discovery_roi"] > 0.05
+    assert child["holdout_roi"] > 0
+    assert child["holdout_confirmed"] is True
+    assert effective_edge_status(parent, child) == "SUPPORTED_SUBGROUP"
+
+
+def test_supported_child_under_unsupported_parent_is_not_promoted():
+    report = _watch_parent_supported_child_report()
+    parent = dict(match_edge_regime(report, "spread", 3.5))
+    parent["status"] = "UNSUPPORTED"
+    child = match_edge_subgroup(
+        report, "spread", 3.5, "Away", 7.5, "Home", "Away"
+    )
+
+    assert child["status"] == "SUPPORTED_SUBGROUP"
+    assert effective_edge_status(parent, child) == "UNSUPPORTED"
+
+
+def test_watch_parent_supported_child_is_visible_on_watch_board():
+    report = _watch_parent_supported_child_report()
+    frame = pd.DataFrame(
+        [
+            {
+                "game_id": "g-watch-child",
+                "date": "2026-10-10T18:00:00Z",
+                "away_team": "Away",
+                "home_team": "Home",
+                "spread_team": "Away",
+                "spread_line": 7.5,
+                "spread_odds": -108,
+                "spread_edge_pts": 3.5,
+                "cover_probability": 0.59,
+                "spread_badge": "LEAN",
+                "spread_book": "Book A",
+                "spread_quote_at": "2026-10-10T16:00:00Z",
+                "quant_market": "spread",
+                "quant_side": "Away",
+                "quant_signal": "LEAN",
+                "quant_ev": 0.13,
+            }
+        ]
+    )
+
+    board = current_edge_board(frame, report, {"WATCH"})
+
+    assert len(board) == 1
+    row = board.iloc[0]
+    assert row["regime_status"] == "WATCH"
+    assert row["edge_reliability_status"] == "SUPPORTED_SUBGROUP"
+    assert row["subgroup_key"] == "underdog|away"
+    assert row["subgroup_holdout_confirmed"] is True
+
+
+def test_watch_parent_supported_child_can_outrank_unsupported_raw_ev(tmp_path):
+    report = _watch_parent_supported_child_report()
+    row = pd.Series(
+        {
+            "week": 6,
+            "home_team": "Home",
+            "away_team": "Away",
+            "calibrated_home_probability": 0.58,
+            "quant_best_ml_side": "Home",
+            "quant_best_ml_edge_pp": 12.0,
+            "quant_best_ml_roi": 0.28,
+            "best_home_ml": 120,
+            "best_home_ml_book": "Book ML",
+            "best_home_ml_quote_at": "2026-10-07T03:00:00Z",
+            "cover_probability": 0.59,
+            "spread_edge_pts": 3.5,
+            "spread_team": "Away",
+            "spread_line": 7.5,
+            "best_away_spread_odds": -108,
+            "best_away_spread_book": "Book Spread",
+            "best_away_spread_quote_at": "2026-10-07T03:00:00Z",
+        }
+    )
+    missing_policy = tmp_path / "missing_policy.json"
+
+    selected = select_best_market(
+        row,
+        risk_multiplier=1.0,
+        policy_path=str(missing_policy),
+        edge_report=report,
+    )
+
+    assert selected["quant_market"] == "spread"
+    assert selected["quant_side"] == "Away"
+    assert selected["edge_regime_parent_status"] == "WATCH"
+    assert selected["edge_regime_status"] == "SUPPORTED_SUBGROUP"
+    assert selected["edge_subgroup_key"] == "underdog|away"
+    assert selected["selection_basis"] == "supported_edge_subgroup"
+    assert selected["price_evidence_status"] in {"CONFIRMED", "PLAUSIBLE"}
