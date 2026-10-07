@@ -358,6 +358,7 @@ def grade_prediction_history(client,history_dir="history",reports_dir="reports")
     tier_rows.to_csv(reports/"live_graded_tiers.csv",index=False)
     tier_validation=build_tier_performance(tier_rows)
     (reports/"tier_performance.json").write_text(json.dumps(tier_validation,indent=2))
+    pd.DataFrame(tier_validation.get("matrix") or []).to_csv(reports/"tier_performance.csv",index=False)
 
     overall=_summary(bets); by_market={str(k):_summary(v) for k,v in bets.groupby("quant_market")} if len(bets) else {}; by_signal={str(k):_summary(v) for k,v in bets.groupby("quant_signal")} if len(bets) else {}; by_season={str(k):_summary(v) for k,v in bets.groupby("season")} if len(bets) else {}; by_book={str(k):_summary(v) for k,v in bets.dropna(subset=["quant_book"]).groupby("quant_book")} if len(bets) and "quant_book" in bets.columns else {}; by_edge_bucket={str(k):_summary(v) for k,v in bets.groupby("edge_bucket")} if len(bets) and "edge_bucket" in bets.columns else {}
     verified=int((pd.to_numeric(bets.clv_proxy,errors="coerce").notna()).sum()) if len(bets) else 0
