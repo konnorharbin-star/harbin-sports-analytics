@@ -39,7 +39,7 @@ jobs:
         run: |
           git config user.name "harbin-grade-bot"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          for f in reports/live_performance.json reports/live_graded_predictions.csv reports/live_graded_bets.csv reports/tier_performance.json reports/tier_performance.csv reports/live_graded_tiers.csv outputs/live_performance.json outputs/tier_performance.json outputs/tier_performance.csv outputs/live_graded_tiers.csv docs/live_performance.json docs/tier_performance.json docs/tier_performance.csv docs/live_graded_tiers.csv; do
+          for f in reports/live_performance.json reports/live_graded_predictions.csv reports/live_graded_bets.csv reports/tier_performance.json reports/tier_performance.csv reports/tier_validation_clean.csv reports/live_graded_tiers.csv outputs/live_performance.json outputs/tier_performance.json outputs/tier_performance.csv outputs/tier_validation_clean.csv outputs/live_graded_tiers.csv docs/live_performance.json docs/tier_performance.json docs/tier_performance.csv docs/tier_validation_clean.csv docs/live_graded_tiers.csv; do
             [ -f "$f" ] && git add "$f" || true
           done
           if ! git diff --cached --quiet; then
