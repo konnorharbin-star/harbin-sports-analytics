@@ -15,7 +15,7 @@
     {
       "name": "complete_market_coverage",
       "passed": false,
-      "value": 0.9464,
+      "value": 0.9455,
       "requirement": ">= 95% games with ML + spread + total",
       "detail": ""
     },
@@ -78,7 +78,7 @@
     {
       "name": "multi_book_consensus",
       "passed": true,
-      "value": 0.9821,
+      "value": 0.9818,
       "requirement": ">= 75% of games covered by 2+ books",
       "detail": "Configure THE_ODDS_API_KEY if ESPN exposes only one provider."
     },
