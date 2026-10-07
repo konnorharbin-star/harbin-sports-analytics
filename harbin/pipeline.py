@@ -239,7 +239,7 @@ def _write_edge_html(edges,path,updated):
         "table{width:100%;border-collapse:collapse}th,td{padding:10px;border-bottom:1px solid #292c30;text-align:left}"
         "th{color:#888;font-size:11px}tr:nth-child(even){background:#17191c}</style></head><body><div class='wrap'>"
         f"<h1>SUPPORTED EDGE BOARD</h1><p>Updated {updated}</p>"
-        "<div class='callout'><strong>Current supported edge:</strong> holdout-confirmed spread subgroups inside the 6–8 point disagreement regime. "
+        "<div class='callout'><strong>Current supported edge:</strong> holdout-confirmed subgroups inside the spread model-market disagreement of 6–8 points. "
         "CONFIRMED price means the 95% Wilson lower bound of historical hit rate still clears the current odds break-even probability; PLAUSIBLE clears only on the point estimate. "
         "Historical price evidence never changes model probability or EV, and clean forward validation is still required.</div>"
         "<table><thead><tr><th>GAME</th><th>MARKET</th><th>SIDE</th><th>LINE</th><th>ODDS</th><th>MODEL P</th>"
