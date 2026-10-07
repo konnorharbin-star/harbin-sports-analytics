@@ -81,14 +81,14 @@
     "total": 0.5
   },
   "allocated_by_book": {
-    "ActionNetwork book 69": 0.93,
+    "ActionNetwork book 49": 0.33,
     "ActionNetwork book 71": 0.4,
     "ActionNetwork book 30": 1.0,
     "ActionNetwork book 15": 0.13,
     "ActionNetwork book 75": 0.61,
     "DraftKings": 0.12,
     "ActionNetwork book 68": 0.18,
-    "ActionNetwork book 49": 0.13
+    "ActionNetwork book 69": 0.73
   },
   "allocated_by_kickoff_window": {
     "2026-10-08 21:00:00+00:00": 0.39,
