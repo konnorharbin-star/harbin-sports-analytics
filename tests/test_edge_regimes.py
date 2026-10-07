@@ -1,5 +1,7 @@
 import pandas as pd
 
+from harbin.pro_market import select_best_market
+
 from harbin.edge_regimes import (
     annotate_selected_regimes,
     build_edge_regime_report,
@@ -105,3 +107,99 @@ def test_selected_pick_annotation_carries_regime_evidence():
     assert out.iloc[0]["edge_regime_status"] == "PERSISTENT_CANDIDATE"
     assert bool(out.iloc[0]["edge_regime_candidate"]) is True
     assert out.iloc[0]["edge_regime_profitable_seasons"] == 3
+
+
+def test_persistent_regime_outranks_higher_raw_ev_unsupported_market(tmp_path):
+    rows = []
+    rows += _rows("spread", 6.5, 2023, 60, 36)
+    rows += _rows("spread", 6.5, 2024, 60, 36)
+    rows += _rows("spread", 6.5, 2025, 60, 36)
+    report = build_edge_regime_report(pd.DataFrame(rows))
+
+    row = pd.Series(
+        {
+            "week": 6,
+            "home_team": "UTSA",
+            "away_team": "South Florida",
+            "calibrated_home_probability": 0.46,
+            "quant_best_ml_side": "South Florida",
+            "quant_best_ml_edge_pp": 24.48,
+            "quant_best_ml_roi": 0.782,
+            "best_away_ml": 230,
+            "best_away_ml_book": "Book ML",
+            "best_away_ml_quote_at": "2026-10-07T03:00:00Z",
+            "cover_probability": 0.6843,
+            "spread_edge_pts": 7.816,
+            "spread_team": "South Florida",
+            "spread_line": 7.5,
+            "best_away_spread_odds": -122,
+            "best_away_spread_book": "Book Spread",
+            "best_away_spread_quote_at": "2026-10-07T03:00:00Z",
+        }
+    )
+    missing_policy = tmp_path / "missing_policy.json"
+
+    raw = select_best_market(
+        row,
+        risk_multiplier=1.0,
+        policy_path=str(missing_policy),
+        edge_report=None,
+    )
+    supported = select_best_market(
+        row,
+        risk_multiplier=1.0,
+        policy_path=str(missing_policy),
+        edge_report=report,
+    )
+
+    assert raw["quant_market"] == "moneyline"
+    assert raw["quant_ev"] > supported["quant_ev"]
+    assert supported["quant_market"] == "spread"
+    assert supported["quant_side"] == "South Florida"
+    assert supported["selection_basis"] == "persistent_edge_regime"
+    assert supported["edge_selection_override"] is True
+    assert supported["raw_ev_best_market"] == "moneyline"
+    assert supported["edge_regime_status"] == "PERSISTENT_CANDIDATE"
+    assert supported["edge_regime_band"] == "6-8"
+    assert supported["edge_regime_profitable_seasons"] == 3
+
+
+def test_persistent_selection_does_not_inflate_probability_ev_or_stake(tmp_path):
+    rows = []
+    rows += _rows("spread", 6.5, 2023, 60, 36)
+    rows += _rows("spread", 6.5, 2024, 60, 36)
+    rows += _rows("spread", 6.5, 2025, 60, 36)
+    report = build_edge_regime_report(pd.DataFrame(rows))
+
+    row = pd.Series(
+        {
+            "week": 6,
+            "home_team": "Home",
+            "away_team": "Away",
+            "cover_probability": 0.62,
+            "spread_edge_pts": 6.5,
+            "spread_team": "Away",
+            "spread_line": 7.5,
+            "best_away_spread_odds": -110,
+            "best_away_spread_book": "Book A",
+            "best_away_spread_quote_at": "2026-10-07T03:00:00Z",
+        }
+    )
+    missing_policy = tmp_path / "missing_policy.json"
+
+    raw = select_best_market(
+        row,
+        risk_multiplier=0.8,
+        policy_path=str(missing_policy),
+        edge_report=None,
+    )
+    supported = select_best_market(
+        row,
+        risk_multiplier=0.8,
+        policy_path=str(missing_policy),
+        edge_report=report,
+    )
+
+    assert supported["quant_probability"] == raw["quant_probability"] == 0.62
+    assert supported["quant_ev"] == raw["quant_ev"]
+    assert supported["stake_units"] == raw["stake_units"]
