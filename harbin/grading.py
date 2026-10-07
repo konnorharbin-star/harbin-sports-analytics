@@ -188,7 +188,6 @@ def _display_market_entry(entry, market):
         else:
             book = entry.get("ml_book") or entry.get("best_away_ml_book")
             quote_at = entry.get("ml_quote_at") or entry.get("best_away_ml_quote_at")
-        price_verified = True
     elif market == "spread":
         side = str(entry.get("spread_team") or "")
         line = _safe(entry.get("spread_line"))
@@ -196,7 +195,6 @@ def _display_market_entry(entry, market):
             return None
         stored_odds = _safe(entry.get("spread_odds"))
         odds = stored_odds if math.isfinite(stored_odds) else -110.0
-        price_verified = math.isfinite(stored_odds)
         probability = _safe(entry.get("cover_probability"))
         edge = _safe(entry.get("spread_edge_pts"))
         if math.isfinite(probability):
@@ -225,6 +223,12 @@ def _display_market_entry(entry, market):
         else:
             book = entry.get("total_book") or entry.get("best_under_book")
             quote_at = entry.get("total_quote_at") or entry.get("best_under_quote_at")
+
+    price_verified = (
+        math.isfinite(_safe(odds))
+        and bool(str(book or "").strip())
+        and bool(str(quote_at or "").strip())
+    )
 
     return pd.Series(
         {
