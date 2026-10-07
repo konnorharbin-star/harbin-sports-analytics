@@ -10,6 +10,7 @@ import pandas as pd
 from .advanced import AdvancedFeatureStore
 from .context import ContextStore
 from .edge_regimes import annotate_selected_regimes, current_edge_board, load_or_build_edge_regime_report
+from .edge_forward import apply_forward_validation, append_edge_shadow_candidates, load_edge_forward_report
 from .data import SportsDataVerseClient
 from .grading import grade_prediction_history
 from .health import build_health_report
@@ -144,11 +145,19 @@ def _edge_evidence_html(row):
         override=bool(row.get("edge_selection_override")) and str(row.get("edge_selection_override")).lower() not in {"false","0","nan"}
         note=" · selected over raw-EV alternative" if override else ""
         return (
-            f"<span class='edge supported'>SUPPORTED {band}</span>"
-            f"<div class='edge-sub'>{bets} hist bets · {roi_value:.1%} ROI · "
+            f"<span class='edge supported'>FORWARD-VALIDATED {band}</span>"
+            f"<div class='edge-sub'>{bets} hist bets · {roi_value:.1%} hist ROI · "
             f"{profitable}/{seasons} profitable seasons{note}</div>"
         )
-    if status=="WATCH":
+    if status=="HISTORICAL_HYPOTHESIS":
+        band=str(row.get("edge_regime_band") or "")
+        bets=int(float(row.get("edge_regime_bets") or 0))
+        verified=int(float(row.get("edge_regime_verified_entry_bets") or 0))
+        return (
+            f"<span class='edge watch'>HYPOTHESIS {band}</span>"
+            f"<div class='edge-sub'>{bets} archive bets · {verified} timestamp-verified entries · shadow tracking</div>"
+        )
+    if status in {"WATCH","HISTORICAL_WATCH"}:
         band=str(row.get("edge_regime_band") or "")
         return f"<span class='edge watch'>WATCH {band}</span>"
     return "<span class='edge raw'>RAW MODEL</span>"
@@ -182,8 +191,8 @@ def _write_quant_html(pred,path,updated):
         "th{color:#888;font-size:11px}tr:nth-child(even){background:#17191c}.edge{display:inline-block;font-size:10px;font-weight:800;border-radius:4px;padding:4px 6px}"
         ".supported{background:#5fc468;color:#0c2c12}.watch{background:#483b1e;color:#e3b549}.raw{background:#25282c;color:#8f9499}"
         ".edge-sub{font-size:9px;color:#9da1a6;margin-top:4px;white-space:nowrap}</style></head><body><div class='wrap'>"
-        f"<h1>HARBIN QUANT CARD</h1><p>Updated {updated}. Supported edges are historically persistent research candidates, not guaranteed profit. "
-        "Archive backtest evidence prioritizes market selection; clean forward validation remains required before production use.</p>"
+        f"<h1>HARBIN QUANT CARD</h1><p>Updated {updated}. Archive backtests generate hypotheses only. "
+        "Only timestamp-verified forward edge evidence may prioritize market selection.</p>"
         "<table><thead><tr><th>GAME</th><th>SIGNAL</th><th>MARKET</th><th>SIDE</th><th>LINE</th><th>ODDS</th>"
         "<th>MODEL P</th><th>EV</th><th>EDGE EVIDENCE</th><th>UNITS</th><th>DATA QUALITY</th></tr></thead>"
         f"<tbody>{''.join(rows)}</tbody></table></div></body></html>"
@@ -207,7 +216,7 @@ def _write_edge_html(edges,path,updated):
             f"<td>{int(float(r.get('historical_bets') or 0))}</td><td>{hp:.1%}</td><td>{hr:.1%}</td>"
             f"<td>{int(float(r.get('profitable_seasons') or 0))}/{int(float(r.get('season_count') or 0))}</td></tr>"
         )
-    empty="<tr><td colspan='12'>No current pregame markets match a persistent historical edge regime.</td></tr>"
+    empty="<tr><td colspan='12'>No current pregame markets match a historical edge hypothesis.</td></tr>"
     Path(path).write_text(
         "<!doctype html><html><head><meta charset='utf-8'><meta name='viewport' content='width=device-width,initial-scale=1'>"
         "<title>Harbin Supported Edges</title><style>"
@@ -215,10 +224,10 @@ def _write_edge_html(edges,path,updated):
         "p{color:#9da1a6}.callout{border:1px solid #315d38;background:#152319;padding:12px;border-radius:8px;margin:12px 0 18px}"
         "table{width:100%;border-collapse:collapse}th,td{padding:10px;border-bottom:1px solid #292c30;text-align:left}"
         "th{color:#888;font-size:11px}tr:nth-child(even){background:#17191c}</style></head><body><div class='wrap'>"
-        f"<h1>SUPPORTED EDGE BOARD</h1><p>Updated {updated}</p>"
-        "<div class='callout'><strong>Current persistent regime:</strong> spread model-market disagreement of 6–8 points. "
-        "It met the research gate across the historical walk-forward sample, but the archive entry-price sample is not fully timestamp-verified. "
-        "Treat this as where the model has found its best historical edge candidate; clean forward validation is still required.</div>"
+        f"<h1>EDGE HYPOTHESIS BOARD</h1><p>Updated {updated}</p>"
+        "<div class='callout'><strong>Research only:</strong> these regimes survived historical walk-forward tests, "
+        "but their archive entry prices are not timestamp-verified. Each current candidate is shadow-captured at a real book, price, "
+        "and pre-kickoff timestamp. Only verified forward validation can promote a regime into live selection priority.</div>"
         "<table><thead><tr><th>GAME</th><th>MARKET</th><th>SIDE</th><th>LINE</th><th>ODDS</th><th>MODEL P</th>"
         "<th>MODEL EDGE</th><th>MODEL EV</th><th>HIST BETS</th><th>HIST HIT</th><th>HIST ROI</th><th>PROFITABLE SEASONS</th></tr></thead>"
         f"<tbody>{''.join(rows) if rows else empty}</tbody></table></div></body></html>"
@@ -235,7 +244,7 @@ def _write_output_readme(out,base,meta,pages,run_tag):
         for i in range(1,pages+1)
     )
     h=meta.get("health",{}); ac=meta.get("advanced_features",{}).get("dynamic_coverage",meta.get("advanced_features",{}).get("live_coverage",0))
-    (out/"README.md").write_text(f"# Latest CFB model output\n\n**Model:** v{meta['model_version']}  \n**Season / Week:** {meta['season']} / {meta['week']}  \n**Updated:** {meta['updated_at_ct']}  \n**Market:** {meta['market_status']}  \n**Dynamic advanced-feature live coverage:** {ac:.0%}  \n**System health:** {h.get('system_health_score','—')}/100 *(readiness, not predicted profitability)*\n\n## Use these\n- [Interactive Cooper-style table]({base}.html)\n- [Quant card](quant_card.html)\n- [Supported edge board](edge_card.html)\n- [Quant recommendations CSV](quant_recommendations.csv)\n- [Persistent historical edge candidates](edge_candidates.csv)\n- [Edge-regime watchlist](edge_watchlist.csv)\n- [Edge-regime evidence](edge_regimes.json)\n- [Full model CSV]({base}.csv)\n- [Metadata / diagnostics]({base}_metadata.json)\n- [System health report](system_health.json)\n- [Market × tier forward validation](tier_performance.json)\n- [Posted market × tier matrix CSV](tier_performance.csv)\n- [Clean validation-eligible tier matrix](tier_validation_clean.csv)\n- [Posted flat-1u graded tier ledger](live_graded_tiers.csv)\n- [Clean validation-entry ledger](live_graded_tiers_clean.csv)\n\n## Fresh PNGs for mobile\n{pngs}\n\nThese filenames change on every run so GitHub mobile cannot reuse an old image preview.\n\n## Stable PNG names\n{stable_pngs}\n\nThe Cooper-style table is the reconstructed presentation layer. The Quant card is the independent EV/risk layer. Missing verified markets display **NO LINE**. Run the separate **CFB Backtest** workflow before treating signals as historically established.\n")
+    (out/"README.md").write_text(f"# Latest CFB model output\n\n**Model:** v{meta['model_version']}  \n**Season / Week:** {meta['season']} / {meta['week']}  \n**Updated:** {meta['updated_at_ct']}  \n**Market:** {meta['market_status']}  \n**Dynamic advanced-feature live coverage:** {ac:.0%}  \n**System health:** {h.get('system_health_score','—')}/100 *(readiness, not predicted profitability)*\n\n## Use these\n- [Interactive Cooper-style table]({base}.html)\n- [Quant card](quant_card.html)\n- [Edge hypothesis board](edge_card.html)\n- [Quant recommendations CSV](quant_recommendations.csv)\n- [Historical edge hypotheses](edge_candidates.csv)\n- [Forward-validated edge candidates](edge_validated.csv)\n- [Verified edge-forward performance](edge_forward_performance.json)\n- [Edge shadow ledger](edge_shadow_snapshots.csv)\n- [Edge-regime watchlist](edge_watchlist.csv)\n- [Edge-regime evidence](edge_regimes.json)\n- [Full model CSV]({base}.csv)\n- [Metadata / diagnostics]({base}_metadata.json)\n- [System health report](system_health.json)\n- [Market × tier forward validation](tier_performance.json)\n- [Posted market × tier matrix CSV](tier_performance.csv)\n- [Clean validation-eligible tier matrix](tier_validation_clean.csv)\n- [Posted flat-1u graded tier ledger](live_graded_tiers.csv)\n- [Clean validation-entry ledger](live_graded_tiers_clean.csv)\n\n## Fresh PNGs for mobile\n{pngs}\n\nThese filenames change on every run so GitHub mobile cannot reuse an old image preview.\n\n## Stable PNG names\n{stable_pngs}\n\nThe Cooper-style table is the reconstructed presentation layer. The Quant card is the independent EV/risk layer. Missing verified markets display **NO LINE**. Run the separate **CFB Backtest** workflow before treating signals as historically established.\n")
 
 
 def _pregame_games(games, now=None):
@@ -277,14 +286,23 @@ def run_week(season=None,week=None,history_start=None,root="."):
     if season is None or week is None:
         ds,dw=client.detect(); season=season or ds; week=week or dw
     now=datetime.now(timezone.utc)
-    history_start=history_start or max(2018,season-5); history=client.history(history_start,season,week); ratings=OpponentAdjustedRatings(); base_train=ratings.training_frame(history); advanced=AdvancedFeatureStore(history_start,season,cache_dir=root/"cache"/"advanced"); train_df,adv_train=advanced.enrich(base_train); bundle=train_models(train_df); raw_games=client.week(season,week); games,pregame_meta=_pregame_games(raw_games,now); base_frame=ratings.upcoming_frame(games); frame,adv_live=advanced.enrich(base_frame); pred=build_predictions(games,frame,bundle); intel=MarketIntelligence(); pred,intel_meta=intel.attach(games,pred); context=ContextStore(season,schedule_frame=client.season_frame(season),cache_dir=root/"cache"/"context"); pred,ctx=context.attach(pred); pred,line_meta=attach_line_movement(pred,hist); edge_report=load_or_build_edge_regime_report(reports); pred=_quantize(pred,bundle,adv_live,ctx,edge_report=edge_report); pred=annotate_selected_regimes(pred,edge_report); persistent_edges=current_edge_board(pred,edge_report,{"PERSISTENT_CANDIDATE"}); watch_edges=current_edge_board(pred,edge_report,{"WATCH"}); stamp=now.isoformat(); display=_display_time(now); base=f"cfb_model_{season}_week{week}"; run_tag=now.astimezone(ZoneInfo("America/Chicago")).strftime("%Y%m%d_%H%M%S_CT"); cov=_coverage(pred); status=_market_status(cov,client.odds_source)
-    meta={"model_version":MODEL_VERSION,"season":int(season),"week":int(week),"history_start":int(history_start),"historical_games":int(len(history)),"training_rows":int(len(train_df)),"upcoming_games":int(len(games)),"validation":bundle.get("validation"),"metrics":dict(bundle["metrics"]),"model_selection":{"margin_blend_weight":float(bundle["margin_weight"]),"total_blend_weight":float(bundle["total_weight"])},"calibrated_margin_sigma":float(bundle["margin_sigma"]),"calibrated_total_sigma":float(bundle["total_sigma"]),"generated_at":stamp,"updated_at_ct":display,"schedule_source":"sportsdataverse/cfbfastR-data","odds_source":client.odds_source,"odds_errors":client.odds_errors,"market_coverage":cov,"market_status":status,"advanced_features":{"train_coverage":adv_train.get("coverage",0),"live_coverage":adv_live.get("coverage",0),"dynamic_coverage":adv_live.get("dynamic_coverage",0),"feature_count":adv_live.get("feature_count",adv_train.get("feature_count",0)),"dynamic_feature_count":adv_live.get("dynamic_feature_count",adv_train.get("dynamic_feature_count",0)),"identity":adv_live.get("identity",adv_train.get("identity",{})),"sources":adv_live.get("sources",[]),"errors":list(dict.fromkeys((adv_train.get("errors") or [])+(adv_live.get("errors") or [])))},"market_intelligence":intel_meta,"pregame_filter":pregame_meta,"current_context":{"coverage":ctx.get("coverage",0),"weather_coverage":ctx.get("weather_coverage",0),"sources":ctx.get("sources",[]),"errors":ctx.get("errors",[]),"source_available":bool(ctx.get("sources"))},"line_history":line_meta,"edge_discovery":{"persistent_regimes":edge_report.get("persistent_regimes",0),"watch_regimes":edge_report.get("watch_regimes",0),"persistent_candidates":int(len(persistent_edges)),"watch_candidates":int(len(watch_edges)),"methodology":edge_report.get("methodology")},"quant_picks":{"strong":int((pred.get("quant_signal",pd.Series(dtype=str))=="STRONG").sum()),"bet":int((pred.get("quant_signal",pd.Series(dtype=str))=="BET").sum()),"lean":int((pred.get("quant_signal",pd.Series(dtype=str))=="LEAN").sum())}}
+    history_start=history_start or max(2018,season-5); history=client.history(history_start,season,week); ratings=OpponentAdjustedRatings(); base_train=ratings.training_frame(history); advanced=AdvancedFeatureStore(history_start,season,cache_dir=root/"cache"/"advanced"); train_df,adv_train=advanced.enrich(base_train); bundle=train_models(train_df); raw_games=client.week(season,week); games,pregame_meta=_pregame_games(raw_games,now); base_frame=ratings.upcoming_frame(games); frame,adv_live=advanced.enrich(base_frame); pred=build_predictions(games,frame,bundle); intel=MarketIntelligence(); pred,intel_meta=intel.attach(games,pred); context=ContextStore(season,schedule_frame=client.season_frame(season),cache_dir=root/"cache"/"context"); pred,ctx=context.attach(pred); pred,line_meta=attach_line_movement(pred,hist); historical_edge_report=load_or_build_edge_regime_report(reports); edge_forward_report=load_edge_forward_report(reports); edge_report=apply_forward_validation(historical_edge_report,edge_forward_report); pred=_quantize(pred,bundle,adv_live,ctx,edge_report=edge_report); pred=annotate_selected_regimes(pred,edge_report); validated_edges=current_edge_board(pred,edge_report,{"PERSISTENT_CANDIDATE"}); hypothesis_edges=current_edge_board(pred,historical_edge_report,{"HISTORICAL_HYPOTHESIS"}); watch_edges=current_edge_board(pred,historical_edge_report,{"WATCH","HISTORICAL_WATCH"}); stamp=now.isoformat(); shadow_appended=append_edge_shadow_candidates(hypothesis_edges,hist/"edge_shadow_snapshots.csv",captured_at=now); display=_display_time(now); base=f"cfb_model_{season}_week{week}"; run_tag=now.astimezone(ZoneInfo("America/Chicago")).strftime("%Y%m%d_%H%M%S_CT"); cov=_coverage(pred); status=_market_status(cov,client.odds_source)
+    meta={"model_version":MODEL_VERSION,"season":int(season),"week":int(week),"history_start":int(history_start),"historical_games":int(len(history)),"training_rows":int(len(train_df)),"upcoming_games":int(len(games)),"validation":bundle.get("validation"),"metrics":dict(bundle["metrics"]),"model_selection":{"margin_blend_weight":float(bundle["margin_weight"]),"total_blend_weight":float(bundle["total_weight"])},"calibrated_margin_sigma":float(bundle["margin_sigma"]),"calibrated_total_sigma":float(bundle["total_sigma"]),"generated_at":stamp,"updated_at_ct":display,"schedule_source":"sportsdataverse/cfbfastR-data","odds_source":client.odds_source,"odds_errors":client.odds_errors,"market_coverage":cov,"market_status":status,"advanced_features":{"train_coverage":adv_train.get("coverage",0),"live_coverage":adv_live.get("coverage",0),"dynamic_coverage":adv_live.get("dynamic_coverage",0),"feature_count":adv_live.get("feature_count",adv_train.get("feature_count",0)),"dynamic_feature_count":adv_live.get("dynamic_feature_count",adv_train.get("dynamic_feature_count",0)),"identity":adv_live.get("identity",adv_train.get("identity",{})),"sources":adv_live.get("sources",[]),"errors":list(dict.fromkeys((adv_train.get("errors") or [])+(adv_live.get("errors") or [])))},"market_intelligence":intel_meta,"pregame_filter":pregame_meta,"current_context":{"coverage":ctx.get("coverage",0),"weather_coverage":ctx.get("weather_coverage",0),"sources":ctx.get("sources",[]),"errors":ctx.get("errors",[]),"source_available":bool(ctx.get("sources"))},"line_history":line_meta,"edge_discovery":{"forward_validated_regimes":edge_report.get("persistent_regimes",0),"historical_hypothesis_regimes":historical_edge_report.get("historical_hypothesis_regimes",0),"watch_regimes":historical_edge_report.get("watch_regimes",0),"historical_watch_regimes":historical_edge_report.get("historical_watch_regimes",0),"validated_candidates":int(len(validated_edges)),"hypothesis_candidates":int(len(hypothesis_edges)),"watch_candidates":int(len(watch_edges)),"shadow_entries_appended":int(shadow_appended),"forward_validation":edge_report.get("forward_validation",{}),"methodology":historical_edge_report.get("methodology")},"quant_picks":{"strong":int((pred.get("quant_signal",pd.Series(dtype=str))=="STRONG").sum()),"bet":int((pred.get("quant_signal",pd.Series(dtype=str))=="BET").sum()),"lean":int((pred.get("quant_signal",pd.Series(dtype=str))=="LEAN").sum())}}
     pred.to_csv(out/f"{base}.csv",index=False); (out/f"{base}.json").write_text(pred.to_json(orient="records",indent=2))
     (out/"edge_regimes.json").write_text(json.dumps(edge_report,indent=2)); (docs/"edge_regimes.json").write_text(json.dumps(edge_report,indent=2))
-    persistent_edges.to_csv(out/"edge_candidates.csv",index=False); persistent_edges.to_csv(docs/"edge_candidates.csv",index=False)
-    _write_edge_html(persistent_edges,out/"edge_card.html",display); _write_edge_html(persistent_edges,docs/"edge.html",display)
+    hypothesis_edges.to_csv(out/"edge_candidates.csv",index=False); hypothesis_edges.to_csv(docs/"edge_candidates.csv",index=False)
+    validated_edges.to_csv(out/"edge_validated.csv",index=False); validated_edges.to_csv(docs/"edge_validated.csv",index=False)
+    _write_edge_html(hypothesis_edges,out/"edge_card.html",display); _write_edge_html(hypothesis_edges,docs/"edge.html",display)
     watch_edges.to_csv(out/"edge_watchlist.csv",index=False); watch_edges.to_csv(docs/"edge_watchlist.csv",index=False)
-    qcols=[c for c in ["game_id","date","away_team","home_team","model_margin_home","model_total","quant_signal","quant_market","quant_side","quant_price","quant_odds","quant_probability","quant_ev","quant_edge","selection_basis","edge_selection_override","raw_ev_best_market","raw_ev_best_side","raw_ev_best_ev","edge_regime_status","edge_regime_band","edge_regime_bets","edge_regime_roi","edge_regime_profitable_seasons","edge_regime_season_count","edge_regime_candidate","stake_units","risk_multiplier","data_quality_score","context_risk","market_book_count","policy_block_reason"] if c in pred.columns]
+    if (hist/"edge_shadow_snapshots.csv").exists():
+        (out/"edge_shadow_snapshots.csv").write_text((hist/"edge_shadow_snapshots.csv").read_text())
+        (docs/"edge_shadow_snapshots.csv").write_text((hist/"edge_shadow_snapshots.csv").read_text())
+    for name in ("edge_forward_performance.json","edge_forward_graded.csv"):
+        src=reports/name
+        if src.exists():
+            (out/name).write_text(src.read_text())
+            (docs/name).write_text(src.read_text())
+    qcols=[c for c in ["game_id","date","away_team","home_team","model_margin_home","model_total","quant_signal","quant_market","quant_side","quant_price","quant_odds","quant_probability","quant_ev","quant_edge","selection_basis","edge_selection_override","raw_ev_best_market","raw_ev_best_side","raw_ev_best_ev","edge_regime_status","edge_regime_band","edge_regime_bets","edge_regime_roi","edge_regime_profitable_seasons","edge_regime_season_count","edge_regime_verified_entry_bets","edge_regime_verified_entry_rate","edge_regime_candidate","stake_units","risk_multiplier","data_quality_score","context_risk","market_book_count","policy_block_reason"] if c in pred.columns]
     q=pred[qcols].copy() if qcols else pd.DataFrame()
     if "quant_signal" in q.columns:
         q=q[q.quant_signal!="PASS"].copy()

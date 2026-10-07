@@ -46,6 +46,9 @@ def _segment_stats(frame):
             "roi": None,
             "avg_clv": None,
             "positive_clv_rate": None,
+            "verified_entry_bets": 0,
+            "verified_entry_rate": 0.0,
+            "entry_quote_sources": {},
         }
     result = pd.to_numeric(frame.get("result"), errors="coerce")
     profit = pd.to_numeric(frame.get("profit"), errors="coerce")
@@ -54,6 +57,21 @@ def _segment_stats(frame):
     losses = int((result < 0).sum())
     pushes = int((result == 0).sum())
     units = float(profit.fillna(0).sum())
+    verified = (
+        frame.get("entry_quote_verified", pd.Series(False, index=frame.index))
+        .fillna(False)
+        .astype(str)
+        .str.lower()
+        .isin({"true", "1", "t", "yes"})
+    )
+    source_series = frame.get(
+        "entry_quote_source",
+        pd.Series("unknown", index=frame.index),
+    ).fillna("unknown").astype(str)
+    sources = {
+        str(key): int(value)
+        for key, value in source_series.value_counts(dropna=False).to_dict().items()
+    }
     return {
         "bets": int(len(frame)),
         "wins": wins,
@@ -64,6 +82,9 @@ def _segment_stats(frame):
         "roi": float(units / max(1, len(frame))),
         "avg_clv": float(clv.mean()) if len(clv) else None,
         "positive_clv_rate": float((clv > 0).mean()) if len(clv) else None,
+        "verified_entry_bets": int(verified.sum()),
+        "verified_entry_rate": float(verified.mean()) if len(frame) else 0.0,
+        "entry_quote_sources": sources,
     }
 
 
@@ -80,8 +101,10 @@ def _status(overall, seasons):
     )
     roi_value = overall.get("roi")
     avg_clv = overall.get("avg_clv")
+    verified_rate = float(overall.get("verified_entry_rate", 0.0) or 0.0)
+    verified_bets = int(overall.get("verified_entry_bets", 0) or 0)
 
-    persistent = (
+    persistent_shape = (
         int(overall.get("bets", 0)) >= PERSISTENT_MIN_BETS
         and season_count >= 3
         and min_season_bets >= PERSISTENT_MIN_SEASON_BETS
@@ -91,10 +114,12 @@ def _status(overall, seasons):
         and avg_clv is not None
         and float(avg_clv) > 0
     )
-    if persistent:
+    if persistent_shape and verified_rate >= 0.90 and verified_bets >= 150:
         return "PERSISTENT_CANDIDATE"
+    if persistent_shape:
+        return "HISTORICAL_HYPOTHESIS"
 
-    watch = (
+    watch_shape = (
         int(overall.get("bets", 0)) >= WATCH_MIN_BETS
         and season_count >= 2
         and profitable >= max(2, math.ceil(season_count * 2 / 3))
@@ -102,26 +127,32 @@ def _status(overall, seasons):
         and float(roi_value) > 0
         and (avg_clv is None or float(avg_clv) >= 0)
     )
-    return "WATCH" if watch else "UNSUPPORTED"
+    if watch_shape and verified_rate >= 0.90:
+        return "WATCH"
+    if watch_shape:
+        return "HISTORICAL_WATCH"
+    return "UNSUPPORTED"
 
 
 def build_edge_regime_report(bets):
     """Find historically persistent model-market disagreement regimes.
 
-    The edge bands are fixed before reading outcomes. A regime can only be promoted to
-    PERSISTENT_CANDIDATE when it is profitable in every represented evaluation season,
-    has meaningful per-season sample size, positive aggregate ROI, and positive CLV.
-    This report never creates a model edge and never changes the fair projection.
+    The edge bands are fixed before reading outcomes. Archive-only historical results
+    can generate hypotheses but cannot certify a live edge. PERSISTENT_CANDIDATE also
+    requires high coverage from timestamp-verified entry quotes. This report never
+    changes the fair projection.
     """
 
     data = bets.copy() if isinstance(bets, pd.DataFrame) else pd.DataFrame(bets)
     if data.empty:
         return {
-            "schema_version": 1,
+            "schema_version": 2,
             "status": "NO_SAMPLE",
             "regimes": [],
             "persistent_regimes": 0,
+            "historical_hypothesis_regimes": 0,
             "watch_regimes": 0,
+            "historical_watch_regimes": 0,
             "methodology": _methodology(),
         }
 
@@ -169,7 +200,13 @@ def build_edge_regime_report(bets):
                 }
             )
 
-    order = {"PERSISTENT_CANDIDATE": 0, "WATCH": 1, "UNSUPPORTED": 2}
+    order = {
+        "PERSISTENT_CANDIDATE": 0,
+        "HISTORICAL_HYPOTHESIS": 1,
+        "WATCH": 2,
+        "HISTORICAL_WATCH": 3,
+        "UNSUPPORTED": 4,
+    }
     regimes.sort(
         key=lambda row: (
             order.get(row["status"], 9),
@@ -178,25 +215,32 @@ def build_edge_regime_report(bets):
         )
     )
     return {
-        "schema_version": 1,
+        "schema_version": 2,
         "status": "TRACKING",
         "regimes": regimes,
         "persistent_regimes": int(
             sum(row["status"] == "PERSISTENT_CANDIDATE" for row in regimes)
         ),
+        "historical_hypothesis_regimes": int(
+            sum(row["status"] == "HISTORICAL_HYPOTHESIS" for row in regimes)
+        ),
         "watch_regimes": int(sum(row["status"] == "WATCH" for row in regimes)),
+        "historical_watch_regimes": int(
+            sum(row["status"] == "HISTORICAL_WATCH" for row in regimes)
+        ),
         "methodology": _methodology(),
     }
 
 
 def _methodology():
     return (
-        "Fixed edge bands; market-specific walk-forward bet outcomes; "
-        "PERSISTENT_CANDIDATE requires >=180 bets, >=3 seasons, >=50 bets in every "
-        "season, positive ROI in every season, >=3% aggregate ROI, and positive "
-        "average CLV. WATCH requires >=100 bets, positive aggregate ROI, and profit "
-        "in at least two-thirds of seasons. Regime evidence can prioritize research "
-        "and surface candidates but cannot create an edge or modify the fair line."
+        "Fixed edge bands; market-specific walk-forward outcomes. Archive/opening-line "
+        "results can identify HISTORICAL_HYPOTHESIS regimes but cannot steer live "
+        "selection. PERSISTENT_CANDIDATE additionally requires >=90% timestamp-verified "
+        "entry quotes and >=150 verified entries, plus >=180 total bets, >=3 seasons, "
+        ">=50 bets in every season, positive ROI in every season, >=3% aggregate ROI, "
+        "and positive average CLV. WATCH also requires >=90% verified entry coverage. "
+        "Historical evidence never changes the fair line or model probability."
     )
 
 
@@ -212,17 +256,23 @@ def write_edge_regime_report(bets, json_path, csv_path=None):
 
 
 def load_or_build_edge_regime_report(reports_dir="reports"):
+    """Load only current-schema evidence; rebuild stale reports from bet-level data."""
+
     reports = Path(reports_dir)
     path = reports / "edge_regimes.json"
     if path.exists():
         try:
-            return json.loads(path.read_text())
+            cached = json.loads(path.read_text())
+            if int(cached.get("schema_version", 0) or 0) >= 2:
+                return cached
         except Exception:
             pass
     bets_path = reports / "backtest_bets.csv"
     if bets_path.exists():
         try:
-            return build_edge_regime_report(pd.read_csv(bets_path, low_memory=False))
+            report = build_edge_regime_report(pd.read_csv(bets_path, low_memory=False))
+            path.write_text(json.dumps(report, indent=2))
+            return report
         except Exception:
             pass
     return build_edge_regime_report(pd.DataFrame())
@@ -252,6 +302,8 @@ def annotate_selected_regimes(frame, report):
         "edge_regime_roi": np.nan,
         "edge_regime_profitable_seasons": 0,
         "edge_regime_season_count": 0,
+        "edge_regime_verified_entry_bets": 0,
+        "edge_regime_verified_entry_rate": 0.0,
         "edge_regime_candidate": False,
     }
     for key, default in fields.items():
@@ -274,6 +326,12 @@ def annotate_selected_regimes(frame, report):
             regime.get("profitable_seasons", 0)
         )
         out.at[idx, "edge_regime_season_count"] = int(regime.get("season_count", 0))
+        out.at[idx, "edge_regime_verified_entry_bets"] = int(
+            regime.get("verified_entry_bets", 0) or 0
+        )
+        out.at[idx, "edge_regime_verified_entry_rate"] = float(
+            regime.get("verified_entry_rate", 0.0) or 0.0
+        )
         out.at[idx, "edge_regime_candidate"] = (
             regime.get("status") == "PERSISTENT_CANDIDATE"
         )
@@ -372,6 +430,12 @@ def current_edge_board(frame, report, statuses=None):
                     "historical_avg_clv": regime.get("avg_clv"),
                     "profitable_seasons": regime.get("profitable_seasons"),
                     "season_count": regime.get("season_count"),
+                    "verified_entry_bets": regime.get("verified_entry_bets"),
+                    "verified_entry_rate": regime.get("verified_entry_rate"),
+                    "entry_quote_sources": json.dumps(
+                        regime.get("entry_quote_sources") or {},
+                        sort_keys=True,
+                    ),
                     "currently_selected": (
                         str(game.get("quant_market") or "").lower() == market
                         and str(game.get("quant_side") or "") == str(candidate["side"])
