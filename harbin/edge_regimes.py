@@ -496,6 +496,12 @@ def annotate_selected_regimes(frame, report):
         "edge_subgroup_roi": np.nan,
         "edge_subgroup_profitable_seasons": 0,
         "edge_subgroup_season_count": 0,
+        "edge_subgroup_discovery_roi": np.nan,
+        "edge_subgroup_holdout_season": "",
+        "edge_subgroup_holdout_bets": 0,
+        "edge_subgroup_holdout_roi": np.nan,
+        "edge_subgroup_holdout_win_rate": np.nan,
+        "edge_subgroup_holdout_confirmed": False,
     }
     for key, default in fields.items():
         if key not in out.columns:
@@ -544,6 +550,24 @@ def annotate_selected_regimes(frame, report):
             )
             out.at[idx, "edge_subgroup_season_count"] = int(
                 subgroup.get("season_count", 0) or 0
+            )
+            out.at[idx, "edge_subgroup_discovery_roi"] = subgroup.get(
+                "discovery_roi"
+            )
+            out.at[idx, "edge_subgroup_holdout_season"] = str(
+                subgroup.get("holdout_season") or ""
+            )
+            out.at[idx, "edge_subgroup_holdout_bets"] = int(
+                subgroup.get("holdout_bets", 0) or 0
+            )
+            out.at[idx, "edge_subgroup_holdout_roi"] = subgroup.get(
+                "holdout_roi"
+            )
+            out.at[idx, "edge_subgroup_holdout_win_rate"] = subgroup.get(
+                "holdout_win_rate"
+            )
+            out.at[idx, "edge_subgroup_holdout_confirmed"] = bool(
+                subgroup.get("holdout_confirmed", False)
             )
     return out
 
@@ -669,6 +693,28 @@ def current_edge_board(frame, report, statuses=None, include_contraindicated=Fal
                         "profitable_seasons", 0
                     ),
                     "subgroup_season_count": (subgroup or {}).get("season_count", 0),
+                    "subgroup_validation_design": (subgroup or {}).get(
+                        "validation_design", ""
+                    ),
+                    "subgroup_discovery_seasons": "|".join(
+                        str(value)
+                        for value in (subgroup or {}).get("discovery_seasons", [])
+                    ),
+                    "subgroup_discovery_bets": (subgroup or {}).get(
+                        "discovery_bets", 0
+                    ),
+                    "subgroup_discovery_roi": (subgroup or {}).get("discovery_roi"),
+                    "subgroup_holdout_season": (subgroup or {}).get(
+                        "holdout_season", ""
+                    ),
+                    "subgroup_holdout_bets": (subgroup or {}).get("holdout_bets", 0),
+                    "subgroup_holdout_roi": (subgroup or {}).get("holdout_roi"),
+                    "subgroup_holdout_win_rate": (subgroup or {}).get(
+                        "holdout_win_rate"
+                    ),
+                    "subgroup_holdout_confirmed": bool(
+                        (subgroup or {}).get("holdout_confirmed", False)
+                    ),
                     "currently_selected": (
                         str(game.get("quant_market") or "").lower() == market
                         and str(game.get("quant_side") or "") == str(candidate["side"])
