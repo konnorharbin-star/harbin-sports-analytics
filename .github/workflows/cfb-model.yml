@@ -105,6 +105,12 @@ jobs:
             docs/tier_validation_clean.csv
             docs/live_graded_tiers.csv
             docs/live_graded_tiers_clean.csv
+            reports/edge_forward_performance.json
+            reports/edge_forward_graded.csv
+            outputs/edge_forward_performance.json
+            outputs/edge_forward_graded.csv
+            docs/edge_forward_performance.json
+            docs/edge_forward_graded.csv
           )
           for f in "${GRADE_OWNED[@]}"; do
             if git ls-files --error-unmatch "$f" >/dev/null 2>&1; then
