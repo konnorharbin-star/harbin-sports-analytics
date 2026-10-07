@@ -1,5 +1,5 @@
 import pandas as pd
-from harbin.grading import _grade_row,_clv_from_market_snapshot,_summary
+from harbin.grading import _grade_row,_clv_from_market_snapshot,_summary,_display_market_entry
 
 
 def test_grade_spread_total_moneyline():
@@ -28,3 +28,45 @@ def test_live_summary_has_uncertainty_and_drawdown():
     assert x["graded_bets"]==40
     assert x["roi_ci_95"][0] is not None
     assert x["max_drawdown"]>=0
+
+
+def test_display_market_entry_normalizes_each_published_market():
+    base = pd.Series(
+        {
+            "home_team": "Home",
+            "away_team": "Away",
+            "calibrated_home_probability": 0.60,
+            "snapshot_at": "2026-10-06T18:00:00Z",
+            "ml_badge": "STRONG",
+            "ml_team": "Home",
+            "ml_odds": -110,
+            "ml_edge_pp": 7.6,
+            "ml_est_roi": 0.14,
+            "spread_badge": "BET",
+            "spread_team": "Away",
+            "spread_line": 3.5,
+            "spread_odds": -105,
+            "spread_edge_pts": 4.0,
+            "cover_probability": 0.58,
+            "total_badge": "LEAN",
+            "total_dir": "U",
+            "market_total": 52.5,
+            "total_odds": -108,
+            "total_edge_pts": 3.0,
+            "total_probability": 0.55,
+        }
+    )
+
+    moneyline = _display_market_entry(base, "moneyline")
+    spread = _display_market_entry(base, "spread")
+    total = _display_market_entry(base, "total")
+
+    assert moneyline["tier"] == "STRONG"
+    assert moneyline["quant_side"] == "Home"
+    assert moneyline["model_probability"] == 0.60
+    assert spread["tier"] == "BET"
+    assert spread["quant_side"] == "Away"
+    assert spread["quant_price"] == 3.5
+    assert total["tier"] == "LEAN"
+    assert total["quant_side"] == "U"
+    assert total["quant_price"] == 52.5
