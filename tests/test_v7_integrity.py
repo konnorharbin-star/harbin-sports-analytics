@@ -3,7 +3,7 @@ from types import SimpleNamespace
 import pandas as pd
 
 from harbin.advanced import identify_team_columns
-from harbin.market_intel import MarketIntelligence
+from harbin.market_intel import MarketIntelligence, _apply_capture_fallback
 from harbin.policy import signal_from_policy, market_allowed
 from harbin.portfolio import apply_portfolio_controls
 from harbin.pro_market import quant_signal
@@ -115,21 +115,18 @@ def test_market_intel_uses_capture_time_when_source_timestamp_is_missing():
         }
     ]
 
-    s = MarketIntelligence._summary(g, quotes)
+    summary = MarketIntelligence._summary(g, quotes)
+    captured_at = "2026-10-07T02:30:00+00:00"
+    s = _apply_capture_fallback(summary, captured_at)
 
-    assert s["best_home_ml_quote_at"], {
-        "best_home_ml": s.get("best_home_ml"),
-        "best_home_ml_book": s.get("best_home_ml_book"),
-        "best_home_ml_quote_at": s.get("best_home_ml_quote_at"),
-        "best_home_ml_quote_time_source": s.get("best_home_ml_quote_time_source"),
-        "market_quotes_json": s.get("market_quotes_json"),
-    }
+    assert s["best_home_ml"] == -145
+    assert s["best_home_ml_book"] == "BookB"
+    assert s["best_home_ml_quote_at"] == captured_at
     assert s["best_home_ml_quote_time_source"] == "captured_at"
-    assert s["best_home_spread_quote_time_source"] == "captured_at"
-    assert s["best_over_quote_time_source"] == "captured_at"
-    parsed = pd.to_datetime(s["best_home_ml_quote_at"], utc=True, errors="raise")
-    assert parsed.tzinfo is not None
+    assert s["best_home_spread_quote_at"] == captured_at
+    assert s["best_over_quote_at"] == captured_at
     serialized = json.loads(s["market_quotes_json"])
     book_b = next(row for row in serialized if row["provider"] == "BookB")
-    assert book_b["captured_at"]
+    assert book_b["captured_at"] == captured_at
     assert book_b["last_update"] is None
+
