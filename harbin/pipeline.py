@@ -93,34 +93,34 @@ def _quantize(pred,bundle,adv_meta,ctx_meta):
 
         if _finite(r.get("consensus_home_spread")):
             consensus=float(r.consensus_home_spread); consensus_edge=float(r.model_margin_home)+consensus
-            if consensus_edge>=0:
-                line=float(r.best_home_spread) if _finite(r.get("best_home_spread")) else consensus
-                edge=float(r.model_margin_home)+line
+            if consensus_edge>=0 and _finite(r.get("best_home_spread")) and _finite(r.get("best_home_spread_odds")):
+                line=float(r.best_home_spread); edge=float(r.model_margin_home)+line
                 q["spread_team"],q["spread_line"]=r.home_team,line
-                q["spread_odds"]=float(r.best_home_spread_odds) if _finite(r.get("best_home_spread_odds")) else -110.0
-            else:
-                line=float(r.best_away_spread) if _finite(r.get("best_away_spread")) else -consensus
-                edge=line-float(r.model_margin_home)
+                q["spread_odds"]=float(r.best_home_spread_odds)
+                q["spread_edge_pts"]=max(0.0,edge); q["cover_probability"]=norm_cdf(max(0.0,edge)/conditional_margin_sigma(sm,r.model_margin_home))
+            elif consensus_edge<0 and _finite(r.get("best_away_spread")) and _finite(r.get("best_away_spread_odds")):
+                line=float(r.best_away_spread); edge=line-float(r.model_margin_home)
                 q["spread_team"],q["spread_line"]=r.away_team,line
-                q["spread_odds"]=float(r.best_away_spread_odds) if _finite(r.get("best_away_spread_odds")) else -110.0
-            q["spread_edge_pts"]=max(0.0,edge); q["cover_probability"]=norm_cdf(max(0.0,edge)/conditional_margin_sigma(sm,r.model_margin_home))
+                q["spread_odds"]=float(r.best_away_spread_odds)
+                q["spread_edge_pts"]=max(0.0,edge); q["cover_probability"]=norm_cdf(max(0.0,edge)/conditional_margin_sigma(sm,r.model_margin_home))
 
         if _finite(r.get("consensus_total")):
             consensus=float(r.consensus_total); consensus_edge=float(r.model_total)-consensus
-            if consensus_edge>=0:
-                line=float(r.best_over_total) if _finite(r.get("best_over_total")) else consensus
-                edge=float(r.model_total)-line; q["total_dir"]="O"; q["total_odds"]=float(r.best_over_odds) if _finite(r.get("best_over_odds")) else -110.0
-            else:
-                line=float(r.best_under_total) if _finite(r.get("best_under_total")) else consensus
-                edge=line-float(r.model_total); q["total_dir"]="U"; q["total_odds"]=float(r.best_under_odds) if _finite(r.get("best_under_odds")) else -110.0
-            q["market_total"]=line; q["total_edge_pts"]=max(0.0,edge); q["total_probability"]=norm_cdf(max(0.0,edge)/conditional_total_sigma(st,r.model_total))
+            if consensus_edge>=0 and _finite(r.get("best_over_total")) and _finite(r.get("best_over_odds")):
+                line=float(r.best_over_total); edge=float(r.model_total)-line
+                q["total_dir"]="O"; q["total_odds"]=float(r.best_over_odds)
+                q["market_total"]=line; q["total_edge_pts"]=max(0.0,edge); q["total_probability"]=norm_cdf(max(0.0,edge)/conditional_total_sigma(st,r.model_total))
+            elif consensus_edge<0 and _finite(r.get("best_under_total")) and _finite(r.get("best_under_odds")):
+                line=float(r.best_under_total); edge=line-float(r.model_total)
+                q["total_dir"]="U"; q["total_odds"]=float(r.best_under_odds)
+                q["market_total"]=line; q["total_edge_pts"]=max(0.0,edge); q["total_probability"]=norm_cdf(max(0.0,edge)/conditional_total_sigma(st,r.model_total))
 
         # The Cooper-style badge must describe the line actually displayed after
         # line-shopping, not the stale primary-provider line used during base build.
         for key,value in refresh_display_market_tiers(q).items():
             q[key]=value
 
-        mq=float(r.get("market_consensus_quality",.25) or .25); dq=max(.15,min(1,.58*ac+.27*mq+.15*ca)); cr=float(r.get("context_risk",r.get("availability_risk",0)) or 0); vol=float(r.get("volatility_avg",14)) if _finite(r.get("volatility_avg")) else 14.; rm=risk_multiplier(cr,dq,vol); disagreement=0.
+        mq=float(r.get("market_consensus_quality",.25) or .25); outlier_penalty=max(.65,1-.05*float(r.get("market_outlier_rejected_count",0) or 0)); dq=max(.15,min(1,(.58*ac+.27*mq+.15*ca)*outlier_penalty)); cr=float(r.get("context_risk",r.get("availability_risk",0)) or 0); vol=float(r.get("volatility_avg",14)) if _finite(r.get("volatility_avg")) else 14.; rm=risk_multiplier(cr,dq,vol); disagreement=0.
         if _finite(r.get("consensus_home_spread")): disagreement=max(disagreement,abs(float(r.model_margin_home)+float(r.consensus_home_spread)))
         if _finite(r.get("consensus_total")): disagreement=max(disagreement,abs(float(r.model_total)-float(r.consensus_total)))
         if disagreement>10: rm*=max(.5,1-.035*(disagreement-10))
@@ -152,14 +152,47 @@ def _write_output_readme(out,base,meta,pages,run_tag):
     (out/"README.md").write_text(f"# Latest CFB model output\n\n**Model:** v{meta['model_version']}  \n**Season / Week:** {meta['season']} / {meta['week']}  \n**Updated:** {meta['updated_at_ct']}  \n**Market:** {meta['market_status']}  \n**Dynamic advanced-feature live coverage:** {ac:.0%}  \n**System health:** {h.get('system_health_score','—')}/100 *(readiness, not predicted profitability)*\n\n## Use these\n- [Interactive Cooper-style table]({base}.html)\n- [Quant card](quant_card.html)\n- [Quant recommendations CSV](quant_recommendations.csv)\n- [Full model CSV]({base}.csv)\n- [Metadata / diagnostics]({base}_metadata.json)\n- [System health report](system_health.json)\n- [Market × tier forward validation](tier_performance.json)\n- [Posted market × tier matrix CSV](tier_performance.csv)\n- [Clean validation-eligible tier matrix](tier_validation_clean.csv)\n- [Posted flat-1u graded tier ledger](live_graded_tiers.csv)\n- [Clean validation-entry ledger](live_graded_tiers_clean.csv)\n\n## Fresh PNGs for mobile\n{pngs}\n\nThese filenames change on every run so GitHub mobile cannot reuse an old image preview.\n\n## Stable PNG names\n{stable_pngs}\n\nThe Cooper-style table is the reconstructed presentation layer. The Quant card is the independent EV/risk layer. Missing verified markets display **NO LINE**. Run the separate **CFB Backtest** workflow before treating signals as historically established.\n")
 
 
+def _pregame_games(games, now=None):
+    """Return only not-started games; live/in-game markets must never enter pregame picks."""
+
+    now = now or datetime.now(timezone.utc)
+    now_ts = pd.Timestamp(now)
+    if now_ts.tzinfo is None:
+        now_ts = now_ts.tz_localize("UTC")
+    else:
+        now_ts = now_ts.tz_convert("UTC")
+    upcoming=[]; started=[]; invalid=[]
+    for g in games or []:
+        if getattr(g,"completed",False):
+            continue
+        kickoff=pd.to_datetime(getattr(g,"date",None),utc=True,errors="coerce")
+        if pd.isna(kickoff):
+            invalid.append(str(getattr(g,"game_id","")))
+            continue
+        if kickoff <= now_ts:
+            started.append(str(getattr(g,"game_id","")))
+            continue
+        upcoming.append(g)
+    return upcoming, {
+        "returned_games": int(len(games or [])),
+        "upcoming_games": int(len(upcoming)),
+        "started_excluded": int(len(started)),
+        "invalid_kickoff_excluded": int(len(invalid)),
+        "started_game_ids": started,
+        "invalid_kickoff_game_ids": invalid,
+        "cutoff_utc": now_ts.isoformat(),
+    }
+
+
 def run_week(season=None,week=None,history_start=None,root="."):
     root=Path(root); out,docs,hist,reports=root/"outputs",root/"docs",root/"history",root/"reports"
     for p in (out,docs,hist,reports): p.mkdir(parents=True,exist_ok=True)
     client=SportsDataVerseClient()
     if season is None or week is None:
         ds,dw=client.detect(); season=season or ds; week=week or dw
-    history_start=history_start or max(2018,season-5); history=client.history(history_start,season,week); ratings=OpponentAdjustedRatings(); base_train=ratings.training_frame(history); advanced=AdvancedFeatureStore(history_start,season,cache_dir=root/"cache"/"advanced"); train_df,adv_train=advanced.enrich(base_train); bundle=train_models(train_df); games=[g for g in client.week(season,week) if not g.completed]; base_frame=ratings.upcoming_frame(games); frame,adv_live=advanced.enrich(base_frame); pred=build_predictions(games,frame,bundle); intel=MarketIntelligence(); pred,intel_meta=intel.attach(games,pred); context=ContextStore(season,schedule_frame=client.season_frame(season),cache_dir=root/"cache"/"context"); pred,ctx=context.attach(pred); pred,line_meta=attach_line_movement(pred,hist); pred=_quantize(pred,bundle,adv_live,ctx); now=datetime.now(timezone.utc); stamp=now.isoformat(); display=_display_time(now); base=f"cfb_model_{season}_week{week}"; run_tag=now.astimezone(ZoneInfo("America/Chicago")).strftime("%Y%m%d_%H%M%S_CT"); cov=_coverage(pred); status=_market_status(cov,client.odds_source)
-    meta={"model_version":MODEL_VERSION,"season":int(season),"week":int(week),"history_start":int(history_start),"historical_games":int(len(history)),"training_rows":int(len(train_df)),"upcoming_games":int(len(games)),"validation":bundle.get("validation"),"metrics":dict(bundle["metrics"]),"model_selection":{"margin_blend_weight":float(bundle["margin_weight"]),"total_blend_weight":float(bundle["total_weight"])},"calibrated_margin_sigma":float(bundle["margin_sigma"]),"calibrated_total_sigma":float(bundle["total_sigma"]),"generated_at":stamp,"updated_at_ct":display,"schedule_source":"sportsdataverse/cfbfastR-data","odds_source":client.odds_source,"odds_errors":client.odds_errors,"market_coverage":cov,"market_status":status,"advanced_features":{"train_coverage":adv_train.get("coverage",0),"live_coverage":adv_live.get("coverage",0),"dynamic_coverage":adv_live.get("dynamic_coverage",0),"feature_count":adv_live.get("feature_count",adv_train.get("feature_count",0)),"dynamic_feature_count":adv_live.get("dynamic_feature_count",adv_train.get("dynamic_feature_count",0)),"identity":adv_live.get("identity",adv_train.get("identity",{})),"sources":adv_live.get("sources",[]),"errors":list(dict.fromkeys((adv_train.get("errors") or [])+(adv_live.get("errors") or [])))},"market_intelligence":intel_meta,"current_context":{"coverage":ctx.get("coverage",0),"weather_coverage":ctx.get("weather_coverage",0),"sources":ctx.get("sources",[]),"errors":ctx.get("errors",[]),"source_available":bool(ctx.get("sources"))},"line_history":line_meta,"quant_picks":{"strong":int((pred.get("quant_signal",pd.Series(dtype=str))=="STRONG").sum()),"bet":int((pred.get("quant_signal",pd.Series(dtype=str))=="BET").sum()),"lean":int((pred.get("quant_signal",pd.Series(dtype=str))=="LEAN").sum())}}
+    now=datetime.now(timezone.utc)
+    history_start=history_start or max(2018,season-5); history=client.history(history_start,season,week); ratings=OpponentAdjustedRatings(); base_train=ratings.training_frame(history); advanced=AdvancedFeatureStore(history_start,season,cache_dir=root/"cache"/"advanced"); train_df,adv_train=advanced.enrich(base_train); bundle=train_models(train_df); raw_games=client.week(season,week); games,pregame_meta=_pregame_games(raw_games,now); base_frame=ratings.upcoming_frame(games); frame,adv_live=advanced.enrich(base_frame); pred=build_predictions(games,frame,bundle); intel=MarketIntelligence(); pred,intel_meta=intel.attach(games,pred); context=ContextStore(season,schedule_frame=client.season_frame(season),cache_dir=root/"cache"/"context"); pred,ctx=context.attach(pred); pred,line_meta=attach_line_movement(pred,hist); pred=_quantize(pred,bundle,adv_live,ctx); stamp=now.isoformat(); display=_display_time(now); base=f"cfb_model_{season}_week{week}"; run_tag=now.astimezone(ZoneInfo("America/Chicago")).strftime("%Y%m%d_%H%M%S_CT"); cov=_coverage(pred); status=_market_status(cov,client.odds_source)
+    meta={"model_version":MODEL_VERSION,"season":int(season),"week":int(week),"history_start":int(history_start),"historical_games":int(len(history)),"training_rows":int(len(train_df)),"upcoming_games":int(len(games)),"validation":bundle.get("validation"),"metrics":dict(bundle["metrics"]),"model_selection":{"margin_blend_weight":float(bundle["margin_weight"]),"total_blend_weight":float(bundle["total_weight"])},"calibrated_margin_sigma":float(bundle["margin_sigma"]),"calibrated_total_sigma":float(bundle["total_sigma"]),"generated_at":stamp,"updated_at_ct":display,"schedule_source":"sportsdataverse/cfbfastR-data","odds_source":client.odds_source,"odds_errors":client.odds_errors,"market_coverage":cov,"market_status":status,"advanced_features":{"train_coverage":adv_train.get("coverage",0),"live_coverage":adv_live.get("coverage",0),"dynamic_coverage":adv_live.get("dynamic_coverage",0),"feature_count":adv_live.get("feature_count",adv_train.get("feature_count",0)),"dynamic_feature_count":adv_live.get("dynamic_feature_count",adv_train.get("dynamic_feature_count",0)),"identity":adv_live.get("identity",adv_train.get("identity",{})),"sources":adv_live.get("sources",[]),"errors":list(dict.fromkeys((adv_train.get("errors") or [])+(adv_live.get("errors") or [])))},"market_intelligence":intel_meta,"pregame_filter":pregame_meta,"current_context":{"coverage":ctx.get("coverage",0),"weather_coverage":ctx.get("weather_coverage",0),"sources":ctx.get("sources",[]),"errors":ctx.get("errors",[]),"source_available":bool(ctx.get("sources"))},"line_history":line_meta,"quant_picks":{"strong":int((pred.get("quant_signal",pd.Series(dtype=str))=="STRONG").sum()),"bet":int((pred.get("quant_signal",pd.Series(dtype=str))=="BET").sum()),"lean":int((pred.get("quant_signal",pd.Series(dtype=str))=="LEAN").sum())}}
     pred.to_csv(out/f"{base}.csv",index=False); (out/f"{base}.json").write_text(pred.to_json(orient="records",indent=2)); qcols=[c for c in ["game_id","date","away_team","home_team","model_margin_home","model_total","quant_signal","quant_market","quant_side","quant_price","quant_odds","quant_probability","quant_ev","quant_edge","stake_units","risk_multiplier","data_quality_score","context_risk","market_book_count","policy_block_reason"] if c in pred.columns]; q=pred[qcols].copy() if qcols else pd.DataFrame(); q=q[q.quant_signal!="PASS"].sort_values("quant_ev",ascending=False) if "quant_signal" in q.columns else q; q.to_csv(out/"quant_recommendations.csv",index=False); _write_quant_html(pred,out/"quant_card.html",display); snap=_append_snapshot_if_changed(pred,hist/"prediction_snapshots_v4.csv",stamp); meta["snapshot_appended"]=snap
     try:
         meta["live_performance"]=grade_prediction_history(client,hist,reports)
