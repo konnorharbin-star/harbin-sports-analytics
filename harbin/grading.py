@@ -7,7 +7,7 @@ import numpy as np
 import pandas as pd
 
 from .market import american_implied, no_vig, roi
-from .tier_validation import MARKETS, TIERS, build_tier_performance
+from .tier_validation import MARKETS, TIERS, build_tier_performance, expected_display_tier
 
 
 def _safe(v):
@@ -282,6 +282,9 @@ def _grade_display_tiers(hist, finals, markets):
             profit = _profit(result, entry.get("execution_odds"), market)
             clv, clv_source = _clv_from_market_snapshot(entry, close)
             execution_clv = _execution_clv_from_market_snapshot(entry, close)
+            expected_tier = expected_display_tier(market, entry)
+            tier_consistent = expected_tier == str(entry.get("tier") or "").upper()
+            validation_eligible = tier_consistent and bool(entry.get("price_verified"))
             rows.append(
                 {
                     "game_id": gid,
@@ -296,6 +299,9 @@ def _grade_display_tiers(hist, finals, markets):
                     "execution_odds": entry.get("execution_odds"),
                     "book": entry.get("quant_book"),
                     "price_verified": entry.get("price_verified"),
+                    "expected_tier": expected_tier,
+                    "tier_consistent": tier_consistent,
+                    "validation_eligible": validation_eligible,
                     "model_probability": entry.get("model_probability"),
                     "model_edge": entry.get("model_edge"),
                     "model_ev": entry.get("model_ev"),
