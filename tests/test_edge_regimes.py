@@ -229,7 +229,7 @@ def test_supported_edge_label_is_explicit_about_persistent_regime():
 
     assert "FORWARD-VALIDATED 6-8" in html
     assert "231 hist bets" in html
-    assert "16.2% ROI" in html
+    assert "16.2% hist ROI" in html
     assert "3/3 profitable seasons" in html
     assert "selected over raw-EV alternative" in html
 
