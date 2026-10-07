@@ -4,7 +4,7 @@ import math
 import numpy as np
 
 from .execution_market import install_execution_timestamp_patch
-from .edge_regimes import match_edge_regime
+from .edge_regimes import effective_edge_status, match_edge_regime, match_edge_subgroup
 from .market import roi
 from .policy import signal_from_policy, load_policy, DEFAULT_POLICY, market_allowed
 
@@ -124,37 +124,72 @@ def select_best_market(row, risk_multiplier=1.0, policy_path=PRODUCTION_POLICY_P
     raw_best=max(candidates,key=lambda x:x["ev"])
     for candidate in candidates:
         regime=match_edge_regime(edge_report,candidate["market"],candidate["edge"]) if edge_report else None
-        candidate["edge_regime_status"]=(regime or {}).get("status","UNSUPPORTED")
+        subgroup=match_edge_subgroup(
+            edge_report,
+            candidate["market"],
+            candidate["edge"],
+            candidate["side"],
+            candidate["line"],
+            row.get("home_team"),
+            row.get("away_team"),
+        ) if edge_report else None
+        effective=effective_edge_status(regime,subgroup)
+        candidate["edge_regime_parent_status"]=(regime or {}).get("status","UNSUPPORTED")
+        candidate["edge_regime_status"]=effective
         candidate["edge_regime_band"]=(regime or {}).get("edge_band","")
         candidate["edge_regime_bets"]=int((regime or {}).get("bets",0) or 0)
         candidate["edge_regime_roi"]=(regime or {}).get("roi")
         candidate["edge_regime_profitable_seasons"]=int((regime or {}).get("profitable_seasons",0) or 0)
         candidate["edge_regime_season_count"]=int((regime or {}).get("season_count",0) or 0)
+        candidate["edge_subgroup_key"]=(subgroup or {}).get("key","")
+        candidate["edge_subgroup_status"]=(subgroup or {}).get("status","INCONCLUSIVE_SUBGROUP")
+        candidate["edge_subgroup_bets"]=int((subgroup or {}).get("bets",0) or 0)
+        candidate["edge_subgroup_roi"]=(subgroup or {}).get("roi")
+        candidate["edge_subgroup_profitable_seasons"]=int((subgroup or {}).get("profitable_seasons",0) or 0)
+        candidate["edge_subgroup_season_count"]=int((subgroup or {}).get("season_count",0) or 0)
+        candidate["edge_promotion_rank"]=(
+            2 if effective=="SUPPORTED_SUBGROUP"
+            else 1 if effective=="PERSISTENT_PARENT_ONLY"
+            else 0
+        )
 
-    persistent=[x for x in candidates if x["edge_regime_status"]=="PERSISTENT_CANDIDATE"]
-    best=max(persistent,key=lambda x:x["ev"]) if persistent else raw_best
-    override=bool(persistent) and (
+    promotable=[x for x in candidates if x["edge_promotion_rank"]>0]
+    best=max(promotable,key=lambda x:(x["edge_promotion_rank"],x["ev"])) if promotable else raw_best
+    override=bool(promotable) and (
         best["market"]!=raw_best["market"] or str(best["side"])!=str(raw_best["side"])
     )
     segment_multiplier=_market_reliability_multiplier(best["market"],best["side"])
     units=fractional_kelly_units(best["p"],best["odds"],risk_multiplier*segment_multiplier,policy_path=policy_path)
+    if best["edge_regime_status"]=="SUPPORTED_SUBGROUP":
+        selection_basis="supported_edge_subgroup"
+    elif best["edge_regime_status"]=="PERSISTENT_PARENT_ONLY":
+        selection_basis="persistent_parent_regime"
+    else:
+        selection_basis="highest_raw_ev"
     return {
         "quant_signal":best["signal"],"quant_market":best["market"],"quant_side":best["side"],"quant_book":best.get("book"),"quant_quote_at":best.get("quote_at"),
         "quant_price":best["line"],"quant_odds":best["odds"],"quant_ev":best["ev"],
         "quant_probability":best["p"],"quant_edge":best["edge"],"stake_units":round(units,2),
         "historical_segment_multiplier":segment_multiplier,
-        "selection_basis":"persistent_edge_regime" if persistent else "highest_raw_ev",
+        "selection_basis":selection_basis,
         "edge_selection_override":override,
         "raw_ev_best_market":raw_best["market"],
         "raw_ev_best_side":raw_best["side"],
         "raw_ev_best_ev":raw_best["ev"],
+        "edge_regime_parent_status":best["edge_regime_parent_status"],
         "edge_regime_status":best["edge_regime_status"],
         "edge_regime_band":best["edge_regime_band"],
         "edge_regime_bets":best["edge_regime_bets"],
         "edge_regime_roi":best["edge_regime_roi"],
         "edge_regime_profitable_seasons":best["edge_regime_profitable_seasons"],
         "edge_regime_season_count":best["edge_regime_season_count"],
-        "edge_regime_candidate":best["edge_regime_status"]=="PERSISTENT_CANDIDATE",
+        "edge_regime_candidate":best["edge_regime_status"] in {"SUPPORTED_SUBGROUP","PERSISTENT_PARENT_ONLY"},
+        "edge_subgroup_key":best["edge_subgroup_key"],
+        "edge_subgroup_status":best["edge_subgroup_status"],
+        "edge_subgroup_bets":best["edge_subgroup_bets"],
+        "edge_subgroup_roi":best["edge_subgroup_roi"],
+        "edge_subgroup_profitable_seasons":best["edge_subgroup_profitable_seasons"],
+        "edge_subgroup_season_count":best["edge_subgroup_season_count"],
         "policy_block_reason":"",
     }
 
