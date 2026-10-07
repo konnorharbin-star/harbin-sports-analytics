@@ -1,5 +1,5 @@
 import pandas as pd
-from harbin.grading import _grade_row,_clv_from_market_snapshot,_summary,_display_market_entry
+from harbin.grading import _grade_row,_clv_from_market_snapshot,_summary,_display_market_entry,_grade_display_tiers
 
 
 def test_grade_spread_total_moneyline():
@@ -117,3 +117,86 @@ def test_display_market_entry_rejects_unparseable_quote_timestamp():
 
     assert entry["price_verified"] is False
     assert entry["quote_time_source"] == "captured_at"
+
+
+def test_clean_tier_grading_uses_first_eligible_pre_kickoff_snapshot():
+    kickoff = "2026-10-10T18:00:00Z"
+    hist = pd.DataFrame(
+        [
+            {
+                "game_id": "g1",
+                "season": 2026,
+                "week": 6,
+                "date": kickoff,
+                "snapshot_at": "2026-10-10T15:00:00Z",
+                "away_team": "Away",
+                "home_team": "Home",
+                "calibrated_home_probability": 0.60,
+                "model_margin_home": 4.0,
+                "model_total": 50.0,
+                "ml_badge": "STRONG",
+                "ml_team": "Home",
+                "ml_odds": 120,
+                "ml_edge_pp": 14.5,
+                "ml_est_roi": 0.32,
+                "ml_book": float("nan"),
+                "ml_quote_at": float("nan"),
+            },
+            {
+                "game_id": "g1",
+                "season": 2026,
+                "week": 6,
+                "date": kickoff,
+                "snapshot_at": "2026-10-10T16:00:00Z",
+                "away_team": "Away",
+                "home_team": "Home",
+                "calibrated_home_probability": 0.60,
+                "model_margin_home": 6.0,
+                "model_total": 52.0,
+                "ml_badge": "STRONG",
+                "ml_team": "Home",
+                "ml_odds": 120,
+                "ml_edge_pp": 14.5,
+                "ml_est_roi": 0.32,
+                "ml_book": "Book A",
+                "ml_quote_at": "2026-10-10T15:59:00Z",
+                "ml_quote_time_source": "captured_at",
+            },
+            {
+                "game_id": "g1",
+                "season": 2026,
+                "week": 6,
+                "date": kickoff,
+                "snapshot_at": "2026-10-10T17:00:00Z",
+                "away_team": "Away",
+                "home_team": "Home",
+                "calibrated_home_probability": 0.60,
+                "model_margin_home": 8.0,
+                "model_total": 54.0,
+                "ml_badge": "STRONG",
+                "ml_team": "Home",
+                "ml_odds": 125,
+                "ml_edge_pp": 15.6,
+                "ml_est_roi": 0.35,
+                "ml_book": "Book B",
+                "ml_quote_at": "2026-10-10T16:59:00Z",
+                "ml_quote_time_source": "captured_at",
+            },
+        ]
+    )
+    hist["_ts"] = pd.to_datetime(hist["snapshot_at"], utc=True)
+    finals = {"g1": (27.0, 20.0)}
+
+    posted = _grade_display_tiers(hist, finals, pd.DataFrame(), clean_only=False)
+    clean = _grade_display_tiers(hist, finals, pd.DataFrame(), clean_only=True)
+
+    posted_ml = posted[posted["market"] == "moneyline"].iloc[0]
+    clean_ml = clean[clean["market"] == "moneyline"].iloc[0]
+
+    assert posted_ml["entry_snapshot"] == "2026-10-10T15:00:00Z"
+    assert bool(posted_ml["validation_eligible"]) is False
+    assert clean_ml["entry_snapshot"] == "2026-10-10T16:00:00Z"
+    assert bool(clean_ml["validation_eligible"]) is True
+    assert clean_ml["book"] == "Book A"
+    assert clean_ml["projected_margin_home"] == 6.0
+    assert clean_ml["projected_total"] == 52.0
