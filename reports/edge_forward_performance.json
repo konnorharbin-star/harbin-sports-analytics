@@ -1,8 +1,31 @@
 {
-  "schema_version": 1,
+  "schema_version": 2,
   "status": "PENDING_FORWARD",
-  "observed_rows": 0,
+  "observed_rows": 20,
   "clean_entries": 0,
   "graded_bets": 0,
-  "note": "No forward edge candidate history exists yet."
+  "wins": 0,
+  "losses": 0,
+  "pushes": 0,
+  "units": 0.0,
+  "roi": null,
+  "win_rate": null,
+  "avg_clv_proxy": null,
+  "positive_clv_rate": null,
+  "clv_samples": 0,
+  "avg_execution_clv": null,
+  "positive_execution_clv_rate": null,
+  "execution_clv_samples": 0,
+  "roi_ci_95": [
+    null,
+    null
+  ],
+  "max_drawdown": 0.0,
+  "by_edge_class": {},
+  "by_price_evidence": {},
+  "by_reliability": {},
+  "by_subgroup": {},
+  "by_market": {},
+  "methodology": "First provenance-complete pre-kickoff observation per game/market; schema v2 preserves CORE/PLAUSIBLE/parent-only price class at entry; flat 1u risk at the observed executable price; results only after final; CLV uses the latest timestamp-valid pre-kickoff market snapshot. Historical regime statistics never alter forward P/L. FORWARD_VALIDATED requires >=100 graded bets, positive 95% ROI lower bound, and positive average execution CLV.",
+  "note": "Forward edge validation is independent evidence. It does not authorize production staking by itself."
 }
