@@ -1,27 +1,27 @@
 {
   "status": "OK",
-  "live_readiness_score": 94.9,
+  "live_readiness_score": 94.7,
   "scores": {
     "market_coverage": 94.73684210526316,
     "advanced_coverage": 100.0,
     "multi_book": 98.24561403508771,
     "context": 100.0,
-    "calibration": 84.45441996626009,
+    "calibration": 84.45441996626026,
     "freshness": 100.0,
     "drift_margin": 98.5,
     "drift_total": 90.9,
     "drift_probability": 99.3,
     "distribution_stability": 96.2,
-    "output_completeness": 90.27975343764818
+    "output_completeness": 89.10433979686057
   },
   "drift_details": {
     "margin": {
       "stability_score": 98.5,
       "mean_z": 0.029,
       "std_ratio": 0.9683,
-      "live_mean": 4.355031977491928,
+      "live_mean": 4.355031977491922,
       "reference_mean": 4.007587882019203,
-      "live_std": 11.613978827637336,
+      "live_std": 11.613978827637327,
       "reference_std": 11.99409006138559,
       "live_n": 57,
       "reference_n": 2398
@@ -30,9 +30,9 @@
       "stability_score": 90.9,
       "mean_z": 0.1714,
       "std_ratio": 0.8242,
-      "live_mean": 52.63153363221129,
+      "live_mean": 52.63153363221127,
       "reference_mean": 53.69890163853031,
-      "live_std": 5.1326358888525405,
+      "live_std": 5.132635888852556,
       "reference_std": 6.227517524699614,
       "live_n": 57,
       "reference_n": 2398

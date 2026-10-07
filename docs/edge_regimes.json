@@ -1,5 +1,5 @@
 {
-  "schema_version": 2,
+  "schema_version": 3,
   "status": "TRACKING",
   "regimes": [
     {
@@ -73,6 +73,20 @@
           "season_count": 3,
           "profitable_seasons": 2,
           "min_season_bets": 3,
+          "validation_design": "latest_season_holdout",
+          "discovery_seasons": [
+            "2023",
+            "2024"
+          ],
+          "discovery_bets": 12,
+          "discovery_roi": -0.12121212121212117,
+          "discovery_win_rate": 0.45454545454545453,
+          "discovery_profitable_seasons": 1,
+          "holdout_season": "2025",
+          "holdout_bets": 7,
+          "holdout_roi": 0.6363636363636365,
+          "holdout_win_rate": 0.8571428571428571,
+          "holdout_confirmed": false,
           "by_season": {
             "2023": {
               "bets": 9,
@@ -126,6 +140,20 @@
           "season_count": 3,
           "profitable_seasons": 3,
           "min_season_bets": 18,
+          "validation_design": "latest_season_holdout",
+          "discovery_seasons": [
+            "2023",
+            "2024"
+          ],
+          "discovery_bets": 38,
+          "discovery_roi": 0.23205741626794263,
+          "discovery_win_rate": 0.6486486486486487,
+          "discovery_profitable_seasons": 2,
+          "holdout_season": "2025",
+          "holdout_bets": 21,
+          "holdout_roi": 0.7272727272727275,
+          "holdout_win_rate": 0.9047619047619048,
+          "holdout_confirmed": true,
           "by_season": {
             "2023": {
               "bets": 20,
@@ -179,6 +207,17 @@
           "season_count": 1,
           "profitable_seasons": 0,
           "min_season_bets": 1,
+          "validation_design": "latest_season_holdout",
+          "discovery_seasons": [],
+          "discovery_bets": 0,
+          "discovery_roi": null,
+          "discovery_win_rate": null,
+          "discovery_profitable_seasons": 0,
+          "holdout_season": "2024",
+          "holdout_bets": 1,
+          "holdout_roi": -1.0,
+          "holdout_win_rate": 0.0,
+          "holdout_confirmed": false,
           "by_season": {
             "2024": {
               "bets": 1,
@@ -210,6 +249,20 @@
           "season_count": 3,
           "profitable_seasons": 3,
           "min_season_bets": 25,
+          "validation_design": "latest_season_holdout",
+          "discovery_seasons": [
+            "2023",
+            "2024"
+          ],
+          "discovery_bets": 64,
+          "discovery_roi": 0.19318181818181823,
+          "discovery_win_rate": 0.625,
+          "discovery_profitable_seasons": 2,
+          "holdout_season": "2025",
+          "holdout_bets": 25,
+          "holdout_roi": 0.22181818181818186,
+          "holdout_win_rate": 0.64,
+          "holdout_confirmed": true,
           "by_season": {
             "2023": {
               "bets": 36,
@@ -263,6 +316,20 @@
           "season_count": 3,
           "profitable_seasons": 0,
           "min_season_bets": 12,
+          "validation_design": "latest_season_holdout",
+          "discovery_seasons": [
+            "2023",
+            "2024"
+          ],
+          "discovery_bets": 42,
+          "discovery_roi": -0.11255411255411252,
+          "discovery_win_rate": 0.4634146341463415,
+          "discovery_profitable_seasons": 0,
+          "holdout_season": "2025",
+          "holdout_bets": 21,
+          "holdout_roi": -0.09090909090909087,
+          "holdout_win_rate": 0.47619047619047616,
+          "holdout_confirmed": true,
           "by_season": {
             "2023": {
               "bets": 30,
@@ -482,6 +549,20 @@
           "season_count": 3,
           "profitable_seasons": 1,
           "min_season_bets": 14,
+          "validation_design": "latest_season_holdout",
+          "discovery_seasons": [
+            "2023",
+            "2024"
+          ],
+          "discovery_bets": 38,
+          "discovery_roi": -0.019138755980861205,
+          "discovery_win_rate": 0.5135135135135135,
+          "discovery_profitable_seasons": 1,
+          "holdout_season": "2025",
+          "holdout_bets": 14,
+          "holdout_roi": -0.045454545454545414,
+          "holdout_win_rate": 0.5,
+          "holdout_confirmed": false,
           "by_season": {
             "2023": {
               "bets": 18,
@@ -535,6 +616,20 @@
           "season_count": 3,
           "profitable_seasons": 2,
           "min_season_bets": 28,
+          "validation_design": "latest_season_holdout",
+          "discovery_seasons": [
+            "2023",
+            "2024"
+          ],
+          "discovery_bets": 59,
+          "discovery_roi": 0.03543913713405243,
+          "discovery_win_rate": 0.5423728813559322,
+          "discovery_profitable_seasons": 2,
+          "holdout_season": "2025",
+          "holdout_bets": 41,
+          "holdout_roi": -0.022172949002217255,
+          "holdout_win_rate": 0.5121951219512195,
+          "holdout_confirmed": false,
           "by_season": {
             "2023": {
               "bets": 28,
@@ -588,6 +683,17 @@
           "season_count": 1,
           "profitable_seasons": 1,
           "min_season_bets": 1,
+          "validation_design": "latest_season_holdout",
+          "discovery_seasons": [],
+          "discovery_bets": 0,
+          "discovery_roi": null,
+          "discovery_win_rate": null,
+          "discovery_profitable_seasons": 0,
+          "holdout_season": "2024",
+          "holdout_bets": 1,
+          "holdout_roi": 0.9090909090909092,
+          "holdout_win_rate": 1.0,
+          "holdout_confirmed": false,
           "by_season": {
             "2024": {
               "bets": 1,
@@ -619,6 +725,20 @@
           "season_count": 3,
           "profitable_seasons": 3,
           "min_season_bets": 31,
+          "validation_design": "latest_season_holdout",
+          "discovery_seasons": [
+            "2023",
+            "2024"
+          ],
+          "discovery_bets": 63,
+          "discovery_roi": 0.12121212121212126,
+          "discovery_win_rate": 0.5873015873015873,
+          "discovery_profitable_seasons": 2,
+          "holdout_season": "2025",
+          "holdout_bets": 31,
+          "holdout_roi": 0.017595307917888606,
+          "holdout_win_rate": 0.5333333333333333,
+          "holdout_confirmed": true,
           "by_season": {
             "2023": {
               "bets": 31,
@@ -672,6 +792,20 @@
           "season_count": 3,
           "profitable_seasons": 1,
           "min_season_bets": 19,
+          "validation_design": "latest_season_holdout",
+          "discovery_seasons": [
+            "2023",
+            "2024"
+          ],
+          "discovery_bets": 40,
+          "discovery_roi": -0.14090909090909087,
+          "discovery_win_rate": 0.45,
+          "discovery_profitable_seasons": 0,
+          "holdout_season": "2025",
+          "holdout_bets": 20,
+          "holdout_roi": 0.1454545454545455,
+          "holdout_win_rate": 0.6,
+          "holdout_confirmed": false,
           "by_season": {
             "2023": {
               "bets": 19,
@@ -781,6 +915,20 @@
           "season_count": 3,
           "profitable_seasons": 2,
           "min_season_bets": 4,
+          "validation_design": "latest_season_holdout",
+          "discovery_seasons": [
+            "2023",
+            "2024"
+          ],
+          "discovery_bets": 14,
+          "discovery_roi": 0.3636363636363637,
+          "discovery_win_rate": 0.7142857142857143,
+          "discovery_profitable_seasons": 2,
+          "holdout_season": "2025",
+          "holdout_bets": 4,
+          "holdout_roi": -0.5227272727272727,
+          "holdout_win_rate": 0.25,
+          "holdout_confirmed": false,
           "by_season": {
             "2023": {
               "bets": 7,
@@ -834,6 +982,20 @@
           "season_count": 3,
           "profitable_seasons": 1,
           "min_season_bets": 6,
+          "validation_design": "latest_season_holdout",
+          "discovery_seasons": [
+            "2023",
+            "2024"
+          ],
+          "discovery_bets": 13,
+          "discovery_roi": 0.027972027972028017,
+          "discovery_win_rate": 0.5384615384615384,
+          "discovery_profitable_seasons": 1,
+          "holdout_season": "2025",
+          "holdout_bets": 10,
+          "holdout_roi": -0.23636363636363633,
+          "holdout_win_rate": 0.4,
+          "holdout_confirmed": false,
           "by_season": {
             "2023": {
               "bets": 7,
@@ -887,6 +1049,20 @@
           "season_count": 3,
           "profitable_seasons": 2,
           "min_season_bets": 16,
+          "validation_design": "latest_season_holdout",
+          "discovery_seasons": [
+            "2023",
+            "2024"
+          ],
+          "discovery_bets": 38,
+          "discovery_roi": 0.08133971291866034,
+          "discovery_win_rate": 0.5675675675675675,
+          "discovery_profitable_seasons": 1,
+          "holdout_season": "2025",
+          "holdout_bets": 19,
+          "holdout_roi": 0.057416267942583775,
+          "holdout_win_rate": 0.5555555555555556,
+          "holdout_confirmed": false,
           "by_season": {
             "2023": {
               "bets": 22,
@@ -940,6 +1116,20 @@
           "season_count": 3,
           "profitable_seasons": 2,
           "min_season_bets": 11,
+          "validation_design": "latest_season_holdout",
+          "discovery_seasons": [
+            "2023",
+            "2024"
+          ],
+          "discovery_bets": 23,
+          "discovery_roi": 0.37154150197628466,
+          "discovery_win_rate": 0.7272727272727273,
+          "discovery_profitable_seasons": 2,
+          "holdout_season": "2025",
+          "holdout_bets": 18,
+          "holdout_roi": -0.1515151515151515,
+          "holdout_win_rate": 0.4444444444444444,
+          "holdout_confirmed": false,
           "by_season": {
             "2023": {
               "bets": 11,
@@ -1379,6 +1569,20 @@
           "season_count": 3,
           "profitable_seasons": 0,
           "min_season_bets": 18,
+          "validation_design": "latest_season_holdout",
+          "discovery_seasons": [
+            "2023",
+            "2024"
+          ],
+          "discovery_bets": 39,
+          "discovery_roi": -0.11888111888111884,
+          "discovery_win_rate": 0.46153846153846156,
+          "discovery_profitable_seasons": 0,
+          "holdout_season": "2025",
+          "holdout_bets": 26,
+          "holdout_roi": -0.26573426573426573,
+          "holdout_win_rate": 0.38461538461538464,
+          "holdout_confirmed": true,
           "by_season": {
             "2023": {
               "bets": 21,
@@ -1432,6 +1636,20 @@
           "season_count": 3,
           "profitable_seasons": 0,
           "min_season_bets": 21,
+          "validation_design": "latest_season_holdout",
+          "discovery_seasons": [
+            "2023",
+            "2024"
+          ],
+          "discovery_bets": 54,
+          "discovery_roi": -0.11616161616161612,
+          "discovery_win_rate": 0.46296296296296297,
+          "discovery_profitable_seasons": 0,
+          "holdout_season": "2025",
+          "holdout_bets": 28,
+          "holdout_roi": -0.045454545454545414,
+          "holdout_win_rate": 0.5,
+          "holdout_confirmed": true,
           "by_season": {
             "2023": {
               "bets": 21,
@@ -1485,6 +1703,19 @@
           "season_count": 2,
           "profitable_seasons": 2,
           "min_season_bets": 1,
+          "validation_design": "latest_season_holdout",
+          "discovery_seasons": [
+            "2023"
+          ],
+          "discovery_bets": 1,
+          "discovery_roi": 0.9090909090909092,
+          "discovery_win_rate": 1.0,
+          "discovery_profitable_seasons": 1,
+          "holdout_season": "2024",
+          "holdout_bets": 1,
+          "holdout_roi": 0.9090909090909092,
+          "holdout_win_rate": 1.0,
+          "holdout_confirmed": false,
           "by_season": {
             "2023": {
               "bets": 1,
@@ -1527,6 +1758,17 @@
           "season_count": 1,
           "profitable_seasons": 1,
           "min_season_bets": 1,
+          "validation_design": "latest_season_holdout",
+          "discovery_seasons": [],
+          "discovery_bets": 0,
+          "discovery_roi": null,
+          "discovery_win_rate": null,
+          "discovery_profitable_seasons": 0,
+          "holdout_season": "2024",
+          "holdout_bets": 1,
+          "holdout_roi": 0.9090909090909092,
+          "holdout_win_rate": 1.0,
+          "holdout_confirmed": false,
           "by_season": {
             "2024": {
               "bets": 1,
@@ -1558,6 +1800,20 @@
           "season_count": 3,
           "profitable_seasons": 1,
           "min_season_bets": 33,
+          "validation_design": "latest_season_holdout",
+          "discovery_seasons": [
+            "2023",
+            "2024"
+          ],
+          "discovery_bets": 75,
+          "discovery_roi": -0.2351515151515151,
+          "discovery_win_rate": 0.3972602739726027,
+          "discovery_profitable_seasons": 0,
+          "holdout_season": "2025",
+          "holdout_bets": 46,
+          "holdout_roi": 0.12252964426877475,
+          "holdout_win_rate": 0.5909090909090909,
+          "holdout_confirmed": false,
           "by_season": {
             "2023": {
               "bets": 42,
@@ -1611,6 +1867,20 @@
           "season_count": 3,
           "profitable_seasons": 0,
           "min_season_bets": 23,
+          "validation_design": "latest_season_holdout",
+          "discovery_seasons": [
+            "2023",
+            "2024"
+          ],
+          "discovery_bets": 49,
+          "discovery_roi": -0.20037105751391462,
+          "discovery_win_rate": 0.4166666666666667,
+          "discovery_profitable_seasons": 0,
+          "holdout_season": "2025",
+          "holdout_bets": 25,
+          "holdout_roi": -0.15999999999999998,
+          "holdout_win_rate": 0.44,
+          "holdout_confirmed": true,
           "by_season": {
             "2023": {
               "bets": 26,
@@ -1720,6 +1990,20 @@
           "season_count": 3,
           "profitable_seasons": 2,
           "min_season_bets": 9,
+          "validation_design": "latest_season_holdout",
+          "discovery_seasons": [
+            "2023",
+            "2024"
+          ],
+          "discovery_bets": 26,
+          "discovery_roi": -0.006993006993006952,
+          "discovery_win_rate": 0.52,
+          "discovery_profitable_seasons": 1,
+          "holdout_season": "2025",
+          "holdout_bets": 9,
+          "holdout_roi": 0.06060606060606065,
+          "holdout_win_rate": 0.5555555555555556,
+          "holdout_confirmed": false,
           "by_season": {
             "2023": {
               "bets": 13,
@@ -1773,6 +2057,20 @@
           "season_count": 3,
           "profitable_seasons": 1,
           "min_season_bets": 10,
+          "validation_design": "latest_season_holdout",
+          "discovery_seasons": [
+            "2023",
+            "2024"
+          ],
+          "discovery_bets": 38,
+          "discovery_roi": -0.24641148325358841,
+          "discovery_win_rate": 0.39473684210526316,
+          "discovery_profitable_seasons": 0,
+          "holdout_season": "2025",
+          "holdout_bets": 10,
+          "holdout_roi": 0.7181818181818183,
+          "holdout_win_rate": 0.9,
+          "holdout_confirmed": false,
           "by_season": {
             "2023": {
               "bets": 22,
@@ -1826,6 +2124,17 @@
           "season_count": 1,
           "profitable_seasons": 0,
           "min_season_bets": 1,
+          "validation_design": "latest_season_holdout",
+          "discovery_seasons": [],
+          "discovery_bets": 0,
+          "discovery_roi": null,
+          "discovery_win_rate": null,
+          "discovery_profitable_seasons": 0,
+          "holdout_season": "2024",
+          "holdout_bets": 1,
+          "holdout_roi": -1.0,
+          "holdout_win_rate": 0.0,
+          "holdout_confirmed": false,
           "by_season": {
             "2024": {
               "bets": 1,
@@ -1857,6 +2166,20 @@
           "season_count": 3,
           "profitable_seasons": 1,
           "min_season_bets": 24,
+          "validation_design": "latest_season_holdout",
+          "discovery_seasons": [
+            "2023",
+            "2024"
+          ],
+          "discovery_bets": 58,
+          "discovery_roi": -0.026645768025078332,
+          "discovery_win_rate": 0.509090909090909,
+          "discovery_profitable_seasons": 1,
+          "holdout_season": "2025",
+          "holdout_bets": 35,
+          "holdout_roi": -0.01818181818181814,
+          "holdout_win_rate": 0.5142857142857142,
+          "holdout_confirmed": false,
           "by_season": {
             "2023": {
               "bets": 24,
@@ -1910,6 +2233,20 @@
           "season_count": 3,
           "profitable_seasons": 1,
           "min_season_bets": 9,
+          "validation_design": "latest_season_holdout",
+          "discovery_seasons": [
+            "2023",
+            "2024"
+          ],
+          "discovery_bets": 22,
+          "discovery_roi": -0.045454545454545414,
+          "discovery_win_rate": 0.5,
+          "discovery_profitable_seasons": 1,
+          "holdout_season": "2025",
+          "holdout_bets": 16,
+          "holdout_roi": -0.045454545454545414,
+          "holdout_win_rate": 0.5,
+          "holdout_confirmed": false,
           "by_season": {
             "2023": {
               "bets": 13,
@@ -2019,6 +2356,20 @@
           "season_count": 3,
           "profitable_seasons": 0,
           "min_season_bets": 3,
+          "validation_design": "latest_season_holdout",
+          "discovery_seasons": [
+            "2023",
+            "2024"
+          ],
+          "discovery_bets": 22,
+          "discovery_roi": -0.39256198347107424,
+          "discovery_win_rate": 0.3181818181818182,
+          "discovery_profitable_seasons": 0,
+          "holdout_season": "2025",
+          "holdout_bets": 3,
+          "holdout_roi": -0.3636363636363636,
+          "holdout_win_rate": 0.3333333333333333,
+          "holdout_confirmed": false,
           "by_season": {
             "2023": {
               "bets": 14,
@@ -2072,6 +2423,20 @@
           "season_count": 3,
           "profitable_seasons": 1,
           "min_season_bets": 13,
+          "validation_design": "latest_season_holdout",
+          "discovery_seasons": [
+            "2023",
+            "2024"
+          ],
+          "discovery_bets": 31,
+          "discovery_roi": 0.049853372434017634,
+          "discovery_win_rate": 0.5517241379310345,
+          "discovery_profitable_seasons": 1,
+          "holdout_season": "2025",
+          "holdout_bets": 13,
+          "holdout_roi": -0.41258741258741255,
+          "holdout_win_rate": 0.3076923076923077,
+          "holdout_confirmed": false,
           "by_season": {
             "2023": {
               "bets": 18,
@@ -2125,6 +2490,17 @@
           "season_count": 1,
           "profitable_seasons": 1,
           "min_season_bets": 2,
+          "validation_design": "latest_season_holdout",
+          "discovery_seasons": [],
+          "discovery_bets": 0,
+          "discovery_roi": null,
+          "discovery_win_rate": null,
+          "discovery_profitable_seasons": 0,
+          "holdout_season": "2024",
+          "holdout_bets": 2,
+          "holdout_roi": 0.9090909090909092,
+          "holdout_win_rate": 1.0,
+          "holdout_confirmed": false,
           "by_season": {
             "2024": {
               "bets": 2,
@@ -2156,6 +2532,20 @@
           "season_count": 3,
           "profitable_seasons": 2,
           "min_season_bets": 17,
+          "validation_design": "latest_season_holdout",
+          "discovery_seasons": [
+            "2023",
+            "2024"
+          ],
+          "discovery_bets": 38,
+          "discovery_roi": -0.14593301435406691,
+          "discovery_win_rate": 0.4473684210526316,
+          "discovery_profitable_seasons": 1,
+          "holdout_season": "2025",
+          "holdout_bets": 22,
+          "holdout_roi": 0.04132231404958682,
+          "holdout_win_rate": 0.5454545454545454,
+          "holdout_confirmed": false,
           "by_season": {
             "2023": {
               "bets": 21,
@@ -2209,6 +2599,20 @@
           "season_count": 3,
           "profitable_seasons": 2,
           "min_season_bets": 8,
+          "validation_design": "latest_season_holdout",
+          "discovery_seasons": [
+            "2023",
+            "2024"
+          ],
+          "discovery_bets": 25,
+          "discovery_roi": 0.07272727272727277,
+          "discovery_win_rate": 0.5652173913043478,
+          "discovery_profitable_seasons": 2,
+          "holdout_season": "2025",
+          "holdout_bets": 13,
+          "holdout_roi": -0.11888111888111884,
+          "holdout_win_rate": 0.46153846153846156,
+          "holdout_confirmed": false,
           "by_season": {
             "2023": {
               "bets": 8,
@@ -2318,6 +2722,19 @@
           "season_count": 2,
           "profitable_seasons": 1,
           "min_season_bets": 3,
+          "validation_design": "latest_season_holdout",
+          "discovery_seasons": [
+            "2023"
+          ],
+          "discovery_bets": 7,
+          "discovery_roi": -0.1818181818181818,
+          "discovery_win_rate": 0.42857142857142855,
+          "discovery_profitable_seasons": 0,
+          "holdout_season": "2024",
+          "holdout_bets": 3,
+          "holdout_roi": 0.27272727272727276,
+          "holdout_win_rate": 0.6666666666666666,
+          "holdout_confirmed": false,
           "by_season": {
             "2023": {
               "bets": 7,
@@ -2360,6 +2777,20 @@
           "season_count": 3,
           "profitable_seasons": 1,
           "min_season_bets": 2,
+          "validation_design": "latest_season_holdout",
+          "discovery_seasons": [
+            "2023",
+            "2024"
+          ],
+          "discovery_bets": 6,
+          "discovery_roi": 0.27272727272727276,
+          "discovery_win_rate": 0.6666666666666666,
+          "discovery_profitable_seasons": 1,
+          "holdout_season": "2025",
+          "holdout_bets": 8,
+          "holdout_roi": -0.045454545454545414,
+          "holdout_win_rate": 0.5,
+          "holdout_confirmed": false,
           "by_season": {
             "2023": {
               "bets": 4,
@@ -2413,6 +2844,20 @@
           "season_count": 3,
           "profitable_seasons": 2,
           "min_season_bets": 16,
+          "validation_design": "latest_season_holdout",
+          "discovery_seasons": [
+            "2023",
+            "2024"
+          ],
+          "discovery_bets": 34,
+          "discovery_roi": -0.01604278074866306,
+          "discovery_win_rate": 0.5151515151515151,
+          "discovery_profitable_seasons": 1,
+          "holdout_season": "2025",
+          "holdout_bets": 18,
+          "holdout_roi": 0.06060606060606065,
+          "holdout_win_rate": 0.5555555555555556,
+          "holdout_confirmed": false,
           "by_season": {
             "2023": {
               "bets": 16,
@@ -2466,6 +2911,20 @@
           "season_count": 3,
           "profitable_seasons": 0,
           "min_season_bets": 10,
+          "validation_design": "latest_season_holdout",
+          "discovery_seasons": [
+            "2023",
+            "2024"
+          ],
+          "discovery_bets": 31,
+          "discovery_roi": -0.19941348973607034,
+          "discovery_win_rate": 0.41935483870967744,
+          "discovery_profitable_seasons": 0,
+          "holdout_season": "2025",
+          "holdout_bets": 10,
+          "holdout_roi": -0.045454545454545414,
+          "holdout_win_rate": 0.5,
+          "holdout_confirmed": false,
           "by_season": {
             "2023": {
               "bets": 17,
@@ -2575,6 +3034,17 @@
           "season_count": 1,
           "profitable_seasons": 0,
           "min_season_bets": 1,
+          "validation_design": "latest_season_holdout",
+          "discovery_seasons": [],
+          "discovery_bets": 0,
+          "discovery_roi": null,
+          "discovery_win_rate": null,
+          "discovery_profitable_seasons": 0,
+          "holdout_season": "2023",
+          "holdout_bets": 1,
+          "holdout_roi": -1.0,
+          "holdout_win_rate": 0.0,
+          "holdout_confirmed": false,
           "by_season": {
             "2023": {
               "bets": 1,
@@ -2606,6 +3076,20 @@
           "season_count": 3,
           "profitable_seasons": 2,
           "min_season_bets": 1,
+          "validation_design": "latest_season_holdout",
+          "discovery_seasons": [
+            "2023",
+            "2024"
+          ],
+          "discovery_bets": 3,
+          "discovery_roi": 0.27272727272727276,
+          "discovery_win_rate": 0.6666666666666666,
+          "discovery_profitable_seasons": 1,
+          "holdout_season": "2025",
+          "holdout_bets": 1,
+          "holdout_roi": 0.9090909090909092,
+          "holdout_win_rate": 1.0,
+          "holdout_confirmed": false,
           "by_season": {
             "2023": {
               "bets": 2,
@@ -2659,6 +3143,20 @@
           "season_count": 3,
           "profitable_seasons": 3,
           "min_season_bets": 5,
+          "validation_design": "latest_season_holdout",
+          "discovery_seasons": [
+            "2023",
+            "2024"
+          ],
+          "discovery_bets": 11,
+          "discovery_roi": 0.5619834710743802,
+          "discovery_win_rate": 0.8181818181818182,
+          "discovery_profitable_seasons": 2,
+          "holdout_season": "2025",
+          "holdout_bets": 5,
+          "holdout_roi": 0.1454545454545455,
+          "holdout_win_rate": 0.6,
+          "holdout_confirmed": false,
           "by_season": {
             "2023": {
               "bets": 5,
@@ -2712,6 +3210,19 @@
           "season_count": 2,
           "profitable_seasons": 1,
           "min_season_bets": 3,
+          "validation_design": "latest_season_holdout",
+          "discovery_seasons": [
+            "2024"
+          ],
+          "discovery_bets": 6,
+          "discovery_roi": 0.27272727272727276,
+          "discovery_win_rate": 0.6666666666666666,
+          "discovery_profitable_seasons": 1,
+          "holdout_season": "2025",
+          "holdout_bets": 3,
+          "holdout_roi": -0.3636363636363636,
+          "holdout_win_rate": 0.3333333333333333,
+          "holdout_confirmed": false,
           "by_season": {
             "2024": {
               "bets": 6,
@@ -3072,5 +3583,5 @@
   ],
   "persistent_regimes": 1,
   "watch_regimes": 5,
-  "methodology": "Fixed edge bands; market-specific walk-forward bet outcomes; PERSISTENT_CANDIDATE requires >=180 bets, >=3 seasons, >=50 bets in every season, positive ROI in every season, >=3% aggregate ROI, and positive average CLV. WATCH requires >=100 bets, positive aggregate ROI, and profit in at least two-thirds of seasons. Spread parent regimes are decomposed into favorite/underdog \u00d7 home/away children. A child is SUPPORTED_SUBGROUP with >=45 bets, >=12 bets per season across >=3 seasons, profit in every season, >=5% aggregate ROI, and positive average CLV; it is CONTRAINDICATED_SUBGROUP with the same sample floor, losses in every season, and <=-3% aggregate ROI. Regime evidence can prioritize research and surface candidates but cannot create an edge, modify the fair line, probability, EV, or inflate stake."
+  "methodology": "Fixed edge bands; market-specific walk-forward bet outcomes; PERSISTENT_CANDIDATE requires >=180 bets, >=3 seasons, >=50 bets in every season, positive ROI in every season, >=3% aggregate ROI, and positive average CLV. WATCH requires >=100 bets, positive aggregate ROI, and profit in at least two-thirds of seasons. Spread parent regimes are decomposed into favorite/underdog \u00d7 home/away children using chronological confirmation: all but the latest represented season are discovery and the latest season is a holdout. SUPPORTED_SUBGROUP requires >=45 total bets, >=2 discovery seasons with >=12 bets each, >=5% discovery ROI with every discovery season profitable, >=12 holdout bets with positive holdout ROI, and positive full-sample CLV. CONTRAINDICATED_SUBGROUP requires the same sample floor, every discovery season negative with <=-3% discovery ROI, a negative holdout ROI, and <=-3% full-sample ROI. Regime evidence can prioritize research and surface candidates but cannot create an edge, modify the fair line, probability, EV, or inflate stake."
 }
