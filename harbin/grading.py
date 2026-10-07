@@ -6,7 +6,8 @@ import math
 import numpy as np
 import pandas as pd
 
-from .market import american_implied, no_vig
+from .market import american_implied, no_vig, roi
+from .tier_validation import MARKETS, TIERS, build_tier_performance
 
 
 def _safe(v):
@@ -140,6 +141,181 @@ def _summary(bets):
     return {"graded_bets":int(len(bets)),"wins":wins,"losses":losses,"pushes":pushes,"units":float(p.sum()),"roi":float(p.mean()),"win_rate":float(wins/max(1,wins+losses)),"avg_clv_proxy":float(c.mean()) if len(c) else None,"positive_clv_rate":float((c>0).mean()) if len(c) else None,"clv_samples":int(len(c)),"avg_execution_clv":float(ec.mean()) if len(ec) else None,"positive_execution_clv_rate":float((ec>0).mean()) if len(ec) else None,"execution_clv_samples":int(len(ec)),"roi_ci_95":_bootstrap_roi(p),"max_drawdown":_max_drawdown(p)}
 
 
+
+def _display_market_entry(entry, market):
+    """Normalize one displayed market tier into the quant grading contract."""
+
+    tier_col = {
+        "moneyline": "ml_badge",
+        "spread": "spread_badge",
+        "total": "total_badge",
+    }[market]
+    tier = str(entry.get(tier_col) or "").upper()
+    if tier not in TIERS:
+        return None
+
+    home = str(entry.get("home_team") or "")
+    away = str(entry.get("away_team") or "")
+    home_probability = _safe(entry.get("calibrated_home_probability"))
+    side = ""
+    line = np.nan
+    odds = np.nan
+    probability = np.nan
+    edge = np.nan
+    model_ev = np.nan
+    book = None
+    quote_at = None
+    price_verified = False
+
+    if market == "moneyline":
+        side = str(entry.get("ml_team") or "")
+        odds = _safe(entry.get("ml_odds"))
+        if side not in {home, away} or not math.isfinite(odds):
+            return None
+        line = odds
+        probability = (
+            home_probability
+            if side == home
+            else 1.0 - home_probability
+            if math.isfinite(home_probability)
+            else np.nan
+        )
+        edge = _safe(entry.get("ml_edge_pp"))
+        model_ev = _safe(entry.get("ml_est_roi"))
+        if side == home:
+            book = entry.get("ml_book") or entry.get("best_home_ml_book")
+            quote_at = entry.get("ml_quote_at") or entry.get("best_home_ml_quote_at")
+        else:
+            book = entry.get("ml_book") or entry.get("best_away_ml_book")
+            quote_at = entry.get("ml_quote_at") or entry.get("best_away_ml_quote_at")
+        price_verified = True
+    elif market == "spread":
+        side = str(entry.get("spread_team") or "")
+        line = _safe(entry.get("spread_line"))
+        if side not in {home, away} or not math.isfinite(line):
+            return None
+        stored_odds = _safe(entry.get("spread_odds"))
+        odds = stored_odds if math.isfinite(stored_odds) else -110.0
+        price_verified = math.isfinite(stored_odds)
+        probability = _safe(entry.get("cover_probability"))
+        edge = _safe(entry.get("spread_edge_pts"))
+        if math.isfinite(probability):
+            model_ev = roi(probability, odds)
+        if side == home:
+            book = entry.get("spread_book") or entry.get("best_home_spread_book")
+            quote_at = entry.get("spread_quote_at") or entry.get("best_home_spread_quote_at")
+        else:
+            book = entry.get("spread_book") or entry.get("best_away_spread_book")
+            quote_at = entry.get("spread_quote_at") or entry.get("best_away_spread_quote_at")
+    else:
+        side = str(entry.get("total_dir") or "").upper()
+        line = _safe(entry.get("market_total"))
+        if side not in {"O", "U"} or not math.isfinite(line):
+            return None
+        stored_odds = _safe(entry.get("total_odds"))
+        odds = stored_odds if math.isfinite(stored_odds) else -110.0
+        price_verified = math.isfinite(stored_odds)
+        probability = _safe(entry.get("total_probability"))
+        edge = _safe(entry.get("total_edge_pts"))
+        if math.isfinite(probability):
+            model_ev = roi(probability, odds)
+        if side == "O":
+            book = entry.get("total_book") or entry.get("best_over_book")
+            quote_at = entry.get("total_quote_at") or entry.get("best_over_quote_at")
+        else:
+            book = entry.get("total_book") or entry.get("best_under_book")
+            quote_at = entry.get("total_quote_at") or entry.get("best_under_quote_at")
+
+    return pd.Series(
+        {
+            **entry.to_dict(),
+            "tier": tier,
+            "quant_market": market,
+            "quant_side": side,
+            "quant_price": line,
+            "quant_odds": odds,
+            "quant_book": book,
+            "quant_quote_at": quote_at or entry.get("snapshot_at"),
+            "model_probability": probability,
+            "model_edge": edge,
+            "model_ev": model_ev,
+            "execution_odds": odds,
+            "price_verified": bool(price_verified),
+        }
+    )
+
+
+def _grade_display_tiers(hist, finals, markets):
+    """Grade the exact displayed STRONG/BET/LEAN label for each game/market."""
+
+    rows = []
+    badge_columns = {
+        "moneyline": "ml_badge",
+        "spread": "spread_badge",
+        "total": "total_badge",
+    }
+    for gid, group in hist.groupby(hist.game_id.astype(str), sort=False):
+        if gid not in finals:
+            continue
+        pre = group.sort_values("_ts")
+        first = pre.iloc[0]
+        hpnt, apnt = finals[gid]
+        actual_margin = hpnt - apnt
+        actual_total = hpnt + apnt
+        kickoff = pd.to_datetime(first.get("date"), utc=True, errors="coerce")
+        close = _latest_pre_kickoff_market(markets, gid, kickoff)
+
+        for market in MARKETS:
+            column = badge_columns[market]
+            if column not in pre.columns:
+                continue
+            tier_values = pre[column].fillna("").astype(str).str.upper()
+            actionable = pre[tier_values.isin(TIERS)]
+            if actionable.empty:
+                continue
+            raw_entry = actionable.iloc[0]
+            entry = _display_market_entry(raw_entry, market)
+            if entry is None:
+                continue
+
+            result = _grade_row(entry, actual_margin, actual_total)
+            profit = _profit(result, entry.get("execution_odds"), market)
+            clv, clv_source = _clv_from_market_snapshot(entry, close)
+            execution_clv = _execution_clv_from_market_snapshot(entry, close)
+            rows.append(
+                {
+                    "game_id": gid,
+                    "season": first.get("season"),
+                    "week": first.get("week"),
+                    "away_team": first.get("away_team"),
+                    "home_team": first.get("home_team"),
+                    "market": market,
+                    "tier": entry.get("tier"),
+                    "side": entry.get("quant_side"),
+                    "line": entry.get("quant_price"),
+                    "execution_odds": entry.get("execution_odds"),
+                    "book": entry.get("quant_book"),
+                    "price_verified": entry.get("price_verified"),
+                    "model_probability": entry.get("model_probability"),
+                    "model_edge": entry.get("model_edge"),
+                    "model_ev": entry.get("model_ev"),
+                    "projected_margin_home": first.get("model_margin_home"),
+                    "actual_margin_home": actual_margin,
+                    "projected_total": first.get("model_total"),
+                    "actual_total": actual_total,
+                    "result": result,
+                    "flat_stake_units": 1.0,
+                    "flat_profit": profit,
+                    "clv_proxy": clv,
+                    "execution_clv": execution_clv,
+                    "clv_source": clv_source,
+                    "entry_snapshot": raw_entry.get("snapshot_at"),
+                    "entry_quote_at": entry.get("quant_quote_at"),
+                    "kickoff": first.get("date"),
+                }
+            )
+    return pd.DataFrame(rows)
+
 def grade_prediction_history(client,history_dir="history",reports_dir="reports"):
     """Grade independent live/paper predictions using only stored pre-kickoff state."""
     hdir=Path(history_dir); hp=hdir/"prediction_snapshots_v4.csv"; mp=hdir/"market_snapshots.csv"; reports=Path(reports_dir); reports.mkdir(parents=True,exist_ok=True)
@@ -177,7 +353,13 @@ def grade_prediction_history(client,history_dir="history",reports_dir="reports")
     df=pd.DataFrame(rows); df.to_csv(reports/"live_graded_predictions.csv",index=False); bets=df[(df.quant_signal!="PASS") & df.result.notna()].copy() if len(df) else pd.DataFrame()
     if len(bets): bets["edge_bucket"]=bets.get("quant_edge",pd.Series(index=bets.index,dtype=float)).apply(_edge_bucket)
     bets.to_csv(reports/"live_graded_bets.csv",index=False)
+
+    tier_rows=_grade_display_tiers(hist,finals,markets)
+    tier_rows.to_csv(reports/"live_graded_tiers.csv",index=False)
+    tier_validation=build_tier_performance(tier_rows)
+    (reports/"tier_performance.json").write_text(json.dumps(tier_validation,indent=2))
+
     overall=_summary(bets); by_market={str(k):_summary(v) for k,v in bets.groupby("quant_market")} if len(bets) else {}; by_signal={str(k):_summary(v) for k,v in bets.groupby("quant_signal")} if len(bets) else {}; by_season={str(k):_summary(v) for k,v in bets.groupby("season")} if len(bets) else {}; by_book={str(k):_summary(v) for k,v in bets.dropna(subset=["quant_book"]).groupby("quant_book")} if len(bets) and "quant_book" in bets.columns else {}; by_edge_bucket={str(k):_summary(v) for k,v in bets.groupby("edge_bucket")} if len(bets) and "edge_bucket" in bets.columns else {}
     verified=int((pd.to_numeric(bets.clv_proxy,errors="coerce").notna()).sum()) if len(bets) else 0
-    report={"graded_games":int(len(df)),**overall,"by_market":by_market,"by_signal":by_signal,"by_book":by_book,"by_edge_bucket":by_edge_bucket,"by_season":by_season,"clv_method":method,"verified_close_clv_samples":verified,"status":"live/shadow evidence only; not historical backtest evidence"}
+    report={"graded_games":int(len(df)),**overall,"by_market":by_market,"by_signal":by_signal,"by_book":by_book,"by_edge_bucket":by_edge_bucket,"by_season":by_season,"tier_validation":tier_validation,"clv_method":method,"verified_close_clv_samples":verified,"status":"live/shadow evidence only; tier validation is display-model quality evidence and does not authorize portfolio stake"}
     (reports/"live_performance.json").write_text(json.dumps(report,indent=2)); return report
