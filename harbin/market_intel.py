@@ -305,14 +305,29 @@ class MarketIntelligence:
         if len(sp)>1: cq*=max(.55,1-min(1.,float(np.std(sp))/2.5)*.35)
         if len(to)>1: cq*=max(.55,1-min(1.,float(np.std(to))/3.5)*.35)
         if len(ph)>1: cq*=max(.70,1-min(1.,float(np.std(ph))/.08)*.20)
-        serial=[_clean_quote(q) for q in sorted(qs,key=lambda q:_provider(q).lower())]
+        serial=[]
+        for q in sorted(qs,key=lambda q:_provider(q).lower()):
+            cleaned=_clean_quote(q)
+            if not cleaned.get("captured_at"):
+                cleaned["captured_at"]=observed_at
+            serial.append(cleaned)
         sources=sorted({str(q.get("source") or "unknown") for q in qs})
+
+        def selected_quote_at(q):
+            if not q:
+                return None
+            return _quote_at(q) or observed_at
+
+        def selected_quote_time_source(q):
+            if not q:
+                return None
+            return _quote_time_source(q) or "captured_at"
         return {
             "market_book_count":len(providers),"market_books":" | ".join(providers[:20]),"market_quote_sources":" | ".join(sources),"market_quotes_json":json.dumps(serial,sort_keys=True,separators=(",",":")),
             "consensus_home_spread":_median(sp),"consensus_total":_median(to),"spread_market_std":float(np.std(sp)) if len(sp)>1 else 0. if sp else np.nan,"total_market_std":float(np.std(to)) if len(to)>1 else 0. if to else np.nan,"spread_market_range":sr,"total_market_range":tr,
-            "best_home_spread":bhr,"best_away_spread":bar,"best_home_spread_odds":_num(hb.get("home_spread_price")) if hb else np.nan,"best_away_spread_odds":_num(ab.get("away_spread_price")) if ab else np.nan,"best_home_spread_book":_provider(hb) if hb else None,"best_away_spread_book":_provider(ab) if ab else None,"best_home_spread_quote_at":_quote_at(hb),"best_away_spread_quote_at":_quote_at(ab),"best_home_spread_quote_time_source":_quote_time_source(hb),"best_away_spread_quote_time_source":_quote_time_source(ab),
-            "best_over_total":bot,"best_under_total":but,"best_over_odds":_num(ob.get("over_price")) if ob else np.nan,"best_under_odds":_num(ub.get("under_price")) if ub else np.nan,"best_over_book":_provider(ob) if ob else None,"best_under_book":_provider(ub) if ub else None,"best_over_quote_at":_quote_at(ob),"best_under_quote_at":_quote_at(ub),"best_over_quote_time_source":_quote_time_source(ob),"best_under_quote_time_source":_quote_time_source(ub),
-            "best_home_ml":_num(hml.get("home_ml")) if hml else np.nan,"best_away_ml":_num(aml.get("away_ml")) if aml else np.nan,"best_home_ml_book":_provider(hml) if hml else None,"best_away_ml_book":_provider(aml) if aml else None,"best_home_ml_quote_at":_quote_at(hml),"best_away_ml_quote_at":_quote_at(aml),"best_home_ml_quote_time_source":_quote_time_source(hml),"best_away_ml_quote_time_source":_quote_time_source(aml),
+            "best_home_spread":bhr,"best_away_spread":bar,"best_home_spread_odds":_num(hb.get("home_spread_price")) if hb else np.nan,"best_away_spread_odds":_num(ab.get("away_spread_price")) if ab else np.nan,"best_home_spread_book":_provider(hb) if hb else None,"best_away_spread_book":_provider(ab) if ab else None,"best_home_spread_quote_at":selected_quote_at(hb),"best_away_spread_quote_at":selected_quote_at(ab),"best_home_spread_quote_time_source":selected_quote_time_source(hb),"best_away_spread_quote_time_source":selected_quote_time_source(ab),
+            "best_over_total":bot,"best_under_total":but,"best_over_odds":_num(ob.get("over_price")) if ob else np.nan,"best_under_odds":_num(ub.get("under_price")) if ub else np.nan,"best_over_book":_provider(ob) if ob else None,"best_under_book":_provider(ub) if ub else None,"best_over_quote_at":selected_quote_at(ob),"best_under_quote_at":selected_quote_at(ub),"best_over_quote_time_source":selected_quote_time_source(ob),"best_under_quote_time_source":selected_quote_time_source(ub),
+            "best_home_ml":_num(hml.get("home_ml")) if hml else np.nan,"best_away_ml":_num(aml.get("away_ml")) if aml else np.nan,"best_home_ml_book":_provider(hml) if hml else None,"best_away_ml_book":_provider(aml) if aml else None,"best_home_ml_quote_at":selected_quote_at(hml),"best_away_ml_quote_at":selected_quote_at(aml),"best_home_ml_quote_time_source":selected_quote_time_source(hml),"best_away_ml_quote_time_source":selected_quote_time_source(aml),
             "consensus_home_novig_probability":float(np.mean(ph)) if ph else np.nan,"consensus_probability_std":float(np.std(ph)) if len(ph)>1 else 0. if ph else np.nan,"moneyline_pair_book_count":int(len(ph)),"market_consensus_quality":float(cq),
         }
 
