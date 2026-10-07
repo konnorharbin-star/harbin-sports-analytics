@@ -344,7 +344,7 @@ def render_run_report(snapshot: dict) -> str:
         f"- Independent live evidence: **{live.get('graded_bets',0)} bets**, ROI **{_pct(live.get('roi'))}**, CLV **{_pct(live.get('avg_clv'))}**.",
         "",
         "## Market × tier forward validation",
-        f"- Display-tier ledger: **{tiers.get('graded_tier_bets',0)} flat-1u decisions** · status **{tiers.get('status','EARLY_SAMPLE')}** · validated cells **{tiers.get('validated_cells',0)}**.",
+        f"- Display-tier ledger: **{tiers.get('graded_tier_bets',0)} posted flat-1u decisions** · clean validation-eligible **{tiers.get('validation_eligible_bets',0)}** · excluded legacy/unverified **{tiers.get('excluded_from_validation',0)}** · status **{tiers.get('status','EARLY_SAMPLE')}** · validated cells **{tiers.get('validated_cells',0)}**.",
     ]
     for row in (tiers.get("matrix") or []):
         if int(row.get("graded_bets",0) or 0) <= 0:
