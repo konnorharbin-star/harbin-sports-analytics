@@ -1,3 +1,4 @@
+import json
 import pandas as pd
 
 from harbin.edge_timing import enrich_edge_timing, summarize_observed_survival
@@ -105,3 +106,44 @@ def test_survival_descriptive_not_official_closing_line(tmp_path):
     assert report["survived_bet_to"] == 1
     assert report["closing_line_claim"] is False
     assert report["betting_authorized"] is False
+
+
+def test_captured_market_quote_same_book_supports_timing(tmp_path):
+    market = tmp_path / "market.csv"
+    pd.DataFrame([{
+        "captured_at": "2026-10-07T17:00:00Z",
+        "game_id": "g1", "kickoff": KICK,
+        "home_team": "Home", "away_team": "Away",
+        "market_quotes_json": json.dumps([
+            {"provider": "Book A", "home_spread": -9, "home_spread_price": -110},
+            {"provider": "Book B", "home_spread": -12, "home_spread_price": -110},
+        ])
+    }]).to_csv(market, index=False)
+    row = enrich_edge_timing(
+        pd.DataFrame([candidate()]), tmp_path / "missing.csv",
+        as_of=NOW, market_history_path=market
+    ).iloc[0]
+    assert row.timing_action == "BET_NOW_RESEARCH"
+    assert row.timing_evidence_source == "captured_market_quote"
+    assert row.timing_previous_line == -9
+
+
+def test_market_capture_wont_use_future_quotes_or_other_books(tmp_path):
+    market = tmp_path / "market.csv"
+    pd.DataFrame([{
+        "captured_at": "2026-10-07T20:30:00Z",  # future relative to as_of
+        "game_id": "g1", "kickoff": KICK,
+        "home_team": "Home", "away_team": "Away",
+        "market_quotes_json": json.dumps([{"provider": "Book A", "home_spread": -9, "home_spread_price": -110}])
+    }, {
+        "captured_at": "2026-10-07T16:00:00Z",
+        "game_id": "g1", "kickoff": KICK,
+        "home_team": "Home", "away_team": "Away",
+        "market_quotes_json": json.dumps([{"provider": "Book B", "home_spread": -9, "home_spread_price": -110}])
+    }]).to_csv(market, index=False)
+    row = enrich_edge_timing(
+        pd.DataFrame([candidate()]), tmp_path / "missing.csv",
+        as_of=NOW, market_history_path=market
+    ).iloc[0]
+    assert row.timing_action == "NO_TIMING_SIGNAL"
+    assert row.timing_observations == 0
