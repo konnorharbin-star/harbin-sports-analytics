@@ -250,7 +250,7 @@ def _write_edge_html(edges,path,updated):
         "CONFIRMED price means the 95% Wilson lower bound of historical hit rate still clears the current odds break-even probability; PLAUSIBLE clears only on the point estimate. ROBUST_CORE requires at least a 5 percentage-point conservative price cushion and at least 0.5 points of spread room before leaving the supported edge band. "
         "Historical price evidence never changes model probability or EV, and clean forward validation is still required.</div>"
         "<table><thead><tr><th>GAME</th><th>MARKET</th><th>SIDE</th><th>LINE</th><th>ODDS</th><th>MODEL P</th>"
-        "<th>MODEL EDGE</th><th>MODEL EV</th><th>EDGE QUALITY</th><th>BET TO LINE</th><th>PRICE CUSHION</th><th>LINE CUSHION</th>"
+        "<th>MODEL EDGE</th><th>MODEL EV</th><th>EDGE QUALITY</th><th>TIMING (RESEARCH)</th><th>BET TO LINE</th><th>PRICE CUSHION</th><th>LINE CUSHION</th>"
         "<th>PRICE EVIDENCE</th><th>95% HIST LOWER</th><th>CURRENT BREAK-EVEN</th><th>HIST PRICE CEILING</th>"
         "<th>HIST BETS</th><th>HIST HIT</th><th>HIST ROI</th><th>PROFITABLE SEASONS</th></tr></thead>"
         f"<tbody>{''.join(rows) if rows else empty}</tbody></table></div></body></html>"
