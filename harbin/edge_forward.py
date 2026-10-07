@@ -456,8 +456,8 @@ def grade_edge_forward_history(
         "by_subgroup": _group_summaries(graded, "subgroup_key"),
         "by_market": _group_summaries(graded, "market"),
         "methodology": (
-            "Schema-v2 first provenance-complete pre-kickoff observation per game/market, "
-            "preserving CORE/PLAUSIBLE/parent-only price class at entry; "
+            "First provenance-complete pre-kickoff observation per game/market; "
+            "schema v2 preserves CORE/PLAUSIBLE/parent-only price class at entry; "
             "flat 1u risk at the observed executable price; results only after final; "
             "CLV uses the latest timestamp-valid pre-kickoff market snapshot. "
             "Historical regime statistics never alter forward P/L. "
