@@ -89,3 +89,41 @@ def test_portfolio_caps_same_kickoff_cluster(tmp_path):
     ])
     _, summary = apply_portfolio_controls(df, str(policy), str(gate))
     assert summary["paper_allocated_units"] == 2.0
+
+
+def test_market_intel_uses_capture_time_when_source_timestamp_is_missing():
+    g = SimpleNamespace(
+        provider="BookA",
+        home_ml=-150,
+        away_ml=130,
+        home_spread=-3.5,
+        market_total=56,
+    )
+    quotes = [
+        {
+            "provider": "BookB",
+            "source": "action_network",
+            "home_ml": -145,
+            "away_ml": 135,
+            "home_spread": -3.0,
+            "market_total": 55.5,
+            "home_spread_price": -105,
+            "away_spread_price": -115,
+            "over_price": -110,
+            "under_price": -110,
+            "last_update": None,
+        }
+    ]
+
+    s = MarketIntelligence._summary(g, quotes)
+
+    assert s["best_home_ml_quote_at"]
+    assert s["best_home_ml_quote_time_source"] == "captured_at"
+    assert s["best_home_spread_quote_time_source"] == "captured_at"
+    assert s["best_over_quote_time_source"] == "captured_at"
+    parsed = pd.to_datetime(s["best_home_ml_quote_at"], utc=True, errors="raise")
+    assert parsed.tzinfo is not None
+    serialized = json.loads(s["market_quotes_json"])
+    book_b = next(row for row in serialized if row["provider"] == "BookB")
+    assert book_b["captured_at"]
+    assert book_b["last_update"] is None
