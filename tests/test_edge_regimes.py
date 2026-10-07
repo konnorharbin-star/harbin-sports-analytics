@@ -1,6 +1,7 @@
 import pandas as pd
 
 from harbin.pro_market import select_best_market
+from harbin.pipeline import _edge_evidence_html, _write_edge_html
 
 from harbin.edge_regimes import (
     annotate_selected_regimes,
@@ -203,3 +204,58 @@ def test_persistent_selection_does_not_inflate_probability_ev_or_stake(tmp_path)
     assert supported["quant_probability"] == raw["quant_probability"] == 0.62
     assert supported["quant_ev"] == raw["quant_ev"]
     assert supported["stake_units"] == raw["stake_units"]
+
+
+def test_supported_edge_label_is_explicit_about_persistent_regime():
+    row = pd.Series(
+        {
+            "edge_regime_status": "PERSISTENT_CANDIDATE",
+            "edge_regime_band": "6-8",
+            "edge_regime_bets": 231,
+            "edge_regime_roi": 0.1617,
+            "edge_regime_profitable_seasons": 3,
+            "edge_regime_season_count": 3,
+            "edge_selection_override": True,
+        }
+    )
+
+    html = _edge_evidence_html(row)
+
+    assert "SUPPORTED 6-8" in html
+    assert "231 hist bets" in html
+    assert "16.2% ROI" in html
+    assert "3/3 profitable seasons" in html
+    assert "selected over raw-EV alternative" in html
+
+
+def test_supported_edge_board_contains_forward_validation_warning(tmp_path):
+    edges = pd.DataFrame(
+        [
+            {
+                "away_team": "Away",
+                "home_team": "Home",
+                "market": "spread",
+                "side": "Away",
+                "line": 7.5,
+                "odds": -110,
+                "probability": 0.62,
+                "edge": 6.5,
+                "ev": 0.18,
+                "historical_bets": 231,
+                "historical_win_rate": 0.6096,
+                "historical_roi": 0.1617,
+                "profitable_seasons": 3,
+                "season_count": 3,
+            }
+        ]
+    )
+    path = tmp_path / "edge.html"
+
+    _write_edge_html(edges, path, "Oct 7, 2026 · 5:30 AM CT")
+    html = path.read_text()
+
+    assert "SUPPORTED EDGE BOARD" in html
+    assert "spread model-market disagreement of 6–8 points" in html
+    assert "clean forward validation is still required" in html
+    assert "Away @ Home" in html
+    assert "16.2%" in html
