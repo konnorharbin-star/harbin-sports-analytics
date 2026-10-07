@@ -71,7 +71,7 @@ jobs:
           print(f"- Brier/ECE: **{mm.get('win_brier')} / {mm.get('win_ece')}** · Advanced features: **{a.get('feature_count',0)}**")
           print(f"- Weather: **{x.get('weather_coverage',0):.1%}** · Multi-book: **{mi.get('multi_book_coverage',0):.1%}** · The Odds API configured: **{mi.get('odds_api_configured',False)}**")
           print(f"- Live readiness: **{mon.get('live_readiness_score','n/a')}/100** · Distribution stability: **{mon.get('scores',{}).get('distribution_stability','n/a')}/100**")
-          print(f"- Tier validation: **{tv.get('status','EARLY_SAMPLE')}** · Flat-1u decisions: **{tv.get('graded_tier_bets',0)}** · Validated market×tier cells: **{tv.get('validated_cells',0)}**")
+          print(f"- Tier validation: **{tv.get('status','EARLY_SAMPLE')}** · Posted flat-1u decisions: **{tv.get('graded_tier_bets',0)}** · Clean eligible: **{tv.get('validation_eligible_bets',0)}** · Validated cells: **{tv.get('validated_cells',0)}**")
           if gate.get('blockers'):
               print("- Production blockers: " + "; ".join(gate['blockers'][:4]))
           PY
@@ -81,6 +81,37 @@ jobs:
           git config user.name "harbin-model-bot"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add outputs history reports docs
+
+          # Live-grading owns these files. The model may regenerate them locally for
+          # reporting, but must not race the grading workflow when publishing state.
+          GRADE_OWNED=(
+            reports/live_performance.json
+            reports/live_graded_predictions.csv
+            reports/live_graded_bets.csv
+            reports/tier_performance.json
+            reports/tier_performance.csv
+            reports/tier_validation_clean.csv
+            reports/live_graded_tiers.csv
+            outputs/live_performance.json
+            outputs/tier_performance.json
+            outputs/tier_performance.csv
+            outputs/tier_validation_clean.csv
+            outputs/live_graded_tiers.csv
+            docs/live_performance.json
+            docs/tier_performance.json
+            docs/tier_performance.csv
+            docs/tier_validation_clean.csv
+            docs/live_graded_tiers.csv
+          )
+          for f in "${GRADE_OWNED[@]}"; do
+            if git ls-files --error-unmatch "$f" >/dev/null 2>&1; then
+              git restore --staged --worktree "$f" || true
+            else
+              git rm --cached -f --ignore-unmatch "$f" >/dev/null 2>&1 || true
+              rm -f "$f"
+            fi
+          done
+
           if ! git diff --cached --quiet; then
             git commit -m "model: automated CFB v7 refresh"
             git pull --rebase origin main

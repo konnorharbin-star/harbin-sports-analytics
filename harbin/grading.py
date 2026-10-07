@@ -7,7 +7,7 @@ import numpy as np
 import pandas as pd
 
 from .market import american_implied, no_vig, roi
-from .tier_validation import MARKETS, TIERS, build_tier_performance
+from .tier_validation import MARKETS, TIERS, build_tier_performance, expected_display_tier
 
 
 def _safe(v):
@@ -188,7 +188,6 @@ def _display_market_entry(entry, market):
         else:
             book = entry.get("ml_book") or entry.get("best_away_ml_book")
             quote_at = entry.get("ml_quote_at") or entry.get("best_away_ml_quote_at")
-        price_verified = True
     elif market == "spread":
         side = str(entry.get("spread_team") or "")
         line = _safe(entry.get("spread_line"))
@@ -196,7 +195,6 @@ def _display_market_entry(entry, market):
             return None
         stored_odds = _safe(entry.get("spread_odds"))
         odds = stored_odds if math.isfinite(stored_odds) else -110.0
-        price_verified = math.isfinite(stored_odds)
         probability = _safe(entry.get("cover_probability"))
         edge = _safe(entry.get("spread_edge_pts"))
         if math.isfinite(probability):
@@ -225,6 +223,12 @@ def _display_market_entry(entry, market):
         else:
             book = entry.get("total_book") or entry.get("best_under_book")
             quote_at = entry.get("total_quote_at") or entry.get("best_under_quote_at")
+
+    price_verified = (
+        math.isfinite(_safe(odds))
+        and bool(str(book or "").strip())
+        and bool(str(quote_at or "").strip())
+    )
 
     return pd.Series(
         {
@@ -282,6 +286,9 @@ def _grade_display_tiers(hist, finals, markets):
             profit = _profit(result, entry.get("execution_odds"), market)
             clv, clv_source = _clv_from_market_snapshot(entry, close)
             execution_clv = _execution_clv_from_market_snapshot(entry, close)
+            expected_tier = expected_display_tier(market, entry)
+            tier_consistent = expected_tier == str(entry.get("tier") or "").upper()
+            validation_eligible = tier_consistent and bool(entry.get("price_verified"))
             rows.append(
                 {
                     "game_id": gid,
@@ -296,6 +303,9 @@ def _grade_display_tiers(hist, finals, markets):
                     "execution_odds": entry.get("execution_odds"),
                     "book": entry.get("quant_book"),
                     "price_verified": entry.get("price_verified"),
+                    "expected_tier": expected_tier,
+                    "tier_consistent": tier_consistent,
+                    "validation_eligible": validation_eligible,
                     "model_probability": entry.get("model_probability"),
                     "model_edge": entry.get("model_edge"),
                     "model_ev": entry.get("model_ev"),
@@ -359,6 +369,7 @@ def grade_prediction_history(client,history_dir="history",reports_dir="reports")
     tier_validation=build_tier_performance(tier_rows)
     (reports/"tier_performance.json").write_text(json.dumps(tier_validation,indent=2))
     pd.DataFrame(tier_validation.get("matrix") or []).to_csv(reports/"tier_performance.csv",index=False)
+    pd.DataFrame(tier_validation.get("clean_matrix") or []).to_csv(reports/"tier_validation_clean.csv",index=False)
 
     overall=_summary(bets); by_market={str(k):_summary(v) for k,v in bets.groupby("quant_market")} if len(bets) else {}; by_signal={str(k):_summary(v) for k,v in bets.groupby("quant_signal")} if len(bets) else {}; by_season={str(k):_summary(v) for k,v in bets.groupby("season")} if len(bets) else {}; by_book={str(k):_summary(v) for k,v in bets.dropna(subset=["quant_book"]).groupby("quant_book")} if len(bets) and "quant_book" in bets.columns else {}; by_edge_bucket={str(k):_summary(v) for k,v in bets.groupby("edge_bucket")} if len(bets) and "edge_bucket" in bets.columns else {}
     verified=int((pd.to_numeric(bets.clv_proxy,errors="coerce").notna()).sum()) if len(bets) else 0

@@ -93,6 +93,42 @@ def _status(summary: Mapping[str, object]) -> str:
     return "UNVALIDATED"
 
 
+def expected_display_tier(
+    market: str,
+    row: Mapping[str, object],
+) -> str:
+    """Recompute the tier implied by the exact stored displayed line/price."""
+
+    market = str(market or "").lower()
+    home = str(row.get("home_team") or "")
+    side = str(row.get("quant_side") or "")
+    probability = _number(row.get("model_probability"))
+    if market == "moneyline":
+        odds = _number(row.get("execution_odds"))
+        if probability is None or odds is None:
+            return ""
+        badge, _ = replica_ml_label(probability, odds)
+        return badge if roi(probability, odds) > 0 else ""
+
+    if market == "spread":
+        margin = _number(row.get("model_margin_home"))
+        line = _number(row.get("quant_price"))
+        if margin is None or line is None or side not in {home, str(row.get("away_team") or "")}:
+            return ""
+        home_line = line if side == home else -line
+        badge, _ = replica_spread_label(margin, home_line)
+        return badge
+
+    if market == "total":
+        model_total = _number(row.get("model_total"))
+        line = _number(row.get("quant_price"))
+        if model_total is None or line is None:
+            return ""
+        badge, _ = replica_total_label(model_total, line)
+        return badge
+    return ""
+
+
 def summarize_tier_rows(frame: pd.DataFrame) -> dict[str, object]:
     if frame.empty:
         return {
@@ -190,11 +226,15 @@ def build_tier_performance(frame: pd.DataFrame) -> dict[str, object]:
         return {
             "schema_version": 1,
             "graded_tier_bets": 0,
+            "validation_eligible_bets": 0,
+            "excluded_from_validation": 0,
             "status": "EARLY_SAMPLE",
             "by_market": {},
             "by_tier": {},
             "by_market_tier": {},
             "matrix": [],
+            "clean_matrix": [],
+            "clean_by_market_tier": {},
             "validated_cells": 0,
             "underperforming_cells": 0,
             "methodology": (
@@ -208,6 +248,13 @@ def build_tier_performance(frame: pd.DataFrame) -> dict[str, object]:
     data["market"] = data.get("market", "").astype(str).str.lower()
     data["tier"] = data.get("tier", "").astype(str).str.upper()
     data = data[data["market"].isin(MARKETS) & data["tier"].isin(TIERS)].copy()
+    if "tier_consistent" not in data.columns:
+        data["tier_consistent"] = True
+    if "validation_eligible" not in data.columns:
+        data["validation_eligible"] = True
+    data["tier_consistent"] = data["tier_consistent"].fillna(False).astype(bool)
+    data["validation_eligible"] = data["validation_eligible"].fillna(False).astype(bool)
+    clean = data[data["validation_eligible"]].copy()
 
     by_market = {
         market: summarize_tier_rows(data[data.market == market])
@@ -218,34 +265,49 @@ def build_tier_performance(frame: pd.DataFrame) -> dict[str, object]:
         for tier in TIERS
     }
     nested: dict[str, dict[str, object]] = {}
+    clean_nested: dict[str, dict[str, object]] = {}
     matrix: list[dict[str, object]] = []
+    clean_matrix: list[dict[str, object]] = []
     for market in MARKETS:
         nested[market] = {}
+        clean_nested[market] = {}
         for tier in TIERS:
             summary = summarize_tier_rows(
                 data[(data.market == market) & (data.tier == tier)]
             )
+            clean_summary = summarize_tier_rows(
+                clean[(clean.market == market) & (clean.tier == tier)]
+            )
             nested[market][tier] = summary
+            clean_nested[market][tier] = clean_summary
             matrix.append({"market": market, "tier": tier, **summary})
+            clean_matrix.append({"market": market, "tier": tier, **clean_summary})
 
-    validated = sum(row["status"] == "VALIDATED" for row in matrix)
-    underperforming = sum(row["status"] == "UNDERPERFORMING" for row in matrix)
+    validated = sum(row["status"] == "VALIDATED" for row in clean_matrix)
+    underperforming = sum(row["status"] == "UNDERPERFORMING" for row in clean_matrix)
     sample = int(len(data))
+    clean_sample = int(len(clean))
     status = (
         "VALIDATED_SEGMENTS"
         if validated
         else "TRACKING"
-        if sample >= 50
+        if clean_sample >= 50
         else "EARLY_SAMPLE"
     )
     return {
         "schema_version": 1,
         "graded_tier_bets": sample,
+        "validation_eligible_bets": clean_sample,
+        "excluded_from_validation": sample - clean_sample,
+        "inconsistent_badge_rows": int((~data["tier_consistent"]).sum()),
+        "unverified_price_rows": int((~data.get("price_verified", pd.Series(False, index=data.index)).fillna(False).astype(bool)).sum()),
         "status": status,
         "by_market": by_market,
         "by_tier": by_tier,
         "by_market_tier": nested,
         "matrix": matrix,
+        "clean_by_market_tier": clean_nested,
+        "clean_matrix": clean_matrix,
         "validated_cells": validated,
         "underperforming_cells": underperforming,
         "methodology": (
@@ -255,7 +317,9 @@ def build_tier_performance(frame: pd.DataFrame) -> dict[str, object]:
             "the stored display snapshot has no price; pushes are excluded from "
             "hit-rate/calibration denominators; VALIDATED requires >=100 bets, "
             "positive 95% ROI lower bound, positive average execution CLV and "
-            "|calibration gap| <= 8 percentage points"
+            "|calibration gap| <= 8 percentage points; only rows whose stored "
+            "display badge recomputes from the stored displayed line/price and whose "
+            "execution price is verified may contribute to validation status"
         ),
     }
 
