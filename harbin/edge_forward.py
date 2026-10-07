@@ -23,7 +23,7 @@ from .grading import (
     _summary,
 )
 
-EDGE_FORWARD_SCHEMA_VERSION = 1
+EDGE_FORWARD_SCHEMA_VERSION = 2
 ELIGIBLE_RELIABILITY = {"SUPPORTED_SUBGROUP", "PERSISTENT_PARENT_ONLY"}
 
 
@@ -44,6 +44,24 @@ def _present(value):
     except (TypeError, ValueError):
         pass
     return bool(str(value).strip())
+
+
+def edge_forward_class(reliability_status, price_status):
+    reliability = str(reliability_status or "").upper()
+    price = str(price_status or "").upper()
+    if reliability == "SUPPORTED_SUBGROUP":
+        if price == "CONFIRMED":
+            return "CORE_CONFIRMED"
+        if price == "PLAUSIBLE":
+            return "SUPPORTED_PLAUSIBLE"
+        if price == "OVERPRICED":
+            return "SUPPORTED_OVERPRICED"
+        return "SUPPORTED_UNKNOWN_PRICE"
+    if reliability == "PERSISTENT_PARENT_ONLY":
+        if price == "CONFIRMED":
+            return "PARENT_CONFIRMED"
+        return "PARENT_UNCONFIRMED"
+    return "OTHER"
 
 
 def append_edge_candidate_snapshots(
@@ -87,6 +105,13 @@ def append_edge_candidate_snapshots(
             "path": str(target),
         }
 
+    frame["edge_forward_class"] = [
+        edge_forward_class(reliability, price)
+        for reliability, price in zip(
+            frame.get("edge_reliability_status", pd.Series(index=frame.index, dtype=object)),
+            frame.get("price_evidence_status", pd.Series(index=frame.index, dtype=object)),
+        )
+    ]
     frame.insert(0, "edge_snapshot_schema_version", EDGE_FORWARD_SCHEMA_VERSION)
     frame.insert(1, "snapshot_at", stamp_text)
 
@@ -109,6 +134,15 @@ def append_edge_candidate_snapshots(
         "quote_at",
         "regime_status",
         "edge_reliability_status",
+        "edge_forward_class",
+        "price_evidence_status",
+        "price_evidence_sample",
+        "historical_price_win_rate",
+        "historical_price_wilson_lower",
+        "current_break_even_probability",
+        "historical_price_margin",
+        "conservative_price_margin",
+        "historical_fair_odds_lower_bound",
         "regime_band",
         "historical_bets",
         "historical_win_rate",
@@ -174,6 +208,15 @@ def _clean_forward_entries(history: pd.DataFrame) -> pd.DataFrame:
         .fillna("")
         .astype(str)
     )
+    data["_schema"] = pd.to_numeric(
+        data.get("edge_snapshot_schema_version", pd.Series(index=data.index, dtype=float)),
+        errors="coerce",
+    )
+    data["_edge_class"] = (
+        data.get("edge_forward_class", pd.Series(index=data.index, dtype=object))
+        .fillna("")
+        .astype(str)
+    )
     data["_book_ok"] = data.get(
         "book", pd.Series(index=data.index, dtype=object)
     ).map(_present)
@@ -188,6 +231,8 @@ def _clean_forward_entries(history: pd.DataFrame) -> pd.DataFrame:
         & data["_odds"].notna()
         & data["_book_ok"]
         & data["_reliability"].isin(ELIGIBLE_RELIABILITY)
+        & (data["_schema"] >= EDGE_FORWARD_SCHEMA_VERSION)
+        & data["_edge_class"].map(_present)
     ].copy()
     if clean.empty:
         return clean
@@ -362,6 +407,15 @@ def grade_edge_forward_history(
                 "ev": entry.get("ev"),
                 "badge": entry.get("badge"),
                 "edge_reliability_status": entry.get("edge_reliability_status"),
+                "edge_forward_class": entry.get("edge_forward_class"),
+                "price_evidence_status": entry.get("price_evidence_status"),
+                "price_evidence_sample": entry.get("price_evidence_sample"),
+                "historical_price_win_rate": entry.get("historical_price_win_rate"),
+                "historical_price_wilson_lower": entry.get("historical_price_wilson_lower"),
+                "current_break_even_probability": entry.get("current_break_even_probability"),
+                "historical_price_margin": entry.get("historical_price_margin"),
+                "conservative_price_margin": entry.get("conservative_price_margin"),
+                "historical_fair_odds_lower_bound": entry.get("historical_fair_odds_lower_bound"),
                 "regime_band": entry.get("regime_band"),
                 "subgroup_key": entry.get("subgroup_key"),
                 "subgroup_status": entry.get("subgroup_status"),
@@ -396,11 +450,14 @@ def grade_edge_forward_history(
         "observed_rows": int(len(raw)),
         "clean_entries": int(len(clean)),
         **overall,
+        "by_edge_class": _group_summaries(graded, "edge_forward_class"),
+        "by_price_evidence": _group_summaries(graded, "price_evidence_status"),
         "by_reliability": _group_summaries(graded, "edge_reliability_status"),
         "by_subgroup": _group_summaries(graded, "subgroup_key"),
         "by_market": _group_summaries(graded, "market"),
         "methodology": (
             "First provenance-complete pre-kickoff observation per game/market; "
+            "schema v2 preserves CORE/PLAUSIBLE/parent-only price class at entry; "
             "flat 1u risk at the observed executable price; results only after final; "
             "CLV uses the latest timestamp-valid pre-kickoff market snapshot. "
             "Historical regime statistics never alter forward P/L. "
