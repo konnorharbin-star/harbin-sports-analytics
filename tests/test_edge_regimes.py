@@ -516,3 +516,79 @@ def test_supported_edge_board_contains_forward_validation_warning(tmp_path):
     assert "clean forward validation is still required" in html
     assert "Away @ Home" in html
     assert "16.2%" in html
+
+
+def test_contraindicated_raw_ev_leader_is_removed_from_selection(tmp_path):
+    report = _subgroup_report()
+    row = pd.Series(
+        {
+            "week": 6,
+            "home_team": "California",
+            "away_team": "Virginia Tech",
+            "calibrated_home_probability": 0.55,
+            "quant_best_ml_side": "California",
+            "quant_best_ml_edge_pp": 4.5,
+            "quant_best_ml_roi": 0.08,
+            "best_home_ml": -110,
+            "best_home_ml_book": "Book ML",
+            "best_home_ml_quote_at": "2026-10-07T03:00:00Z",
+            "cover_probability": 0.66,
+            "spread_edge_pts": 6.5,
+            "spread_team": "California",
+            "spread_line": 11.5,
+            "best_home_spread_odds": -110,
+            "best_home_spread_book": "Book Spread",
+            "best_home_spread_quote_at": "2026-10-07T03:00:00Z",
+        }
+    )
+    missing_policy = tmp_path / "missing_policy.json"
+
+    selected = select_best_market(
+        row,
+        risk_multiplier=1.0,
+        policy_path=str(missing_policy),
+        edge_report=report,
+    )
+
+    assert selected["quant_market"] == "moneyline"
+    assert selected["quant_side"] == "California"
+    assert selected["selection_basis"] == "highest_raw_ev_after_contraindicated_veto"
+    assert selected["edge_contraindicated_veto"] is True
+    assert selected["edge_contraindicated_candidates"] == 1
+    assert selected["raw_ev_best_market"] == "spread"
+    assert selected["raw_ev_best_edge_status"] == "CONTRAINDICATED_SUBGROUP"
+    assert selected["quant_ev"] < selected["raw_ev_best_ev"]
+
+
+def test_all_contraindicated_candidates_force_pass(tmp_path):
+    report = _subgroup_report()
+    row = pd.Series(
+        {
+            "week": 6,
+            "home_team": "California",
+            "away_team": "Virginia Tech",
+            "cover_probability": 0.66,
+            "spread_edge_pts": 6.5,
+            "spread_team": "California",
+            "spread_line": 11.5,
+            "best_home_spread_odds": -110,
+            "best_home_spread_book": "Book Spread",
+            "best_home_spread_quote_at": "2026-10-07T03:00:00Z",
+        }
+    )
+    missing_policy = tmp_path / "missing_policy.json"
+
+    selected = select_best_market(
+        row,
+        risk_multiplier=1.0,
+        policy_path=str(missing_policy),
+        edge_report=report,
+    )
+
+    assert selected["quant_signal"] == "PASS"
+    assert selected["quant_market"] is None
+    assert selected["stake_units"] == 0.0
+    assert selected["selection_basis"] == "contraindicated_edge_veto"
+    assert selected["edge_contraindicated_veto"] is True
+    assert selected["edge_contraindicated_candidates"] == 1
+    assert "contraindicated" in selected["policy_block_reason"]

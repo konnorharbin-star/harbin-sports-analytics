@@ -159,9 +159,44 @@ def select_best_market(row, risk_multiplier=1.0, policy_path=PRODUCTION_POLICY_P
             else 0
         )
 
-    promotable=[x for x in candidates if x["edge_promotion_rank"]>0]
-    best=max(promotable,key=lambda x:(x["edge_promotion_rank"],x["ev"])) if promotable else raw_best
-    override=bool(promotable) and (
+    contraindicated=[
+        x for x in candidates
+        if x["edge_regime_status"]=="CONTRAINDICATED_SUBGROUP"
+    ]
+    eligible=[
+        x for x in candidates
+        if x["edge_regime_status"]!="CONTRAINDICATED_SUBGROUP"
+    ]
+    raw_best_contraindicated=raw_best["edge_regime_status"]=="CONTRAINDICATED_SUBGROUP"
+
+    if not eligible:
+        return {
+            "quant_signal":"PASS",
+            "quant_market":None,
+            "quant_side":None,
+            "quant_book":None,
+            "quant_quote_at":None,
+            "quant_price":np.nan,
+            "quant_odds":np.nan,
+            "quant_ev":0.0,
+            "quant_probability":np.nan,
+            "quant_edge":0.0,
+            "stake_units":0.0,
+            "selection_basis":"contraindicated_edge_veto",
+            "edge_selection_override":True,
+            "edge_contraindicated_veto":True,
+            "edge_contraindicated_candidates":len(contraindicated),
+            "raw_ev_best_market":raw_best["market"],
+            "raw_ev_best_side":raw_best["side"],
+            "raw_ev_best_ev":raw_best["ev"],
+            "raw_ev_best_edge_status":raw_best["edge_regime_status"],
+            "policy_block_reason":"all qualified markets are chronologically contraindicated edge subgroups",
+        }
+
+    promotable=[x for x in eligible if x["edge_promotion_rank"]>0]
+    eligible_raw_best=max(eligible,key=lambda x:x["ev"])
+    best=max(promotable,key=lambda x:(x["edge_promotion_rank"],x["ev"])) if promotable else eligible_raw_best
+    override=(
         best["market"]!=raw_best["market"] or str(best["side"])!=str(raw_best["side"])
     )
     segment_multiplier=_market_reliability_multiplier(best["market"],best["side"])
@@ -170,6 +205,8 @@ def select_best_market(row, risk_multiplier=1.0, policy_path=PRODUCTION_POLICY_P
         selection_basis="supported_edge_subgroup"
     elif best["edge_regime_status"]=="PERSISTENT_PARENT_ONLY":
         selection_basis="persistent_parent_regime"
+    elif raw_best_contraindicated:
+        selection_basis="highest_raw_ev_after_contraindicated_veto"
     else:
         selection_basis="highest_raw_ev"
     return {
@@ -179,9 +216,12 @@ def select_best_market(row, risk_multiplier=1.0, policy_path=PRODUCTION_POLICY_P
         "historical_segment_multiplier":segment_multiplier,
         "selection_basis":selection_basis,
         "edge_selection_override":override,
+        "edge_contraindicated_veto":raw_best_contraindicated,
+        "edge_contraindicated_candidates":len(contraindicated),
         "raw_ev_best_market":raw_best["market"],
         "raw_ev_best_side":raw_best["side"],
         "raw_ev_best_ev":raw_best["ev"],
+        "raw_ev_best_edge_status":raw_best["edge_regime_status"],
         "edge_regime_parent_status":best["edge_regime_parent_status"],
         "edge_regime_status":best["edge_regime_status"],
         "edge_regime_band":best["edge_regime_band"],
