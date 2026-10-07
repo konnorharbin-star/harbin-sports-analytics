@@ -281,7 +281,7 @@ def test_contraindicated_child_cannot_receive_persistent_override(tmp_path):
             "quant_best_ml_side": "Away",
             "quant_best_ml_edge_pp": 12.0,
             "quant_best_ml_roi": 0.30,
-            "best_away_ml": -120,
+            "best_away_ml": 110,
             "best_away_ml_book": "Book ML",
             "best_away_ml_quote_at": "2026-10-07T03:00:00Z",
             "cover_probability": 0.63,
