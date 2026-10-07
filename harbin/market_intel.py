@@ -273,7 +273,13 @@ class MarketIntelligence:
     def _summary(g,quotes):
         observed_at=datetime.now(timezone.utc).isoformat()
         base={"provider":g.provider or "primary","source":"primary","home_ml":g.home_ml,"away_ml":g.away_ml,"home_spread":g.home_spread,"market_total":g.market_total,"home_spread_price":None,"away_spread_price":None,"over_price":None,"under_price":None,"last_update":None,"captured_at":observed_at}
-        qs=_dedupe_quotes([dict(x) for x in quotes or []])
+        observed_quotes=[]
+        for raw in quotes or []:
+            q=dict(raw or {})
+            if not q.get("captured_at"):
+                q["captured_at"]=observed_at
+            observed_quotes.append(q)
+        qs=_dedupe_quotes(observed_quotes)
         ex=next((q for q in qs if _provider_key(q)==_provider_key(base)),None)
         if ex is None:
             qs.append(_clean_quote(base))
@@ -281,9 +287,6 @@ class MarketIntelligence:
             # Preserve the freshest provider quote while filling any missing primary fields.
             for k in ("home_ml","away_ml","home_spread","market_total"):
                 if ex.get(k) is None and base.get(k) is not None: ex[k]=float(base[k])
-        for q in qs:
-            if not q.get("captured_at"):
-                q["captured_at"]=observed_at
         providers=[_provider(q) for q in qs]
         sp=_finite_values(q.get("home_spread") for q in qs); to=_finite_values(q.get("market_total") for q in qs)
         ph=[]
