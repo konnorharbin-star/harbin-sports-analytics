@@ -372,7 +372,9 @@ def _methodology():
         ">=12 holdout bets with positive holdout ROI, and positive full-sample CLV. "
         "CONTRAINDICATED_SUBGROUP requires the same sample floor, every discovery season "
         "negative with <=-3% discovery ROI, a negative holdout ROI, and <=-3% full-sample "
-        "ROI. Regime evidence can prioritize research and surface candidates but cannot "
+        "ROI. A holdout-confirmed child may stand independently beneath a WATCH parent, "
+        "but never beneath an UNSUPPORTED parent. Regime evidence can prioritize research "
+        "and surface candidates but cannot "
         "create an edge, modify the fair line, probability, EV, or inflate stake."
     )
 
@@ -469,15 +471,25 @@ def match_edge_subgroup(report, market, edge, side, line, home_team, away_team):
 
 
 def effective_edge_status(regime, subgroup=None):
+    """Return the evidence status that is allowed to influence selection.
+
+    A chronologically confirmed child may stand on its own beneath a WATCH parent,
+    because the child has already passed independent discovery + latest-season
+    holdout requirements. Children under an UNSUPPORTED parent are not promoted;
+    this prevents subgroup mining from rescuing broadly failed edge bands.
+    """
+
     parent = (regime or {}).get("status", "UNSUPPORTED")
-    if parent != "PERSISTENT_CANDIDATE":
-        return parent
     child = (subgroup or {}).get("status")
+    if parent not in {"PERSISTENT_CANDIDATE", "WATCH"}:
+        return parent
     if child == "CONTRAINDICATED_SUBGROUP":
         return "CONTRAINDICATED_SUBGROUP"
     if child == "SUPPORTED_SUBGROUP":
         return "SUPPORTED_SUBGROUP"
-    return "PERSISTENT_PARENT_ONLY"
+    if parent == "PERSISTENT_CANDIDATE":
+        return "PERSISTENT_PARENT_ONLY"
+    return "WATCH"
 
 
 def annotate_selected_regimes(frame, report):
