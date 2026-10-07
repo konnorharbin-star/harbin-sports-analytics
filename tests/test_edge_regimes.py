@@ -592,3 +592,114 @@ def test_all_contraindicated_candidates_force_pass(tmp_path):
     assert selected["edge_contraindicated_veto"] is True
     assert selected["edge_contraindicated_candidates"] == 1
     assert "contraindicated" in selected["policy_block_reason"]
+
+
+def test_current_edge_board_adds_current_price_evidence():
+    report = _subgroup_report()
+    frame = pd.DataFrame(
+        [
+            {
+                "game_id": "g-price",
+                "date": "2026-10-10T18:00:00Z",
+                "away_team": "Away",
+                "home_team": "Home",
+                "spread_team": "Home",
+                "spread_line": -3.5,
+                "spread_odds": -110,
+                "spread_edge_pts": 6.5,
+                "cover_probability": 0.66,
+                "spread_badge": "STRONG",
+                "spread_book": "Book A",
+                "spread_quote_at": "2026-10-10T16:00:00Z",
+                "quant_market": "spread",
+                "quant_side": "Home",
+                "quant_signal": "STRONG",
+                "quant_ev": 0.20,
+            }
+        ]
+    )
+
+    board = current_edge_board(frame, report, {"PERSISTENT_CANDIDATE"})
+
+    assert len(board) == 1
+    row = board.iloc[0]
+    assert row["edge_reliability_status"] == "SUPPORTED_SUBGROUP"
+    assert row["price_evidence_status"] == "CONFIRMED"
+    assert row["historical_price_wilson_lower"] > row["current_break_even_probability"]
+    assert row["conservative_price_margin"] > 0
+    assert row["historical_fair_odds_lower_bound"] < -110
+
+
+def test_overpriced_supported_subgroup_does_not_receive_historical_promotion(tmp_path):
+    report = _subgroup_report()
+    row = pd.Series(
+        {
+            "week": 6,
+            "home_team": "Home",
+            "away_team": "Away",
+            "calibrated_home_probability": 0.50,
+            "quant_best_ml_side": "Home",
+            "quant_best_ml_edge_pp": 10.0,
+            "quant_best_ml_roi": 0.25,
+            "best_home_ml": 150,
+            "best_home_ml_book": "Book ML",
+            "best_home_ml_quote_at": "2026-10-07T03:00:00Z",
+            "cover_probability": 0.85,
+            "spread_edge_pts": 6.5,
+            "spread_team": "Home",
+            "spread_line": -3.5,
+            "best_home_spread_odds": -300,
+            "best_home_spread_book": "Book Spread",
+            "best_home_spread_quote_at": "2026-10-07T03:00:00Z",
+        }
+    )
+    missing_policy = tmp_path / "missing_policy.json"
+
+    selected = select_best_market(
+        row,
+        risk_multiplier=1.0,
+        policy_path=str(missing_policy),
+        edge_report=report,
+    )
+
+    assert selected["quant_market"] == "moneyline"
+    assert selected["selection_basis"] == "highest_raw_ev"
+    assert selected["edge_selection_override"] is False
+
+
+def test_supported_subgroup_at_plausible_price_can_still_outrank_raw_ev(tmp_path):
+    report = _subgroup_report()
+    row = pd.Series(
+        {
+            "week": 6,
+            "home_team": "Home",
+            "away_team": "Away",
+            "calibrated_home_probability": 0.60,
+            "quant_best_ml_side": "Home",
+            "quant_best_ml_edge_pp": 12.0,
+            "quant_best_ml_roi": 0.45,
+            "best_home_ml": 130,
+            "best_home_ml_book": "Book ML",
+            "best_home_ml_quote_at": "2026-10-07T03:00:00Z",
+            "cover_probability": 0.78,
+            "spread_edge_pts": 6.5,
+            "spread_team": "Home",
+            "spread_line": -3.5,
+            "best_home_spread_odds": -180,
+            "best_home_spread_book": "Book Spread",
+            "best_home_spread_quote_at": "2026-10-07T03:00:00Z",
+        }
+    )
+    missing_policy = tmp_path / "missing_policy.json"
+
+    selected = select_best_market(
+        row,
+        risk_multiplier=1.0,
+        policy_path=str(missing_policy),
+        edge_report=report,
+    )
+
+    assert selected["quant_market"] == "spread"
+    assert selected["edge_regime_status"] == "SUPPORTED_SUBGROUP"
+    assert selected["price_evidence_status"] in {"CONFIRMED", "PLAUSIBLE"}
+    assert selected["edge_selection_override"] is True
