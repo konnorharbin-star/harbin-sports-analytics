@@ -133,11 +133,96 @@ def _quantize(pred,bundle,adv_meta,ctx_meta,edge_report=None):
     return out
 
 
+def _edge_evidence_html(row):
+    status=str(row.get("edge_regime_status") or "UNSUPPORTED")
+    if status=="PERSISTENT_CANDIDATE":
+        band=str(row.get("edge_regime_band") or "")
+        bets=int(float(row.get("edge_regime_bets") or 0))
+        roi_value=float(row.get("edge_regime_roi")) if _finite(row.get("edge_regime_roi")) else 0.0
+        profitable=int(float(row.get("edge_regime_profitable_seasons") or 0))
+        seasons=int(float(row.get("edge_regime_season_count") or 0))
+        override=bool(row.get("edge_selection_override")) and str(row.get("edge_selection_override")).lower() not in {"false","0","nan"}
+        note=" · selected over raw-EV alternative" if override else ""
+        return (
+            f"<span class='edge supported'>SUPPORTED {band}</span>"
+            f"<div class='edge-sub'>{bets} hist bets · {roi_value:.1%} ROI · "
+            f"{profitable}/{seasons} profitable seasons{note}</div>"
+        )
+    if status=="WATCH":
+        band=str(row.get("edge_regime_band") or "")
+        return f"<span class='edge watch'>WATCH {band}</span>"
+    return "<span class='edge raw'>RAW MODEL</span>"
+
+
 def _write_quant_html(pred,path,updated):
-    rank={"STRONG":0,"BET":1,"LEAN":2,"PASS":3}; q=pred.copy(); q["_rank"]=q.get("quant_signal",pd.Series("PASS",index=q.index)).map(rank).fillna(3); q=q.sort_values(["_rank","quant_ev"],ascending=[True,False]); rows=[]
+    rank={"STRONG":0,"BET":1,"LEAN":2,"PASS":3}
+    q=pred.copy()
+    q["_rank"]=q.get("quant_signal",pd.Series("PASS",index=q.index)).map(rank).fillna(3)
+    q["_edge_rank"]=q.get("edge_regime_candidate",pd.Series(False,index=q.index)).fillna(False).astype(bool).astype(int)
+    q=q.sort_values(["_edge_rank","_rank","quant_ev"],ascending=[False,True,False])
+    rows=[]
     for _,r in q.iterrows():
-        ev=float(r.quant_ev) if _finite(r.get("quant_ev")) else 0.; prob=float(r.quant_probability) if _finite(r.get("quant_probability")) else 0.; price=r.get("quant_price"); odds=r.get("quant_odds"); rows.append(f"<tr><td>{r.away_team} @ {r.home_team}</td><td>{r.get('quant_signal','PASS')}</td><td>{r.get('quant_market') or '—'}</td><td>{r.get('quant_side') or '—'}</td><td>{price if pd.notna(price) else '—'}</td><td>{odds if pd.notna(odds) else '—'}</td><td>{prob:.1%}</td><td>{ev:.1%}</td><td>{float(r.get('stake_units',0) or 0):.2f}</td><td>{float(r.get('data_quality_score',0) or 0):.0%}</td></tr>")
-    Path(path).write_text(f"<!doctype html><html><head><meta charset='utf-8'><meta name='viewport' content='width=device-width,initial-scale=1'><title>Harbin Quant Card</title><style>body{{background:#0f1113;color:#f2f2f2;font-family:Arial;margin:0;padding:24px}}.wrap{{max-width:1200px;margin:auto}}p{{color:#9da1a6}}table{{width:100%;border-collapse:collapse}}th,td{{padding:10px;border-bottom:1px solid #292c30;text-align:left}}th{{color:#888;font-size:11px}}tr:nth-child(even){{background:#17191c}}</style></head><body><div class='wrap'><h1>HARBIN QUANT CARD</h1><p>Updated {updated}. Best verified executable line/price, positive-EV gates and portfolio risk controls; PASS is normal. No result guarantees future profitability.</p><table><thead><tr><th>GAME</th><th>SIGNAL</th><th>MARKET</th><th>SIDE</th><th>LINE</th><th>ODDS</th><th>MODEL P</th><th>EV</th><th>UNITS</th><th>DATA QUALITY</th></tr></thead><tbody>{''.join(rows)}</tbody></table></div></body></html>")
+        ev=float(r.quant_ev) if _finite(r.get("quant_ev")) else 0.
+        prob=float(r.quant_probability) if _finite(r.get("quant_probability")) else 0.
+        price=r.get("quant_price"); odds=r.get("quant_odds")
+        evidence=_edge_evidence_html(r)
+        rows.append(
+            f"<tr><td>{r.away_team} @ {r.home_team}</td>"
+            f"<td>{r.get('quant_signal','PASS')}</td><td>{r.get('quant_market') or '—'}</td>"
+            f"<td>{r.get('quant_side') or '—'}</td><td>{price if pd.notna(price) else '—'}</td>"
+            f"<td>{odds if pd.notna(odds) else '—'}</td><td>{prob:.1%}</td><td>{ev:.1%}</td>"
+            f"<td>{evidence}</td><td>{float(r.get('stake_units',0) or 0):.2f}</td>"
+            f"<td>{float(r.get('data_quality_score',0) or 0):.0%}</td></tr>"
+        )
+    Path(path).write_text(
+        "<!doctype html><html><head><meta charset='utf-8'><meta name='viewport' content='width=device-width,initial-scale=1'>"
+        "<title>Harbin Quant Card</title><style>"
+        "body{background:#0f1113;color:#f2f2f2;font-family:Arial;margin:0;padding:24px}.wrap{max-width:1450px;margin:auto}"
+        "p{color:#9da1a6}table{width:100%;border-collapse:collapse}th,td{padding:10px;border-bottom:1px solid #292c30;text-align:left}"
+        "th{color:#888;font-size:11px}tr:nth-child(even){background:#17191c}.edge{display:inline-block;font-size:10px;font-weight:800;border-radius:4px;padding:4px 6px}"
+        ".supported{background:#5fc468;color:#0c2c12}.watch{background:#483b1e;color:#e3b549}.raw{background:#25282c;color:#8f9499}"
+        ".edge-sub{font-size:9px;color:#9da1a6;margin-top:4px;white-space:nowrap}</style></head><body><div class='wrap'>"
+        f"<h1>HARBIN QUANT CARD</h1><p>Updated {updated}. Supported edges are historically persistent research candidates, not guaranteed profit. "
+        "Archive backtest evidence prioritizes market selection; clean forward validation remains required before production use.</p>"
+        "<table><thead><tr><th>GAME</th><th>SIGNAL</th><th>MARKET</th><th>SIDE</th><th>LINE</th><th>ODDS</th>"
+        "<th>MODEL P</th><th>EV</th><th>EDGE EVIDENCE</th><th>UNITS</th><th>DATA QUALITY</th></tr></thead>"
+        f"<tbody>{''.join(rows)}</tbody></table></div></body></html>"
+    )
+
+
+def _write_edge_html(edges,path,updated):
+    rows=[]
+    for _,r in edges.iterrows():
+        hp=float(r.get("historical_win_rate")) if _finite(r.get("historical_win_rate")) else 0.0
+        hr=float(r.get("historical_roi")) if _finite(r.get("historical_roi")) else 0.0
+        p=float(r.get("probability")) if _finite(r.get("probability")) else 0.0
+        ev=float(r.get("ev")) if _finite(r.get("ev")) else 0.0
+        edge=float(r.get("edge")) if _finite(r.get("edge")) else 0.0
+        odds=float(r.get("odds")) if _finite(r.get("odds")) else 0.0
+        line=float(r.get("line")) if _finite(r.get("line")) else 0.0
+        rows.append(
+            f"<tr><td>{r.get('away_team')} @ {r.get('home_team')}</td><td>{str(r.get('market')).upper()}</td>"
+            f"<td><strong>{r.get('side')}</strong></td><td>{line:+g}</td><td>{odds:+g}</td>"
+            f"<td>{p:.1%}</td><td>{edge:.2f}</td><td>{ev:.1%}</td>"
+            f"<td>{int(float(r.get('historical_bets') or 0))}</td><td>{hp:.1%}</td><td>{hr:.1%}</td>"
+            f"<td>{int(float(r.get('profitable_seasons') or 0))}/{int(float(r.get('season_count') or 0))}</td></tr>"
+        )
+    empty="<tr><td colspan='12'>No current pregame markets match a persistent historical edge regime.</td></tr>"
+    Path(path).write_text(
+        "<!doctype html><html><head><meta charset='utf-8'><meta name='viewport' content='width=device-width,initial-scale=1'>"
+        "<title>Harbin Supported Edges</title><style>"
+        "body{background:#0f1113;color:#f2f2f2;font-family:Arial;margin:0;padding:24px}.wrap{max-width:1450px;margin:auto}"
+        "p{color:#9da1a6}.callout{border:1px solid #315d38;background:#152319;padding:12px;border-radius:8px;margin:12px 0 18px}"
+        "table{width:100%;border-collapse:collapse}th,td{padding:10px;border-bottom:1px solid #292c30;text-align:left}"
+        "th{color:#888;font-size:11px}tr:nth-child(even){background:#17191c}</style></head><body><div class='wrap'>"
+        f"<h1>SUPPORTED EDGE BOARD</h1><p>Updated {updated}</p>"
+        "<div class='callout'><strong>Current persistent regime:</strong> spread model-market disagreement of 6–8 points. "
+        "It met the research gate across the historical walk-forward sample, but the archive entry-price sample is not fully timestamp-verified. "
+        "Treat this as where the model has found its best historical edge candidate; clean forward validation is still required.</div>"
+        "<table><thead><tr><th>GAME</th><th>MARKET</th><th>SIDE</th><th>LINE</th><th>ODDS</th><th>MODEL P</th>"
+        "<th>MODEL EDGE</th><th>MODEL EV</th><th>HIST BETS</th><th>HIST HIT</th><th>HIST ROI</th><th>PROFITABLE SEASONS</th></tr></thead>"
+        f"<tbody>{''.join(rows) if rows else empty}</tbody></table></div></body></html>"
+    )
 
 
 def _write_output_readme(out,base,meta,pages,run_tag):
@@ -150,7 +235,7 @@ def _write_output_readme(out,base,meta,pages,run_tag):
         for i in range(1,pages+1)
     )
     h=meta.get("health",{}); ac=meta.get("advanced_features",{}).get("dynamic_coverage",meta.get("advanced_features",{}).get("live_coverage",0))
-    (out/"README.md").write_text(f"# Latest CFB model output\n\n**Model:** v{meta['model_version']}  \n**Season / Week:** {meta['season']} / {meta['week']}  \n**Updated:** {meta['updated_at_ct']}  \n**Market:** {meta['market_status']}  \n**Dynamic advanced-feature live coverage:** {ac:.0%}  \n**System health:** {h.get('system_health_score','—')}/100 *(readiness, not predicted profitability)*\n\n## Use these\n- [Interactive Cooper-style table]({base}.html)\n- [Quant card](quant_card.html)\n- [Quant recommendations CSV](quant_recommendations.csv)\n- [Persistent historical edge candidates](edge_candidates.csv)\n- [Edge-regime watchlist](edge_watchlist.csv)\n- [Edge-regime evidence](edge_regimes.json)\n- [Full model CSV]({base}.csv)\n- [Metadata / diagnostics]({base}_metadata.json)\n- [System health report](system_health.json)\n- [Market × tier forward validation](tier_performance.json)\n- [Posted market × tier matrix CSV](tier_performance.csv)\n- [Clean validation-eligible tier matrix](tier_validation_clean.csv)\n- [Posted flat-1u graded tier ledger](live_graded_tiers.csv)\n- [Clean validation-entry ledger](live_graded_tiers_clean.csv)\n\n## Fresh PNGs for mobile\n{pngs}\n\nThese filenames change on every run so GitHub mobile cannot reuse an old image preview.\n\n## Stable PNG names\n{stable_pngs}\n\nThe Cooper-style table is the reconstructed presentation layer. The Quant card is the independent EV/risk layer. Missing verified markets display **NO LINE**. Run the separate **CFB Backtest** workflow before treating signals as historically established.\n")
+    (out/"README.md").write_text(f"# Latest CFB model output\n\n**Model:** v{meta['model_version']}  \n**Season / Week:** {meta['season']} / {meta['week']}  \n**Updated:** {meta['updated_at_ct']}  \n**Market:** {meta['market_status']}  \n**Dynamic advanced-feature live coverage:** {ac:.0%}  \n**System health:** {h.get('system_health_score','—')}/100 *(readiness, not predicted profitability)*\n\n## Use these\n- [Interactive Cooper-style table]({base}.html)\n- [Quant card](quant_card.html)\n- [Supported edge board](edge_card.html)\n- [Quant recommendations CSV](quant_recommendations.csv)\n- [Persistent historical edge candidates](edge_candidates.csv)\n- [Edge-regime watchlist](edge_watchlist.csv)\n- [Edge-regime evidence](edge_regimes.json)\n- [Full model CSV]({base}.csv)\n- [Metadata / diagnostics]({base}_metadata.json)\n- [System health report](system_health.json)\n- [Market × tier forward validation](tier_performance.json)\n- [Posted market × tier matrix CSV](tier_performance.csv)\n- [Clean validation-eligible tier matrix](tier_validation_clean.csv)\n- [Posted flat-1u graded tier ledger](live_graded_tiers.csv)\n- [Clean validation-entry ledger](live_graded_tiers_clean.csv)\n\n## Fresh PNGs for mobile\n{pngs}\n\nThese filenames change on every run so GitHub mobile cannot reuse an old image preview.\n\n## Stable PNG names\n{stable_pngs}\n\nThe Cooper-style table is the reconstructed presentation layer. The Quant card is the independent EV/risk layer. Missing verified markets display **NO LINE**. Run the separate **CFB Backtest** workflow before treating signals as historically established.\n")
 
 
 def _pregame_games(games, now=None):
@@ -197,6 +282,7 @@ def run_week(season=None,week=None,history_start=None,root="."):
     pred.to_csv(out/f"{base}.csv",index=False); (out/f"{base}.json").write_text(pred.to_json(orient="records",indent=2))
     (out/"edge_regimes.json").write_text(json.dumps(edge_report,indent=2)); (docs/"edge_regimes.json").write_text(json.dumps(edge_report,indent=2))
     persistent_edges.to_csv(out/"edge_candidates.csv",index=False); persistent_edges.to_csv(docs/"edge_candidates.csv",index=False)
+    _write_edge_html(persistent_edges,out/"edge_card.html",display); _write_edge_html(persistent_edges,docs/"edge.html",display)
     watch_edges.to_csv(out/"edge_watchlist.csv",index=False); watch_edges.to_csv(docs/"edge_watchlist.csv",index=False)
     qcols=[c for c in ["game_id","date","away_team","home_team","model_margin_home","model_total","quant_signal","quant_market","quant_side","quant_price","quant_odds","quant_probability","quant_ev","quant_edge","selection_basis","edge_selection_override","raw_ev_best_market","raw_ev_best_side","raw_ev_best_ev","edge_regime_status","edge_regime_band","edge_regime_bets","edge_regime_roi","edge_regime_profitable_seasons","edge_regime_season_count","edge_regime_candidate","stake_units","risk_multiplier","data_quality_score","context_risk","market_book_count","policy_block_reason"] if c in pred.columns]
     q=pred[qcols].copy() if qcols else pd.DataFrame()
