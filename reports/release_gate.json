@@ -57,14 +57,14 @@
     {
       "name": "probability_brier",
       "passed": true,
-      "value": 0.17476492013360306,
+      "value": 0.17476492013360373,
       "requirement": "Brier <= 0.18 on chronological release holdout",
       "detail": ""
     },
     {
       "name": "probability_ece",
       "passed": false,
-      "value": 0.06218232013495895,
+      "value": 0.06218232013495953,
       "requirement": "ECE <= 0.05 on chronological release holdout",
       "detail": ""
     },

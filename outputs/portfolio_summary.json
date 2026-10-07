@@ -25,12 +25,12 @@
     "reason": "graded history has no usable profit rows"
   },
   "production_block_reason": "",
-  "proposed_units": 5.18,
-  "risk_adjusted_proposed_units": 5.18,
-  "performance_adjusted_proposed_units": 5.18,
+  "proposed_units": 5.0,
+  "risk_adjusted_proposed_units": 5.0,
+  "performance_adjusted_proposed_units": 5.0,
   "approved_units": 0.0,
-  "paper_allocated_units": 3.4,
-  "paper_or_shadow_allocated_units": 3.4,
+  "paper_allocated_units": 3.37,
+  "paper_or_shadow_allocated_units": 3.37,
   "bets": 20,
   "approved_bets": 0,
   "execution_blocked_bets": 0,
@@ -76,23 +76,23 @@
     "max_book_units": 2.0
   },
   "allocated_by_market": {
-    "spread": 2.24,
+    "spread": 2.21,
     "total": 0.56,
     "moneyline": 0.6
   },
   "allocated_by_book": {
     "ActionNetwork book 71": 0.47,
     "ActionNetwork book 49": 0.74,
-    "ActionNetwork book 30": 0.58,
+    "ActionNetwork book 30": 0.55,
     "Draft Kings": 0.24,
-    "ActionNetwork book 68": 0.42,
-    "ActionNetwork book 15": 0.17,
+    "ActionNetwork book 68": 0.46,
+    "ActionNetwork book 15": 0.13,
     "ActionNetwork book 69": 0.63,
     "ActionNetwork book 75": 0.15
   },
   "allocated_by_kickoff_window": {
     "2026-10-10 21:00:00+00:00": 1.01,
-    "2026-10-10 18:00:00+00:00": 0.89,
+    "2026-10-10 18:00:00+00:00": 0.86,
     "2026-10-10 15:00:00+00:00": 0.83,
     "2026-10-10 00:00:00+00:00": 0.13,
     "2026-10-08 21:00:00+00:00": 0.37,
@@ -113,7 +113,6 @@
     "Indiana": 0.13,
     "Hawai'i": 0.17,
     "Texas A&M": 0.11,
-    "California": 0.18,
     "Virginia": 0.16,
     "Michigan State": 0.13,
     "South Carolina": 0.16,
@@ -122,10 +121,11 @@
     "Air Force": 0.14,
     "Western Michigan": 0.15,
     "Louisiana Tech": 0.1,
-    "Louisiana": 0.1
+    "Louisiana": 0.1,
+    "Temple": 0.15
   },
   "limit_hit_counts": {
-    "max bet count": 18
+    "max bet count": 17
   },
   "release_blockers": [
     "complete_market_coverage: >= 95% games with ML + spread + total",
