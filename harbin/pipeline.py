@@ -221,6 +221,7 @@ def _write_edge_html(edges,path,updated):
         line=float(r.get("line")) if _finite(r.get("line")) else 0.0
         rows.append(
             f"<tr><td>{r.get('away_team')} @ {r.get('home_team')}</td><td>{str(r.get('market')).upper()}</td>"
+            f"<td>{r.get('regime_band') or '—'}</td><td>{r.get('subgroup_key') or '—'}</td>"
             f"<td><strong>{r.get('side')}</strong></td><td>{line:+g}</td><td>{odds:+g}</td>"
             f"<td>{p:.1%}</td><td>{edge:.2f}</td><td>{ev:.1%}</td>"
             f"<td>{r.get('price_evidence_status') or 'UNKNOWN'}</td>"
@@ -230,7 +231,7 @@ def _write_edge_html(edges,path,updated):
             f"<td>{int(float(r.get('historical_bets') or 0))}</td><td>{hp:.1%}</td><td>{hr:.1%}</td>"
             f"<td>{int(float(r.get('profitable_seasons') or 0))}/{int(float(r.get('season_count') or 0))}</td></tr>"
         )
-    empty="<tr><td colspan='16'>No current pregame markets match a holdout-supported edge subgroup.</td></tr>"
+    empty="<tr><td colspan='18'>No current pregame markets match a holdout-supported edge subgroup.</td></tr>"
     Path(path).write_text(
         "<!doctype html><html><head><meta charset='utf-8'><meta name='viewport' content='width=device-width,initial-scale=1'>"
         "<title>Harbin Supported Edges</title><style>"
@@ -239,10 +240,10 @@ def _write_edge_html(edges,path,updated):
         "table{width:100%;border-collapse:collapse}th,td{padding:10px;border-bottom:1px solid #292c30;text-align:left}"
         "th{color:#888;font-size:11px}tr:nth-child(even){background:#17191c}</style></head><body><div class='wrap'>"
         f"<h1>SUPPORTED EDGE BOARD</h1><p>Updated {updated}</p>"
-        "<div class='callout'><strong>Current supported edge:</strong> holdout-confirmed subgroups inside the spread model-market disagreement of 6–8 points. "
+        "<div class='callout'><strong>Current supported edges:</strong> the parent-persistent spread model-market disagreement of 6–8 points plus independently holdout-confirmed child subgroups beneath WATCH bands. "
         "CONFIRMED price means the 95% Wilson lower bound of historical hit rate still clears the current odds break-even probability; PLAUSIBLE clears only on the point estimate. "
         "Historical price evidence never changes model probability or EV, and clean forward validation is still required.</div>"
-        "<table><thead><tr><th>GAME</th><th>MARKET</th><th>SIDE</th><th>LINE</th><th>ODDS</th><th>MODEL P</th>"
+        "<table><thead><tr><th>GAME</th><th>MARKET</th><th>EDGE BAND</th><th>SUBGROUP</th><th>SIDE</th><th>LINE</th><th>ODDS</th><th>MODEL P</th>"
         "<th>MODEL EDGE</th><th>MODEL EV</th><th>PRICE EVIDENCE</th><th>95% HIST LOWER</th><th>CURRENT BREAK-EVEN</th><th>HIST PRICE CEILING</th>"
         "<th>HIST BETS</th><th>HIST HIT</th><th>HIST ROI</th><th>PROFITABLE SEASONS</th></tr></thead>"
         f"<tbody>{''.join(rows) if rows else empty}</tbody></table></div></body></html>"
