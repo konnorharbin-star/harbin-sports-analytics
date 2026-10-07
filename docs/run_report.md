@@ -13,10 +13,13 @@
 - Selection uses untouched evaluation outcomes: **False**.
 
 ## Monitoring and execution
-- Live readiness: **94.0/100**; distribution stability **95.8/100**.
-- Portfolio mode: **PAPER**; proposed **6.14u**; approved **0.00u**.
+- Live readiness: **93.7/100**; distribution stability **95.8/100**.
+- Portfolio mode: **PAPER**; proposed **6.46u**; approved **0.00u**.
 - Historical evidence: **0 bets**, ROI **—**, CLV **—**.
 - Independent live evidence: **0 bets**, ROI **—**, CLV **—**.
+
+## Market × tier forward validation
+- Display-tier ledger: **144 posted flat-1u decisions** · clean validation-eligible **0** · excluded legacy/unverified **0** · status **TRACKING** · validated cells **0**.
 
 ## Current blockers
 - complete_market_coverage: >= 95% games with ML + spread + total
