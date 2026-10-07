@@ -106,6 +106,12 @@ jobs:
             docs/tier_validation_clean.csv
             docs/live_graded_tiers.csv
             docs/live_graded_tiers_clean.csv
+            reports/edge_timing_forward_performance.json
+            reports/edge_timing_forward_graded.csv
+            outputs/edge_timing_forward_performance.json
+            outputs/edge_timing_forward_graded.csv
+            docs/edge_timing_forward_performance.json
+            docs/edge_timing_forward_graded.csv
             reports/edge_forward_performance.json
             reports/edge_forward_graded.csv
             outputs/edge_forward_performance.json
