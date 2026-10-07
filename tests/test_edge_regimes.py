@@ -153,7 +153,7 @@ def test_persistent_regime_outranks_higher_raw_ev_unsupported_market(tmp_path):
             "spread_edge_pts": 7.816,
             "spread_team": "South Florida",
             "spread_line": 7.5,
-            "best_away_spread_odds": -122,
+            "best_away_spread_odds": -110,
             "best_away_spread_book": "Book Spread",
             "best_away_spread_quote_at": "2026-10-07T03:00:00Z",
         }
@@ -637,7 +637,7 @@ def test_overpriced_supported_subgroup_does_not_receive_historical_promotion(tmp
             "week": 6,
             "home_team": "Home",
             "away_team": "Away",
-            "calibrated_home_probability": 0.50,
+            "calibrated_home_probability": 0.55,
             "quant_best_ml_side": "Home",
             "quant_best_ml_edge_pp": 10.0,
             "quant_best_ml_roi": 0.25,
