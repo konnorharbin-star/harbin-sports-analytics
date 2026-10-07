@@ -7,6 +7,7 @@ import pandas as pd
 from harbin.edge_forward import (
     _clean_forward_entries,
     append_edge_candidate_snapshots,
+    edge_forward_class,
     grade_edge_forward_history,
 )
 
@@ -29,6 +30,14 @@ def _edge_row(**overrides):
         "quote_at": "2026-10-10T15:59:00Z",
         "regime_status": "PERSISTENT_CANDIDATE",
         "edge_reliability_status": "SUPPORTED_SUBGROUP",
+        "price_evidence_status": "CONFIRMED",
+        "price_evidence_sample": 89,
+        "historical_price_win_rate": 0.629,
+        "historical_price_wilson_lower": 0.525,
+        "current_break_even_probability": 0.524,
+        "historical_price_margin": 0.105,
+        "conservative_price_margin": 0.001,
+        "historical_fair_odds_lower_bound": -111,
         "regime_band": "6-8",
         "historical_bets": 231,
         "historical_win_rate": 0.61,
@@ -91,29 +100,40 @@ def test_append_forward_edge_snapshots_keeps_supported_and_dedupes_retry(tmp_pat
     assert len(stored) == 1
     assert stored.iloc[0]["game_id"] == "g1"
     assert stored.iloc[0]["edge_reliability_status"] == "SUPPORTED_SUBGROUP"
+    assert stored.iloc[0]["edge_snapshot_schema_version"] == 2
+    assert stored.iloc[0]["edge_forward_class"] == "CORE_CONFIRMED"
+    assert stored.iloc[0]["price_evidence_status"] == "CONFIRMED"
 
 
 def test_clean_forward_entries_uses_first_complete_pre_kickoff_observation():
     frame = pd.DataFrame(
         [
             _edge_row(
+                edge_snapshot_schema_version=2,
+                edge_forward_class="CORE_CONFIRMED",
                 snapshot_at="2026-10-10T15:00:00Z",
                 quote_at="2026-10-10T15:01:00Z",
                 book="Book A",
             ),
             _edge_row(
+                edge_snapshot_schema_version=2,
+                edge_forward_class="CORE_CONFIRMED",
                 snapshot_at="2026-10-10T16:00:00Z",
                 quote_at="2026-10-10T15:59:00Z",
                 book="Book B",
                 odds=-108,
             ),
             _edge_row(
+                edge_snapshot_schema_version=2,
+                edge_forward_class="CORE_CONFIRMED",
                 snapshot_at="2026-10-10T17:00:00Z",
                 quote_at="2026-10-10T16:59:00Z",
                 book="Book C",
                 odds=-105,
             ),
             _edge_row(
+                edge_snapshot_schema_version=2,
+                edge_forward_class="CORE_CONFIRMED",
                 snapshot_at="2026-10-10T18:01:00Z",
                 quote_at="2026-10-10T17:59:00Z",
                 book="Book D",
@@ -154,6 +174,8 @@ def test_grade_forward_edge_history_uses_flat_units_and_pre_kickoff_close(tmp_pa
     pd.DataFrame(
         [
             _edge_row(
+                edge_snapshot_schema_version=2,
+                edge_forward_class="CORE_CONFIRMED",
                 snapshot_at="2026-10-10T16:00:00Z",
                 quote_at="2026-10-10T15:59:00Z",
             )
@@ -190,6 +212,43 @@ def test_grade_forward_edge_history_uses_flat_units_and_pre_kickoff_close(tmp_pa
     assert report["graded_bets"] == 1
     assert report["status"] == "EARLY_SAMPLE"
     assert report["by_subgroup"]["underdog|away"]["wins"] == 1
+    assert report["by_edge_class"]["CORE_CONFIRMED"]["wins"] == 1
+    assert report["by_price_evidence"]["CONFIRMED"]["wins"] == 1
+    assert graded.iloc[0]["edge_forward_class"] == "CORE_CONFIRMED"
+    assert graded.iloc[0]["price_evidence_status"] == "CONFIRMED"
     assert persisted["methodology"].startswith(
         "First provenance-complete pre-kickoff observation"
     )
+
+
+def test_edge_forward_class_separates_core_plausible_and_parent():
+    assert edge_forward_class("SUPPORTED_SUBGROUP", "CONFIRMED") == "CORE_CONFIRMED"
+    assert edge_forward_class("SUPPORTED_SUBGROUP", "PLAUSIBLE") == "SUPPORTED_PLAUSIBLE"
+    assert edge_forward_class("SUPPORTED_SUBGROUP", "OVERPRICED") == "SUPPORTED_OVERPRICED"
+    assert edge_forward_class("PERSISTENT_PARENT_ONLY", "CONFIRMED") == "PARENT_CONFIRMED"
+    assert edge_forward_class("PERSISTENT_PARENT_ONLY", "PLAUSIBLE") == "PARENT_UNCONFIRMED"
+
+
+def test_clean_forward_entries_ignores_legacy_schema_before_price_classes():
+    frame = pd.DataFrame(
+        [
+            _edge_row(
+                edge_snapshot_schema_version=1,
+                edge_forward_class=None,
+                snapshot_at="2026-10-10T15:00:00Z",
+                quote_at="2026-10-10T14:59:00Z",
+            ),
+            _edge_row(
+                edge_snapshot_schema_version=2,
+                edge_forward_class="CORE_CONFIRMED",
+                snapshot_at="2026-10-10T16:00:00Z",
+                quote_at="2026-10-10T15:59:00Z",
+            ),
+        ]
+    )
+
+    clean = _clean_forward_entries(frame)
+
+    assert len(clean) == 1
+    assert clean.iloc[0]["snapshot_at"] == "2026-10-10T16:00:00Z"
+    assert clean.iloc[0]["edge_forward_class"] == "CORE_CONFIRMED"
