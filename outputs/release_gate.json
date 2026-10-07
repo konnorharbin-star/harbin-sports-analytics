@@ -15,7 +15,7 @@
     {
       "name": "complete_market_coverage",
       "passed": false,
-      "value": 0.9483,
+      "value": 0.9474,
       "requirement": ">= 95% games with ML + spread + total",
       "detail": ""
     },
@@ -57,14 +57,14 @@
     {
       "name": "probability_brier",
       "passed": true,
-      "value": 0.17476492013360306,
+      "value": 0.1747649201336038,
       "requirement": "Brier <= 0.18 on chronological release holdout",
       "detail": ""
     },
     {
       "name": "probability_ece",
       "passed": false,
-      "value": 0.06218232013495895,
+      "value": 0.06218232013495966,
       "requirement": "ECE <= 0.05 on chronological release holdout",
       "detail": ""
     },
@@ -78,7 +78,7 @@
     {
       "name": "multi_book_consensus",
       "passed": true,
-      "value": 0.9828,
+      "value": 0.9825,
       "requirement": ">= 75% of games covered by 2+ books",
       "detail": "Configure THE_ODDS_API_KEY if ESPN exposes only one provider."
     },
