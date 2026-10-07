@@ -11,7 +11,7 @@ from harbin.edge_regimes import (
 )
 
 
-def _rows(market, edge, season, bets, wins, clv=0.02):
+def _rows(market, edge, season, bets, wins, clv=0.02, verified=True):
     rows = []
     for idx in range(bets):
         win = idx < wins
@@ -24,6 +24,12 @@ def _rows(market, edge, season, bets, wins, clv=0.02):
                 "result": 1 if win else -1,
                 "profit": 0.9090909091 if win else -1.0,
                 "clv": clv,
+                "entry_quote_verified": verified,
+                "entry_quote_source": (
+                    "verified_timestamped_snapshot"
+                    if verified
+                    else "archive_final_or_unverified_fallback"
+                ),
             }
         )
     return rows
@@ -221,7 +227,7 @@ def test_supported_edge_label_is_explicit_about_persistent_regime():
 
     html = _edge_evidence_html(row)
 
-    assert "SUPPORTED 6-8" in html
+    assert "FORWARD-VALIDATED 6-8" in html
     assert "231 hist bets" in html
     assert "16.2% ROI" in html
     assert "3/3 profitable seasons" in html
@@ -254,8 +260,83 @@ def test_supported_edge_board_contains_forward_validation_warning(tmp_path):
     _write_edge_html(edges, path, "Oct 7, 2026 · 5:30 AM CT")
     html = path.read_text()
 
-    assert "SUPPORTED EDGE BOARD" in html
-    assert "spread model-market disagreement of 6–8 points" in html
-    assert "clean forward validation is still required" in html
+    assert "EDGE HYPOTHESIS BOARD" in html
+    assert "Research only" in html
+    assert "Only verified forward validation can promote" in html
     assert "Away @ Home" in html
     assert "16.2%" in html
+
+
+def test_archive_only_persistent_shape_is_historical_hypothesis_not_live_edge():
+    rows = []
+    rows += _rows("spread", 6.5, 2023, 60, 36, verified=False)
+    rows += _rows("spread", 6.5, 2024, 60, 36, verified=False)
+    rows += _rows("spread", 6.5, 2025, 60, 36, verified=False)
+
+    report = build_edge_regime_report(pd.DataFrame(rows))
+    spread = match_edge_regime(report, "spread", 6.7)
+
+    assert spread["status"] == "HISTORICAL_HYPOTHESIS"
+    assert spread["verified_entry_bets"] == 0
+    assert spread["verified_entry_rate"] == 0.0
+    assert report["persistent_regimes"] == 0
+    assert report["historical_hypothesis_regimes"] == 1
+
+
+def test_archive_hypothesis_does_not_override_higher_raw_ev_market(tmp_path):
+    rows = []
+    rows += _rows("spread", 6.5, 2023, 60, 36, verified=False)
+    rows += _rows("spread", 6.5, 2024, 60, 36, verified=False)
+    rows += _rows("spread", 6.5, 2025, 60, 36, verified=False)
+    report = build_edge_regime_report(pd.DataFrame(rows))
+
+    row = pd.Series(
+        {
+            "week": 6,
+            "home_team": "UTSA",
+            "away_team": "South Florida",
+            "calibrated_home_probability": 0.46,
+            "quant_best_ml_side": "South Florida",
+            "quant_best_ml_edge_pp": 24.48,
+            "quant_best_ml_roi": 0.782,
+            "best_away_ml": 230,
+            "best_away_ml_book": "Book ML",
+            "best_away_ml_quote_at": "2026-10-07T03:00:00Z",
+            "cover_probability": 0.6843,
+            "spread_edge_pts": 7.816,
+            "spread_team": "South Florida",
+            "spread_line": 7.5,
+            "best_away_spread_odds": -122,
+            "best_away_spread_book": "Book Spread",
+            "best_away_spread_quote_at": "2026-10-07T03:00:00Z",
+        }
+    )
+    missing_policy = tmp_path / "missing_policy.json"
+
+    selected = select_best_market(
+        row,
+        risk_multiplier=1.0,
+        policy_path=str(missing_policy),
+        edge_report=report,
+    )
+
+    assert selected["quant_market"] == "moneyline"
+    assert selected["edge_selection_override"] is False
+    assert selected["selection_basis"] == "highest_raw_ev"
+
+
+def test_hypothesis_label_exposes_zero_verified_entries():
+    row = pd.Series(
+        {
+            "edge_regime_status": "HISTORICAL_HYPOTHESIS",
+            "edge_regime_band": "6-8",
+            "edge_regime_bets": 231,
+            "edge_regime_verified_entry_bets": 0,
+        }
+    )
+
+    html = _edge_evidence_html(row)
+
+    assert "HYPOTHESIS 6-8" in html
+    assert "231 archive bets" in html
+    assert "0 timestamp-verified entries" in html
