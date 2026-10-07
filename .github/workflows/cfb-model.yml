@@ -81,6 +81,34 @@ jobs:
           git config user.name "harbin-model-bot"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add outputs history reports docs
+
+          # Live-grading owns these files. The model may regenerate them locally for
+          # reporting, but must not race the grading workflow when publishing state.
+          GRADE_OWNED=(
+            reports/live_performance.json
+            reports/live_graded_predictions.csv
+            reports/live_graded_bets.csv
+            reports/tier_performance.json
+            reports/tier_performance.csv
+            reports/live_graded_tiers.csv
+            outputs/live_performance.json
+            outputs/tier_performance.json
+            outputs/tier_performance.csv
+            outputs/live_graded_tiers.csv
+            docs/live_performance.json
+            docs/tier_performance.json
+            docs/tier_performance.csv
+            docs/live_graded_tiers.csv
+          )
+          for f in "${GRADE_OWNED[@]}"; do
+            if git ls-files --error-unmatch "$f" >/dev/null 2>&1; then
+              git restore --staged --worktree "$f" || true
+            else
+              git rm --cached -f --ignore-unmatch "$f" >/dev/null 2>&1 || true
+              rm -f "$f"
+            fi
+          done
+
           if ! git diff --cached --quiet; then
             git commit -m "model: automated CFB v7 refresh"
             git pull --rebase origin main
