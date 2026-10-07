@@ -243,11 +243,14 @@ def _display_market_entry(entry, market):
             quote_time_source = entry.get("total_quote_time_source") or entry.get("best_under_quote_time_source")
 
     quote_stamp = pd.to_datetime(quote_at, utc=True, errors="coerce")
+    snapshot_stamp = pd.to_datetime(entry.get("snapshot_at"), utc=True, errors="coerce")
     price_verified = (
         math.isfinite(_safe(odds))
         and _present_text(book)
         and _present_text(quote_at)
         and not pd.isna(quote_stamp)
+        and not pd.isna(snapshot_stamp)
+        and quote_stamp <= snapshot_stamp
     )
 
     return pd.Series(
