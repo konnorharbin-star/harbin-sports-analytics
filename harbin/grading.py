@@ -142,6 +142,17 @@ def _summary(bets):
 
 
 
+def _present_text(value):
+    if value is None:
+        return False
+    try:
+        if pd.isna(value):
+            return False
+    except (TypeError, ValueError):
+        pass
+    return bool(str(value).strip())
+
+
 def _display_market_entry(entry, market):
     """Normalize one displayed market tier into the quant grading contract."""
 
@@ -226,8 +237,8 @@ def _display_market_entry(entry, market):
 
     price_verified = (
         math.isfinite(_safe(odds))
-        and bool(str(book or "").strip())
-        and bool(str(quote_at or "").strip())
+        and _present_text(book)
+        and _present_text(quote_at)
     )
 
     return pd.Series(
