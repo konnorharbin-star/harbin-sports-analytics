@@ -1,14 +1,14 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-10-07T23:45:47.143663+00:00",
+  "generated_at": "2026-10-07T23:55:38.987090+00:00",
   "status": "WARN",
   "identity": {
     "platform_version": "7.4.0",
     "model_version": "7.1.0",
     "season": 2026,
     "week": 6,
-    "model_generated_at": "2026-10-07T23:44:42.899637+00:00",
-    "updated_at_ct": "Oct 7, 2026 \u00b7 6:44 PM CT",
+    "model_generated_at": "2026-10-07T23:54:38.793211+00:00",
+    "updated_at_ct": "Oct 7, 2026 \u00b7 6:54 PM CT",
     "prediction_rows": 55
   },
   "release": {
@@ -203,9 +203,9 @@
         "mean_z": 0.0416,
         "std_ratio": 0.9812,
         "live_mean": 4.506152289355529,
-        "reference_mean": 4.007587882019203,
+        "reference_mean": 4.007587882019204,
         "live_std": 11.768568833544736,
-        "reference_std": 11.99409006138559,
+        "reference_std": 11.994090061385588,
         "live_n": 55,
         "reference_n": 2398
       },
@@ -216,7 +216,7 @@
         "live_mean": 52.7117732760507,
         "reference_mean": 53.69890163853031,
         "live_std": 5.2088435617378215,
-        "reference_std": 6.227517524699614,
+        "reference_std": 6.2275175246996115,
         "live_n": 55,
         "reference_n": 2398
       },
@@ -225,9 +225,9 @@
         "mean_z": 0.021,
         "std_ratio": 1.0,
         "live_mean": 0.5877513237104882,
-        "reference_mean": 0.582714657203369,
+        "reference_mean": 0.5827146572033696,
         "live_std": 0.23946479011694674,
-        "reference_std": 0.2394736173752905,
+        "reference_std": 0.23947361737529071,
         "live_n": 55,
         "reference_n": 2398
       }
@@ -281,12 +281,12 @@
       "reason": "graded history has no usable profit rows"
     },
     "production_block_reason": "",
-    "proposed_units": 4.94,
-    "risk_adjusted_proposed_units": 4.94,
-    "performance_adjusted_proposed_units": 4.94,
+    "proposed_units": 4.9,
+    "risk_adjusted_proposed_units": 4.9,
+    "performance_adjusted_proposed_units": 4.9,
     "approved_units": 0.0,
-    "paper_allocated_units": 3.4,
-    "paper_or_shadow_allocated_units": 3.4,
+    "paper_allocated_units": 3.36,
+    "paper_or_shadow_allocated_units": 3.36,
     "bets": 20,
     "approved_bets": 0,
     "execution_blocked_bets": 0,
@@ -332,24 +332,24 @@
       "max_book_units": 2.0
     },
     "allocated_by_market": {
-      "spread": 2.23,
+      "spread": 2.19,
       "total": 0.57,
       "moneyline": 0.6
     },
     "allocated_by_book": {
       "ActionNetwork book 75": 0.6,
       "ActionNetwork book 30": 0.55,
-      "ActionNetwork book 71": 0.52,
+      "ActionNetwork book 69": 0.83,
       "ActionNetwork book 49": 0.56,
-      "Draft Kings": 0.24,
+      "DraftKings": 0.24,
       "ActionNetwork book 15": 0.13,
       "ActionNetwork book 68": 0.17,
-      "ActionNetwork book 69": 0.63
+      "ActionNetwork book 71": 0.28
     },
     "allocated_by_kickoff_window": {
       "2026-10-10 21:00:00+00:00": 1.0,
       "2026-10-10 18:00:00+00:00": 0.86,
-      "2026-10-08 21:00:00+00:00": 0.41,
+      "2026-10-08 21:00:00+00:00": 0.37,
       "2026-10-10 15:00:00+00:00": 0.83,
       "2026-10-10 00:00:00+00:00": 0.13,
       "2026-10-11 00:00:00+00:00": 0.17
@@ -359,9 +359,9 @@
       "Vanderbilt": 0.25,
       "Georgia Tech": 0.18,
       "Duke": 0.18,
-      "Liberty": 0.24,
       "Alabama": 0.15,
       "Georgia": 0.15,
+      "Liberty": 0.2,
       "UCF": 0.2,
       "Iowa": 0.13,
       "Nebraska": 0.13,
@@ -476,25 +476,12 @@
         "name": "approved_not_above_allocation",
         "passed": true,
         "severity": "ERROR",
-        "detail": "approved=0.00 allocated=3.40"
+        "detail": "approved=0.00 allocated=3.36"
       }
     ],
     "errors": []
   },
   "trend": [
-    {
-      "generated_at": "2026-10-07T03:16:53.002595+00:00",
-      "model_generated_at": "2026-10-07T03:16:11.695176+00:00",
-      "season": 2026,
-      "week": 6,
-      "platform_version": "7.4.0",
-      "release_state": "RESEARCH",
-      "publication_status": "WARN",
-      "live_readiness_score": 94.9,
-      "distribution_stability": 96.2,
-      "approved_units": 0.0,
-      "data_quality_status": "PASS"
-    },
     {
       "generated_at": "2026-10-07T10:28:03.763008+00:00",
       "model_generated_at": "2026-10-07T10:26:59.869016+00:00",
@@ -635,6 +622,19 @@
       "publication_status": "WARN",
       "live_readiness_score": 94.7,
       "distribution_stability": 96.2,
+      "approved_units": 0.0,
+      "data_quality_status": "PASS"
+    },
+    {
+      "generated_at": "2026-10-07T23:45:47.143663+00:00",
+      "model_generated_at": "2026-10-07T23:44:42.899637+00:00",
+      "season": 2026,
+      "week": 6,
+      "platform_version": "7.4.0",
+      "release_state": "RESEARCH",
+      "publication_status": "WARN",
+      "live_readiness_score": 94.7,
+      "distribution_stability": 96.5,
       "approved_units": 0.0,
       "data_quality_status": "PASS"
     }
