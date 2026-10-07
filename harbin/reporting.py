@@ -255,6 +255,7 @@ def build_audit_snapshot(
         "portfolio": portfolio,
         "historical_evidence": _compact_evidence(evidence, live=False),
         "live_evidence": _compact_evidence(live, live=True),
+        "tier_validation": live.get("tier_validation") or meta.get("tier_validation") or {},
         "reconciliation": {
             "status": "FAIL" if critical_failures else "PASS",
             "checks": checks,
@@ -317,6 +318,7 @@ def render_run_report(snapshot: dict) -> str:
     p = snapshot.get("portfolio") or {}
     h = snapshot.get("historical_evidence") or {}
     live = snapshot.get("live_evidence") or {}
+    tiers = snapshot.get("tier_validation") or {}
     rec = snapshot.get("reconciliation") or {}
     blockers = r.get("blockers") or []
     alerts = mon.get("alerts") or []
@@ -340,6 +342,21 @@ def render_run_report(snapshot: dict) -> str:
         f"- Portfolio mode: **{str(p.get('mode','paper')).upper()}**; proposed **{_fmt(p.get('proposed_units'),2)}u**; approved **{_fmt(p.get('approved_units'),2)}u**.",
         f"- Historical evidence: **{h.get('bets',0)} bets**, ROI **{_pct(h.get('roi'))}**, CLV **{_pct(h.get('avg_clv'))}**.",
         f"- Independent live evidence: **{live.get('graded_bets',0)} bets**, ROI **{_pct(live.get('roi'))}**, CLV **{_pct(live.get('avg_clv'))}**.",
+        "",
+        "## Market × tier forward validation",
+        f"- Display-tier ledger: **{tiers.get('graded_tier_bets',0)} flat-1u decisions** · status **{tiers.get('status','EARLY_SAMPLE')}** · validated cells **{tiers.get('validated_cells',0)}**.",
+    ]
+    for row in (tiers.get("matrix") or []):
+        if int(row.get("graded_bets",0) or 0) <= 0:
+            continue
+        lines.append(
+            f"- {str(row.get('market','')).upper()} {row.get('tier')}: "
+            f"{row.get('wins',0)}-{row.get('losses',0)}-{row.get('pushes',0)} · "
+            f"{_pct(row.get('hit_rate'))} hit · {_fmt(row.get('flat_units'),2)}u · "
+            f"{_pct(row.get('flat_roi'))} ROI · CLV {_fmt(row.get('avg_execution_clv'),3)} · "
+            f"{row.get('status')}"
+        )
+    lines += [
         "",
         "## Current blockers",
     ]
