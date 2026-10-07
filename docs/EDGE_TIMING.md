@@ -53,3 +53,45 @@ Actual timing-strategy validation requires independent forward observations,
 chronological holdouts, same-book executable-price comparisons, and sufficient
 sample sizes. Do not promote these heuristics on the basis of in-sample
 description alone.
+
+## Prospective strategy validation (schema v1)
+
+The model now appends `history/timing_decisions_v1.csv` at the moment it
+computes a **clean, positive-cushion, pregame** BET_NOW_RESEARCH or WAIT_MONITOR
+signal. The first such observation per `game_id + market + side` wins and
+is never replaced by a later price, sportsbook or revised projection. No
+historical model snapshots are re-labeled retroactively as timing signals.
+
+The independent `grade_live.py` job publishes the following:
+- `outputs/edge_timing_forward_graded.csv` (also in `reports/` and `docs/`):
+  one immutable initial decision per row, plus matched forward same-book offers.
+- `outputs/edge_timing_forward_performance.json` (also in `reports/` and
+  `docs/`): sample counts, missingness, ambiguous line/price trades, action-
+  specific directional accuracy and descriptive Wilson intervals.
+
+**Pre-registered observations:** The primary endpoint is the **first** observed
+same-book quote from 6 to 9 hours after the frozen decision, observed before
+kickoff. A time window without an eligible quote stays missing; we never take
+the best price from the window. The secondary endpoint is the **last**
+observed same-book quote in the final 60 minutes before kickoff. If no such
+snapshot exists we report missing, not the last earlier snapshot as "close."
+This is an *observed near-kickoff proxy*, not an official closing market.
+
+Quotes at other books are never matched. An observed spread improvement
+(e.g. +0.5 points for the backed team) combined with worse American odds
+is a mixed tradeoff and **not scored as an automatic timing win**. For the
+same line, at least one percentage point in implied break-even price is
+required for a directional improvement/deterioration. No return, bet sizing,
+CLV, or timing-based profit is inferred from line improvement alone.
+
+**Research-only gate:** Report remains PENDING/EARLY/COLLECTING until at least
+100 conclusive observations, 80 distinct games, 8 distinct kickoff weeks and
+20 conclusive observations *of each action*. Even then the only transition
+is `REVIEW_READY_NOT_APPROVED`: full independent statistical and economic
+validation, reliability/availability assessment and human review are necessary.
+No automatic strategy promotion or production staking occurs.
+
+The directional Wilson confidence intervals are descriptive and do not adjust
+for within-game clustering or data-availability selection. Missing snapshots,
+sportsbook quote timestamps, stale prices, and observation frequency must
+be monitored before drawing an operational conclusion.
