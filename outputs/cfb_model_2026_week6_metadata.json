@@ -481,8 +481,8 @@
   },
   "calibrated_margin_sigma": 16.28877707158025,
   "calibrated_total_sigma": 16.102959927363244,
-  "generated_at": "2026-10-07T21:03:33.426396+00:00",
-  "updated_at_ct": "Oct 7, 2026 \u00b7 4:03 PM CT",
+  "generated_at": "2026-10-07T21:10:19.787161+00:00",
+  "updated_at_ct": "Oct 7, 2026 \u00b7 4:10 PM CT",
   "schedule_source": "sportsdataverse/cfbfastR-data",
   "odds_source": "ESPN live (site.web.api.espn.com) + ESPN Core supplement",
   "odds_errors": [],
@@ -561,7 +561,7 @@
       "401871090"
     ],
     "invalid_kickoff_game_ids": [],
-    "cutoff_utc": "2026-10-07T21:03:33.426396+00:00"
+    "cutoff_utc": "2026-10-07T21:10:19.787161+00:00"
   },
   "current_context": {
     "coverage": 1.0,
@@ -588,12 +588,12 @@
   "edge_discovery": {
     "persistent_regimes": 1,
     "watch_regimes": 5,
-    "persistent_candidates": 11,
-    "supported_subgroup_candidates": 0,
-    "parent_only_candidates": 11,
-    "contraindicated_candidates": 0,
+    "persistent_candidates": 10,
+    "supported_subgroup_candidates": 9,
+    "parent_only_candidates": 1,
+    "contraindicated_candidates": 1,
     "watch_candidates": 28,
-    "methodology": "Fixed edge bands; market-specific walk-forward bet outcomes; PERSISTENT_CANDIDATE requires >=180 bets, >=3 seasons, >=50 bets in every season, positive ROI in every season, >=3% aggregate ROI, and positive average CLV. WATCH requires >=100 bets, positive aggregate ROI, and profit in at least two-thirds of seasons. Regime evidence can prioritize research and surface candidates but cannot create an edge or modify the fair line."
+    "methodology": "Fixed edge bands; market-specific walk-forward bet outcomes; PERSISTENT_CANDIDATE requires >=180 bets, >=3 seasons, >=50 bets in every season, positive ROI in every season, >=3% aggregate ROI, and positive average CLV. WATCH requires >=100 bets, positive aggregate ROI, and profit in at least two-thirds of seasons. Spread parent regimes are decomposed into favorite/underdog \u00d7 home/away children. A child is SUPPORTED_SUBGROUP with >=45 bets, >=12 bets per season across >=3 seasons, profit in every season, >=5% aggregate ROI, and positive average CLV; it is CONTRAINDICATED_SUBGROUP with the same sample floor, losses in every season, and <=-3% aggregate ROI. Regime evidence can prioritize research and surface candidates but cannot create an edge, modify the fair line, probability, EV, or inflate stake."
   },
   "quant_picks": {
     "strong": 23,
@@ -630,7 +630,7 @@
     "verified_close_clv_samples": 0,
     "portfolio_verified": true,
     "evidence_source": "portfolio_decisions_v1",
-    "eligible_decisions": 138,
+    "eligible_decisions": 158,
     "timing_excluded_rows": 70,
     "status": "live/shadow evidence only; not historical backtest evidence"
   },
@@ -643,7 +643,7 @@
     "underperforming_cells": 0
   },
   "health": {
-    "system_health_score": 84.2,
+    "system_health_score": 84.1,
     "meaning": "engineering/model-readiness score only; not a profitability or win-rate guarantee",
     "components": {
       "pipeline_and_data": 100.0,
@@ -653,7 +653,7 @@
       "probability_calibration": 87.6,
       "market_intelligence": 99.4,
       "current_context": 100.0,
-      "live_monitoring": 94.9,
+      "live_monitoring": 94.8,
       "historical_betting_proof": 25.0
     },
     "betting_proof_status": "UNPROVEN",
@@ -749,7 +749,7 @@
       {
         "name": "live_monitoring",
         "passed": true,
-        "value": 94.8,
+        "value": 94.9,
         "requirement": "live readiness >= 90/100",
         "detail": ""
       },
@@ -826,7 +826,7 @@
   },
   "live_monitoring": {
     "status": "OK",
-    "live_readiness_score": 94.8,
+    "live_readiness_score": 94.9,
     "scores": {
       "market_coverage": 94.73684210526316,
       "advanced_coverage": 100.0,
@@ -838,7 +838,7 @@
       "drift_total": 90.9,
       "drift_probability": 99.3,
       "distribution_stability": 96.2,
-      "output_completeness": 89.82140034771614
+      "output_completeness": 90.27975343764818
     },
     "drift_details": {
       "margin": {
@@ -966,7 +966,7 @@
       "ActionNetwork book 71": 0.47,
       "ActionNetwork book 30": 0.59,
       "ActionNetwork book 15": 0.39,
-      "DraftKings": 0.24,
+      "Draft Kings": 0.24,
       "ActionNetwork book 75": 0.28,
       "ActionNetwork book 69": 0.46,
       "ActionNetwork book 49": 0.36
@@ -1020,6 +1020,6 @@
     "path": "history/portfolio_decisions_v1.csv",
     "eligible_rows": 20,
     "appended_rows": 20,
-    "total_rows": 493
+    "total_rows": 513
   }
 }

@@ -1,14 +1,14 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-10-07T21:04:36.639724+00:00",
+  "generated_at": "2026-10-07T21:11:30.312295+00:00",
   "status": "WARN",
   "identity": {
     "platform_version": "7.4.0",
     "model_version": "7.1.0",
     "season": 2026,
     "week": 6,
-    "model_generated_at": "2026-10-07T21:03:33.426396+00:00",
-    "updated_at_ct": "Oct 7, 2026 \u00b7 4:03 PM CT",
+    "model_generated_at": "2026-10-07T21:10:19.787161+00:00",
+    "updated_at_ct": "Oct 7, 2026 \u00b7 4:10 PM CT",
     "prediction_rows": 57
   },
   "release": {
@@ -84,7 +84,7 @@
       {
         "name": "live_monitoring",
         "passed": true,
-        "value": 94.8,
+        "value": 94.9,
         "requirement": "live readiness >= 90/100",
         "detail": ""
       },
@@ -183,7 +183,7 @@
   },
   "monitoring": {
     "status": "OK",
-    "live_readiness_score": 94.8,
+    "live_readiness_score": 94.9,
     "scores": {
       "market_coverage": 94.73684210526316,
       "advanced_coverage": 100.0,
@@ -195,7 +195,7 @@
       "drift_total": 90.9,
       "drift_probability": 99.3,
       "distribution_stability": 96.2,
-      "output_completeness": 89.82140034771614
+      "output_completeness": 90.27975343764818
     },
     "drift": {
       "margin": {
@@ -238,7 +238,7 @@
       "probability": 99.3
     },
     "alerts": [],
-    "recent_readiness_delta": -0.10000000000000853
+    "recent_readiness_delta": 0.0
   },
   "data_quality": {
     "status": "PASS",
@@ -341,7 +341,7 @@
       "ActionNetwork book 71": 0.47,
       "ActionNetwork book 30": 0.59,
       "ActionNetwork book 15": 0.39,
-      "DraftKings": 0.24,
+      "Draft Kings": 0.24,
       "ActionNetwork book 75": 0.28,
       "ActionNetwork book 69": 0.46,
       "ActionNetwork book 49": 0.36
@@ -458,7 +458,7 @@
         "name": "monitor_reconciled",
         "passed": true,
         "severity": "ERROR",
-        "detail": "metadata=94.8 output=94.8"
+        "detail": "metadata=94.9 output=94.9"
       },
       {
         "name": "data_contracts_publishable",
@@ -482,19 +482,6 @@
     "errors": []
   },
   "trend": [
-    {
-      "generated_at": "2026-10-06T21:42:48.068351+00:00",
-      "model_generated_at": "2026-10-06T21:42:46.648006+00:00",
-      "season": 2026,
-      "week": 6,
-      "platform_version": "7.4.0",
-      "release_state": "RESEARCH",
-      "publication_status": "WARN",
-      "live_readiness_score": 94.0,
-      "distribution_stability": 95.8,
-      "approved_units": 0.0,
-      "data_quality_status": "PASS"
-    },
     {
       "generated_at": "2026-10-07T02:10:00.414856+00:00",
       "model_generated_at": "2026-10-07T02:09:58.803144+00:00",
@@ -634,6 +621,19 @@
       "release_state": "RESEARCH",
       "publication_status": "WARN",
       "live_readiness_score": 94.9,
+      "distribution_stability": 96.2,
+      "approved_units": 0.0,
+      "data_quality_status": "PASS"
+    },
+    {
+      "generated_at": "2026-10-07T21:04:36.639724+00:00",
+      "model_generated_at": "2026-10-07T21:03:33.426396+00:00",
+      "season": 2026,
+      "week": 6,
+      "platform_version": "7.4.0",
+      "release_state": "RESEARCH",
+      "publication_status": "WARN",
+      "live_readiness_score": 94.8,
       "distribution_stability": 96.2,
       "approved_units": 0.0,
       "data_quality_status": "PASS"

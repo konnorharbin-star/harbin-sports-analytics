@@ -1,5 +1,5 @@
 {
-  "schema_version": 1,
+  "schema_version": 2,
   "status": "TRACKING",
   "regimes": [
     {
@@ -15,7 +15,7 @@
       "win_rate": 0.6096491228070176,
       "units": 37.36363636363636,
       "roi": 0.16174734356552536,
-      "avg_clv": 0.027512275493363925,
+      "avg_clv": 0.02751227549336391,
       "positive_clv_rate": 0.4458874458874459,
       "season_count": 3,
       "profitable_seasons": 3,
@@ -27,9 +27,9 @@
           "losses": 40,
           "pushes": 2,
           "win_rate": 0.5698924731182796,
-          "units": 8.181818181818182,
-          "roi": 0.08612440191387559,
-          "avg_clv": 0.015414497679599098,
+          "units": 8.181818181818187,
+          "roi": 0.08612440191387566,
+          "avg_clv": 0.015414497679599092,
           "positive_clv_rate": 0.4105263157894737
         },
         "2024": {
@@ -38,9 +38,9 @@
           "losses": 26,
           "pushes": 1,
           "win_rate": 0.5737704918032787,
-          "units": 5.818181818181819,
-          "roi": 0.09384164222873902,
-          "avg_clv": 0.0411645474970616,
+          "units": 5.818181818181821,
+          "roi": 0.09384164222873904,
+          "avg_clv": 0.04116454749706158,
           "positive_clv_rate": 0.5
         },
         "2025": {
@@ -49,10 +49,255 @@
           "losses": 23,
           "pushes": 0,
           "win_rate": 0.6891891891891891,
-          "units": 23.36363636363636,
-          "roi": 0.3157248157248157,
-          "avg_clv": 0.03160481641334234,
+          "units": 23.363636363636367,
+          "roi": 0.31572481572481575,
+          "avg_clv": 0.031604816413342326,
           "positive_clv_rate": 0.44594594594594594
+        }
+      },
+      "subgroups": {
+        "favorite|away": {
+          "key": "favorite|away",
+          "market_role": "favorite",
+          "side_location": "away",
+          "status": "INCONCLUSIVE_SUBGROUP",
+          "bets": 19,
+          "wins": 11,
+          "losses": 7,
+          "pushes": 1,
+          "win_rate": 0.6111111111111112,
+          "units": 3.000000000000001,
+          "roi": 0.1578947368421053,
+          "avg_clv": 0.028794241177613148,
+          "positive_clv_rate": 0.5263157894736842,
+          "season_count": 3,
+          "profitable_seasons": 2,
+          "min_season_bets": 3,
+          "by_season": {
+            "2023": {
+              "bets": 9,
+              "wins": 3,
+              "losses": 5,
+              "pushes": 1,
+              "win_rate": 0.375,
+              "units": -2.2727272727272725,
+              "roi": -0.2525252525252525,
+              "avg_clv": 0.006749279008460434,
+              "positive_clv_rate": 0.3333333333333333
+            },
+            "2024": {
+              "bets": 3,
+              "wins": 2,
+              "losses": 1,
+              "pushes": 0,
+              "win_rate": 0.6666666666666666,
+              "units": 0.8181818181818183,
+              "roi": 0.27272727272727276,
+              "avg_clv": 0.032832765959063336,
+              "positive_clv_rate": 0.6666666666666666
+            },
+            "2025": {
+              "bets": 7,
+              "wins": 6,
+              "losses": 1,
+              "pushes": 0,
+              "win_rate": 0.8571428571428571,
+              "units": 4.454545454545455,
+              "roi": 0.6363636363636365,
+              "avg_clv": 0.05540696763161656,
+              "positive_clv_rate": 0.7142857142857143
+            }
+          }
+        },
+        "favorite|home": {
+          "key": "favorite|home",
+          "market_role": "favorite",
+          "side_location": "home",
+          "status": "SUPPORTED_SUBGROUP",
+          "bets": 59,
+          "wins": 43,
+          "losses": 15,
+          "pushes": 1,
+          "win_rate": 0.7413793103448276,
+          "units": 24.090909090909097,
+          "roi": 0.4083204930662559,
+          "avg_clv": 0.04478655836569572,
+          "positive_clv_rate": 0.559322033898305,
+          "season_count": 3,
+          "profitable_seasons": 3,
+          "min_season_bets": 18,
+          "by_season": {
+            "2023": {
+              "bets": 20,
+              "wins": 13,
+              "losses": 6,
+              "pushes": 1,
+              "win_rate": 0.6842105263157895,
+              "units": 5.818181818181819,
+              "roi": 0.29090909090909095,
+              "avg_clv": 0.032259604482586954,
+              "positive_clv_rate": 0.45
+            },
+            "2024": {
+              "bets": 18,
+              "wins": 11,
+              "losses": 7,
+              "pushes": 0,
+              "win_rate": 0.6111111111111112,
+              "units": 3.000000000000001,
+              "roi": 0.1666666666666667,
+              "avg_clv": 0.07377019543361012,
+              "positive_clv_rate": 0.7222222222222222
+            },
+            "2025": {
+              "bets": 21,
+              "wins": 19,
+              "losses": 2,
+              "pushes": 0,
+              "win_rate": 0.9047619047619048,
+              "units": 15.272727272727277,
+              "roi": 0.7272727272727275,
+              "avg_clv": 0.031873873148539324,
+              "positive_clv_rate": 0.5238095238095238
+            }
+          }
+        },
+        "pickem|home": {
+          "key": "pickem|home",
+          "market_role": "pickem",
+          "side_location": "home",
+          "status": "INCONCLUSIVE_SUBGROUP",
+          "bets": 1,
+          "wins": 0,
+          "losses": 1,
+          "pushes": 0,
+          "win_rate": 0.0,
+          "units": -1.0,
+          "roi": -1.0,
+          "avg_clv": 0.1606777364327065,
+          "positive_clv_rate": 1.0,
+          "season_count": 1,
+          "profitable_seasons": 0,
+          "min_season_bets": 1,
+          "by_season": {
+            "2024": {
+              "bets": 1,
+              "wins": 0,
+              "losses": 1,
+              "pushes": 0,
+              "win_rate": 0.0,
+              "units": -1.0,
+              "roi": -1.0,
+              "avg_clv": 0.1606777364327065,
+              "positive_clv_rate": 1.0
+            }
+          }
+        },
+        "underdog|away": {
+          "key": "underdog|away",
+          "market_role": "underdog",
+          "side_location": "away",
+          "status": "SUPPORTED_SUBGROUP",
+          "bets": 89,
+          "wins": 56,
+          "losses": 33,
+          "pushes": 0,
+          "win_rate": 0.6292134831460674,
+          "units": 17.909090909090914,
+          "roi": 0.2012257405515833,
+          "avg_clv": 0.015159757205416777,
+          "positive_clv_rate": 0.3146067415730337,
+          "season_count": 3,
+          "profitable_seasons": 3,
+          "min_season_bets": 25,
+          "by_season": {
+            "2023": {
+              "bets": 36,
+              "wins": 23,
+              "losses": 13,
+              "pushes": 0,
+              "win_rate": 0.6388888888888888,
+              "units": 7.909090909090911,
+              "roi": 0.21969696969696975,
+              "avg_clv": -0.002090767719280588,
+              "positive_clv_rate": 0.3055555555555556
+            },
+            "2024": {
+              "bets": 28,
+              "wins": 17,
+              "losses": 11,
+              "pushes": 0,
+              "win_rate": 0.6071428571428571,
+              "units": 4.454545454545456,
+              "roi": 0.15909090909090914,
+              "avg_clv": 0.017155709651569463,
+              "positive_clv_rate": 0.2857142857142857
+            },
+            "2025": {
+              "bets": 25,
+              "wins": 16,
+              "losses": 9,
+              "pushes": 0,
+              "win_rate": 0.64,
+              "units": 5.545454545454547,
+              "roi": 0.22181818181818186,
+              "avg_clv": 0.037765046357289986,
+              "positive_clv_rate": 0.36
+            }
+          }
+        },
+        "underdog|home": {
+          "key": "underdog|home",
+          "market_role": "underdog",
+          "side_location": "home",
+          "status": "CONTRAINDICATED_SUBGROUP",
+          "bets": 63,
+          "wins": 29,
+          "losses": 33,
+          "pushes": 1,
+          "win_rate": 0.46774193548387094,
+          "units": -6.636363636363636,
+          "roi": -0.10533910533910533,
+          "avg_clv": 0.026284793417485183,
+          "positive_clv_rate": 0.49206349206349204,
+          "season_count": 3,
+          "profitable_seasons": 0,
+          "min_season_bets": 12,
+          "by_season": {
+            "2023": {
+              "bets": 30,
+              "wins": 14,
+              "losses": 16,
+              "pushes": 0,
+              "win_rate": 0.4666666666666667,
+              "units": -3.2727272727272716,
+              "roi": -0.10909090909090906,
+              "avg_clv": 0.02779031055760439,
+              "positive_clv_rate": 0.5333333333333333
+            },
+            "2024": {
+              "bets": 12,
+              "wins": 5,
+              "losses": 6,
+              "pushes": 1,
+              "win_rate": 0.45454545454545453,
+              "units": -1.4545454545454541,
+              "roi": -0.12121212121212117,
+              "avg_clv": 0.04040021020491622,
+              "positive_clv_rate": 0.5833333333333334
+            },
+            "2025": {
+              "bets": 21,
+              "wins": 10,
+              "losses": 11,
+              "pushes": 0,
+              "win_rate": 0.47619047619047616,
+              "units": -1.9090909090909083,
+              "roi": -0.09090909090909087,
+              "avg_clv": 0.01606810219592574,
+              "positive_clv_rate": 0.38095238095238093
+            }
+          }
         }
       }
     },
@@ -67,8 +312,8 @@
       "losses": 37,
       "pushes": 0,
       "win_rate": 0.7016129032258065,
-      "units": 0.3474792389926478,
-      "roi": 0.0028022519273600633,
+      "units": 0.34747923899264516,
+      "roi": 0.0028022519273600416,
       "avg_clv": 0.0,
       "positive_clv_rate": 0.0,
       "season_count": 3,
@@ -92,8 +337,8 @@
           "losses": 12,
           "pushes": 0,
           "win_rate": 0.7142857142857143,
-          "units": 2.7293907169595486,
-          "roi": 0.06498549326094163,
+          "units": 2.729390716959548,
+          "roi": 0.06498549326094162,
           "avg_clv": 0.0,
           "positive_clv_rate": 0.0
         },
@@ -103,12 +348,13 @@
           "losses": 11,
           "pushes": 0,
           "win_rate": 0.75,
-          "units": 2.0409262416697187,
-          "roi": 0.046384687310675424,
+          "units": 2.0409262416697183,
+          "roi": 0.04638468731067542,
           "avg_clv": 0.0,
           "positive_clv_rate": 0.0
         }
-      }
+      },
+      "subgroups": {}
     },
     {
       "market": "moneyline",
@@ -121,8 +367,8 @@
       "losses": 39,
       "pushes": 0,
       "win_rate": 0.6829268292682927,
-      "units": 4.177074112340355,
-      "roi": 0.033959952132848414,
+      "units": 4.177074112340357,
+      "roi": 0.03395995213284843,
       "avg_clv": 0.0,
       "positive_clv_rate": 0.0,
       "season_count": 3,
@@ -146,8 +392,8 @@
           "losses": 15,
           "pushes": 0,
           "win_rate": 0.6666666666666666,
-          "units": 0.08892549784613299,
-          "roi": 0.001976122174358511,
+          "units": 0.08892549784613253,
+          "roi": 0.0019761221743585006,
           "avg_clv": 0.0,
           "positive_clv_rate": 0.0
         },
@@ -157,12 +403,13 @@
           "losses": 11,
           "pushes": 0,
           "win_rate": 0.7659574468085106,
-          "units": 6.0134547615852885,
-          "roi": 0.12794584599117634,
+          "units": 6.013454761585287,
+          "roi": 0.1279458459911763,
           "avg_clv": 0.0,
           "positive_clv_rate": 0.0
         }
-      }
+      },
+      "subgroups": {}
     },
     {
       "market": "spread",
@@ -175,9 +422,9 @@
       "losses": 142,
       "pushes": 2,
       "win_rate": 0.5344262295081967,
-      "units": 6.181818181818182,
-      "roi": 0.020136215575954988,
-      "avg_clv": 0.020118893116188905,
+      "units": 6.181818181818196,
+      "roi": 0.020136215575955036,
+      "avg_clv": 0.020118893116188887,
       "positive_clv_rate": 0.5211726384364821,
       "season_count": 3,
       "profitable_seasons": 2,
@@ -189,9 +436,9 @@
           "losses": 41,
           "pushes": 1,
           "win_rate": 0.5684210526315789,
-          "units": 8.090909090909092,
-          "roi": 0.08428030303030304,
-          "avg_clv": 0.011615610121390283,
+          "units": 8.090909090909095,
+          "roi": 0.08428030303030308,
+          "avg_clv": 0.011615610121390266,
           "positive_clv_rate": 0.4270833333333333
         },
         "2024": {
@@ -200,9 +447,9 @@
           "losses": 52,
           "pushes": 0,
           "win_rate": 0.5047619047619047,
-          "units": -3.8181818181818166,
-          "roi": -0.03636363636363635,
-          "avg_clv": 0.021649581988656717,
+          "units": -3.818181818181813,
+          "roi": -0.03636363636363631,
+          "avg_clv": 0.021649581988656703,
           "positive_clv_rate": 0.5619047619047619
         },
         "2025": {
@@ -211,10 +458,255 @@
           "losses": 49,
           "pushes": 1,
           "win_rate": 0.5333333333333333,
-          "units": 1.9090909090909096,
-          "roi": 0.01801029159519726,
-          "avg_clv": 0.02630373119063747,
+          "units": 1.9090909090909136,
+          "roi": 0.0180102915951973,
+          "avg_clv": 0.02630373119063745,
           "positive_clv_rate": 0.5660377358490566
+        }
+      },
+      "subgroups": {
+        "favorite|away": {
+          "key": "favorite|away",
+          "market_role": "favorite",
+          "side_location": "away",
+          "status": "INCONCLUSIVE_SUBGROUP",
+          "bets": 52,
+          "wins": 26,
+          "losses": 25,
+          "pushes": 1,
+          "win_rate": 0.5098039215686274,
+          "units": -1.3636363636363615,
+          "roi": -0.026223776223776182,
+          "avg_clv": 0.020275546053704446,
+          "positive_clv_rate": 0.5769230769230769,
+          "season_count": 3,
+          "profitable_seasons": 1,
+          "min_season_bets": 14,
+          "by_season": {
+            "2023": {
+              "bets": 18,
+              "wins": 12,
+              "losses": 5,
+              "pushes": 1,
+              "win_rate": 0.7058823529411765,
+              "units": 5.90909090909091,
+              "roi": 0.32828282828282834,
+              "avg_clv": 0.00910614549062695,
+              "positive_clv_rate": 0.5
+            },
+            "2024": {
+              "bets": 20,
+              "wins": 7,
+              "losses": 13,
+              "pushes": 0,
+              "win_rate": 0.35,
+              "units": -6.636363636363636,
+              "roi": -0.3318181818181818,
+              "avg_clv": 0.024265261771588616,
+              "positive_clv_rate": 0.65
+            },
+            "2025": {
+              "bets": 14,
+              "wins": 7,
+              "losses": 7,
+              "pushes": 0,
+              "win_rate": 0.5,
+              "units": -0.6363636363636358,
+              "roi": -0.045454545454545414,
+              "avg_clv": 0.028936610037826698,
+              "positive_clv_rate": 0.5714285714285714
+            }
+          }
+        },
+        "favorite|home": {
+          "key": "favorite|home",
+          "market_role": "favorite",
+          "side_location": "home",
+          "status": "INCONCLUSIVE_SUBGROUP",
+          "bets": 100,
+          "wins": 53,
+          "losses": 47,
+          "pushes": 0,
+          "win_rate": 0.53,
+          "units": 1.181818181818186,
+          "roi": 0.011818181818181861,
+          "avg_clv": 0.02299842566751992,
+          "positive_clv_rate": 0.52,
+          "season_count": 3,
+          "profitable_seasons": 2,
+          "min_season_bets": 28,
+          "by_season": {
+            "2023": {
+              "bets": 28,
+              "wins": 15,
+              "losses": 13,
+              "pushes": 0,
+              "win_rate": 0.5357142857142857,
+              "units": 0.6363636363636376,
+              "roi": 0.02272727272727277,
+              "avg_clv": 0.00777368663823495,
+              "positive_clv_rate": 0.2857142857142857
+            },
+            "2024": {
+              "bets": 31,
+              "wins": 17,
+              "losses": 14,
+              "pushes": 0,
+              "win_rate": 0.5483870967741935,
+              "units": 1.454545454545456,
+              "roi": 0.04692082111436954,
+              "avg_clv": 0.020344106291173465,
+              "positive_clv_rate": 0.5806451612903226
+            },
+            "2025": {
+              "bets": 41,
+              "wins": 21,
+              "losses": 20,
+              "pushes": 0,
+              "win_rate": 0.5121951219512195,
+              "units": -0.9090909090909074,
+              "roi": -0.022172949002217255,
+              "avg_clv": 0.03540273282573257,
+              "positive_clv_rate": 0.6341463414634146
+            }
+          }
+        },
+        "pickem|home": {
+          "key": "pickem|home",
+          "market_role": "pickem",
+          "side_location": "home",
+          "status": "INCONCLUSIVE_SUBGROUP",
+          "bets": 1,
+          "wins": 1,
+          "losses": 0,
+          "pushes": 0,
+          "win_rate": 1.0,
+          "units": 0.9090909090909092,
+          "roi": 0.9090909090909092,
+          "avg_clv": -0.0246785531919634,
+          "positive_clv_rate": 0.0,
+          "season_count": 1,
+          "profitable_seasons": 1,
+          "min_season_bets": 1,
+          "by_season": {
+            "2024": {
+              "bets": 1,
+              "wins": 1,
+              "losses": 0,
+              "pushes": 0,
+              "win_rate": 1.0,
+              "units": 0.9090909090909092,
+              "roi": 0.9090909090909092,
+              "avg_clv": -0.0246785531919634,
+              "positive_clv_rate": 0.0
+            }
+          }
+        },
+        "underdog|away": {
+          "key": "underdog|away",
+          "market_role": "underdog",
+          "side_location": "away",
+          "status": "SUPPORTED_SUBGROUP",
+          "bets": 94,
+          "wins": 53,
+          "losses": 40,
+          "pushes": 1,
+          "win_rate": 0.5698924731182796,
+          "units": 8.181818181818187,
+          "roi": 0.08704061895551263,
+          "avg_clv": 0.019525953591782667,
+          "positive_clv_rate": 0.48936170212765956,
+          "season_count": 3,
+          "profitable_seasons": 3,
+          "min_season_bets": 31,
+          "by_season": {
+            "2023": {
+              "bets": 31,
+              "wins": 19,
+              "losses": 12,
+              "pushes": 0,
+              "win_rate": 0.6129032258064516,
+              "units": 5.272727272727274,
+              "roi": 0.17008797653958949,
+              "avg_clv": 0.020802597565787662,
+              "positive_clv_rate": 0.4838709677419355
+            },
+            "2024": {
+              "bets": 32,
+              "wins": 18,
+              "losses": 14,
+              "pushes": 0,
+              "win_rate": 0.5625,
+              "units": 2.363636363636365,
+              "roi": 0.07386363636363641,
+              "avg_clv": 0.02948377987157071,
+              "positive_clv_rate": 0.59375
+            },
+            "2025": {
+              "bets": 31,
+              "wins": 16,
+              "losses": 14,
+              "pushes": 1,
+              "win_rate": 0.5333333333333333,
+              "units": 0.5454545454545467,
+              "roi": 0.017595307917888606,
+              "avg_clv": 0.007970263135415824,
+              "positive_clv_rate": 0.3870967741935484
+            }
+          }
+        },
+        "underdog|home": {
+          "key": "underdog|home",
+          "market_role": "underdog",
+          "side_location": "home",
+          "status": "INCONCLUSIVE_SUBGROUP",
+          "bets": 60,
+          "wins": 30,
+          "losses": 30,
+          "pushes": 0,
+          "win_rate": 0.5,
+          "units": -2.727272727272725,
+          "roi": -0.045454545454545414,
+          "avg_clv": 0.016859469011495983,
+          "positive_clv_rate": 0.5333333333333333,
+          "season_count": 3,
+          "profitable_seasons": 1,
+          "min_season_bets": 19,
+          "by_season": {
+            "2023": {
+              "bets": 19,
+              "wins": 8,
+              "losses": 11,
+              "pushes": 0,
+              "win_rate": 0.42105263157894735,
+              "units": -3.7272727272727266,
+              "roi": -0.19617224880382772,
+              "avg_clv": 0.004665484337483379,
+              "positive_clv_rate": 0.47368421052631576
+            },
+            "2024": {
+              "bets": 21,
+              "wins": 10,
+              "losses": 11,
+              "pushes": 0,
+              "win_rate": 0.47619047619047616,
+              "units": -1.9090909090909083,
+              "roi": -0.09090909090909087,
+              "avg_clv": 0.011353865507262133,
+              "positive_clv_rate": 0.42857142857142855
+            },
+            "2025": {
+              "bets": 20,
+              "wins": 12,
+              "losses": 8,
+              "pushes": 0,
+              "win_rate": 0.6,
+              "units": 2.90909090909091,
+              "roi": 0.1454545454545455,
+              "avg_clv": 0.034224638131253496,
+              "positive_clv_rate": 0.7
+            }
+          }
         }
       }
     },
@@ -229,9 +721,9 @@
       "losses": 59,
       "pushes": 3,
       "win_rate": 0.5661764705882353,
-      "units": 11.0,
-      "roi": 0.07913669064748201,
-      "avg_clv": 0.025269883954540804,
+      "units": 11.000000000000004,
+      "roi": 0.07913669064748204,
+      "avg_clv": 0.025269883954540797,
       "positive_clv_rate": 0.381294964028777,
       "season_count": 3,
       "profitable_seasons": 2,
@@ -243,9 +735,9 @@
           "losses": 15,
           "pushes": 1,
           "win_rate": 0.6739130434782609,
-          "units": 13.181818181818178,
-          "roi": 0.28046421663442933,
-          "avg_clv": 0.026112922368682668,
+          "units": 13.181818181818187,
+          "roi": 0.2804642166344295,
+          "avg_clv": 0.02611292236868268,
           "positive_clv_rate": 0.3191489361702128
         },
         "2024": {
@@ -254,9 +746,9 @@
           "losses": 17,
           "pushes": 1,
           "win_rate": 0.575,
-          "units": 3.9090909090909083,
-          "roi": 0.09534368070953435,
-          "avg_clv": 0.018738901379686066,
+          "units": 3.909090909090911,
+          "roi": 0.09534368070953442,
+          "avg_clv": 0.018738901379686052,
           "positive_clv_rate": 0.43902439024390244
         },
         "2025": {
@@ -265,10 +757,224 @@
           "losses": 27,
           "pushes": 1,
           "win_rate": 0.46,
-          "units": -6.090909090909092,
-          "roi": -0.11942959001782533,
-          "avg_clv": 0.029743363956587405,
+          "units": -6.09090909090909,
+          "roi": -0.1194295900178253,
+          "avg_clv": 0.029743363956587398,
           "positive_clv_rate": 0.39215686274509803
+        }
+      },
+      "subgroups": {
+        "favorite|away": {
+          "key": "favorite|away",
+          "market_role": "favorite",
+          "side_location": "away",
+          "status": "INCONCLUSIVE_SUBGROUP",
+          "bets": 18,
+          "wins": 11,
+          "losses": 7,
+          "pushes": 0,
+          "win_rate": 0.6111111111111112,
+          "units": 3.000000000000001,
+          "roi": 0.1666666666666667,
+          "avg_clv": 0.06154239728606162,
+          "positive_clv_rate": 0.5555555555555556,
+          "season_count": 3,
+          "profitable_seasons": 2,
+          "min_season_bets": 4,
+          "by_season": {
+            "2023": {
+              "bets": 7,
+              "wins": 5,
+              "losses": 2,
+              "pushes": 0,
+              "win_rate": 0.7142857142857143,
+              "units": 2.545454545454546,
+              "roi": 0.3636363636363637,
+              "avg_clv": 0.08746297733837505,
+              "positive_clv_rate": 0.5714285714285714
+            },
+            "2024": {
+              "bets": 7,
+              "wins": 5,
+              "losses": 2,
+              "pushes": 0,
+              "win_rate": 0.7142857142857143,
+              "units": 2.545454545454546,
+              "roi": 0.3636363636363637,
+              "avg_clv": 0.047771273394858725,
+              "positive_clv_rate": 0.5714285714285714
+            },
+            "2025": {
+              "bets": 4,
+              "wins": 1,
+              "losses": 3,
+              "pushes": 0,
+              "win_rate": 0.25,
+              "units": -2.090909090909091,
+              "roi": -0.5227272727272727,
+              "avg_clv": 0.04028084900411817,
+              "positive_clv_rate": 0.5
+            }
+          }
+        },
+        "favorite|home": {
+          "key": "favorite|home",
+          "market_role": "favorite",
+          "side_location": "home",
+          "status": "INCONCLUSIVE_SUBGROUP",
+          "bets": 23,
+          "wins": 11,
+          "losses": 12,
+          "pushes": 0,
+          "win_rate": 0.4782608695652174,
+          "units": -1.9999999999999991,
+          "roi": -0.08695652173913039,
+          "avg_clv": 0.02432463138056349,
+          "positive_clv_rate": 0.391304347826087,
+          "season_count": 3,
+          "profitable_seasons": 1,
+          "min_season_bets": 6,
+          "by_season": {
+            "2023": {
+              "bets": 7,
+              "wins": 4,
+              "losses": 3,
+              "pushes": 0,
+              "win_rate": 0.5714285714285714,
+              "units": 0.6363636363636367,
+              "roi": 0.09090909090909095,
+              "avg_clv": -0.0032933378559656143,
+              "positive_clv_rate": 0.2857142857142857
+            },
+            "2024": {
+              "bets": 6,
+              "wins": 3,
+              "losses": 3,
+              "pushes": 0,
+              "win_rate": 0.5,
+              "units": -0.2727272727272725,
+              "roi": -0.045454545454545414,
+              "avg_clv": 0.08234259852975181,
+              "positive_clv_rate": 0.8333333333333334
+            },
+            "2025": {
+              "bets": 10,
+              "wins": 4,
+              "losses": 6,
+              "pushes": 0,
+              "win_rate": 0.4,
+              "units": -2.3636363636363633,
+              "roi": -0.23636363636363633,
+              "avg_clv": 0.00884642955662087,
+              "positive_clv_rate": 0.2
+            }
+          }
+        },
+        "underdog|away": {
+          "key": "underdog|away",
+          "market_role": "underdog",
+          "side_location": "away",
+          "status": "INCONCLUSIVE_SUBGROUP",
+          "bets": 57,
+          "wins": 31,
+          "losses": 24,
+          "pushes": 2,
+          "win_rate": 0.5636363636363636,
+          "units": 4.181818181818184,
+          "roi": 0.07336523125996815,
+          "avg_clv": 0.02161134252777346,
+          "positive_clv_rate": 0.3157894736842105,
+          "season_count": 3,
+          "profitable_seasons": 2,
+          "min_season_bets": 16,
+          "by_season": {
+            "2023": {
+              "bets": 22,
+              "wins": 15,
+              "losses": 7,
+              "pushes": 0,
+              "win_rate": 0.6818181818181818,
+              "units": 6.636363636363638,
+              "roi": 0.3016528925619835,
+              "avg_clv": 0.016367965990796374,
+              "positive_clv_rate": 0.22727272727272727
+            },
+            "2024": {
+              "bets": 16,
+              "wins": 6,
+              "losses": 9,
+              "pushes": 1,
+              "win_rate": 0.4,
+              "units": -3.545454545454545,
+              "roi": -0.22159090909090906,
+              "avg_clv": -0.005340099969818807,
+              "positive_clv_rate": 0.25
+            },
+            "2025": {
+              "bets": 19,
+              "wins": 10,
+              "losses": 8,
+              "pushes": 1,
+              "win_rate": 0.5555555555555556,
+              "units": 1.0909090909090917,
+              "roi": 0.057416267942583775,
+              "avg_clv": 0.05037857220014041,
+              "positive_clv_rate": 0.47368421052631576
+            }
+          }
+        },
+        "underdog|home": {
+          "key": "underdog|home",
+          "market_role": "underdog",
+          "side_location": "home",
+          "status": "INCONCLUSIVE_SUBGROUP",
+          "bets": 41,
+          "wins": 24,
+          "losses": 16,
+          "pushes": 1,
+          "win_rate": 0.6,
+          "units": 5.81818181818182,
+          "roi": 0.14190687361419074,
+          "avg_clv": 0.014961894456000359,
+          "positive_clv_rate": 0.3902439024390244,
+          "season_count": 3,
+          "profitable_seasons": 2,
+          "min_season_bets": 11,
+          "by_season": {
+            "2023": {
+              "bets": 11,
+              "wins": 7,
+              "losses": 3,
+              "pushes": 1,
+              "win_rate": 0.7,
+              "units": 3.363636363636364,
+              "roi": 0.3057851239669422,
+              "avg_clv": 0.025274965741245402,
+              "positive_clv_rate": 0.36363636363636365
+            },
+            "2024": {
+              "bets": 12,
+              "wins": 9,
+              "losses": 3,
+              "pushes": 0,
+              "win_rate": 0.75,
+              "units": 5.1818181818181825,
+              "roi": 0.4318181818181819,
+              "avg_clv": 0.00210683759514226,
+              "positive_clv_rate": 0.4166666666666667
+            },
+            "2025": {
+              "bets": 18,
+              "wins": 8,
+              "losses": 10,
+              "pushes": 0,
+              "win_rate": 0.4444444444444444,
+              "units": -2.7272727272727266,
+              "roi": -0.1515151515151515,
+              "avg_clv": 0.017229499911144894,
+              "positive_clv_rate": 0.3888888888888889
+            }
+          }
         }
       }
     },
@@ -283,9 +989,9 @@
       "losses": 77,
       "pushes": 4,
       "win_rate": 0.5549132947976878,
-      "units": 10.272727272727275,
-      "roi": 0.05803800719054958,
-      "avg_clv": 0.000174653486710002,
+      "units": 10.27272727272728,
+      "roi": 0.058038007190549606,
+      "avg_clv": 0.00017465348671000317,
       "positive_clv_rate": 0.12429378531073447,
       "season_count": 3,
       "profitable_seasons": 2,
@@ -297,9 +1003,9 @@
           "losses": 21,
           "pushes": 1,
           "win_rate": 0.631578947368421,
-          "units": 11.727272727272725,
-          "roi": 0.2021943573667711,
-          "avg_clv": -6.043859963933035e-05,
+          "units": 11.72727272727273,
+          "roi": 0.20219435736677122,
+          "avg_clv": -6.043859963933107e-05,
           "positive_clv_rate": 0.2413793103448276
         },
         "2024": {
@@ -308,9 +1014,9 @@
           "losses": 24,
           "pushes": 3,
           "win_rate": 0.6,
-          "units": 8.727272727272723,
-          "roi": 0.13852813852813847,
-          "avg_clv": 0.0005493223222879232,
+          "units": 8.727272727272734,
+          "roi": 0.13852813852813864,
+          "avg_clv": 0.0005493223222879281,
           "positive_clv_rate": 0.09523809523809523
         },
         "2025": {
@@ -319,12 +1025,13 @@
           "losses": 32,
           "pushes": 0,
           "win_rate": 0.42857142857142855,
-          "units": -10.181818181818183,
-          "roi": -0.18181818181818185,
-          "avg_clv": -3.3607210247794354e-06,
+          "units": -10.18181818181818,
+          "roi": -0.1818181818181818,
+          "avg_clv": -3.360721024780427e-06,
           "positive_clv_rate": 0.03571428571428571
         }
-      }
+      },
+      "subgroups": {}
     },
     {
       "market": "moneyline",
@@ -373,12 +1080,13 @@
           "losses": 1,
           "pushes": 0,
           "win_rate": 0.8,
-          "units": 1.984056962551586,
-          "roi": 0.3968113925103172,
+          "units": 1.9840569625515863,
+          "roi": 0.3968113925103173,
           "avg_clv": 0.0,
           "positive_clv_rate": 0.0
         }
-      }
+      },
+      "subgroups": {}
     },
     {
       "market": "moneyline",
@@ -432,7 +1140,8 @@
           "avg_clv": 0.0,
           "positive_clv_rate": 0.0
         }
-      }
+      },
+      "subgroups": {}
     },
     {
       "market": "moneyline",
@@ -445,8 +1154,8 @@
       "losses": 22,
       "pushes": 0,
       "win_rate": 0.65625,
-      "units": -4.613557049956535,
-      "roi": -0.07208682890557086,
+      "units": -4.613557049956538,
+      "roi": -0.0720868289055709,
       "avg_clv": 0.0,
       "positive_clv_rate": 0.0,
       "season_count": 3,
@@ -459,8 +1168,8 @@
           "losses": 4,
           "pushes": 0,
           "win_rate": 0.7647058823529411,
-          "units": 0.9615619787089624,
-          "roi": 0.05656246933582132,
+          "units": 0.961561978708962,
+          "roi": 0.05656246933582129,
           "avg_clv": 0.0,
           "positive_clv_rate": 0.0
         },
@@ -486,7 +1195,8 @@
           "avg_clv": 0.0,
           "positive_clv_rate": 0.0
         }
-      }
+      },
+      "subgroups": {}
     },
     {
       "market": "moneyline",
@@ -499,8 +1209,8 @@
       "losses": 70,
       "pushes": 0,
       "win_rate": 0.573170731707317,
-      "units": -10.63973858877571,
-      "roi": -0.06487645480960799,
+      "units": -10.639738588775709,
+      "roi": -0.06487645480960798,
       "avg_clv": 0.0,
       "positive_clv_rate": 0.0,
       "season_count": 3,
@@ -540,7 +1250,8 @@
           "avg_clv": 0.0,
           "positive_clv_rate": 0.0
         }
-      }
+      },
+      "subgroups": {}
     },
     {
       "market": "moneyline",
@@ -594,7 +1305,8 @@
           "avg_clv": 0.0,
           "positive_clv_rate": 0.0
         }
-      }
+      },
+      "subgroups": {}
     },
     {
       "market": "spread",
@@ -607,9 +1319,9 @@
       "losses": 184,
       "pushes": 5,
       "win_rate": 0.4588235294117647,
-      "units": -42.18181818181818,
-      "roi": -0.122266139657444,
-      "avg_clv": 0.006431244710721271,
+      "units": -42.181818181818166,
+      "roi": -0.12226613965744396,
+      "avg_clv": 0.006431244710721264,
       "positive_clv_rate": 0.42028985507246375,
       "season_count": 3,
       "profitable_seasons": 0,
@@ -621,9 +1333,9 @@
           "losses": 61,
           "pushes": 2,
           "win_rate": 0.44036697247706424,
-          "units": -17.363636363636367,
-          "roi": -0.15642915642915645,
-          "avg_clv": 0.003790546866767164,
+          "units": -17.363636363636356,
+          "roi": -0.15642915642915636,
+          "avg_clv": 0.003790546866767161,
           "positive_clv_rate": 0.40540540540540543
         },
         "2024": {
@@ -634,7 +1346,7 @@
           "win_rate": 0.4351851851851852,
           "units": -18.272727272727266,
           "roi": -0.16763969974979143,
-          "avg_clv": 0.007126174755154414,
+          "avg_clv": 0.007126174755154406,
           "positive_clv_rate": 0.42201834862385323
         },
         "2025": {
@@ -643,10 +1355,297 @@
           "losses": 62,
           "pushes": 2,
           "win_rate": 0.4959349593495935,
-          "units": -6.545454545454545,
-          "roi": -0.05236363636363636,
-          "avg_clv": 0.008170205397406817,
+          "units": -6.545454545454538,
+          "roi": -0.0523636363636363,
+          "avg_clv": 0.008170205397406809,
           "positive_clv_rate": 0.432
+        }
+      },
+      "subgroups": {
+        "favorite|away": {
+          "key": "favorite|away",
+          "market_role": "favorite",
+          "side_location": "away",
+          "status": "CONTRAINDICATED_SUBGROUP",
+          "bets": 65,
+          "wins": 28,
+          "losses": 37,
+          "pushes": 0,
+          "win_rate": 0.4307692307692308,
+          "units": -11.545454545454543,
+          "roi": -0.1776223776223776,
+          "avg_clv": 0.01043516211029276,
+          "positive_clv_rate": 0.49230769230769234,
+          "season_count": 3,
+          "profitable_seasons": 0,
+          "min_season_bets": 18,
+          "by_season": {
+            "2023": {
+              "bets": 21,
+              "wins": 9,
+              "losses": 12,
+              "pushes": 0,
+              "win_rate": 0.42857142857142855,
+              "units": -3.8181818181818175,
+              "roi": -0.1818181818181818,
+              "avg_clv": 0.017962593430840258,
+              "positive_clv_rate": 0.47619047619047616
+            },
+            "2024": {
+              "bets": 18,
+              "wins": 9,
+              "losses": 9,
+              "pushes": 0,
+              "win_rate": 0.5,
+              "units": -0.8181818181818175,
+              "roi": -0.045454545454545414,
+              "avg_clv": 0.012385255978996706,
+              "positive_clv_rate": 0.5555555555555556
+            },
+            "2025": {
+              "bets": 26,
+              "wins": 10,
+              "losses": 16,
+              "pushes": 0,
+              "win_rate": 0.38461538461538464,
+              "units": -6.909090909090908,
+              "roi": -0.26573426573426573,
+              "avg_clv": 0.003005248749978589,
+              "positive_clv_rate": 0.46153846153846156
+            }
+          }
+        },
+        "favorite|home": {
+          "key": "favorite|home",
+          "market_role": "favorite",
+          "side_location": "home",
+          "status": "CONTRAINDICATED_SUBGROUP",
+          "bets": 82,
+          "wins": 39,
+          "losses": 43,
+          "pushes": 0,
+          "win_rate": 0.47560975609756095,
+          "units": -7.5454545454545405,
+          "roi": -0.09201773835920171,
+          "avg_clv": 0.008649185865574257,
+          "positive_clv_rate": 0.45121951219512196,
+          "season_count": 3,
+          "profitable_seasons": 0,
+          "min_season_bets": 21,
+          "by_season": {
+            "2023": {
+              "bets": 21,
+              "wins": 10,
+              "losses": 11,
+              "pushes": 0,
+              "win_rate": 0.47619047619047616,
+              "units": -1.9090909090909083,
+              "roi": -0.09090909090909087,
+              "avg_clv": -0.0009092403188249284,
+              "positive_clv_rate": 0.38095238095238093
+            },
+            "2024": {
+              "bets": 33,
+              "wins": 15,
+              "losses": 18,
+              "pushes": 0,
+              "win_rate": 0.45454545454545453,
+              "units": -4.363636363636362,
+              "roi": -0.13223140495867766,
+              "avg_clv": -0.001743969873525713,
+              "positive_clv_rate": 0.42424242424242425
+            },
+            "2025": {
+              "bets": 28,
+              "wins": 14,
+              "losses": 14,
+              "pushes": 0,
+              "win_rate": 0.5,
+              "units": -1.2727272727272716,
+              "roi": -0.045454545454545414,
+              "avg_clv": 0.028067081910670037,
+              "positive_clv_rate": 0.5357142857142857
+            }
+          }
+        },
+        "pickem|away": {
+          "key": "pickem|away",
+          "market_role": "pickem",
+          "side_location": "away",
+          "status": "INCONCLUSIVE_SUBGROUP",
+          "bets": 2,
+          "wins": 2,
+          "losses": 0,
+          "pushes": 0,
+          "win_rate": 1.0,
+          "units": 1.8181818181818183,
+          "roi": 0.9090909090909092,
+          "avg_clv": 0.0014144753779267993,
+          "positive_clv_rate": 0.5,
+          "season_count": 2,
+          "profitable_seasons": 2,
+          "min_season_bets": 1,
+          "by_season": {
+            "2023": {
+              "bets": 1,
+              "wins": 1,
+              "losses": 0,
+              "pushes": 0,
+              "win_rate": 1.0,
+              "units": 0.9090909090909092,
+              "roi": 0.9090909090909092,
+              "avg_clv": -0.0727906821503309,
+              "positive_clv_rate": 0.0
+            },
+            "2024": {
+              "bets": 1,
+              "wins": 1,
+              "losses": 0,
+              "pushes": 0,
+              "win_rate": 1.0,
+              "units": 0.9090909090909092,
+              "roi": 0.9090909090909092,
+              "avg_clv": 0.0756196329061845,
+              "positive_clv_rate": 1.0
+            }
+          }
+        },
+        "pickem|home": {
+          "key": "pickem|home",
+          "market_role": "pickem",
+          "side_location": "home",
+          "status": "INCONCLUSIVE_SUBGROUP",
+          "bets": 1,
+          "wins": 1,
+          "losses": 0,
+          "pushes": 0,
+          "win_rate": 1.0,
+          "units": 0.9090909090909092,
+          "roi": 0.9090909090909092,
+          "avg_clv": 0.0506729445810504,
+          "positive_clv_rate": 1.0,
+          "season_count": 1,
+          "profitable_seasons": 1,
+          "min_season_bets": 1,
+          "by_season": {
+            "2024": {
+              "bets": 1,
+              "wins": 1,
+              "losses": 0,
+              "pushes": 0,
+              "win_rate": 1.0,
+              "units": 0.9090909090909092,
+              "roi": 0.9090909090909092,
+              "avg_clv": 0.0506729445810504,
+              "positive_clv_rate": 1.0
+            }
+          }
+        },
+        "underdog|away": {
+          "key": "underdog|away",
+          "market_role": "underdog",
+          "side_location": "away",
+          "status": "INCONCLUSIVE_SUBGROUP",
+          "bets": 121,
+          "wins": 55,
+          "losses": 62,
+          "pushes": 4,
+          "win_rate": 0.4700854700854701,
+          "units": -11.999999999999993,
+          "roi": -0.09917355371900821,
+          "avg_clv": 0.004665549328927342,
+          "positive_clv_rate": 0.36363636363636365,
+          "season_count": 3,
+          "profitable_seasons": 1,
+          "min_season_bets": 33,
+          "by_season": {
+            "2023": {
+              "bets": 42,
+              "wins": 17,
+              "losses": 24,
+              "pushes": 1,
+              "win_rate": 0.4146341463414634,
+              "units": -8.545454545454543,
+              "roi": -0.2034632034632034,
+              "avg_clv": 0.001894179535212623,
+              "positive_clv_rate": 0.35714285714285715
+            },
+            "2024": {
+              "bets": 33,
+              "wins": 12,
+              "losses": 20,
+              "pushes": 1,
+              "win_rate": 0.375,
+              "units": -9.09090909090909,
+              "roi": -0.2754820936639118,
+              "avg_clv": 0.005448410809683624,
+              "positive_clv_rate": 0.3333333333333333
+            },
+            "2025": {
+              "bets": 46,
+              "wins": 26,
+              "losses": 18,
+              "pushes": 2,
+              "win_rate": 0.5909090909090909,
+              "units": 5.6363636363636385,
+              "roi": 0.12252964426877475,
+              "avg_clv": 0.006634312426124317,
+              "positive_clv_rate": 0.391304347826087
+            }
+          }
+        },
+        "underdog|home": {
+          "key": "underdog|home",
+          "market_role": "underdog",
+          "side_location": "home",
+          "status": "CONTRAINDICATED_SUBGROUP",
+          "bets": 74,
+          "wins": 31,
+          "losses": 42,
+          "pushes": 1,
+          "win_rate": 0.4246575342465753,
+          "units": -13.818181818181817,
+          "roi": -0.18673218673218672,
+          "avg_clv": 0.002881449769129807,
+          "positive_clv_rate": 0.40540540540540543,
+          "season_count": 3,
+          "profitable_seasons": 0,
+          "min_season_bets": 23,
+          "by_season": {
+            "2023": {
+              "bets": 26,
+              "wins": 11,
+              "losses": 14,
+              "pushes": 1,
+              "win_rate": 0.44,
+              "units": -3.999999999999999,
+              "roi": -0.1538461538461538,
+              "avg_clv": 0.002148670328085907,
+              "positive_clv_rate": 0.46153846153846156
+            },
+            "2024": {
+              "bets": 23,
+              "wins": 9,
+              "losses": 14,
+              "pushes": 0,
+              "win_rate": 0.391304347826087,
+              "units": -5.8181818181818175,
+              "roi": -0.25296442687747034,
+              "avg_clv": 0.013273013578671462,
+              "positive_clv_rate": 0.391304347826087
+            },
+            "2025": {
+              "bets": 25,
+              "wins": 11,
+              "losses": 14,
+              "pushes": 0,
+              "win_rate": 0.44,
+              "units": -3.999999999999999,
+              "roi": -0.15999999999999998,
+              "avg_clv": -0.005916698316962865,
+              "positive_clv_rate": 0.36
+            }
+          }
         }
       }
     },
@@ -661,9 +1660,9 @@
       "losses": 104,
       "pushes": 4,
       "win_rate": 0.5071090047393365,
-      "units": -6.727272727272727,
-      "roi": -0.03128964059196617,
-      "avg_clv": 0.01707363357187733,
+      "units": -6.7272727272727195,
+      "roi": -0.031289640591966136,
+      "avg_clv": 0.01707363357187732,
       "positive_clv_rate": 0.48372093023255813,
       "season_count": 3,
       "profitable_seasons": 1,
@@ -675,9 +1674,9 @@
           "losses": 35,
           "pushes": 2,
           "win_rate": 0.5,
-          "units": -3.181818181818181,
-          "roi": -0.044191919191919185,
-          "avg_clv": 0.006377750602287192,
+          "units": -3.181818181818179,
+          "roi": -0.04419191919191915,
+          "avg_clv": 0.006377750602287186,
           "positive_clv_rate": 0.4166666666666667
         },
         "2024": {
@@ -686,9 +1685,9 @@
           "losses": 39,
           "pushes": 2,
           "win_rate": 0.4507042253521127,
-          "units": -9.909090909090908,
-          "roi": -0.1357409713574097,
-          "avg_clv": 0.02909646688381038,
+          "units": -9.909090909090907,
+          "roi": -0.13574097135740967,
+          "avg_clv": 0.02909646688381037,
           "positive_clv_rate": 0.547945205479452
         },
         "2025": {
@@ -697,10 +1696,255 @@
           "losses": 30,
           "pushes": 0,
           "win_rate": 0.5714285714285714,
-          "units": 6.363636363636364,
-          "roi": 0.09090909090909091,
-          "avg_clv": 0.01553701560101129,
+          "units": 6.363636363636367,
+          "roi": 0.09090909090909095,
+          "avg_clv": 0.015537015601011277,
           "positive_clv_rate": 0.4857142857142857
+        }
+      },
+      "subgroups": {
+        "favorite|away": {
+          "key": "favorite|away",
+          "market_role": "favorite",
+          "side_location": "away",
+          "status": "INCONCLUSIVE_SUBGROUP",
+          "bets": 35,
+          "wins": 18,
+          "losses": 16,
+          "pushes": 1,
+          "win_rate": 0.5294117647058824,
+          "units": 0.3636363636363651,
+          "roi": 0.010389610389610431,
+          "avg_clv": 0.025068966498565326,
+          "positive_clv_rate": 0.5428571428571428,
+          "season_count": 3,
+          "profitable_seasons": 2,
+          "min_season_bets": 9,
+          "by_season": {
+            "2023": {
+              "bets": 13,
+              "wins": 7,
+              "losses": 6,
+              "pushes": 0,
+              "win_rate": 0.5384615384615384,
+              "units": 0.3636363636363642,
+              "roi": 0.027972027972028017,
+              "avg_clv": 0.015154187242359146,
+              "positive_clv_rate": 0.5384615384615384
+            },
+            "2024": {
+              "bets": 13,
+              "wins": 6,
+              "losses": 6,
+              "pushes": 1,
+              "win_rate": 0.5,
+              "units": -0.545454545454545,
+              "roi": -0.04195804195804192,
+              "avg_clv": 0.043314008237804694,
+              "positive_clv_rate": 0.6153846153846154
+            },
+            "2025": {
+              "bets": 9,
+              "wins": 5,
+              "losses": 4,
+              "pushes": 0,
+              "win_rate": 0.5555555555555556,
+              "units": 0.5454545454545459,
+              "roi": 0.06060606060606065,
+              "avg_clv": 0.013036365134184057,
+              "positive_clv_rate": 0.4444444444444444
+            }
+          }
+        },
+        "favorite|home": {
+          "key": "favorite|home",
+          "market_role": "favorite",
+          "side_location": "home",
+          "status": "INCONCLUSIVE_SUBGROUP",
+          "bets": 48,
+          "wins": 24,
+          "losses": 24,
+          "pushes": 0,
+          "win_rate": 0.5,
+          "units": -2.18181818181818,
+          "roi": -0.045454545454545414,
+          "avg_clv": 0.010452500836134325,
+          "positive_clv_rate": 0.5208333333333334,
+          "season_count": 3,
+          "profitable_seasons": 1,
+          "min_season_bets": 10,
+          "by_season": {
+            "2023": {
+              "bets": 22,
+              "wins": 8,
+              "losses": 14,
+              "pushes": 0,
+              "win_rate": 0.36363636363636365,
+              "units": -6.727272727272727,
+              "roi": -0.30578512396694213,
+              "avg_clv": -0.005110034021913695,
+              "positive_clv_rate": 0.36363636363636365
+            },
+            "2024": {
+              "bets": 16,
+              "wins": 7,
+              "losses": 9,
+              "pushes": 0,
+              "win_rate": 0.4375,
+              "units": -2.636363636363636,
+              "roi": -0.16477272727272724,
+              "avg_clv": 0.023850960799489736,
+              "positive_clv_rate": 0.5625
+            },
+            "2025": {
+              "bets": 10,
+              "wins": 9,
+              "losses": 1,
+              "pushes": 0,
+              "win_rate": 0.9,
+              "units": 7.1818181818181825,
+              "roi": 0.7181818181818183,
+              "avg_clv": 0.023252541582471312,
+              "positive_clv_rate": 0.8
+            }
+          }
+        },
+        "pickem|away": {
+          "key": "pickem|away",
+          "market_role": "pickem",
+          "side_location": "away",
+          "status": "INCONCLUSIVE_SUBGROUP",
+          "bets": 1,
+          "wins": 0,
+          "losses": 1,
+          "pushes": 0,
+          "win_rate": 0.0,
+          "units": -1.0,
+          "roi": -1.0,
+          "avg_clv": -0.0488395016110903,
+          "positive_clv_rate": 0.0,
+          "season_count": 1,
+          "profitable_seasons": 0,
+          "min_season_bets": 1,
+          "by_season": {
+            "2024": {
+              "bets": 1,
+              "wins": 0,
+              "losses": 1,
+              "pushes": 0,
+              "win_rate": 0.0,
+              "units": -1.0,
+              "roi": -1.0,
+              "avg_clv": -0.0488395016110903,
+              "positive_clv_rate": 0.0
+            }
+          }
+        },
+        "underdog|away": {
+          "key": "underdog|away",
+          "market_role": "underdog",
+          "side_location": "away",
+          "status": "INCONCLUSIVE_SUBGROUP",
+          "bets": 93,
+          "wins": 46,
+          "losses": 44,
+          "pushes": 3,
+          "win_rate": 0.5111111111111111,
+          "units": -2.181818181818178,
+          "roi": -0.02346041055718471,
+          "avg_clv": 0.02489849877350033,
+          "positive_clv_rate": 0.4731182795698925,
+          "season_count": 3,
+          "profitable_seasons": 1,
+          "min_season_bets": 24,
+          "by_season": {
+            "2023": {
+              "bets": 24,
+              "wins": 12,
+              "losses": 10,
+              "pushes": 2,
+              "win_rate": 0.5454545454545454,
+              "units": 0.9090909090909101,
+              "roi": 0.03787878787878792,
+              "avg_clv": 0.011590405991814356,
+              "positive_clv_rate": 0.4583333333333333
+            },
+            "2024": {
+              "bets": 34,
+              "wins": 16,
+              "losses": 17,
+              "pushes": 1,
+              "win_rate": 0.48484848484848486,
+              "units": -2.4545454545454533,
+              "roi": -0.07219251336898391,
+              "avg_clv": 0.04374654773238296,
+              "positive_clv_rate": 0.5588235294117647
+            },
+            "2025": {
+              "bets": 35,
+              "wins": 18,
+              "losses": 17,
+              "pushes": 0,
+              "win_rate": 0.5142857142857142,
+              "units": -0.6363636363636349,
+              "roi": -0.01818181818181814,
+              "avg_clv": 0.015714514835170442,
+              "positive_clv_rate": 0.4
+            }
+          }
+        },
+        "underdog|home": {
+          "key": "underdog|home",
+          "market_role": "underdog",
+          "side_location": "home",
+          "status": "INCONCLUSIVE_SUBGROUP",
+          "bets": 38,
+          "wins": 19,
+          "losses": 19,
+          "pushes": 0,
+          "win_rate": 0.5,
+          "units": -1.7272727272727257,
+          "roi": -0.045454545454545414,
+          "avg_clv": 0.0006572754222355093,
+          "positive_clv_rate": 0.42105263157894735,
+          "season_count": 3,
+          "profitable_seasons": 1,
+          "min_season_bets": 9,
+          "by_season": {
+            "2023": {
+              "bets": 13,
+              "wins": 8,
+              "losses": 5,
+              "pushes": 0,
+              "win_rate": 0.6153846153846154,
+              "units": 2.2727272727272734,
+              "roi": 0.17482517482517487,
+              "avg_clv": 0.007418816453274246,
+              "positive_clv_rate": 0.3076923076923077
+            },
+            "2024": {
+              "bets": 9,
+              "wins": 3,
+              "losses": 6,
+              "pushes": 0,
+              "win_rate": 0.3333333333333333,
+              "units": -3.2727272727272725,
+              "roi": -0.3636363636363636,
+              "avg_clv": -0.028799835406118905,
+              "positive_clv_rate": 0.4444444444444444
+            },
+            "2025": {
+              "bets": 16,
+              "wins": 8,
+              "losses": 8,
+              "pushes": 0,
+              "win_rate": 0.5,
+              "units": -0.7272727272727266,
+              "roi": -0.045454545454545414,
+              "avg_clv": 0.011733148175465901,
+              "positive_clv_rate": 0.5
+            }
+          }
         }
       }
     },
@@ -715,9 +1959,9 @@
       "losses": 87,
       "pushes": 4,
       "win_rate": 0.4727272727272727,
-      "units": -16.09090909090909,
-      "roi": -0.09521247982786443,
-      "avg_clv": 0.017554602662113894,
+      "units": -16.090909090909086,
+      "roi": -0.09521247982786442,
+      "avg_clv": 0.01755460266211388,
       "positive_clv_rate": 0.44970414201183434,
       "season_count": 3,
       "profitable_seasons": 1,
@@ -729,9 +1973,9 @@
           "losses": 35,
           "pushes": 2,
           "win_rate": 0.4067796610169492,
-          "units": -13.181818181818183,
-          "roi": -0.21609538002980627,
-          "avg_clv": 0.012464640663161646,
+          "units": -13.18181818181818,
+          "roi": -0.21609538002980622,
+          "avg_clv": 0.012464640663161634,
           "positive_clv_rate": 0.4098360655737705
         },
         "2024": {
@@ -740,9 +1984,9 @@
           "losses": 24,
           "pushes": 2,
           "win_rate": 0.5636363636363636,
-          "units": 4.181818181818182,
-          "roi": 0.0733652312599681,
-          "avg_clv": 0.019553664748862293,
+          "units": 4.181818181818184,
+          "roi": 0.07336523125996815,
+          "avg_clv": 0.019553664748862276,
           "positive_clv_rate": 0.5087719298245614
         },
         "2025": {
@@ -751,10 +1995,255 @@
           "losses": 28,
           "pushes": 0,
           "win_rate": 0.45098039215686275,
-          "units": -7.090909090909091,
-          "roi": -0.13903743315508021,
-          "avg_clv": 0.021408350563906615,
+          "units": -7.090909090909089,
+          "roi": -0.1390374331550802,
+          "avg_clv": 0.02140835056390661,
           "positive_clv_rate": 0.43137254901960786
+        }
+      },
+      "subgroups": {
+        "favorite|away": {
+          "key": "favorite|away",
+          "market_role": "favorite",
+          "side_location": "away",
+          "status": "INCONCLUSIVE_SUBGROUP",
+          "bets": 25,
+          "wins": 8,
+          "losses": 17,
+          "pushes": 0,
+          "win_rate": 0.32,
+          "units": -9.727272727272727,
+          "roi": -0.38909090909090904,
+          "avg_clv": 0.014141364751727226,
+          "positive_clv_rate": 0.48,
+          "season_count": 3,
+          "profitable_seasons": 0,
+          "min_season_bets": 3,
+          "by_season": {
+            "2023": {
+              "bets": 14,
+              "wins": 4,
+              "losses": 10,
+              "pushes": 0,
+              "win_rate": 0.2857142857142857,
+              "units": -6.363636363636363,
+              "roi": -0.45454545454545453,
+              "avg_clv": 0.00015460478271505613,
+              "positive_clv_rate": 0.2857142857142857
+            },
+            "2024": {
+              "bets": 8,
+              "wins": 3,
+              "losses": 5,
+              "pushes": 0,
+              "win_rate": 0.375,
+              "units": -2.2727272727272725,
+              "roi": -0.28409090909090906,
+              "avg_clv": 0.04258497871788698,
+              "positive_clv_rate": 0.75
+            },
+            "2025": {
+              "bets": 3,
+              "wins": 1,
+              "losses": 2,
+              "pushes": 0,
+              "win_rate": 0.3333333333333333,
+              "units": -1.0909090909090908,
+              "roi": -0.3636363636363636,
+              "avg_clv": 0.003563274030691332,
+              "positive_clv_rate": 0.6666666666666666
+            }
+          }
+        },
+        "favorite|home": {
+          "key": "favorite|home",
+          "market_role": "favorite",
+          "side_location": "home",
+          "status": "INCONCLUSIVE_SUBGROUP",
+          "bets": 44,
+          "wins": 20,
+          "losses": 22,
+          "pushes": 2,
+          "win_rate": 0.47619047619047616,
+          "units": -3.8181818181818166,
+          "roi": -0.08677685950413219,
+          "avg_clv": 0.009122876481737098,
+          "positive_clv_rate": 0.38636363636363635,
+          "season_count": 3,
+          "profitable_seasons": 1,
+          "min_season_bets": 13,
+          "by_season": {
+            "2023": {
+              "bets": 18,
+              "wins": 8,
+              "losses": 8,
+              "pushes": 2,
+              "win_rate": 0.5,
+              "units": -0.7272727272727266,
+              "roi": -0.040404040404040366,
+              "avg_clv": 0.004491139737296108,
+              "positive_clv_rate": 0.2777777777777778
+            },
+            "2024": {
+              "bets": 13,
+              "wins": 8,
+              "losses": 5,
+              "pushes": 0,
+              "win_rate": 0.6153846153846154,
+              "units": 2.2727272727272734,
+              "roi": 0.17482517482517487,
+              "avg_clv": 0.019010193510919954,
+              "positive_clv_rate": 0.5384615384615384
+            },
+            "2025": {
+              "bets": 13,
+              "wins": 4,
+              "losses": 9,
+              "pushes": 0,
+              "win_rate": 0.3076923076923077,
+              "units": -5.363636363636363,
+              "roi": -0.41258741258741255,
+              "avg_clv": 0.005648733406395623,
+              "positive_clv_rate": 0.38461538461538464
+            }
+          }
+        },
+        "pickem|away": {
+          "key": "pickem|away",
+          "market_role": "pickem",
+          "side_location": "away",
+          "status": "INCONCLUSIVE_SUBGROUP",
+          "bets": 2,
+          "wins": 2,
+          "losses": 0,
+          "pushes": 0,
+          "win_rate": 1.0,
+          "units": 1.8181818181818183,
+          "roi": 0.9090909090909092,
+          "avg_clv": 0.01962970381722605,
+          "positive_clv_rate": 0.5,
+          "season_count": 1,
+          "profitable_seasons": 1,
+          "min_season_bets": 2,
+          "by_season": {
+            "2024": {
+              "bets": 2,
+              "wins": 2,
+              "losses": 0,
+              "pushes": 0,
+              "win_rate": 1.0,
+              "units": 1.8181818181818183,
+              "roi": 0.9090909090909092,
+              "avg_clv": 0.01962970381722605,
+              "positive_clv_rate": 0.5
+            }
+          }
+        },
+        "underdog|away": {
+          "key": "underdog|away",
+          "market_role": "underdog",
+          "side_location": "away",
+          "status": "INCONCLUSIVE_SUBGROUP",
+          "bets": 60,
+          "wins": 29,
+          "losses": 31,
+          "pushes": 0,
+          "win_rate": 0.48333333333333334,
+          "units": -4.636363636363634,
+          "roi": -0.07727272727272723,
+          "avg_clv": 0.02190660182536603,
+          "positive_clv_rate": 0.45,
+          "season_count": 3,
+          "profitable_seasons": 2,
+          "min_season_bets": 17,
+          "by_season": {
+            "2023": {
+              "bets": 21,
+              "wins": 7,
+              "losses": 14,
+              "pushes": 0,
+              "win_rate": 0.3333333333333333,
+              "units": -7.636363636363634,
+              "roi": -0.36363636363636354,
+              "avg_clv": 0.026433941637135517,
+              "positive_clv_rate": 0.5714285714285714
+            },
+            "2024": {
+              "bets": 17,
+              "wins": 10,
+              "losses": 7,
+              "pushes": 0,
+              "win_rate": 0.5882352941176471,
+              "units": 2.0909090909090917,
+              "roi": 0.12299465240641716,
+              "avg_clv": 0.029615001635967614,
+              "positive_clv_rate": 0.5294117647058824
+            },
+            "2025": {
+              "bets": 22,
+              "wins": 12,
+              "losses": 10,
+              "pushes": 0,
+              "win_rate": 0.5454545454545454,
+              "units": 0.9090909090909101,
+              "roi": 0.04132231404958682,
+              "avg_clv": 0.011628559424121198,
+              "positive_clv_rate": 0.2727272727272727
+            }
+          }
+        },
+        "underdog|home": {
+          "key": "underdog|home",
+          "market_role": "underdog",
+          "side_location": "home",
+          "status": "INCONCLUSIVE_SUBGROUP",
+          "bets": 38,
+          "wins": 19,
+          "losses": 17,
+          "pushes": 2,
+          "win_rate": 0.5277777777777778,
+          "units": 0.27272727272727426,
+          "roi": 0.0071770334928230066,
+          "avg_clv": 0.02258241180924261,
+          "positive_clv_rate": 0.5,
+          "season_count": 3,
+          "profitable_seasons": 2,
+          "min_season_bets": 8,
+          "by_season": {
+            "2023": {
+              "bets": 8,
+              "wins": 5,
+              "losses": 3,
+              "pushes": 0,
+              "win_rate": 0.625,
+              "units": 1.5454545454545459,
+              "roi": 0.19318181818181823,
+              "avg_clv": 0.015278165480459101,
+              "positive_clv_rate": 0.5
+            },
+            "2024": {
+              "bets": 17,
+              "wins": 8,
+              "losses": 7,
+              "pushes": 2,
+              "win_rate": 0.5333333333333333,
+              "units": 0.2727272727272734,
+              "roi": 0.016042780748663138,
+              "avg_clv": -0.0009392876556357167,
+              "positive_clv_rate": 0.35294117647058826
+            },
+            "2025": {
+              "bets": 13,
+              "wins": 6,
+              "losses": 7,
+              "pushes": 0,
+              "win_rate": 0.46153846153846156,
+              "units": -1.545454545454545,
+              "roi": -0.11888111888111884,
+              "avg_clv": 0.057836478081027196,
+              "positive_clv_rate": 0.6923076923076923
+            }
+          }
         }
       }
     },
@@ -769,9 +2258,9 @@
       "losses": 58,
       "pushes": 1,
       "win_rate": 0.5,
-      "units": -5.272727272727271,
-      "roi": -0.04506604506604505,
-      "avg_clv": 0.042445959859543435,
+      "units": -5.272727272727268,
+      "roi": -0.04506604506604502,
+      "avg_clv": 0.04244595985954342,
       "positive_clv_rate": 0.46153846153846156,
       "season_count": 3,
       "profitable_seasons": 1,
@@ -783,8 +2272,8 @@
           "losses": 22,
           "pushes": 1,
           "win_rate": 0.4883720930232558,
-          "units": -2.9090909090909083,
-          "roi": -0.06611570247933883,
+          "units": -2.9090909090909074,
+          "roi": -0.0661157024793388,
           "avg_clv": 0.03143845744212553,
           "positive_clv_rate": 0.4318181818181818
         },
@@ -794,8 +2283,8 @@
           "losses": 19,
           "pushes": 0,
           "win_rate": 0.4864864864864865,
-          "units": -2.636363636363636,
-          "roi": -0.07125307125307123,
+          "units": -2.636363636363635,
+          "roi": -0.07125307125307122,
           "avg_clv": 0.05773398479904905,
           "positive_clv_rate": 0.5135135135135135
         },
@@ -805,10 +2294,213 @@
           "losses": 17,
           "pushes": 0,
           "win_rate": 0.5277777777777778,
-          "units": 0.27272727272727304,
-          "roi": 0.007575757575757585,
-          "avg_clv": 0.04018688162634007,
+          "units": 0.27272727272727426,
+          "roi": 0.0075757575757576185,
+          "avg_clv": 0.040186881626340064,
           "positive_clv_rate": 0.4444444444444444
+        }
+      },
+      "subgroups": {
+        "favorite|away": {
+          "key": "favorite|away",
+          "market_role": "favorite",
+          "side_location": "away",
+          "status": "INCONCLUSIVE_SUBGROUP",
+          "bets": 10,
+          "wins": 5,
+          "losses": 5,
+          "pushes": 0,
+          "win_rate": 0.5,
+          "units": -0.45454545454545414,
+          "roi": -0.045454545454545414,
+          "avg_clv": 0.09247748129157811,
+          "positive_clv_rate": 0.7,
+          "season_count": 2,
+          "profitable_seasons": 1,
+          "min_season_bets": 3,
+          "by_season": {
+            "2023": {
+              "bets": 7,
+              "wins": 3,
+              "losses": 4,
+              "pushes": 0,
+              "win_rate": 0.42857142857142855,
+              "units": -1.2727272727272725,
+              "roi": -0.1818181818181818,
+              "avg_clv": 0.04276739728155436,
+              "positive_clv_rate": 0.5714285714285714
+            },
+            "2024": {
+              "bets": 3,
+              "wins": 2,
+              "losses": 1,
+              "pushes": 0,
+              "win_rate": 0.6666666666666666,
+              "units": 0.8181818181818183,
+              "roi": 0.27272727272727276,
+              "avg_clv": 0.20846767731496685,
+              "positive_clv_rate": 1.0
+            }
+          }
+        },
+        "favorite|home": {
+          "key": "favorite|home",
+          "market_role": "favorite",
+          "side_location": "home",
+          "status": "INCONCLUSIVE_SUBGROUP",
+          "bets": 14,
+          "wins": 8,
+          "losses": 6,
+          "pushes": 0,
+          "win_rate": 0.5714285714285714,
+          "units": 1.2727272727272734,
+          "roi": 0.09090909090909095,
+          "avg_clv": 0.04928364939884577,
+          "positive_clv_rate": 0.42857142857142855,
+          "season_count": 3,
+          "profitable_seasons": 1,
+          "min_season_bets": 2,
+          "by_season": {
+            "2023": {
+              "bets": 4,
+              "wins": 3,
+              "losses": 1,
+              "pushes": 0,
+              "win_rate": 0.75,
+              "units": 1.7272727272727275,
+              "roi": 0.4318181818181819,
+              "avg_clv": 0.07926852391402257,
+              "positive_clv_rate": 0.5
+            },
+            "2024": {
+              "bets": 2,
+              "wins": 1,
+              "losses": 1,
+              "pushes": 0,
+              "win_rate": 0.5,
+              "units": -0.09090909090909083,
+              "roi": -0.045454545454545414,
+              "avg_clv": -0.08296859488454855,
+              "positive_clv_rate": 0.0
+            },
+            "2025": {
+              "bets": 8,
+              "wins": 4,
+              "losses": 4,
+              "pushes": 0,
+              "win_rate": 0.5,
+              "units": -0.3636363636363633,
+              "roi": -0.045454545454545414,
+              "avg_clv": 0.06735427321210594,
+              "positive_clv_rate": 0.5
+            }
+          }
+        },
+        "underdog|away": {
+          "key": "underdog|away",
+          "market_role": "underdog",
+          "side_location": "away",
+          "status": "INCONCLUSIVE_SUBGROUP",
+          "bets": 52,
+          "wins": 27,
+          "losses": 24,
+          "pushes": 1,
+          "win_rate": 0.5294117647058824,
+          "units": 0.5454545454545476,
+          "roi": 0.010489510489510532,
+          "avg_clv": 0.047052265727757045,
+          "positive_clv_rate": 0.5,
+          "season_count": 3,
+          "profitable_seasons": 2,
+          "min_season_bets": 16,
+          "by_season": {
+            "2023": {
+              "bets": 16,
+              "wins": 8,
+              "losses": 7,
+              "pushes": 1,
+              "win_rate": 0.5333333333333333,
+              "units": 0.2727272727272734,
+              "roi": 0.017045454545454586,
+              "avg_clv": 0.03202235649244428,
+              "positive_clv_rate": 0.375
+            },
+            "2024": {
+              "bets": 18,
+              "wins": 9,
+              "losses": 9,
+              "pushes": 0,
+              "win_rate": 0.5,
+              "units": -0.8181818181818175,
+              "roi": -0.045454545454545414,
+              "avg_clv": 0.07555290883557755,
+              "positive_clv_rate": 0.6666666666666666
+            },
+            "2025": {
+              "bets": 18,
+              "wins": 10,
+              "losses": 8,
+              "pushes": 0,
+              "win_rate": 0.5555555555555556,
+              "units": 1.0909090909090917,
+              "roi": 0.06060606060606065,
+              "avg_clv": 0.031911541940214554,
+              "positive_clv_rate": 0.4444444444444444
+            }
+          }
+        },
+        "underdog|home": {
+          "key": "underdog|home",
+          "market_role": "underdog",
+          "side_location": "home",
+          "status": "INCONCLUSIVE_SUBGROUP",
+          "bets": 41,
+          "wins": 18,
+          "losses": 23,
+          "pushes": 0,
+          "win_rate": 0.43902439024390244,
+          "units": -6.636363636363635,
+          "roi": -0.16186252771618623,
+          "avg_clv": 0.022066184907892486,
+          "positive_clv_rate": 0.36585365853658536,
+          "season_count": 3,
+          "profitable_seasons": 0,
+          "min_season_bets": 10,
+          "by_season": {
+            "2023": {
+              "bets": 17,
+              "wins": 7,
+              "losses": 10,
+              "pushes": 0,
+              "win_rate": 0.4117647058823529,
+              "units": -3.636363636363636,
+              "roi": -0.213903743315508,
+              "avg_clv": 0.014969914526320212,
+              "positive_clv_rate": 0.4117647058823529
+            },
+            "2024": {
+              "bets": 14,
+              "wins": 6,
+              "losses": 8,
+              "pushes": 0,
+              "win_rate": 0.42857142857142855,
+              "units": -2.545454545454545,
+              "roi": -0.1818181818181818,
+              "avg_clv": 0.022624231167758236,
+              "positive_clv_rate": 0.2857142857142857
+            },
+            "2025": {
+              "bets": 10,
+              "wins": 5,
+              "losses": 5,
+              "pushes": 0,
+              "win_rate": 0.5,
+              "units": -0.45454545454545414,
+              "roi": -0.045454545454545414,
+              "avg_clv": 0.03334857979275329,
+              "positive_clv_rate": 0.4
+            }
+          }
         }
       }
     },
@@ -823,9 +2515,9 @@
       "losses": 10,
       "pushes": 0,
       "win_rate": 0.6666666666666666,
-      "units": 8.181818181818178,
-      "roi": 0.2727272727272726,
-      "avg_clv": 0.10289688924222154,
+      "units": 8.181818181818187,
+      "roi": 0.2727272727272729,
+      "avg_clv": 0.1028968892422215,
       "positive_clv_rate": 0.5666666666666667,
       "season_count": 3,
       "profitable_seasons": 2,
@@ -837,9 +2529,9 @@
           "losses": 4,
           "pushes": 0,
           "win_rate": 0.5,
-          "units": -0.36363636363636376,
-          "roi": -0.04545454545454547,
-          "avg_clv": 0.03815770987649334,
+          "units": -0.3636363636363633,
+          "roi": -0.045454545454545414,
+          "avg_clv": 0.03815770987649332,
           "positive_clv_rate": 0.625
         },
         "2024": {
@@ -859,10 +2551,191 @@
           "losses": 4,
           "pushes": 0,
           "win_rate": 0.5555555555555556,
-          "units": 0.5454545454545453,
-          "roi": 0.06060606060606059,
-          "avg_clv": 0.013455840038046353,
+          "units": 0.5454545454545459,
+          "roi": 0.06060606060606065,
+          "avg_clv": 0.013455840038046344,
           "positive_clv_rate": 0.3333333333333333
+        }
+      },
+      "subgroups": {
+        "favorite|away": {
+          "key": "favorite|away",
+          "market_role": "favorite",
+          "side_location": "away",
+          "status": "INCONCLUSIVE_SUBGROUP",
+          "bets": 1,
+          "wins": 0,
+          "losses": 1,
+          "pushes": 0,
+          "win_rate": 0.0,
+          "units": -1.0,
+          "roi": -1.0,
+          "avg_clv": -0.1312711685081211,
+          "positive_clv_rate": 0.0,
+          "season_count": 1,
+          "profitable_seasons": 0,
+          "min_season_bets": 1,
+          "by_season": {
+            "2023": {
+              "bets": 1,
+              "wins": 0,
+              "losses": 1,
+              "pushes": 0,
+              "win_rate": 0.0,
+              "units": -1.0,
+              "roi": -1.0,
+              "avg_clv": -0.1312711685081211,
+              "positive_clv_rate": 0.0
+            }
+          }
+        },
+        "favorite|home": {
+          "key": "favorite|home",
+          "market_role": "favorite",
+          "side_location": "home",
+          "status": "INCONCLUSIVE_SUBGROUP",
+          "bets": 4,
+          "wins": 3,
+          "losses": 1,
+          "pushes": 0,
+          "win_rate": 0.75,
+          "units": 1.7272727272727275,
+          "roi": 0.4318181818181819,
+          "avg_clv": 0.1278346071681142,
+          "positive_clv_rate": 0.5,
+          "season_count": 3,
+          "profitable_seasons": 2,
+          "min_season_bets": 1,
+          "by_season": {
+            "2023": {
+              "bets": 2,
+              "wins": 1,
+              "losses": 1,
+              "pushes": 0,
+              "win_rate": 0.5,
+              "units": -0.09090909090909083,
+              "roi": -0.045454545454545414,
+              "avg_clv": 0.0502358679651029,
+              "positive_clv_rate": 0.5
+            },
+            "2024": {
+              "bets": 1,
+              "wins": 1,
+              "losses": 0,
+              "pushes": 0,
+              "win_rate": 1.0,
+              "units": 0.9090909090909092,
+              "roi": 0.9090909090909092,
+              "avg_clv": 0.410866692742251,
+              "positive_clv_rate": 1.0
+            },
+            "2025": {
+              "bets": 1,
+              "wins": 1,
+              "losses": 0,
+              "pushes": 0,
+              "win_rate": 1.0,
+              "units": 0.9090909090909092,
+              "roi": 0.9090909090909092,
+              "avg_clv": 0.0,
+              "positive_clv_rate": 0.0
+            }
+          }
+        },
+        "underdog|away": {
+          "key": "underdog|away",
+          "market_role": "underdog",
+          "side_location": "away",
+          "status": "INCONCLUSIVE_SUBGROUP",
+          "bets": 16,
+          "wins": 12,
+          "losses": 4,
+          "pushes": 0,
+          "win_rate": 0.75,
+          "units": 6.90909090909091,
+          "roi": 0.4318181818181819,
+          "avg_clv": 0.1072982962694249,
+          "positive_clv_rate": 0.6875,
+          "season_count": 3,
+          "profitable_seasons": 3,
+          "min_season_bets": 5,
+          "by_season": {
+            "2023": {
+              "bets": 5,
+              "wins": 3,
+              "losses": 2,
+              "pushes": 0,
+              "win_rate": 0.6,
+              "units": 0.7272727272727275,
+              "roi": 0.1454545454545455,
+              "avg_clv": 0.06721222231797239,
+              "positive_clv_rate": 0.8
+            },
+            "2024": {
+              "bets": 6,
+              "wins": 6,
+              "losses": 0,
+              "pushes": 0,
+              "win_rate": 1.0,
+              "units": 5.454545454545455,
+              "roi": 0.9090909090909092,
+              "avg_clv": 0.2099348447297532,
+              "positive_clv_rate": 0.6666666666666666
+            },
+            "2025": {
+              "bets": 5,
+              "wins": 3,
+              "losses": 2,
+              "pushes": 0,
+              "win_rate": 0.6,
+              "units": 0.7272727272727275,
+              "roi": 0.1454545454545455,
+              "avg_clv": 0.02422051206848342,
+              "positive_clv_rate": 0.6
+            }
+          }
+        },
+        "underdog|home": {
+          "key": "underdog|home",
+          "market_role": "underdog",
+          "side_location": "home",
+          "status": "INCONCLUSIVE_SUBGROUP",
+          "bets": 9,
+          "wins": 5,
+          "losses": 4,
+          "pushes": 0,
+          "win_rate": 0.5555555555555556,
+          "units": 0.5454545454545459,
+          "roi": 0.06060606060606065,
+          "avg_clv": 0.11000740853239016,
+          "positive_clv_rate": 0.4444444444444444,
+          "season_count": 2,
+          "profitable_seasons": 1,
+          "min_season_bets": 3,
+          "by_season": {
+            "2024": {
+              "bets": 6,
+              "wins": 4,
+              "losses": 2,
+              "pushes": 0,
+              "win_rate": 0.6666666666666666,
+              "units": 1.6363636363636367,
+              "roi": 0.27272727272727276,
+              "avg_clv": 0.16501111279858524,
+              "positive_clv_rate": 0.6666666666666666
+            },
+            "2025": {
+              "bets": 3,
+              "wins": 1,
+              "losses": 2,
+              "pushes": 0,
+              "win_rate": 0.3333333333333333,
+              "units": -1.0909090909090908,
+              "roi": -0.3636363636363636,
+              "avg_clv": 0.0,
+              "positive_clv_rate": 0.0
+            }
+          }
         }
       }
     },
@@ -877,9 +2750,9 @@
       "losses": 106,
       "pushes": 4,
       "win_rate": 0.45918367346938777,
-      "units": -24.18181818181818,
-      "roi": -0.1209090909090909,
-      "avg_clv": 6.178241024645481e-05,
+      "units": -24.181818181818176,
+      "roi": -0.12090909090909088,
+      "avg_clv": 6.178241024645467e-05,
       "positive_clv_rate": 0.12,
       "season_count": 3,
       "profitable_seasons": 0,
@@ -891,9 +2764,9 @@
           "losses": 31,
           "pushes": 2,
           "win_rate": 0.39215686274509803,
-          "units": -12.818181818181818,
-          "roi": -0.241852487135506,
-          "avg_clv": -0.003086280825988419,
+          "units": -12.818181818181817,
+          "roi": -0.24185248713550597,
+          "avg_clv": -0.003086280825988415,
           "positive_clv_rate": 0.22641509433962265
         },
         "2024": {
@@ -902,9 +2775,9 @@
           "losses": 35,
           "pushes": 2,
           "win_rate": 0.453125,
-          "units": -8.636363636363637,
-          "roi": -0.13085399449035814,
-          "avg_clv": 0.0036667153920074995,
+          "units": -8.636363636363633,
+          "roi": -0.1308539944903581,
+          "avg_clv": 0.003666715392007494,
           "positive_clv_rate": 0.12121212121212122
         },
         "2025": {
@@ -913,12 +2786,13 @@
           "losses": 40,
           "pushes": 0,
           "win_rate": 0.5061728395061729,
-          "units": -2.7272727272727275,
-          "roi": -0.033670033670033676,
-          "avg_clv": -0.0008157265437755282,
+          "units": -2.727272727272724,
+          "roi": -0.03367003367003363,
+          "avg_clv": -0.0008157265437755268,
           "positive_clv_rate": 0.04938271604938271
         }
-      }
+      },
+      "subgroups": {}
     },
     {
       "market": "total",
@@ -931,9 +2805,9 @@
       "losses": 149,
       "pushes": 4,
       "win_rate": 0.5098684210526315,
-      "units": -8.090909090909088,
-      "roi": -0.02626918536009444,
-      "avg_clv": 0.00015276975928221837,
+      "units": -8.090909090909078,
+      "roi": -0.026269185360094406,
+      "avg_clv": 0.00015276975928221927,
       "positive_clv_rate": 0.12337662337662338,
       "season_count": 3,
       "profitable_seasons": 1,
@@ -945,9 +2819,9 @@
           "losses": 52,
           "pushes": 0,
           "win_rate": 0.48,
-          "units": -8.363636363636363,
-          "roi": -0.08363636363636363,
-          "avg_clv": -0.0018783085289247104,
+          "units": -8.36363636363636,
+          "roi": -0.08363636363636359,
+          "avg_clv": -0.0018783085289247054,
           "positive_clv_rate": 0.25
         },
         "2024": {
@@ -956,9 +2830,9 @@
           "losses": 46,
           "pushes": 4,
           "win_rate": 0.5353535353535354,
-          "units": 2.1818181818181817,
-          "roi": 0.021182700794351278,
-          "avg_clv": -0.00031505120545224246,
+          "units": 2.181818181818185,
+          "roi": 0.021182700794351313,
+          "avg_clv": -0.00031505120545224474,
           "positive_clv_rate": 0.07766990291262135
         },
         "2025": {
@@ -967,12 +2841,13 @@
           "losses": 51,
           "pushes": 0,
           "win_rate": 0.5142857142857142,
-          "units": -1.9090909090909074,
-          "roi": -0.018181818181818167,
+          "units": -1.9090909090909056,
+          "roi": -0.01818181818181815,
           "avg_clv": 0.002546040122980717,
           "positive_clv_rate": 0.047619047619047616
         }
-      }
+      },
+      "subgroups": {}
     },
     {
       "market": "total",
@@ -985,9 +2860,9 @@
       "losses": 117,
       "pushes": 2,
       "win_rate": 0.4935064935064935,
-      "units": -13.363636363636358,
-      "roi": -0.05735466250487707,
-      "avg_clv": -5.12107761606738e-05,
+      "units": -13.363636363636356,
+      "roi": -0.057354662504877064,
+      "avg_clv": -5.121077616067427e-05,
       "positive_clv_rate": 0.1072961373390558,
       "season_count": 3,
       "profitable_seasons": 0,
@@ -999,9 +2874,9 @@
           "losses": 37,
           "pushes": 2,
           "win_rate": 0.5194805194805194,
-          "units": -0.636363636363635,
-          "roi": -0.008055235903337152,
-          "avg_clv": -0.004208965650630225,
+          "units": -0.6363636363636331,
+          "roi": -0.008055235903337128,
+          "avg_clv": -0.004208965650630227,
           "positive_clv_rate": 0.21518987341772153
         },
         "2024": {
@@ -1010,9 +2885,9 @@
           "losses": 39,
           "pushes": 0,
           "win_rate": 0.5,
-          "units": -3.545454545454546,
-          "roi": -0.04545454545454546,
-          "avg_clv": 0.0012496437947958849,
+          "units": -3.5454545454545423,
+          "roi": -0.045454545454545414,
+          "avg_clv": 0.0012496437947958833,
           "positive_clv_rate": 0.038461538461538464
         },
         "2025": {
@@ -1021,12 +2896,13 @@
           "losses": 41,
           "pushes": 0,
           "win_rate": 0.4605263157894737,
-          "units": -9.181818181818182,
-          "roi": -0.1208133971291866,
-          "avg_clv": 0.002935578415266734,
+          "units": -9.18181818181818,
+          "roi": -0.12081339712918658,
+          "avg_clv": 0.0029355784152667354,
           "positive_clv_rate": 0.06578947368421052
         }
-      }
+      },
+      "subgroups": {}
     },
     {
       "market": "total",
@@ -1039,9 +2915,9 @@
       "losses": 79,
       "pushes": 1,
       "win_rate": 0.5325443786982249,
-      "units": 2.8181818181818183,
-      "roi": 0.016577540106951873,
-      "avg_clv": 0.0024949690000013827,
+      "units": 2.8181818181818272,
+      "roi": 0.016577540106951925,
+      "avg_clv": 0.0024949690000013822,
       "positive_clv_rate": 0.12352941176470589,
       "season_count": 3,
       "profitable_seasons": 1,
@@ -1053,9 +2929,9 @@
           "losses": 24,
           "pushes": 1,
           "win_rate": 0.4782608695652174,
-          "units": -4.000000000000001,
-          "roi": -0.08510638297872343,
-          "avg_clv": -0.00955867432406773,
+          "units": -3.9999999999999982,
+          "roi": -0.08510638297872336,
+          "avg_clv": -0.00955867432406772,
           "positive_clv_rate": 0.10638297872340426
         },
         "2024": {
@@ -1064,9 +2940,9 @@
           "losses": 31,
           "pushes": 0,
           "win_rate": 0.5230769230769231,
-          "units": -0.09090909090908961,
-          "roi": -0.0013986013986013787,
-          "avg_clv": 0.005166689607072604,
+          "units": -0.09090909090908816,
+          "roi": -0.0013986013986013563,
+          "avg_clv": 0.005166689607072598,
           "positive_clv_rate": 0.16923076923076924
         },
         "2025": {
@@ -1075,12 +2951,13 @@
           "losses": 24,
           "pushes": 0,
           "win_rate": 0.5862068965517241,
-          "units": 6.9090909090909065,
-          "roi": 0.11912225705329149,
-          "avg_clv": 0.009268406875374125,
+          "units": 6.909090909090912,
+          "roi": 0.11912225705329159,
+          "avg_clv": 0.00926840687537412,
           "positive_clv_rate": 0.08620689655172414
         }
-      }
+      },
+      "subgroups": {}
     },
     {
       "market": "total",
@@ -1093,9 +2970,9 @@
       "losses": 26,
       "pushes": 1,
       "win_rate": 0.5666666666666667,
-      "units": 4.90909090909091,
-      "roi": 0.08047690014903132,
-      "avg_clv": 0.00274770719246364,
+      "units": 4.909090909090912,
+      "roi": 0.08047690014903135,
+      "avg_clv": 0.0027477071924636412,
       "positive_clv_rate": 0.18032786885245902,
       "season_count": 3,
       "profitable_seasons": 1,
@@ -1107,9 +2984,9 @@
           "losses": 14,
           "pushes": 1,
           "win_rate": 0.44,
-          "units": -4.0,
-          "roi": -0.15384615384615385,
-          "avg_clv": 0.0017465308346651025,
+          "units": -3.999999999999999,
+          "roi": -0.1538461538461538,
+          "avg_clv": 0.0017465308346651044,
           "positive_clv_rate": 0.2692307692307692
         },
         "2024": {
@@ -1118,9 +2995,9 @@
           "losses": 5,
           "pushes": 0,
           "win_rate": 0.7727272727272727,
-          "units": 10.454545454545451,
-          "roi": 0.4752066115702478,
-          "avg_clv": 0.0032714453737842752,
+          "units": 10.454545454545457,
+          "roi": 0.475206611570248,
+          "avg_clv": 0.0032714453737842817,
           "positive_clv_rate": 0.09090909090909091
         },
         "2025": {
@@ -1129,12 +3006,13 @@
           "losses": 7,
           "pushes": 0,
           "win_rate": 0.46153846153846156,
-          "units": -1.5454545454545459,
-          "roi": -0.11888111888111891,
-          "avg_clv": 0.003863733755056562,
+          "units": -1.545454545454545,
+          "roi": -0.11888111888111884,
+          "avg_clv": 0.0038637337550565536,
           "positive_clv_rate": 0.15384615384615385
         }
-      }
+      },
+      "subgroups": {}
     },
     {
       "market": "total",
@@ -1147,8 +3025,8 @@
       "losses": 13,
       "pushes": 0,
       "win_rate": 0.43478260869565216,
-      "units": -3.909090909090909,
-      "roi": -0.16996047430830039,
+      "units": -3.9090909090909083,
+      "roi": -0.16996047430830036,
       "avg_clv": 0.01349373880884247,
       "positive_clv_rate": 0.17391304347826086,
       "season_count": 3,
@@ -1161,9 +3039,9 @@
           "losses": 1,
           "pushes": 0,
           "win_rate": 0.6666666666666666,
-          "units": 0.8181818181818181,
-          "roi": 0.2727272727272727,
-          "avg_clv": -0.004376580034182158,
+          "units": 0.8181818181818183,
+          "roi": 0.27272727272727276,
+          "avg_clv": -0.004376580034182133,
           "positive_clv_rate": 0.3333333333333333
         },
         "2024": {
@@ -1174,7 +3052,7 @@
           "win_rate": 0.4166666666666667,
           "units": -2.454545454545454,
           "roi": -0.2045454545454545,
-          "avg_clv": 0.0020150446240588724,
+          "avg_clv": 0.0020150446240588668,
           "positive_clv_rate": 0.08333333333333333
         },
         "2025": {
@@ -1188,10 +3066,11 @@
           "avg_clv": 0.0374131496521521,
           "positive_clv_rate": 0.25
         }
-      }
+      },
+      "subgroups": {}
     }
   ],
   "persistent_regimes": 1,
   "watch_regimes": 5,
-  "methodology": "Fixed edge bands; market-specific walk-forward bet outcomes; PERSISTENT_CANDIDATE requires >=180 bets, >=3 seasons, >=50 bets in every season, positive ROI in every season, >=3% aggregate ROI, and positive average CLV. WATCH requires >=100 bets, positive aggregate ROI, and profit in at least two-thirds of seasons. Regime evidence can prioritize research and surface candidates but cannot create an edge or modify the fair line."
+  "methodology": "Fixed edge bands; market-specific walk-forward bet outcomes; PERSISTENT_CANDIDATE requires >=180 bets, >=3 seasons, >=50 bets in every season, positive ROI in every season, >=3% aggregate ROI, and positive average CLV. WATCH requires >=100 bets, positive aggregate ROI, and profit in at least two-thirds of seasons. Spread parent regimes are decomposed into favorite/underdog \u00d7 home/away children. A child is SUPPORTED_SUBGROUP with >=45 bets, >=12 bets per season across >=3 seasons, profit in every season, >=5% aggregate ROI, and positive average CLV; it is CONTRAINDICATED_SUBGROUP with the same sample floor, losses in every season, and <=-3% aggregate ROI. Regime evidence can prioritize research and surface candidates but cannot create an edge, modify the fair line, probability, EV, or inflate stake."
 }
