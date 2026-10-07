@@ -2,6 +2,7 @@ import pandas as pd
 
 from harbin.tier_validation import (
     build_tier_performance,
+    expected_display_tier,
     refresh_display_market_tiers,
     summarize_tier_rows,
 )
@@ -116,3 +117,58 @@ def test_market_tier_matrix_keeps_markets_separate():
     assert report["by_market_tier"]["total"]["STRONG"]["losses"] == 1
     assert report["by_market_tier"]["moneyline"]["BET"]["flat_units"] == 1.2
     assert len(report["matrix"]) == 9
+
+
+def test_expected_display_tier_detects_legacy_moneyline_mismatch():
+    row = {
+        "home_team": "Home",
+        "away_team": "Away",
+        "quant_side": "Home",
+        "execution_odds": -200,
+        "model_probability": 0.55,
+    }
+    assert expected_display_tier("moneyline", row) == ""
+
+
+def test_clean_validation_excludes_inconsistent_or_unverified_rows():
+    frame = pd.DataFrame(
+        [
+            {
+                "market": "spread",
+                "tier": "BET",
+                "result": 1,
+                "flat_profit": 0.9090909091,
+                "execution_odds": -110,
+                "model_probability": 0.60,
+                "model_edge": 4.5,
+                "model_ev": 0.10,
+                "execution_clv": 0.5,
+                "tier_consistent": True,
+                "price_verified": True,
+                "validation_eligible": True,
+            },
+            {
+                "market": "spread",
+                "tier": "STRONG",
+                "result": -1,
+                "flat_profit": -1.0,
+                "execution_odds": -110,
+                "model_probability": 0.75,
+                "model_edge": 11.0,
+                "model_ev": 0.40,
+                "execution_clv": -1.0,
+                "tier_consistent": False,
+                "price_verified": False,
+                "validation_eligible": False,
+            },
+        ]
+    )
+
+    report = build_tier_performance(frame)
+
+    assert report["graded_tier_bets"] == 2
+    assert report["validation_eligible_bets"] == 1
+    assert report["excluded_from_validation"] == 1
+    assert report["inconsistent_badge_rows"] == 1
+    assert report["clean_by_market_tier"]["spread"]["BET"]["graded_bets"] == 1
+    assert report["clean_by_market_tier"]["spread"]["STRONG"]["graded_bets"] == 0
