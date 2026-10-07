@@ -1,3 +1,4 @@
+import json
 import pandas as pd
 
 from harbin.pro_market import select_best_market
@@ -8,6 +9,7 @@ from harbin.edge_regimes import (
     build_edge_regime_report,
     current_edge_board,
     effective_edge_status,
+    load_or_build_edge_regime_report,
     match_edge_regime,
     match_edge_subgroup,
 )
@@ -385,6 +387,40 @@ def test_current_edge_board_excludes_contraindicated_child_by_default():
     assert len(all_parent) == 1
     assert all_parent.iloc[0]["edge_reliability_status"] == "CONTRAINDICATED_SUBGROUP"
     assert all_parent.iloc[0]["subgroup_key"] == "underdog|home"
+
+
+def test_loader_rebuilds_stale_edge_regime_schema(tmp_path):
+    rows = []
+    for season in (2023, 2024, 2025):
+        rows += _role_rows(6.5, season, 30, 21, "favorite", "home", clv=0.04)
+        rows += _role_rows(6.5, season, 30, 13, "underdog", "home", clv=0.02)
+
+    reports = tmp_path / "reports"
+    reports.mkdir()
+    pd.DataFrame(rows).to_csv(reports / "backtest_bets.csv", index=False)
+    stale = {
+        "schema_version": 1,
+        "status": "TRACKING",
+        "regimes": [
+            {
+                "market": "spread",
+                "edge_band": "6-8",
+                "min_edge": 6,
+                "max_edge": 8,
+                "status": "PERSISTENT_CANDIDATE",
+            }
+        ],
+    }
+    (reports / "edge_regimes.json").write_text(json.dumps(stale))
+
+    rebuilt = load_or_build_edge_regime_report(reports)
+
+    assert rebuilt["schema_version"] == 2
+    parent = match_edge_regime(rebuilt, "spread", 6.5)
+    assert parent["subgroups"]["favorite|home"]["status"] == "SUPPORTED_SUBGROUP"
+    assert parent["subgroups"]["underdog|home"]["status"] == "CONTRAINDICATED_SUBGROUP"
+    persisted = json.loads((reports / "edge_regimes.json").read_text())
+    assert persisted["schema_version"] == 2
 
 
 def test_supported_edge_board_contains_forward_validation_warning(tmp_path):
