@@ -243,11 +243,14 @@ def _display_market_entry(entry, market):
             quote_time_source = entry.get("total_quote_time_source") or entry.get("best_under_quote_time_source")
 
     quote_stamp = pd.to_datetime(quote_at, utc=True, errors="coerce")
+    snapshot_stamp = pd.to_datetime(entry.get("snapshot_at"), utc=True, errors="coerce")
     price_verified = (
         math.isfinite(_safe(odds))
         and _present_text(book)
         and _present_text(quote_at)
         and not pd.isna(quote_stamp)
+        and not pd.isna(snapshot_stamp)
+        and quote_stamp <= snapshot_stamp
     )
 
     return pd.Series(
@@ -270,8 +273,26 @@ def _display_market_entry(entry, market):
     )
 
 
-def _grade_display_tiers(hist, finals, markets):
-    """Grade the exact displayed STRONG/BET/LEAN label for each game/market."""
+def _tier_entry_state(raw_entry, market):
+    """Normalize one displayed tier and evaluate the clean-evidence contract."""
+
+    entry = _display_market_entry(raw_entry, market)
+    if entry is None:
+        return None, "", False, False
+    expected_tier = expected_display_tier(market, entry)
+    tier_consistent = expected_tier == str(entry.get("tier") or "").upper()
+    validation_eligible = tier_consistent and bool(entry.get("price_verified"))
+    return entry, expected_tier, tier_consistent, validation_eligible
+
+
+def _grade_display_tiers(hist, finals, markets, clean_only=False):
+    """Grade displayed tiers by game/market.
+
+    Posted history uses the first timestamp-safe displayed tier. Clean validation
+    uses the first later-or-equal pre-kickoff tier that satisfies the provenance
+    and badge-consistency contract. This preserves the original audit trail while
+    allowing forward evidence to begin once the clean contract became available.
+    """
 
     rows = []
     badge_columns = {
@@ -298,25 +319,45 @@ def _grade_display_tiers(hist, finals, markets):
             actionable = pre[tier_values.isin(TIERS)]
             if actionable.empty:
                 continue
-            raw_entry = actionable.iloc[0]
-            entry = _display_market_entry(raw_entry, market)
-            if entry is None:
+
+            selected = None
+            for _, raw_entry in actionable.iterrows():
+                entry, expected_tier, tier_consistent, validation_eligible = (
+                    _tier_entry_state(raw_entry, market)
+                )
+                if entry is None:
+                    continue
+                if clean_only and not validation_eligible:
+                    continue
+                selected = (
+                    raw_entry,
+                    entry,
+                    expected_tier,
+                    tier_consistent,
+                    validation_eligible,
+                )
+                break
+            if selected is None:
                 continue
 
+            (
+                raw_entry,
+                entry,
+                expected_tier,
+                tier_consistent,
+                validation_eligible,
+            ) = selected
             result = _grade_row(entry, actual_margin, actual_total)
             profit = _profit(result, entry.get("execution_odds"), market)
             clv, clv_source = _clv_from_market_snapshot(entry, close)
             execution_clv = _execution_clv_from_market_snapshot(entry, close)
-            expected_tier = expected_display_tier(market, entry)
-            tier_consistent = expected_tier == str(entry.get("tier") or "").upper()
-            validation_eligible = tier_consistent and bool(entry.get("price_verified"))
             rows.append(
                 {
                     "game_id": gid,
-                    "season": first.get("season"),
-                    "week": first.get("week"),
-                    "away_team": first.get("away_team"),
-                    "home_team": first.get("home_team"),
+                    "season": raw_entry.get("season", first.get("season")),
+                    "week": raw_entry.get("week", first.get("week")),
+                    "away_team": raw_entry.get("away_team", first.get("away_team")),
+                    "home_team": raw_entry.get("home_team", first.get("home_team")),
                     "market": market,
                     "tier": entry.get("tier"),
                     "side": entry.get("quant_side"),
@@ -327,12 +368,13 @@ def _grade_display_tiers(hist, finals, markets):
                     "expected_tier": expected_tier,
                     "tier_consistent": tier_consistent,
                     "validation_eligible": validation_eligible,
+                    "entry_mode": "clean" if clean_only else "posted",
                     "model_probability": entry.get("model_probability"),
                     "model_edge": entry.get("model_edge"),
                     "model_ev": entry.get("model_ev"),
-                    "projected_margin_home": first.get("model_margin_home"),
+                    "projected_margin_home": raw_entry.get("model_margin_home"),
                     "actual_margin_home": actual_margin,
-                    "projected_total": first.get("model_total"),
+                    "projected_total": raw_entry.get("model_total"),
                     "actual_total": actual_total,
                     "result": result,
                     "flat_stake_units": 1.0,
@@ -343,10 +385,11 @@ def _grade_display_tiers(hist, finals, markets):
                     "entry_snapshot": raw_entry.get("snapshot_at"),
                     "entry_quote_at": entry.get("quant_quote_at"),
                     "quote_time_source": entry.get("quote_time_source"),
-                    "kickoff": first.get("date"),
+                    "kickoff": raw_entry.get("date", first.get("date")),
                 }
             )
     return pd.DataFrame(rows)
+
 
 def grade_prediction_history(client,history_dir="history",reports_dir="reports"):
     """Grade independent live/paper predictions using only stored pre-kickoff state."""
@@ -386,9 +429,11 @@ def grade_prediction_history(client,history_dir="history",reports_dir="reports")
     if len(bets): bets["edge_bucket"]=bets.get("quant_edge",pd.Series(index=bets.index,dtype=float)).apply(_edge_bucket)
     bets.to_csv(reports/"live_graded_bets.csv",index=False)
 
-    tier_rows=_grade_display_tiers(hist,finals,markets)
+    tier_rows=_grade_display_tiers(hist,finals,markets,clean_only=False)
+    clean_tier_rows=_grade_display_tiers(hist,finals,markets,clean_only=True)
     tier_rows.to_csv(reports/"live_graded_tiers.csv",index=False)
-    tier_validation=build_tier_performance(tier_rows)
+    clean_tier_rows.to_csv(reports/"live_graded_tiers_clean.csv",index=False)
+    tier_validation=build_tier_performance(tier_rows,clean_frame=clean_tier_rows)
     (reports/"tier_performance.json").write_text(json.dumps(tier_validation,indent=2))
     pd.DataFrame(tier_validation.get("matrix") or []).to_csv(reports/"tier_performance.csv",index=False)
     pd.DataFrame(tier_validation.get("clean_matrix") or []).to_csv(reports/"tier_validation_clean.csv",index=False)
