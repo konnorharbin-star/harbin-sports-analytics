@@ -16,7 +16,8 @@ PERSISTENT_MIN_SEASON_BETS = 50
 WATCH_MIN_BETS = 100
 SUBGROUP_MIN_BETS = 45
 SUBGROUP_MIN_SEASON_BETS = 12
-EDGE_REGIME_SCHEMA_VERSION = 2
+SUBGROUP_CONFIRMATION_MIN_BETS = 12
+EDGE_REGIME_SCHEMA_VERSION = 3
 
 
 def _finite(v):
@@ -108,43 +109,56 @@ def _status(overall, seasons):
     return "WATCH" if watch else "UNSUPPORTED"
 
 
-def _subgroup_status(overall, seasons):
-    """Classify broad spread role/location children of a persistent parent band."""
+def _subgroup_status(overall, discovery, discovery_seasons, holdout):
+    """Classify a subgroup using earlier seasons for discovery and latest for holdout."""
 
-    season_rows = list(seasons.values())
-    season_count = len(season_rows)
-    profitable = sum(
+    discovery_rows = list(discovery_seasons.values())
+    discovery_count = len(discovery_rows)
+    discovery_profitable = sum(
         row.get("roi") is not None and float(row["roi"]) > 0
-        for row in season_rows
+        for row in discovery_rows
     )
-    min_season_bets = min(
-        (int(row.get("bets", 0)) for row in season_rows),
+    discovery_negative = sum(
+        row.get("roi") is not None and float(row["roi"]) < 0
+        for row in discovery_rows
+    )
+    discovery_min_bets = min(
+        (int(row.get("bets", 0)) for row in discovery_rows),
         default=0,
     )
-    bets = int(overall.get("bets", 0))
-    roi_value = overall.get("roi")
-    avg_clv = overall.get("avg_clv")
+    discovery_roi = discovery.get("roi")
+    holdout_roi = holdout.get("roi")
     enough = (
-        bets >= SUBGROUP_MIN_BETS
-        and season_count >= 3
-        and min_season_bets >= SUBGROUP_MIN_SEASON_BETS
+        int(overall.get("bets", 0)) >= SUBGROUP_MIN_BETS
+        and discovery_count >= 2
+        and discovery_min_bets >= SUBGROUP_MIN_SEASON_BETS
+        and int(holdout.get("bets", 0)) >= SUBGROUP_CONFIRMATION_MIN_BETS
     )
+
     if (
         enough
-        and profitable == season_count
-        and roi_value is not None
-        and float(roi_value) >= 0.05
-        and avg_clv is not None
-        and float(avg_clv) > 0
+        and discovery_profitable == discovery_count
+        and discovery_roi is not None
+        and float(discovery_roi) >= 0.05
+        and holdout_roi is not None
+        and float(holdout_roi) > 0
+        and overall.get("avg_clv") is not None
+        and float(overall["avg_clv"]) > 0
     ):
         return "SUPPORTED_SUBGROUP"
+
     if (
         enough
-        and profitable == 0
-        and roi_value is not None
-        and float(roi_value) <= -0.03
+        and discovery_negative == discovery_count
+        and discovery_roi is not None
+        and float(discovery_roi) <= -0.03
+        and holdout_roi is not None
+        and float(holdout_roi) < 0
+        and overall.get("roi") is not None
+        and float(overall["roi"]) <= -0.03
     ):
         return "CONTRAINDICATED_SUBGROUP"
+
     return "INCONCLUSIVE_SUBGROUP"
 
 
@@ -162,19 +176,60 @@ def _spread_subgroups(segment):
     for (role, location), rows in data.groupby(["market_role", "side_location"]):
         overall = _segment_stats(rows)
         by_season = {}
+        season_frames = {}
         if "season" in rows.columns:
             for season, season_rows in rows.groupby("season"):
-                by_season[str(int(float(season)))] = _segment_stats(season_rows)
+                season_key = str(int(float(season)))
+                by_season[season_key] = _segment_stats(season_rows)
+                season_frames[season_key] = season_rows
+
+        ordered_seasons = sorted(
+            by_season,
+            key=lambda value: int(float(value)),
+        )
+        holdout_season = ordered_seasons[-1] if ordered_seasons else None
+        discovery_seasons = ordered_seasons[:-1]
+        discovery_frame = (
+            pd.concat(
+                [season_frames[season] for season in discovery_seasons],
+                ignore_index=False,
+            )
+            if discovery_seasons
+            else rows.iloc[0:0]
+        )
+        holdout_frame = (
+            season_frames[holdout_season]
+            if holdout_season is not None
+            else rows.iloc[0:0]
+        )
+        discovery = _segment_stats(discovery_frame)
+        holdout = _segment_stats(holdout_frame)
+        discovery_by_season = {
+            season: by_season[season]
+            for season in discovery_seasons
+        }
+        status = _subgroup_status(
+            overall,
+            discovery,
+            discovery_by_season,
+            holdout,
+        )
         profitable = sum(
             row.get("roi") is not None and float(row["roi"]) > 0
             for row in by_season.values()
         )
+        holdout_roi = holdout.get("roi")
+        discovery_roi = discovery.get("roi")
+        holdout_confirmed = (
+            status in {"SUPPORTED_SUBGROUP", "CONTRAINDICATED_SUBGROUP"}
+        )
+
         key = f"{role}|{location}"
         out[key] = {
             "key": key,
             "market_role": role,
             "side_location": location,
-            "status": _subgroup_status(overall, by_season),
+            "status": status,
             **overall,
             "season_count": int(len(by_season)),
             "profitable_seasons": int(profitable),
@@ -182,6 +237,22 @@ def _spread_subgroups(segment):
                 (int(row.get("bets", 0)) for row in by_season.values()),
                 default=0,
             ),
+            "validation_design": "latest_season_holdout",
+            "discovery_seasons": discovery_seasons,
+            "discovery_bets": int(discovery.get("bets", 0)),
+            "discovery_roi": discovery_roi,
+            "discovery_win_rate": discovery.get("win_rate"),
+            "discovery_profitable_seasons": int(
+                sum(
+                    row.get("roi") is not None and float(row["roi"]) > 0
+                    for row in discovery_by_season.values()
+                )
+            ),
+            "holdout_season": holdout_season,
+            "holdout_bets": int(holdout.get("bets", 0)),
+            "holdout_roi": holdout_roi,
+            "holdout_win_rate": holdout.get("win_rate"),
+            "holdout_confirmed": bool(holdout_confirmed),
             "by_season": by_season,
         }
     return out
@@ -293,11 +364,14 @@ def _methodology():
         "season, positive ROI in every season, >=3% aggregate ROI, and positive "
         "average CLV. WATCH requires >=100 bets, positive aggregate ROI, and profit "
         "in at least two-thirds of seasons. Spread parent regimes are decomposed into "
-        "favorite/underdog × home/away children. A child is SUPPORTED_SUBGROUP with "
-        ">=45 bets, >=12 bets per season across >=3 seasons, profit in every season, "
-        ">=5% aggregate ROI, and positive average CLV; it is CONTRAINDICATED_SUBGROUP "
-        "with the same sample floor, losses in every season, and <=-3% aggregate ROI. "
-        "Regime evidence can prioritize research and surface candidates but cannot "
+        "favorite/underdog × home/away children using chronological confirmation: "
+        "all but the latest represented season are discovery and the latest season is "
+        "a holdout. SUPPORTED_SUBGROUP requires >=45 total bets, >=2 discovery seasons "
+        "with >=12 bets each, >=5% discovery ROI with every discovery season profitable, "
+        ">=12 holdout bets with positive holdout ROI, and positive full-sample CLV. "
+        "CONTRAINDICATED_SUBGROUP requires the same sample floor, every discovery season "
+        "negative with <=-3% discovery ROI, a negative holdout ROI, and <=-3% full-sample "
+        "ROI. Regime evidence can prioritize research and surface candidates but cannot "
         "create an edge, modify the fair line, probability, EV, or inflate stake."
     )
 
