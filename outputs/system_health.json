@@ -3,7 +3,7 @@
   "meaning": "engineering/model-readiness score only; not a profitability or win-rate guarantee",
   "components": {
     "pipeline_and_data": 100.0,
-    "market_coverage": 94.7,
+    "market_coverage": 94.6,
     "advanced_features": 100.0,
     "model_validation": 92.1,
     "probability_calibration": 87.6,

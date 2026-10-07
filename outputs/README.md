@@ -2,8 +2,8 @@
 
 **Model:** v7.1.0  
 **Season / Week:** 2026 / 6  
-**Updated:** Oct 7, 2026 · 5:57 PM CT  
-**Market:** LIVE MARKET DATA — all 57 games have verified market data from ESPN live (site.web.api.espn.com) + ESPN Core supplement.  
+**Updated:** Oct 7, 2026 · 6:04 PM CT  
+**Market:** LIVE MARKET DATA — all 56 games have verified market data from ESPN live (site.web.api.espn.com) + ESPN Core supplement.  
 **Dynamic advanced-feature live coverage:** 100%  
 **System health:** 84.1/100 *(readiness, not predicted profitability)*
 
@@ -31,11 +31,10 @@
 - [Clean validation-entry ledger](live_graded_tiers_clean.csv)
 
 ## Fresh PNGs for mobile
-- [Fresh page 1 — cache-safe](cfb_model_2026_week6_run_20261007_175743_CT_page1.png)
-- [Fresh page 2 — cache-safe](cfb_model_2026_week6_run_20261007_175743_CT_page2.png)
-- [Fresh page 3 — cache-safe](cfb_model_2026_week6_run_20261007_175743_CT_page3.png)
-- [Fresh page 4 — cache-safe](cfb_model_2026_week6_run_20261007_175743_CT_page4.png)
-- [Fresh page 5 — cache-safe](cfb_model_2026_week6_run_20261007_175743_CT_page5.png)
+- [Fresh page 1 — cache-safe](cfb_model_2026_week6_run_20261007_180432_CT_page1.png)
+- [Fresh page 2 — cache-safe](cfb_model_2026_week6_run_20261007_180432_CT_page2.png)
+- [Fresh page 3 — cache-safe](cfb_model_2026_week6_run_20261007_180432_CT_page3.png)
+- [Fresh page 4 — cache-safe](cfb_model_2026_week6_run_20261007_180432_CT_page4.png)
 
 These filenames change on every run so GitHub mobile cannot reuse an old image preview.
 
@@ -44,7 +43,6 @@ These filenames change on every run so GitHub mobile cannot reuse an old image p
 - [Stable page 2](cfb_model_2026_week6_page2.png)
 - [Stable page 3](cfb_model_2026_week6_page3.png)
 - [Stable page 4](cfb_model_2026_week6_page4.png)
-- [Stable page 5](cfb_model_2026_week6_page5.png)
 
 The Cooper-style table is the reconstructed presentation layer. The Quant card is the independent EV/risk layer. Missing verified markets display **NO LINE**. Run the separate **CFB Backtest** workflow before treating signals as historically established.
 
