@@ -61,7 +61,7 @@ jobs:
           import glob,json,os
           files=glob.glob("outputs/cfb_model_*_metadata.json")
           if not files: print("## CFB model\nNo metadata file was produced."); raise SystemExit(0)
-          m=json.load(open(max(files,key=os.path.getmtime))); mon=m.get("live_monitoring",{}); port=m.get("portfolio",{}); gate=m.get("release_gate",{}); dq=m.get("data_quality",{}); c=m["market_coverage"]; a=m.get("advanced_features",{}); x=m.get("current_context",{}); mi=m.get("market_intelligence",{}); mm=m.get("metrics",{}); tv=m.get("tier_validation",{})
+          m=json.load(open(max(files,key=os.path.getmtime))); mon=m.get("live_monitoring",{}); port=m.get("portfolio",{}); gate=m.get("release_gate",{}); dq=m.get("data_quality",{}); c=m["market_coverage"]; a=m.get("advanced_features",{}); x=m.get("current_context",{}); mi=m.get("market_intelligence",{}); mm=m.get("metrics",{}); tv=m.get("tier_validation",{}); ef=m.get("edge_forward_validation",{})
           audit=json.load(open("outputs/audit_snapshot.json")) if os.path.exists("outputs/audit_snapshot.json") else {}; pub=json.load(open("outputs/publication_validation.json")) if os.path.exists("outputs/publication_validation.json") else {}
           print(f"## Harbin CFB Platform v7.3 — {m['season']} Week {m['week']}")
           print(f"- Publication: **{audit.get('status','UNKNOWN')}** · Reconciliation: **{pub.get('status','UNKNOWN')}** · Release state: **{gate.get('release_state','UNKNOWN')}**")
@@ -72,6 +72,7 @@ jobs:
           print(f"- Weather: **{x.get('weather_coverage',0):.1%}** · Multi-book: **{mi.get('multi_book_coverage',0):.1%}** · The Odds API configured: **{mi.get('odds_api_configured',False)}**")
           print(f"- Live readiness: **{mon.get('live_readiness_score','n/a')}/100** · Distribution stability: **{mon.get('scores',{}).get('distribution_stability','n/a')}/100**")
           print(f"- Tier validation: **{tv.get('status','EARLY_SAMPLE')}** · Posted flat-1u decisions: **{tv.get('graded_tier_bets',0)}** · Clean eligible: **{tv.get('validation_eligible_bets',0)}** · Validated cells: **{tv.get('validated_cells',0)}**")
+          print(f"- Forward edge evidence: **{ef.get('status','PENDING_FORWARD')}** · Observed: **{ef.get('observed_rows',0)}** · Clean entries: **{ef.get('clean_entries',0)}** · Graded: **{ef.get('graded_bets',0)}** · ROI: **{ef.get('roi')}** · CLV: **{ef.get('avg_execution_clv')}**")
           if gate.get('blockers'):
               print("- Production blockers: " + "; ".join(gate['blockers'][:4]))
           PY
@@ -105,6 +106,12 @@ jobs:
             docs/tier_validation_clean.csv
             docs/live_graded_tiers.csv
             docs/live_graded_tiers_clean.csv
+            reports/edge_forward_performance.json
+            reports/edge_forward_graded.csv
+            outputs/edge_forward_performance.json
+            outputs/edge_forward_graded.csv
+            docs/edge_forward_performance.json
+            docs/edge_forward_graded.csv
           )
           for f in "${GRADE_OWNED[@]}"; do
             if git ls-files --error-unmatch "$f" >/dev/null 2>&1; then
