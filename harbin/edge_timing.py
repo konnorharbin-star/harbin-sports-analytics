@@ -72,6 +72,72 @@ def _observations(history, as_of):
     )
 
 
+
+def _captured_book_observations(market_path, candidates, as_of):
+    """Convert captured per-book spread quotes into comparable observations.
+
+    'captured_at' is an observation timestamp, NOT a sportsbook publication time.
+    Unpriced, book-ambiguous and post-kickoff observations are discarded.
+    """
+    path = Path(market_path)
+    if not path.exists() or not path.stat().st_size or candidates.empty:
+        return pd.DataFrame()
+    try:
+        raw = pd.read_csv(path, low_memory=False, usecols=lambda c: c in {
+            "captured_at", "game_id", "kickoff", "home_team", "away_team", "market_quotes_json"
+        })
+    except (ValueError, pd.errors.ParserError):
+        return pd.DataFrame()
+    if raw.empty or "market_quotes_json" not in raw:
+        return pd.DataFrame()
+    wanted = {}
+    for _, r in candidates.iterrows():
+        if str(r.get("market")) != "spread":
+            continue
+        key = str(r.get("game_id"))
+        wanted.setdefault(key, set()).add((str(r.get("side")), str(r.get("book"))))
+    if not wanted:
+        return pd.DataFrame()
+    raw = raw[raw["game_id"].astype(str).isin(wanted)].copy()
+    rows = []
+    for _, r in raw.iterrows():
+        stamp, kickoff = _ts(r.get("captured_at")), _ts(r.get("kickoff"))
+        if pd.isna(stamp) or pd.isna(kickoff) or not stamp < kickoff or stamp > as_of:
+            continue
+        try:
+            quotes = json.loads(r.get("market_quotes_json") or "[]")
+        except (ValueError, TypeError):
+            continue
+        if not isinstance(quotes, list):
+            continue
+        game_id = str(r.get("game_id"))
+        for q in quotes:
+            if not isinstance(q, dict):
+                continue
+            book = str(q.get("provider") or "")
+            if not book:
+                continue
+            for side, side_book in wanted.get(game_id, ()):
+                if side_book != book:
+                    continue
+                if side == str(r.get("home_team")):
+                    line, odds = _num(q.get("home_spread")), _num(q.get("home_spread_price"))
+                elif side == str(r.get("away_team")):
+                    spread = _num(q.get("home_spread"))
+                    line = -spread if math.isfinite(spread) else np.nan
+                    odds = _num(q.get("away_spread_price"))
+                else:
+                    continue
+                if not math.isfinite(line) or not math.isfinite(odds) or odds == 0:
+                    continue
+                rows.append({
+                    "game_id": game_id, "market": "spread", "side": side,
+                    "book": book, "line": line, "odds": odds, "date": kickoff.isoformat(),
+                    "snapshot_at": stamp.isoformat(), "quote_at": stamp.isoformat(),
+                    "_source_name": "captured_market_quote",
+                })
+    return pd.DataFrame(rows)
+
 def _status(row, history, as_of):
     priority = str(row.get("edge_priority") or "")
     cutoff = _ts(row.get("date"))
@@ -90,6 +156,7 @@ def _status(row, history, as_of):
         "timing_last_observed_at": None,
         "timing_quote_age_minutes": np.nan,
         "timing_status": "RESEARCH_ONLY",
+        "timing_evidence_source": None,
     }
     if priority not in {"ROBUST_CORE", "CORE"}:
         result.update(timing_action="PASS", timing_reason="NOT_PRIORITY_CORE")
@@ -128,6 +195,7 @@ def _status(row, history, as_of):
     result["timing_previous_line"] = float(prev["line"])
     result["timing_previous_odds"] = float(prev["odds"])
     result["timing_last_observed_at"] = prev["_seen"].isoformat()
+    result["timing_evidence_source"] = prev.get("_source_name", "candidate_quote")
     line_move = line - float(prev["line"])  # selected-side spread: higher is better
     price_move = (_implied(price) - _implied(prev["odds"])) * 100
     result["timing_line_move_pts"] = round(line_move, 3)
@@ -143,7 +211,7 @@ def _status(row, history, as_of):
     return result
 
 
-def enrich_edge_timing(frame, history_path="history/edge_candidate_snapshots.csv", as_of=None):
+def enrich_edge_timing(frame, history_path="history/edge_candidate_snapshots.csv", as_of=None, market_history_path=None):
     """Annotate existing ranked edges. No alteration to priority, EV, or stake."""
     if frame is None:
         return pd.DataFrame()
@@ -161,6 +229,14 @@ def enrich_edge_timing(frame, history_path="history/edge_candidate_snapshots.csv
     except (ValueError, pd.errors.ParserError):
         raw = pd.DataFrame()
     history = _observations(raw, as_of)
+    if not history.empty:
+        history["_source_name"] = "candidate_quote"
+    if market_history_path is not None:
+        captured = _captured_book_observations(market_history_path, out, as_of)
+        if not captured.empty:
+            captured = _observations(captured, as_of)
+            captured["_source_name"] = "captured_market_quote"
+            history = pd.concat([history, captured], ignore_index=True, sort=False)
     details = pd.DataFrame([_status(row, history, as_of) for _, row in out.iterrows()], index=out.index)
     for col in details.columns:
         out[col] = details[col]
