@@ -5,6 +5,7 @@ import numpy as np
 
 from .execution_market import install_execution_timestamp_patch
 from .edge_regimes import effective_edge_status, match_edge_regime, match_edge_subgroup
+from .edge_price import price_evidence
 from .market import roi
 from .policy import signal_from_policy, load_policy, DEFAULT_POLICY, market_allowed
 
