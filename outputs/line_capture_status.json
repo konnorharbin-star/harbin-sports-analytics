@@ -1,5 +1,5 @@
 {
-  "captured_at": "2026-10-07T00:43:15.173524+00:00",
+  "captured_at": "2026-10-07T07:14:37.216020+00:00",
   "season": 2026,
   "week": 6,
   "games": 58,
@@ -8,6 +8,7 @@
   "market_intelligence": {
     "coverage": 1.0,
     "multi_book_coverage": 0.9827586206896551,
+    "market_integrity_filter": "robust consensus cluster; executable-price line shopping",
     "odds_api_configured": false,
     "odds_api_used": false,
     "action_network_enabled": true,
@@ -25,10 +26,22 @@
     "best_line_provenance_fields": [
       "best_home_ml_book",
       "best_away_ml_book",
+      "best_home_ml_quote_at",
+      "best_away_ml_quote_at",
+      "best_home_ml_quote_time_source",
+      "best_away_ml_quote_time_source",
       "best_home_spread_book",
       "best_away_spread_book",
+      "best_home_spread_quote_at",
+      "best_away_spread_quote_at",
+      "best_home_spread_quote_time_source",
+      "best_away_spread_quote_time_source",
       "best_over_book",
-      "best_under_book"
+      "best_under_book",
+      "best_over_quote_at",
+      "best_under_quote_at",
+      "best_over_quote_time_source",
+      "best_under_quote_time_source"
     ]
   },
   "errors": []
