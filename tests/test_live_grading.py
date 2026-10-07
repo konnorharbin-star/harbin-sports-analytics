@@ -70,3 +70,27 @@ def test_display_market_entry_normalizes_each_published_market():
     assert total["tier"] == "LEAN"
     assert total["quant_side"] == "U"
     assert total["quant_price"] == 52.5
+
+
+def test_display_market_entry_requires_real_book_and_quote_timestamp():
+    missing = pd.Series(
+        {
+            "home_team": "Home",
+            "away_team": "Away",
+            "calibrated_home_probability": 0.60,
+            "snapshot_at": "2026-10-06T18:00:00Z",
+            "ml_badge": "STRONG",
+            "ml_team": "Home",
+            "ml_odds": 120,
+            "ml_edge_pp": 14.5,
+            "ml_est_roi": 0.32,
+            "ml_book": float("nan"),
+            "ml_quote_at": float("nan"),
+        }
+    )
+    verified = missing.copy()
+    verified["ml_book"] = "Book A"
+    verified["ml_quote_at"] = "2026-10-06T17:59:00Z"
+
+    assert _display_market_entry(missing, "moneyline")["price_verified"] is False
+    assert _display_market_entry(verified, "moneyline")["price_verified"] is True
