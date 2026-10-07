@@ -178,3 +178,50 @@ def test_clean_validation_excludes_inconsistent_or_unverified_rows():
     assert report["inconsistent_badge_rows"] == 1
     assert report["clean_by_market_tier"]["spread"]["BET"]["graded_bets"] == 1
     assert report["clean_by_market_tier"]["spread"]["STRONG"]["graded_bets"] == 0
+
+
+def test_explicit_clean_frame_can_start_after_legacy_posted_entry():
+    posted = pd.DataFrame(
+        [
+            {
+                "market": "moneyline",
+                "tier": "STRONG",
+                "result": -1,
+                "flat_profit": -1.0,
+                "execution_odds": 120,
+                "model_probability": 0.60,
+                "model_edge": 14.5,
+                "model_ev": 0.32,
+                "execution_clv": -0.02,
+                "tier_consistent": True,
+                "price_verified": False,
+                "validation_eligible": False,
+            }
+        ]
+    )
+    clean = pd.DataFrame(
+        [
+            {
+                "market": "moneyline",
+                "tier": "STRONG",
+                "result": -1,
+                "flat_profit": -1.0,
+                "execution_odds": 125,
+                "model_probability": 0.60,
+                "model_edge": 15.6,
+                "model_ev": 0.35,
+                "execution_clv": -0.01,
+                "tier_consistent": True,
+                "price_verified": True,
+                "validation_eligible": True,
+            }
+        ]
+    )
+
+    report = build_tier_performance(posted, clean_frame=clean)
+
+    assert report["graded_tier_bets"] == 1
+    assert report["validation_eligible_bets"] == 1
+    assert report["excluded_from_validation"] == 0
+    assert report["by_market_tier"]["moneyline"]["STRONG"]["graded_bets"] == 1
+    assert report["clean_by_market_tier"]["moneyline"]["STRONG"]["graded_bets"] == 1
