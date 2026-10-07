@@ -364,15 +364,20 @@ def _one_summary(frame):
     if not n:
         return {"decisions": 0, "primary_observed": 0, "conclusive": 0,
                 "correct": 0, "accuracy": None, "accuracy_wilson_95": None,
-                "near_kickoff_observed": 0}
+                "near_kickoff_observed": 0, "near_kickoff_conclusive": 0,
+                "near_kickoff_correct": 0, "near_kickoff_accuracy": None}
     primary = frame[frame["primary_status"].eq("OBSERVED")]
     scored = primary[primary["primary_movement"].isin(["BETTER", "WORSE"])]
-    right = sum(v is True or v == True for v in scored["primary_action_correct"])
+    right = sum(bool(v) for v in scored["primary_action_correct"])
     accuracy = right / len(scored) if len(scored) else None
+    near = frame[frame["near_kickoff_status"].eq("OBSERVED")]
+    near_scored = near[near["near_kickoff_movement"].isin(["BETTER", "WORSE"])]
+    near_correct = sum(bool(v) for v in near_scored["near_kickoff_action_correct"])
     return {
         "decisions": n,
         "distinct_games": int(frame["game_id"].nunique()),
         "primary_observed": len(primary),
+        "primary_quote_coverage": len(primary) / n,
         "conclusive": len(scored),
         "correct": int(right),
         "incorrect": int(len(scored) - right),
@@ -383,7 +388,12 @@ def _one_summary(frame):
         "primary_pending": int(frame["primary_status"].eq("PENDING_HORIZON").sum()),
         "primary_missing": int(frame["primary_status"].eq("NO_HORIZON_QUOTE").sum()),
         "primary_insufficient_window": int(frame["primary_status"].eq("INSUFFICIENT_PREGAME_WINDOW").sum()),
-        "near_kickoff_observed": int(frame["near_kickoff_status"].eq("OBSERVED").sum()),
+        "near_kickoff_observed": len(near),
+        "near_kickoff_conclusive": len(near_scored),
+        "near_kickoff_correct": int(near_correct),
+        "near_kickoff_accuracy": near_correct / len(near_scored) if len(near_scored) else None,
+        "near_kickoff_accuracy_wilson_95": _wilson(near_correct, len(near_scored)),
+        "near_kickoff_mixed": int(near["near_kickoff_movement"].eq("MIXED_LINE_PRICE").sum()),
         "near_kickoff_missing": int(frame["near_kickoff_status"].eq("NO_FINAL_HOUR_QUOTE").sum()),
     }
 
