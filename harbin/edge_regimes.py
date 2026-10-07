@@ -14,6 +14,8 @@ EDGE_BINS = (0.0, 2.0, 3.0, 4.0, 5.0, 6.0, 8.0, 10.0, 15.0, 999.0)
 PERSISTENT_MIN_BETS = 180
 PERSISTENT_MIN_SEASON_BETS = 50
 WATCH_MIN_BETS = 100
+SUBGROUP_MIN_BETS = 45
+SUBGROUP_MIN_SEASON_BETS = 12
 
 
 def _finite(v):
@@ -105,6 +107,99 @@ def _status(overall, seasons):
     return "WATCH" if watch else "UNSUPPORTED"
 
 
+def _subgroup_status(overall, seasons):
+    """Classify broad spread role/location children of a persistent parent band."""
+
+    season_rows = list(seasons.values())
+    season_count = len(season_rows)
+    profitable = sum(
+        row.get("roi") is not None and float(row["roi"]) > 0
+        for row in season_rows
+    )
+    min_season_bets = min(
+        (int(row.get("bets", 0)) for row in season_rows),
+        default=0,
+    )
+    bets = int(overall.get("bets", 0))
+    roi_value = overall.get("roi")
+    avg_clv = overall.get("avg_clv")
+    enough = (
+        bets >= SUBGROUP_MIN_BETS
+        and season_count >= 3
+        and min_season_bets >= SUBGROUP_MIN_SEASON_BETS
+    )
+    if (
+        enough
+        and profitable == season_count
+        and roi_value is not None
+        and float(roi_value) >= 0.05
+        and avg_clv is not None
+        and float(avg_clv) > 0
+    ):
+        return "SUPPORTED_SUBGROUP"
+    if (
+        enough
+        and profitable == 0
+        and roi_value is not None
+        and float(roi_value) <= -0.03
+    ):
+        return "CONTRAINDICATED_SUBGROUP"
+    return "INCONCLUSIVE_SUBGROUP"
+
+
+def _spread_subgroups(segment):
+    if segment.empty or not {"market_role", "side_location"}.issubset(segment.columns):
+        return {}
+    data = segment.copy()
+    data["market_role"] = data["market_role"].fillna("").astype(str).str.lower()
+    data["side_location"] = data["side_location"].fillna("").astype(str).str.lower()
+    data = data[
+        data["market_role"].isin({"favorite", "underdog", "pickem"})
+        & data["side_location"].isin({"home", "away"})
+    ]
+    out = {}
+    for (role, location), rows in data.groupby(["market_role", "side_location"]):
+        overall = _segment_stats(rows)
+        by_season = {}
+        if "season" in rows.columns:
+            for season, season_rows in rows.groupby("season"):
+                by_season[str(int(float(season)))] = _segment_stats(season_rows)
+        profitable = sum(
+            row.get("roi") is not None and float(row["roi"]) > 0
+            for row in by_season.values()
+        )
+        key = f"{role}|{location}"
+        out[key] = {
+            "key": key,
+            "market_role": role,
+            "side_location": location,
+            "status": _subgroup_status(overall, by_season),
+            **overall,
+            "season_count": int(len(by_season)),
+            "profitable_seasons": int(profitable),
+            "min_season_bets": min(
+                (int(row.get("bets", 0)) for row in by_season.values()),
+                default=0,
+            ),
+            "by_season": by_season,
+        }
+    return out
+
+
+def _candidate_subgroup_key(market, side, line, home_team, away_team):
+    if str(market or "").lower() != "spread" or not _finite(line):
+        return None
+    side = str(side or "")
+    home = str(home_team or "")
+    away = str(away_team or "")
+    location = "home" if side == home else "away" if side == away else None
+    if location is None:
+        return None
+    line_value = float(line)
+    role = "favorite" if line_value < 0 else "underdog" if line_value > 0 else "pickem"
+    return f"{role}|{location}"
+
+
 def build_edge_regime_report(bets):
     """Find historically persistent model-market disagreement regimes.
 
@@ -117,7 +212,7 @@ def build_edge_regime_report(bets):
     data = bets.copy() if isinstance(bets, pd.DataFrame) else pd.DataFrame(bets)
     if data.empty:
         return {
-            "schema_version": 1,
+            "schema_version": 2,
             "status": "NO_SAMPLE",
             "regimes": [],
             "persistent_regimes": 0,
@@ -166,6 +261,7 @@ def build_edge_regime_report(bets):
                         default=0,
                     ),
                     "by_season": by_season,
+                    "subgroups": _spread_subgroups(segment) if market == "spread" else {},
                 }
             )
 
@@ -195,8 +291,13 @@ def _methodology():
         "PERSISTENT_CANDIDATE requires >=180 bets, >=3 seasons, >=50 bets in every "
         "season, positive ROI in every season, >=3% aggregate ROI, and positive "
         "average CLV. WATCH requires >=100 bets, positive aggregate ROI, and profit "
-        "in at least two-thirds of seasons. Regime evidence can prioritize research "
-        "and surface candidates but cannot create an edge or modify the fair line."
+        "in at least two-thirds of seasons. Spread parent regimes are decomposed into "
+        "favorite/underdog × home/away children. A child is SUPPORTED_SUBGROUP with "
+        ">=45 bets, >=12 bets per season across >=3 seasons, profit in every season, "
+        ">=5% aggregate ROI, and positive average CLV; it is CONTRAINDICATED_SUBGROUP "
+        "with the same sample floor, losses in every season, and <=-3% aggregate ROI. "
+        "Regime evidence can prioritize research and surface candidates but cannot "
+        "create an edge, modify the fair line, probability, EV, or inflate stake."
     )
 
 
@@ -243,9 +344,45 @@ def match_edge_regime(report, market, edge):
     return None
 
 
+def match_edge_subgroup(report, market, edge, side, line, home_team, away_team):
+    regime = match_edge_regime(report, market, edge)
+    if not regime:
+        return None
+    key = _candidate_subgroup_key(market, side, line, home_team, away_team)
+    if key is None:
+        return None
+    subgroup = (regime.get("subgroups") or {}).get(key)
+    if subgroup:
+        return subgroup
+    return {
+        "key": key,
+        "market_role": key.split("|", 1)[0],
+        "side_location": key.split("|", 1)[1],
+        "status": "INCONCLUSIVE_SUBGROUP",
+        "bets": 0,
+        "roi": None,
+        "season_count": 0,
+        "profitable_seasons": 0,
+        "min_season_bets": 0,
+    }
+
+
+def effective_edge_status(regime, subgroup=None):
+    parent = (regime or {}).get("status", "UNSUPPORTED")
+    if parent != "PERSISTENT_CANDIDATE":
+        return parent
+    child = (subgroup or {}).get("status")
+    if child == "CONTRAINDICATED_SUBGROUP":
+        return "CONTRAINDICATED_SUBGROUP"
+    if child == "SUPPORTED_SUBGROUP":
+        return "SUPPORTED_SUBGROUP"
+    return "PERSISTENT_PARENT_ONLY"
+
+
 def annotate_selected_regimes(frame, report):
     out = frame.copy()
     fields = {
+        "edge_regime_parent_status": "UNSUPPORTED",
         "edge_regime_status": "UNSUPPORTED",
         "edge_regime_band": "",
         "edge_regime_bets": 0,
@@ -253,6 +390,12 @@ def annotate_selected_regimes(frame, report):
         "edge_regime_profitable_seasons": 0,
         "edge_regime_season_count": 0,
         "edge_regime_candidate": False,
+        "edge_subgroup_key": "",
+        "edge_subgroup_status": "INCONCLUSIVE_SUBGROUP",
+        "edge_subgroup_bets": 0,
+        "edge_subgroup_roi": np.nan,
+        "edge_subgroup_profitable_seasons": 0,
+        "edge_subgroup_season_count": 0,
     }
     for key, default in fields.items():
         if key not in out.columns:
@@ -266,7 +409,18 @@ def annotate_selected_regimes(frame, report):
         )
         if not regime:
             continue
-        out.at[idx, "edge_regime_status"] = regime.get("status", "UNSUPPORTED")
+        subgroup = match_edge_subgroup(
+            report,
+            row.get("quant_market"),
+            row.get("quant_edge"),
+            row.get("quant_side"),
+            row.get("quant_price"),
+            row.get("home_team"),
+            row.get("away_team"),
+        )
+        effective = effective_edge_status(regime, subgroup)
+        out.at[idx, "edge_regime_parent_status"] = regime.get("status", "UNSUPPORTED")
+        out.at[idx, "edge_regime_status"] = effective
         out.at[idx, "edge_regime_band"] = regime.get("edge_band", "")
         out.at[idx, "edge_regime_bets"] = int(regime.get("bets", 0))
         out.at[idx, "edge_regime_roi"] = regime.get("roi")
@@ -274,11 +428,24 @@ def annotate_selected_regimes(frame, report):
             regime.get("profitable_seasons", 0)
         )
         out.at[idx, "edge_regime_season_count"] = int(regime.get("season_count", 0))
-        out.at[idx, "edge_regime_candidate"] = (
-            regime.get("status") == "PERSISTENT_CANDIDATE"
-        )
+        out.at[idx, "edge_regime_candidate"] = effective in {
+            "SUPPORTED_SUBGROUP",
+            "PERSISTENT_PARENT_ONLY",
+        }
+        if subgroup:
+            out.at[idx, "edge_subgroup_key"] = subgroup.get("key", "")
+            out.at[idx, "edge_subgroup_status"] = subgroup.get(
+                "status", "INCONCLUSIVE_SUBGROUP"
+            )
+            out.at[idx, "edge_subgroup_bets"] = int(subgroup.get("bets", 0) or 0)
+            out.at[idx, "edge_subgroup_roi"] = subgroup.get("roi")
+            out.at[idx, "edge_subgroup_profitable_seasons"] = int(
+                subgroup.get("profitable_seasons", 0) or 0
+            )
+            out.at[idx, "edge_subgroup_season_count"] = int(
+                subgroup.get("season_count", 0) or 0
+            )
     return out
-
 
 def _market_candidate(row, market):
     home = row.get("home_team")
@@ -344,8 +511,13 @@ def _market_candidate(row, market):
     }
 
 
-def current_edge_board(frame, report, statuses=None):
-    """Return all executable current market candidates in selected evidence regimes."""
+def current_edge_board(frame, report, statuses=None, include_contraindicated=False):
+    """Return executable current candidates in selected parent regimes.
+
+    Persistent parent bands are filtered through their broad role/location child
+    evidence. Contraindicated children are excluded by default so the supported-edge
+    board cannot present a repeatedly losing subtype as historically supported.
+    """
 
     statuses = set(statuses or {"PERSISTENT_CANDIDATE"})
     rows = []
@@ -357,6 +529,18 @@ def current_edge_board(frame, report, statuses=None):
             regime = match_edge_regime(report, market, candidate["edge"])
             if not regime or regime.get("status") not in statuses:
                 continue
+            subgroup = match_edge_subgroup(
+                report,
+                market,
+                candidate["edge"],
+                candidate["side"],
+                candidate["line"],
+                game.get("home_team"),
+                game.get("away_team"),
+            )
+            effective = effective_edge_status(regime, subgroup)
+            if effective == "CONTRAINDICATED_SUBGROUP" and not include_contraindicated:
+                continue
             rows.append(
                 {
                     "game_id": game.get("game_id"),
@@ -365,6 +549,7 @@ def current_edge_board(frame, report, statuses=None):
                     "home_team": game.get("home_team"),
                     **candidate,
                     "regime_status": regime.get("status"),
+                    "edge_reliability_status": effective,
                     "regime_band": regime.get("edge_band"),
                     "historical_bets": regime.get("bets"),
                     "historical_win_rate": regime.get("win_rate"),
@@ -372,6 +557,18 @@ def current_edge_board(frame, report, statuses=None):
                     "historical_avg_clv": regime.get("avg_clv"),
                     "profitable_seasons": regime.get("profitable_seasons"),
                     "season_count": regime.get("season_count"),
+                    "subgroup_key": (subgroup or {}).get("key", ""),
+                    "subgroup_status": (subgroup or {}).get(
+                        "status", "INCONCLUSIVE_SUBGROUP"
+                    ),
+                    "subgroup_bets": (subgroup or {}).get("bets", 0),
+                    "subgroup_win_rate": (subgroup or {}).get("win_rate"),
+                    "subgroup_roi": (subgroup or {}).get("roi"),
+                    "subgroup_avg_clv": (subgroup or {}).get("avg_clv"),
+                    "subgroup_profitable_seasons": (subgroup or {}).get(
+                        "profitable_seasons", 0
+                    ),
+                    "subgroup_season_count": (subgroup or {}).get("season_count", 0),
                     "currently_selected": (
                         str(game.get("quant_market") or "").lower() == market
                         and str(game.get("quant_side") or "") == str(candidate["side"])
@@ -382,8 +579,16 @@ def current_edge_board(frame, report, statuses=None):
             )
     out = pd.DataFrame(rows)
     if not out.empty:
+        rank = {
+            "SUPPORTED_SUBGROUP": 0,
+            "PERSISTENT_PARENT_ONLY": 1,
+            "WATCH": 2,
+            "CONTRAINDICATED_SUBGROUP": 9,
+        }
+        out["_reliability_rank"] = out["edge_reliability_status"].map(rank).fillna(5)
         out = out.sort_values(
-            ["regime_status", "historical_roi", "ev"],
+            ["_reliability_rank", "historical_roi", "ev"],
             ascending=[True, False, False],
-        ).reset_index(drop=True)
+        ).drop(columns=["_reliability_rank"]).reset_index(drop=True)
     return out
+

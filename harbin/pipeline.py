@@ -135,24 +135,38 @@ def _quantize(pred,bundle,adv_meta,ctx_meta,edge_report=None):
 
 def _edge_evidence_html(row):
     status=str(row.get("edge_regime_status") or "UNSUPPORTED")
-    if status=="PERSISTENT_CANDIDATE":
-        band=str(row.get("edge_regime_band") or "")
-        bets=int(float(row.get("edge_regime_bets") or 0))
-        roi_value=float(row.get("edge_regime_roi")) if _finite(row.get("edge_regime_roi")) else 0.0
-        profitable=int(float(row.get("edge_regime_profitable_seasons") or 0))
-        seasons=int(float(row.get("edge_regime_season_count") or 0))
-        override=bool(row.get("edge_selection_override")) and str(row.get("edge_selection_override")).lower() not in {"false","0","nan"}
-        note=" · selected over raw-EV alternative" if override else ""
+    band=str(row.get("edge_regime_band") or "")
+    override=bool(row.get("edge_selection_override")) and str(row.get("edge_selection_override")).lower() not in {"false","0","nan"}
+    note=" · selected over raw-EV alternative" if override else ""
+    if status=="SUPPORTED_SUBGROUP":
+        key=str(row.get("edge_subgroup_key") or "")
+        bets=int(float(row.get("edge_subgroup_bets") or 0))
+        roi_value=float(row.get("edge_subgroup_roi")) if _finite(row.get("edge_subgroup_roi")) else 0.0
+        profitable=int(float(row.get("edge_subgroup_profitable_seasons") or 0))
+        seasons=int(float(row.get("edge_subgroup_season_count") or 0))
         return (
-            f"<span class='edge supported'>SUPPORTED {band}</span>"
-            f"<div class='edge-sub'>{bets} hist bets · {roi_value:.1%} ROI · "
+            f"<span class='edge supported'>SUPPORTED {key}</span>"
+            f"<div class='edge-sub'>{band} parent · {bets} subgroup bets · {roi_value:.1%} ROI · "
             f"{profitable}/{seasons} profitable seasons{note}</div>"
         )
+    if status=="PERSISTENT_PARENT_ONLY":
+        bets=int(float(row.get("edge_regime_bets") or 0))
+        roi_value=float(row.get("edge_regime_roi")) if _finite(row.get("edge_regime_roi")) else 0.0
+        return (
+            f"<span class='edge parent'>PARENT {band}</span>"
+            f"<div class='edge-sub'>{bets} parent bets · {roi_value:.1%} ROI · child evidence inconclusive{note}</div>"
+        )
+    if status=="CONTRAINDICATED_SUBGROUP":
+        key=str(row.get("edge_subgroup_key") or "")
+        bets=int(float(row.get("edge_subgroup_bets") or 0))
+        roi_value=float(row.get("edge_subgroup_roi")) if _finite(row.get("edge_subgroup_roi")) else 0.0
+        return (
+            f"<span class='edge contra'>CONTRA {key}</span>"
+            f"<div class='edge-sub'>{bets} subgroup bets · {roi_value:.1%} ROI · parent regime not promoted</div>"
+        )
     if status=="WATCH":
-        band=str(row.get("edge_regime_band") or "")
         return f"<span class='edge watch'>WATCH {band}</span>"
     return "<span class='edge raw'>RAW MODEL</span>"
-
 
 def _write_quant_html(pred,path,updated):
     rank={"STRONG":0,"BET":1,"LEAN":2,"PASS":3}
@@ -180,7 +194,7 @@ def _write_quant_html(pred,path,updated):
         "body{background:#0f1113;color:#f2f2f2;font-family:Arial;margin:0;padding:24px}.wrap{max-width:1450px;margin:auto}"
         "p{color:#9da1a6}table{width:100%;border-collapse:collapse}th,td{padding:10px;border-bottom:1px solid #292c30;text-align:left}"
         "th{color:#888;font-size:11px}tr:nth-child(even){background:#17191c}.edge{display:inline-block;font-size:10px;font-weight:800;border-radius:4px;padding:4px 6px}"
-        ".supported{background:#5fc468;color:#0c2c12}.watch{background:#483b1e;color:#e3b549}.raw{background:#25282c;color:#8f9499}"
+        ".supported{background:#5fc468;color:#0c2c12}.parent{background:#235137;color:#b7f0c5}.contra{background:#5a2525;color:#ffb2b2}.watch{background:#483b1e;color:#e3b549}.raw{background:#25282c;color:#8f9499}"
         ".edge-sub{font-size:9px;color:#9da1a6;margin-top:4px;white-space:nowrap}</style></head><body><div class='wrap'>"
         f"<h1>HARBIN QUANT CARD</h1><p>Updated {updated}. Supported edges are historically persistent research candidates, not guaranteed profit. "
         "Archive backtest evidence prioritizes market selection; clean forward validation remains required before production use.</p>"
@@ -235,7 +249,7 @@ def _write_output_readme(out,base,meta,pages,run_tag):
         for i in range(1,pages+1)
     )
     h=meta.get("health",{}); ac=meta.get("advanced_features",{}).get("dynamic_coverage",meta.get("advanced_features",{}).get("live_coverage",0))
-    (out/"README.md").write_text(f"# Latest CFB model output\n\n**Model:** v{meta['model_version']}  \n**Season / Week:** {meta['season']} / {meta['week']}  \n**Updated:** {meta['updated_at_ct']}  \n**Market:** {meta['market_status']}  \n**Dynamic advanced-feature live coverage:** {ac:.0%}  \n**System health:** {h.get('system_health_score','—')}/100 *(readiness, not predicted profitability)*\n\n## Use these\n- [Interactive Cooper-style table]({base}.html)\n- [Quant card](quant_card.html)\n- [Supported edge board](edge_card.html)\n- [Quant recommendations CSV](quant_recommendations.csv)\n- [Persistent historical edge candidates](edge_candidates.csv)\n- [Edge-regime watchlist](edge_watchlist.csv)\n- [Edge-regime evidence](edge_regimes.json)\n- [Full model CSV]({base}.csv)\n- [Metadata / diagnostics]({base}_metadata.json)\n- [System health report](system_health.json)\n- [Market × tier forward validation](tier_performance.json)\n- [Posted market × tier matrix CSV](tier_performance.csv)\n- [Clean validation-eligible tier matrix](tier_validation_clean.csv)\n- [Posted flat-1u graded tier ledger](live_graded_tiers.csv)\n- [Clean validation-entry ledger](live_graded_tiers_clean.csv)\n\n## Fresh PNGs for mobile\n{pngs}\n\nThese filenames change on every run so GitHub mobile cannot reuse an old image preview.\n\n## Stable PNG names\n{stable_pngs}\n\nThe Cooper-style table is the reconstructed presentation layer. The Quant card is the independent EV/risk layer. Missing verified markets display **NO LINE**. Run the separate **CFB Backtest** workflow before treating signals as historically established.\n")
+    (out/"README.md").write_text(f"# Latest CFB model output\n\n**Model:** v{meta['model_version']}  \n**Season / Week:** {meta['season']} / {meta['week']}  \n**Updated:** {meta['updated_at_ct']}  \n**Market:** {meta['market_status']}  \n**Dynamic advanced-feature live coverage:** {ac:.0%}  \n**System health:** {h.get('system_health_score','—')}/100 *(readiness, not predicted profitability)*\n\n## Use these\n- [Interactive Cooper-style table]({base}.html)\n- [Quant card](quant_card.html)\n- [Supported edge board](edge_card.html)\n- [Quant recommendations CSV](quant_recommendations.csv)\n- [Persistent historical edge candidates](edge_candidates.csv)\n- [Edge-regime watchlist](edge_watchlist.csv)\n- [Historically contraindicated edge subgroups](edge_exclusions.csv)\n- [Edge-regime evidence](edge_regimes.json)\n- [Full model CSV]({base}.csv)\n- [Metadata / diagnostics]({base}_metadata.json)\n- [System health report](system_health.json)\n- [Market × tier forward validation](tier_performance.json)\n- [Posted market × tier matrix CSV](tier_performance.csv)\n- [Clean validation-eligible tier matrix](tier_validation_clean.csv)\n- [Posted flat-1u graded tier ledger](live_graded_tiers.csv)\n- [Clean validation-entry ledger](live_graded_tiers_clean.csv)\n\n## Fresh PNGs for mobile\n{pngs}\n\nThese filenames change on every run so GitHub mobile cannot reuse an old image preview.\n\n## Stable PNG names\n{stable_pngs}\n\nThe Cooper-style table is the reconstructed presentation layer. The Quant card is the independent EV/risk layer. Missing verified markets display **NO LINE**. Run the separate **CFB Backtest** workflow before treating signals as historically established.\n")
 
 
 def _pregame_games(games, now=None):
@@ -277,19 +291,20 @@ def run_week(season=None,week=None,history_start=None,root="."):
     if season is None or week is None:
         ds,dw=client.detect(); season=season or ds; week=week or dw
     now=datetime.now(timezone.utc)
-    history_start=history_start or max(2018,season-5); history=client.history(history_start,season,week); ratings=OpponentAdjustedRatings(); base_train=ratings.training_frame(history); advanced=AdvancedFeatureStore(history_start,season,cache_dir=root/"cache"/"advanced"); train_df,adv_train=advanced.enrich(base_train); bundle=train_models(train_df); raw_games=client.week(season,week); games,pregame_meta=_pregame_games(raw_games,now); base_frame=ratings.upcoming_frame(games); frame,adv_live=advanced.enrich(base_frame); pred=build_predictions(games,frame,bundle); intel=MarketIntelligence(); pred,intel_meta=intel.attach(games,pred); context=ContextStore(season,schedule_frame=client.season_frame(season),cache_dir=root/"cache"/"context"); pred,ctx=context.attach(pred); pred,line_meta=attach_line_movement(pred,hist); edge_report=load_or_build_edge_regime_report(reports); pred=_quantize(pred,bundle,adv_live,ctx,edge_report=edge_report); pred=annotate_selected_regimes(pred,edge_report); persistent_edges=current_edge_board(pred,edge_report,{"PERSISTENT_CANDIDATE"}); watch_edges=current_edge_board(pred,edge_report,{"WATCH"}); stamp=now.isoformat(); display=_display_time(now); base=f"cfb_model_{season}_week{week}"; run_tag=now.astimezone(ZoneInfo("America/Chicago")).strftime("%Y%m%d_%H%M%S_CT"); cov=_coverage(pred); status=_market_status(cov,client.odds_source)
-    meta={"model_version":MODEL_VERSION,"season":int(season),"week":int(week),"history_start":int(history_start),"historical_games":int(len(history)),"training_rows":int(len(train_df)),"upcoming_games":int(len(games)),"validation":bundle.get("validation"),"metrics":dict(bundle["metrics"]),"model_selection":{"margin_blend_weight":float(bundle["margin_weight"]),"total_blend_weight":float(bundle["total_weight"])},"calibrated_margin_sigma":float(bundle["margin_sigma"]),"calibrated_total_sigma":float(bundle["total_sigma"]),"generated_at":stamp,"updated_at_ct":display,"schedule_source":"sportsdataverse/cfbfastR-data","odds_source":client.odds_source,"odds_errors":client.odds_errors,"market_coverage":cov,"market_status":status,"advanced_features":{"train_coverage":adv_train.get("coverage",0),"live_coverage":adv_live.get("coverage",0),"dynamic_coverage":adv_live.get("dynamic_coverage",0),"feature_count":adv_live.get("feature_count",adv_train.get("feature_count",0)),"dynamic_feature_count":adv_live.get("dynamic_feature_count",adv_train.get("dynamic_feature_count",0)),"identity":adv_live.get("identity",adv_train.get("identity",{})),"sources":adv_live.get("sources",[]),"errors":list(dict.fromkeys((adv_train.get("errors") or [])+(adv_live.get("errors") or [])))},"market_intelligence":intel_meta,"pregame_filter":pregame_meta,"current_context":{"coverage":ctx.get("coverage",0),"weather_coverage":ctx.get("weather_coverage",0),"sources":ctx.get("sources",[]),"errors":ctx.get("errors",[]),"source_available":bool(ctx.get("sources"))},"line_history":line_meta,"edge_discovery":{"persistent_regimes":edge_report.get("persistent_regimes",0),"watch_regimes":edge_report.get("watch_regimes",0),"persistent_candidates":int(len(persistent_edges)),"watch_candidates":int(len(watch_edges)),"methodology":edge_report.get("methodology")},"quant_picks":{"strong":int((pred.get("quant_signal",pd.Series(dtype=str))=="STRONG").sum()),"bet":int((pred.get("quant_signal",pd.Series(dtype=str))=="BET").sum()),"lean":int((pred.get("quant_signal",pd.Series(dtype=str))=="LEAN").sum())}}
+    history_start=history_start or max(2018,season-5); history=client.history(history_start,season,week); ratings=OpponentAdjustedRatings(); base_train=ratings.training_frame(history); advanced=AdvancedFeatureStore(history_start,season,cache_dir=root/"cache"/"advanced"); train_df,adv_train=advanced.enrich(base_train); bundle=train_models(train_df); raw_games=client.week(season,week); games,pregame_meta=_pregame_games(raw_games,now); base_frame=ratings.upcoming_frame(games); frame,adv_live=advanced.enrich(base_frame); pred=build_predictions(games,frame,bundle); intel=MarketIntelligence(); pred,intel_meta=intel.attach(games,pred); context=ContextStore(season,schedule_frame=client.season_frame(season),cache_dir=root/"cache"/"context"); pred,ctx=context.attach(pred); pred,line_meta=attach_line_movement(pred,hist); edge_report=load_or_build_edge_regime_report(reports); pred=_quantize(pred,bundle,adv_live,ctx,edge_report=edge_report); pred=annotate_selected_regimes(pred,edge_report); persistent_edges=current_edge_board(pred,edge_report,{"PERSISTENT_CANDIDATE"}); parent_edges_all=current_edge_board(pred,edge_report,{"PERSISTENT_CANDIDATE"},include_contraindicated=True); excluded_edges=parent_edges_all[parent_edges_all.get("edge_reliability_status",pd.Series(index=parent_edges_all.index,dtype=str))=="CONTRAINDICATED_SUBGROUP"].copy() if not parent_edges_all.empty else pd.DataFrame(); watch_edges=current_edge_board(pred,edge_report,{"WATCH"}); stamp=now.isoformat(); display=_display_time(now); base=f"cfb_model_{season}_week{week}"; run_tag=now.astimezone(ZoneInfo("America/Chicago")).strftime("%Y%m%d_%H%M%S_CT"); cov=_coverage(pred); status=_market_status(cov,client.odds_source)
+    meta={"model_version":MODEL_VERSION,"season":int(season),"week":int(week),"history_start":int(history_start),"historical_games":int(len(history)),"training_rows":int(len(train_df)),"upcoming_games":int(len(games)),"validation":bundle.get("validation"),"metrics":dict(bundle["metrics"]),"model_selection":{"margin_blend_weight":float(bundle["margin_weight"]),"total_blend_weight":float(bundle["total_weight"])},"calibrated_margin_sigma":float(bundle["margin_sigma"]),"calibrated_total_sigma":float(bundle["total_sigma"]),"generated_at":stamp,"updated_at_ct":display,"schedule_source":"sportsdataverse/cfbfastR-data","odds_source":client.odds_source,"odds_errors":client.odds_errors,"market_coverage":cov,"market_status":status,"advanced_features":{"train_coverage":adv_train.get("coverage",0),"live_coverage":adv_live.get("coverage",0),"dynamic_coverage":adv_live.get("dynamic_coverage",0),"feature_count":adv_live.get("feature_count",adv_train.get("feature_count",0)),"dynamic_feature_count":adv_live.get("dynamic_feature_count",adv_train.get("dynamic_feature_count",0)),"identity":adv_live.get("identity",adv_train.get("identity",{})),"sources":adv_live.get("sources",[]),"errors":list(dict.fromkeys((adv_train.get("errors") or [])+(adv_live.get("errors") or [])))},"market_intelligence":intel_meta,"pregame_filter":pregame_meta,"current_context":{"coverage":ctx.get("coverage",0),"weather_coverage":ctx.get("weather_coverage",0),"sources":ctx.get("sources",[]),"errors":ctx.get("errors",[]),"source_available":bool(ctx.get("sources"))},"line_history":line_meta,"edge_discovery":{"persistent_regimes":edge_report.get("persistent_regimes",0),"watch_regimes":edge_report.get("watch_regimes",0),"persistent_candidates":int(len(persistent_edges)),"supported_subgroup_candidates":int((persistent_edges.get("edge_reliability_status",pd.Series(index=persistent_edges.index,dtype=str))=="SUPPORTED_SUBGROUP").sum()) if not persistent_edges.empty else 0,"parent_only_candidates":int((persistent_edges.get("edge_reliability_status",pd.Series(index=persistent_edges.index,dtype=str))=="PERSISTENT_PARENT_ONLY").sum()) if not persistent_edges.empty else 0,"contraindicated_candidates":int(len(excluded_edges)),"watch_candidates":int(len(watch_edges)),"methodology":edge_report.get("methodology")},"quant_picks":{"strong":int((pred.get("quant_signal",pd.Series(dtype=str))=="STRONG").sum()),"bet":int((pred.get("quant_signal",pd.Series(dtype=str))=="BET").sum()),"lean":int((pred.get("quant_signal",pd.Series(dtype=str))=="LEAN").sum())}}
     pred.to_csv(out/f"{base}.csv",index=False); (out/f"{base}.json").write_text(pred.to_json(orient="records",indent=2))
     (out/"edge_regimes.json").write_text(json.dumps(edge_report,indent=2)); (docs/"edge_regimes.json").write_text(json.dumps(edge_report,indent=2))
     persistent_edges.to_csv(out/"edge_candidates.csv",index=False); persistent_edges.to_csv(docs/"edge_candidates.csv",index=False)
     _write_edge_html(persistent_edges,out/"edge_card.html",display); _write_edge_html(persistent_edges,docs/"edge.html",display)
-    watch_edges.to_csv(out/"edge_watchlist.csv",index=False); watch_edges.to_csv(docs/"edge_watchlist.csv",index=False)
-    qcols=[c for c in ["game_id","date","away_team","home_team","model_margin_home","model_total","quant_signal","quant_market","quant_side","quant_price","quant_odds","quant_probability","quant_ev","quant_edge","selection_basis","edge_selection_override","raw_ev_best_market","raw_ev_best_side","raw_ev_best_ev","edge_regime_status","edge_regime_band","edge_regime_bets","edge_regime_roi","edge_regime_profitable_seasons","edge_regime_season_count","edge_regime_candidate","stake_units","risk_multiplier","data_quality_score","context_risk","market_book_count","policy_block_reason"] if c in pred.columns]
+    watch_edges.to_csv(out/"edge_watchlist.csv",index=False); watch_edges.to_csv(docs/"edge_watchlist.csv",index=False); excluded_edges.to_csv(out/"edge_exclusions.csv",index=False); excluded_edges.to_csv(docs/"edge_exclusions.csv",index=False)
+    qcols=[c for c in ["game_id","date","away_team","home_team","model_margin_home","model_total","quant_signal","quant_market","quant_side","quant_price","quant_odds","quant_probability","quant_ev","quant_edge","selection_basis","edge_selection_override","raw_ev_best_market","raw_ev_best_side","raw_ev_best_ev","edge_regime_parent_status","edge_regime_status","edge_regime_band","edge_regime_bets","edge_regime_roi","edge_regime_profitable_seasons","edge_regime_season_count","edge_regime_candidate","edge_subgroup_key","edge_subgroup_status","edge_subgroup_bets","edge_subgroup_roi","edge_subgroup_profitable_seasons","edge_subgroup_season_count","stake_units","risk_multiplier","data_quality_score","context_risk","market_book_count","policy_block_reason"] if c in pred.columns]
     q=pred[qcols].copy() if qcols else pd.DataFrame()
     if "quant_signal" in q.columns:
         q=q[q.quant_signal!="PASS"].copy()
-        if "edge_regime_candidate" in q.columns:
-            q["_edge_rank"]=q["edge_regime_candidate"].fillna(False).astype(bool).astype(int)
+        if "edge_regime_status" in q.columns:
+            rank={"SUPPORTED_SUBGROUP":2,"PERSISTENT_PARENT_ONLY":1}
+            q["_edge_rank"]=q["edge_regime_status"].map(rank).fillna(0)
             q=q.sort_values(["_edge_rank","quant_ev"],ascending=[False,False]).drop(columns=["_edge_rank"])
         else:
             q=q.sort_values("quant_ev",ascending=False)

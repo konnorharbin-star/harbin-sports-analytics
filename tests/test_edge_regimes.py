@@ -7,7 +7,9 @@ from harbin.edge_regimes import (
     annotate_selected_regimes,
     build_edge_regime_report,
     current_edge_board,
+    effective_edge_status,
     match_edge_regime,
+    match_edge_subgroup,
 )
 
 
@@ -27,6 +29,22 @@ def _rows(market, edge, season, bets, wins, clv=0.02):
             }
         )
     return rows
+
+
+def _role_rows(edge, season, bets, wins, role, location, clv=0.02):
+    rows = _rows("spread", edge, season, bets, wins, clv=clv)
+    for row in rows:
+        row["market_role"] = role
+        row["side_location"] = location
+    return rows
+
+
+def _subgroup_report():
+    rows = []
+    for season in (2023, 2024, 2025):
+        rows += _role_rows(6.5, season, 30, 21, "favorite", "home", clv=0.04)
+        rows += _role_rows(6.5, season, 30, 13, "underdog", "home", clv=0.02)
+    return build_edge_regime_report(pd.DataFrame(rows))
 
 
 def test_persistent_regime_requires_cross_season_profitability():
@@ -105,7 +123,7 @@ def test_selected_pick_annotation_carries_regime_evidence():
     )
     out = annotate_selected_regimes(frame, report)
 
-    assert out.iloc[0]["edge_regime_status"] == "PERSISTENT_CANDIDATE"
+    assert out.iloc[0]["edge_regime_status"] == "PERSISTENT_PARENT_ONLY"
     assert bool(out.iloc[0]["edge_regime_candidate"]) is True
     assert out.iloc[0]["edge_regime_profitable_seasons"] == 3
 
@@ -157,10 +175,10 @@ def test_persistent_regime_outranks_higher_raw_ev_unsupported_market(tmp_path):
     assert raw["quant_ev"] > supported["quant_ev"]
     assert supported["quant_market"] == "spread"
     assert supported["quant_side"] == "South Florida"
-    assert supported["selection_basis"] == "persistent_edge_regime"
+    assert supported["selection_basis"] == "persistent_parent_regime"
     assert supported["edge_selection_override"] is True
     assert supported["raw_ev_best_market"] == "moneyline"
-    assert supported["edge_regime_status"] == "PERSISTENT_CANDIDATE"
+    assert supported["edge_regime_status"] == "PERSISTENT_PARENT_ONLY"
     assert supported["edge_regime_band"] == "6-8"
     assert supported["edge_regime_profitable_seasons"] == 3
 
@@ -206,26 +224,167 @@ def test_persistent_selection_does_not_inflate_probability_ev_or_stake(tmp_path)
     assert supported["stake_units"] == raw["stake_units"]
 
 
-def test_supported_edge_label_is_explicit_about_persistent_regime():
+def test_supported_edge_label_is_explicit_about_subgroup_evidence():
     row = pd.Series(
         {
-            "edge_regime_status": "PERSISTENT_CANDIDATE",
+            "edge_regime_status": "SUPPORTED_SUBGROUP",
             "edge_regime_band": "6-8",
-            "edge_regime_bets": 231,
-            "edge_regime_roi": 0.1617,
-            "edge_regime_profitable_seasons": 3,
-            "edge_regime_season_count": 3,
+            "edge_subgroup_key": "favorite|home",
+            "edge_subgroup_bets": 59,
+            "edge_subgroup_roi": 0.408,
+            "edge_subgroup_profitable_seasons": 3,
+            "edge_subgroup_season_count": 3,
             "edge_selection_override": True,
         }
     )
 
     html = _edge_evidence_html(row)
 
-    assert "SUPPORTED 6-8" in html
-    assert "231 hist bets" in html
-    assert "16.2% ROI" in html
+    assert "SUPPORTED favorite|home" in html
+    assert "6-8 parent" in html
+    assert "59 subgroup bets" in html
+    assert "40.8% ROI" in html
     assert "3/3 profitable seasons" in html
     assert "selected over raw-EV alternative" in html
+
+
+def test_spread_subgroups_separate_supported_and_contraindicated_children():
+    report = _subgroup_report()
+    parent = match_edge_regime(report, "spread", 6.5)
+    favorite_home = match_edge_subgroup(
+        report, "spread", 6.5, "Home", -3.5, "Home", "Away"
+    )
+    underdog_home = match_edge_subgroup(
+        report, "spread", 6.5, "Home", 7.5, "Home", "Away"
+    )
+
+    assert parent["status"] == "PERSISTENT_CANDIDATE"
+    assert favorite_home["status"] == "SUPPORTED_SUBGROUP"
+    assert favorite_home["profitable_seasons"] == 3
+    assert favorite_home["roi"] > 0.05
+    assert effective_edge_status(parent, favorite_home) == "SUPPORTED_SUBGROUP"
+
+    assert underdog_home["status"] == "CONTRAINDICATED_SUBGROUP"
+    assert underdog_home["profitable_seasons"] == 0
+    assert underdog_home["roi"] < 0
+    assert effective_edge_status(parent, underdog_home) == "CONTRAINDICATED_SUBGROUP"
+
+
+def test_contraindicated_child_cannot_receive_persistent_override(tmp_path):
+    report = _subgroup_report()
+    row = pd.Series(
+        {
+            "week": 6,
+            "home_team": "Home",
+            "away_team": "Away",
+            "calibrated_home_probability": 0.40,
+            "quant_best_ml_side": "Away",
+            "quant_best_ml_edge_pp": 12.0,
+            "quant_best_ml_roi": 0.30,
+            "best_away_ml": 110,
+            "best_away_ml_book": "Book ML",
+            "best_away_ml_quote_at": "2026-10-07T03:00:00Z",
+            "cover_probability": 0.63,
+            "spread_edge_pts": 6.5,
+            "spread_team": "Home",
+            "spread_line": 7.5,
+            "best_home_spread_odds": -110,
+            "best_home_spread_book": "Book Spread",
+            "best_home_spread_quote_at": "2026-10-07T03:00:00Z",
+        }
+    )
+    missing_policy = tmp_path / "missing_policy.json"
+
+    selected = select_best_market(
+        row,
+        risk_multiplier=1.0,
+        policy_path=str(missing_policy),
+        edge_report=report,
+    )
+
+    assert selected["quant_market"] == "moneyline"
+    assert selected["selection_basis"] == "highest_raw_ev"
+    assert selected["edge_selection_override"] is False
+
+
+def test_supported_subgroup_outranks_higher_raw_ev_market(tmp_path):
+    report = _subgroup_report()
+    row = pd.Series(
+        {
+            "week": 6,
+            "home_team": "Home",
+            "away_team": "Away",
+            "calibrated_home_probability": 0.60,
+            "quant_best_ml_side": "Home",
+            "quant_best_ml_edge_pp": 12.0,
+            "quant_best_ml_roi": 0.45,
+            "best_home_ml": 130,
+            "best_home_ml_book": "Book ML",
+            "best_home_ml_quote_at": "2026-10-07T03:00:00Z",
+            "cover_probability": 0.66,
+            "spread_edge_pts": 6.5,
+            "spread_team": "Home",
+            "spread_line": -3.5,
+            "best_home_spread_odds": -110,
+            "best_home_spread_book": "Book Spread",
+            "best_home_spread_quote_at": "2026-10-07T03:00:00Z",
+        }
+    )
+    missing_policy = tmp_path / "missing_policy.json"
+
+    selected = select_best_market(
+        row,
+        risk_multiplier=1.0,
+        policy_path=str(missing_policy),
+        edge_report=report,
+    )
+
+    assert selected["quant_market"] == "spread"
+    assert selected["quant_side"] == "Home"
+    assert selected["selection_basis"] == "supported_edge_subgroup"
+    assert selected["edge_selection_override"] is True
+    assert selected["edge_regime_status"] == "SUPPORTED_SUBGROUP"
+    assert selected["edge_subgroup_key"] == "favorite|home"
+    assert selected["edge_subgroup_status"] == "SUPPORTED_SUBGROUP"
+
+
+def test_current_edge_board_excludes_contraindicated_child_by_default():
+    report = _subgroup_report()
+    frame = pd.DataFrame(
+        [
+            {
+                "game_id": "g1",
+                "date": "2026-10-10T18:00:00Z",
+                "away_team": "Away",
+                "home_team": "Home",
+                "spread_team": "Home",
+                "spread_line": 7.5,
+                "spread_odds": -110,
+                "spread_edge_pts": 6.5,
+                "cover_probability": 0.63,
+                "spread_badge": "STRONG",
+                "spread_book": "Book A",
+                "spread_quote_at": "2026-10-10T16:00:00Z",
+                "quant_market": "spread",
+                "quant_side": "Home",
+                "quant_signal": "STRONG",
+                "quant_ev": 0.20,
+            }
+        ]
+    )
+
+    supported = current_edge_board(frame, report, {"PERSISTENT_CANDIDATE"})
+    all_parent = current_edge_board(
+        frame,
+        report,
+        {"PERSISTENT_CANDIDATE"},
+        include_contraindicated=True,
+    )
+
+    assert supported.empty
+    assert len(all_parent) == 1
+    assert all_parent.iloc[0]["edge_reliability_status"] == "CONTRAINDICATED_SUBGROUP"
+    assert all_parent.iloc[0]["subgroup_key"] == "underdog|home"
 
 
 def test_supported_edge_board_contains_forward_validation_warning(tmp_path):
