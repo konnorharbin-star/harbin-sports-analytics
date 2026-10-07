@@ -70,7 +70,7 @@ def _display_time(dt):
     except ValueError: return x.strftime("%b %d, %Y · %I:%M %p CT").replace(" 0"," ")
 def _prediction_signature(pred):
     if pred.empty: return ""
-    cols=["game_id","model_margin_home","model_total","away_ml","home_ml","market_spread_home","market_total","provider","ml_badge","ml_odds","ml_book","spread_badge","spread_team","spread_line","spread_odds","spread_book","total_badge","total_dir","total_odds","total_book","quant_signal","quant_market","quant_side","quant_price","quant_odds"]; temp=pred[[c for c in cols if c in pred.columns]].copy()
+    cols=["game_id","model_margin_home","model_total","away_ml","home_ml","market_spread_home","market_total","provider","ml_badge","ml_odds","ml_book","ml_quote_at","ml_quote_time_source","spread_badge","spread_team","spread_line","spread_odds","spread_book","spread_quote_at","spread_quote_time_source","total_badge","total_dir","total_odds","total_book","total_quote_at","total_quote_time_source","quant_signal","quant_market","quant_side","quant_price","quant_odds"]; temp=pred[[c for c in cols if c in pred.columns]].copy()
     for c in temp.columns:
         if pd.api.types.is_numeric_dtype(temp[c]): temp[c]=temp[c].round(6)
     return temp.to_json(orient="records")
@@ -126,7 +126,7 @@ def _quantize(pred,bundle,adv_meta,ctx_meta):
         if disagreement>10: rm*=max(.5,1-.035*(disagreement-10))
         pick=select_best_market(q,rm); out.at[i,"data_quality_score"]=dq; out.at[i,"risk_multiplier"]=rm; out.at[i,"market_disagreement"]=disagreement
         for k,v in q.items():
-            if k in {"ml_odds","ml_badge","ml_edge_pp","ml_est_roi","ml_book","ml_quote_at","spread_team","spread_line","spread_odds","spread_badge","spread_book","spread_quote_at","spread_edge_pts","cover_probability","total_dir","market_total","total_odds","total_badge","total_book","total_quote_at","total_edge_pts","total_probability","home_ml","away_ml","quant_best_ml_side","quant_best_ml_edge_pp","quant_best_ml_roi"}: out.at[i,k]=v
+            if k in {"ml_odds","ml_badge","ml_edge_pp","ml_est_roi","ml_book","ml_quote_at","ml_quote_time_source","spread_team","spread_line","spread_odds","spread_badge","spread_book","spread_quote_at","spread_quote_time_source","spread_edge_pts","cover_probability","total_dir","market_total","total_odds","total_badge","total_book","total_quote_at","total_quote_time_source","total_edge_pts","total_probability","home_ml","away_ml","quant_best_ml_side","quant_best_ml_edge_pp","quant_best_ml_roi"}: out.at[i,k]=v
         for k,v in pick.items(): out.at[i,k]=v
         if dq<.45 or float(pick.get("stake_units",0) or 0)<.08: out.at[i,"quant_signal"]="PASS"; out.at[i,"stake_units"]=0.
     return out

@@ -340,6 +340,7 @@ def refresh_display_market_tiers(row: Mapping[str, object]) -> dict[str, object]
                 odds = _number(row.get("home_ml"))
             book = row.get("best_home_ml_book")
             quote_at = row.get("best_home_ml_quote_at")
+            quote_time_source = row.get("best_home_ml_quote_time_source")
             probability = home_probability
         else:
             odds = _number(row.get("best_away_ml"))
@@ -347,6 +348,7 @@ def refresh_display_market_tiers(row: Mapping[str, object]) -> dict[str, object]
                 odds = _number(row.get("away_ml"))
             book = row.get("best_away_ml_book")
             quote_at = row.get("best_away_ml_quote_at")
+            quote_time_source = row.get("best_away_ml_quote_time_source")
             probability = 1.0 - home_probability
         if odds is not None:
             badge, edge = replica_ml_label(probability, odds)
@@ -359,6 +361,7 @@ def refresh_display_market_tiers(row: Mapping[str, object]) -> dict[str, object]
                     "ml_est_roi": ev,
                     "ml_book": book,
                     "ml_quote_at": quote_at,
+                    "ml_quote_time_source": quote_time_source,
                 }
             )
 
@@ -372,9 +375,11 @@ def refresh_display_market_tiers(row: Mapping[str, object]) -> dict[str, object]
         if spread_side == home:
             out["spread_book"] = row.get("best_home_spread_book")
             out["spread_quote_at"] = row.get("best_home_spread_quote_at")
+            out["spread_quote_time_source"] = row.get("best_home_spread_quote_time_source")
         else:
             out["spread_book"] = row.get("best_away_spread_book")
             out["spread_quote_at"] = row.get("best_away_spread_quote_at")
+            out["spread_quote_time_source"] = row.get("best_away_spread_quote_time_source")
 
     total_line = _number(row.get("market_total"))
     model_total = _number(row.get("model_total"))
@@ -385,8 +390,10 @@ def refresh_display_market_tiers(row: Mapping[str, object]) -> dict[str, object]
         if direction == "O":
             out["total_book"] = row.get("best_over_book")
             out["total_quote_at"] = row.get("best_over_quote_at")
+            out["total_quote_time_source"] = row.get("best_over_quote_time_source")
         elif direction == "U":
             out["total_book"] = row.get("best_under_book")
             out["total_quote_at"] = row.get("best_under_quote_at")
+            out["total_quote_time_source"] = row.get("best_under_quote_time_source")
 
     return out

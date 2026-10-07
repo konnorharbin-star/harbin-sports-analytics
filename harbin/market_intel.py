@@ -49,7 +49,7 @@ def _provider_key(q):
 
 
 def _quote_timestamp(q):
-    raw=(q or {}).get("last_update") or (q or {}).get("updated_at") or (q or {}).get("timestamp")
+    raw=(q or {}).get("last_update") or (q or {}).get("updated_at") or (q or {}).get("timestamp") or (q or {}).get("captured_at")
     if not raw:
         return datetime.min.replace(tzinfo=timezone.utc)
     try:
@@ -58,6 +58,61 @@ def _quote_timestamp(q):
         return x.astimezone(timezone.utc)
     except Exception:
         return datetime.min.replace(tzinfo=timezone.utc)
+
+
+def _quote_at(q):
+    q=q or {}
+    return q.get("last_update") or q.get("captured_at")
+
+
+def _quote_time_source(q):
+    q=q or {}
+    if q.get("last_update"):
+        return "source_last_update"
+    if q.get("captured_at"):
+        return "captured_at"
+    return None
+
+
+def _apply_capture_fallback(summary, captured_at):
+    """Fill missing selected-line timestamps with the model observation time.
+
+    Source-reported update times always win. This fallback records when the model
+    observed the quote; it never represents itself as a sportsbook update time.
+    """
+
+    out=dict(summary or {})
+    if not captured_at:
+        return out
+    pairs=(
+        ("best_home_ml","best_home_ml_book","best_home_ml_quote_at","best_home_ml_quote_time_source"),
+        ("best_away_ml","best_away_ml_book","best_away_ml_quote_at","best_away_ml_quote_time_source"),
+        ("best_home_spread","best_home_spread_book","best_home_spread_quote_at","best_home_spread_quote_time_source"),
+        ("best_away_spread","best_away_spread_book","best_away_spread_quote_at","best_away_spread_quote_time_source"),
+        ("best_over_total","best_over_book","best_over_quote_at","best_over_quote_time_source"),
+        ("best_under_total","best_under_book","best_under_quote_at","best_under_quote_time_source"),
+    )
+    for value_key,book_key,time_key,source_key in pairs:
+        if math.isfinite(_num(out.get(value_key))) and _provider({"provider":out.get(book_key)})!="unknown":
+            if not out.get(time_key):
+                out[time_key]=captured_at
+                out[source_key]="captured_at"
+
+    raw=out.get("market_quotes_json")
+    if raw:
+        try:
+            quotes=json.loads(raw)
+        except Exception:
+            quotes=[]
+        if isinstance(quotes,list):
+            changed=False
+            for quote in quotes:
+                if isinstance(quote,dict) and not quote.get("captured_at"):
+                    quote["captured_at"]=captured_at
+                    changed=True
+            if changed:
+                out["market_quotes_json"]=json.dumps(quotes,sort_keys=True,separators=(",",":"))
+    return out
 
 
 def _quote_completeness(q):
@@ -71,6 +126,7 @@ def _clean_quote(q):
         "provider":_provider(q),
         "source":str(q.get("source") or "unknown"),
         "last_update":q.get("last_update") or q.get("updated_at") or q.get("timestamp"),
+        "captured_at":q.get("captured_at"),
     }
     for k in ("home_ml","away_ml","home_spread","market_total","home_spread_price","away_spread_price","over_price","under_price"):
         x=_num(q.get(k)); out[k]=float(x) if math.isfinite(x) else None
@@ -256,7 +312,7 @@ class MarketIntelligence:
 
     @staticmethod
     def _summary(g,quotes):
-        base={"provider":g.provider or "primary","source":"primary","home_ml":g.home_ml,"away_ml":g.away_ml,"home_spread":g.home_spread,"market_total":g.market_total,"home_spread_price":None,"away_spread_price":None,"over_price":None,"under_price":None,"last_update":None}
+        base={"provider":g.provider or "primary","source":"primary","home_ml":g.home_ml,"away_ml":g.away_ml,"home_spread":g.home_spread,"market_total":g.market_total,"home_spread_price":None,"away_spread_price":None,"over_price":None,"under_price":None,"last_update":None,"captured_at":None}
         qs=_dedupe_quotes([dict(x) for x in quotes or []])
         ex=next((q for q in qs if _provider_key(q)==_provider_key(base)),None)
         if ex is None:
@@ -285,12 +341,18 @@ class MarketIntelligence:
         if len(ph)>1: cq*=max(.70,1-min(1.,float(np.std(ph))/.08)*.20)
         serial=[_clean_quote(q) for q in sorted(qs,key=lambda q:_provider(q).lower())]
         sources=sorted({str(q.get("source") or "unknown") for q in qs})
+
+        def selected_quote_at(q):
+            return _quote_at(q) if q else None
+
+        def selected_quote_time_source(q):
+            return _quote_time_source(q) if q else None
         return {
             "market_book_count":len(providers),"market_books":" | ".join(providers[:20]),"market_quote_sources":" | ".join(sources),"market_quotes_json":json.dumps(serial,sort_keys=True,separators=(",",":")),
             "consensus_home_spread":_median(sp),"consensus_total":_median(to),"spread_market_std":float(np.std(sp)) if len(sp)>1 else 0. if sp else np.nan,"total_market_std":float(np.std(to)) if len(to)>1 else 0. if to else np.nan,"spread_market_range":sr,"total_market_range":tr,
-            "best_home_spread":bhr,"best_away_spread":bar,"best_home_spread_odds":_num(hb.get("home_spread_price")) if hb else np.nan,"best_away_spread_odds":_num(ab.get("away_spread_price")) if ab else np.nan,"best_home_spread_book":_provider(hb) if hb else None,"best_away_spread_book":_provider(ab) if ab else None,"best_home_spread_quote_at":hb.get("last_update") if hb else None,"best_away_spread_quote_at":ab.get("last_update") if ab else None,
-            "best_over_total":bot,"best_under_total":but,"best_over_odds":_num(ob.get("over_price")) if ob else np.nan,"best_under_odds":_num(ub.get("under_price")) if ub else np.nan,"best_over_book":_provider(ob) if ob else None,"best_under_book":_provider(ub) if ub else None,"best_over_quote_at":ob.get("last_update") if ob else None,"best_under_quote_at":ub.get("last_update") if ub else None,
-            "best_home_ml":_num(hml.get("home_ml")) if hml else np.nan,"best_away_ml":_num(aml.get("away_ml")) if aml else np.nan,"best_home_ml_book":_provider(hml) if hml else None,"best_away_ml_book":_provider(aml) if aml else None,"best_home_ml_quote_at":hml.get("last_update") if hml else None,"best_away_ml_quote_at":aml.get("last_update") if aml else None,
+            "best_home_spread":bhr,"best_away_spread":bar,"best_home_spread_odds":_num(hb.get("home_spread_price")) if hb else np.nan,"best_away_spread_odds":_num(ab.get("away_spread_price")) if ab else np.nan,"best_home_spread_book":_provider(hb) if hb else None,"best_away_spread_book":_provider(ab) if ab else None,"best_home_spread_quote_at":selected_quote_at(hb),"best_away_spread_quote_at":selected_quote_at(ab),"best_home_spread_quote_time_source":selected_quote_time_source(hb),"best_away_spread_quote_time_source":selected_quote_time_source(ab),
+            "best_over_total":bot,"best_under_total":but,"best_over_odds":_num(ob.get("over_price")) if ob else np.nan,"best_under_odds":_num(ub.get("under_price")) if ub else np.nan,"best_over_book":_provider(ob) if ob else None,"best_under_book":_provider(ub) if ub else None,"best_over_quote_at":selected_quote_at(ob),"best_under_quote_at":selected_quote_at(ub),"best_over_quote_time_source":selected_quote_time_source(ob),"best_under_quote_time_source":selected_quote_time_source(ub),
+            "best_home_ml":_num(hml.get("home_ml")) if hml else np.nan,"best_away_ml":_num(aml.get("away_ml")) if aml else np.nan,"best_home_ml_book":_provider(hml) if hml else None,"best_away_ml_book":_provider(aml) if aml else None,"best_home_ml_quote_at":selected_quote_at(hml),"best_away_ml_quote_at":selected_quote_at(aml),"best_home_ml_quote_time_source":selected_quote_time_source(hml),"best_away_ml_quote_time_source":selected_quote_time_source(aml),
             "consensus_home_novig_probability":float(np.mean(ph)) if ph else np.nan,"consensus_probability_std":float(np.std(ph)) if len(ph)>1 else 0. if ph else np.nan,"moneyline_pair_book_count":int(len(ph)),"market_consensus_quality":float(cq),
         }
 
@@ -304,6 +366,7 @@ class MarketIntelligence:
         out=pred.copy(); covered=multi=action_matched=0
         for i,r in out.iterrows():
             g=by[str(r.game_id)]; aq=self._action_quotes_for(g); action_matched+=int(bool(aq)); q=list(quotes.get(str(r.game_id),[])); q.extend(aq); q.extend(self.external.get((canon_team(g.away_team),canon_team(g.home_team)),[])); z=self._summary(g,q)
+            z=_apply_capture_fallback(z,datetime.now(timezone.utc).isoformat())
             for k,v in z.items(): out.at[i,k]=v
             covered+=int(z["market_book_count"]>0); multi+=int(z["market_book_count"]>=2)
-        return out,{"coverage":covered/len(out),"multi_book_coverage":multi/len(out),"odds_api_configured":bool(self.odds_key),"odds_api_used":self.odds_api_used,"action_network_enabled":self.action_network_enabled,"action_network_used":self.action_network_used,"action_network_match_coverage":action_matched/len(out),"errors":self.errors[-20:],"best_line_fields":["best_home_ml","best_away_ml","best_home_spread","best_away_spread","best_over_total","best_under_total"],"best_line_provenance_fields":["best_home_ml_book","best_away_ml_book","best_home_ml_quote_at","best_away_ml_quote_at","best_home_spread_book","best_away_spread_book","best_home_spread_quote_at","best_away_spread_quote_at","best_over_book","best_under_book","best_over_quote_at","best_under_quote_at"]}
+        return out,{"coverage":covered/len(out),"multi_book_coverage":multi/len(out),"odds_api_configured":bool(self.odds_key),"odds_api_used":self.odds_api_used,"action_network_enabled":self.action_network_enabled,"action_network_used":self.action_network_used,"action_network_match_coverage":action_matched/len(out),"errors":self.errors[-20:],"best_line_fields":["best_home_ml","best_away_ml","best_home_spread","best_away_spread","best_over_total","best_under_total"],"best_line_provenance_fields":["best_home_ml_book","best_away_ml_book","best_home_ml_quote_at","best_away_ml_quote_at","best_home_ml_quote_time_source","best_away_ml_quote_time_source","best_home_spread_book","best_away_spread_book","best_home_spread_quote_at","best_away_spread_quote_at","best_home_spread_quote_time_source","best_away_spread_quote_time_source","best_over_book","best_under_book","best_over_quote_at","best_under_quote_at","best_over_quote_time_source","best_under_quote_time_source"]}

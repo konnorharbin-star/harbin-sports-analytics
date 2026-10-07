@@ -18,16 +18,19 @@ def test_refresh_display_badges_uses_post_line_shopping_prices():
         "home_ml": -150,
         "best_home_ml_book": "Book A",
         "best_home_ml_quote_at": "2026-10-06T18:00:00Z",
+        "best_home_ml_quote_time_source": "source_last_update",
         "model_margin_home": 7.0,
         "spread_team": "Home",
         "spread_line": -3.0,
         "best_home_spread_book": "Book B",
         "best_home_spread_quote_at": "2026-10-06T18:00:00Z",
+        "best_home_spread_quote_time_source": "captured_at",
         "model_total": 55.0,
         "market_total": 50.0,
         "total_dir": "O",
         "best_over_book": "Book C",
         "best_over_quote_at": "2026-10-06T18:00:00Z",
+        "best_over_quote_time_source": "captured_at",
     }
 
     refreshed = refresh_display_market_tiers(row)
@@ -35,10 +38,13 @@ def test_refresh_display_badges_uses_post_line_shopping_prices():
     assert refreshed["ml_odds"] == -110
     assert refreshed["ml_badge"] == "STRONG"
     assert refreshed["ml_book"] == "Book A"
+    assert refreshed["ml_quote_time_source"] == "source_last_update"
     assert refreshed["spread_badge"] == "BET"
     assert refreshed["spread_book"] == "Book B"
+    assert refreshed["spread_quote_time_source"] == "captured_at"
     assert refreshed["total_badge"] == "BET"
     assert refreshed["total_book"] == "Book C"
+    assert refreshed["total_quote_time_source"] == "captured_at"
 
 
 def test_tier_summary_is_flat_one_unit_and_calibrated():
