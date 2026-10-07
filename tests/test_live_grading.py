@@ -94,3 +94,26 @@ def test_display_market_entry_requires_real_book_and_quote_timestamp():
 
     assert _display_market_entry(missing, "moneyline")["price_verified"] is False
     assert _display_market_entry(verified, "moneyline")["price_verified"] is True
+
+
+def test_display_market_entry_rejects_unparseable_quote_timestamp():
+    row = pd.Series(
+        {
+            "home_team": "Home",
+            "away_team": "Away",
+            "calibrated_home_probability": 0.60,
+            "ml_badge": "STRONG",
+            "ml_team": "Home",
+            "ml_odds": 120,
+            "ml_edge_pp": 14.5,
+            "ml_est_roi": 0.32,
+            "ml_book": "Book A",
+            "ml_quote_at": "not-a-timestamp",
+            "ml_quote_time_source": "captured_at",
+        }
+    )
+
+    entry = _display_market_entry(row, "moneyline")
+
+    assert entry["price_verified"] is False
+    assert entry["quote_time_source"] == "captured_at"
