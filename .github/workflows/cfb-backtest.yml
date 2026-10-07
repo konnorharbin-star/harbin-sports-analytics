@@ -56,12 +56,14 @@ jobs:
           cp reports/backtest_summary.json docs/backtest_summary.json
           cp reports/evidence_report.json docs/evidence.json
           cp reports/production_policy.json docs/policy.json
+          cp reports/edge_regimes.json docs/edge_regimes.json
+          cp reports/edge_regimes.csv docs/edge_regimes.csv
       - name: Backtest summary
         shell: bash
         run: |
           python - <<'PY' >> "$GITHUB_STEP_SUMMARY"
           import json
-          m=json.load(open("reports/backtest_summary.json")); o=m["overall"]; e=json.load(open("reports/evidence_report.json")); p=json.load(open("reports/production_policy.json"))
+          m=json.load(open("reports/backtest_summary.json")); o=m["overall"]; e=json.load(open("reports/evidence_report.json")); p=json.load(open("reports/production_policy.json")); r=json.load(open("reports/edge_regimes.json"))
           pct=lambda x:"n/a" if x is None else f"{x:.2%}"
           print(f"## CFB Walk-Forward Backtest — {m['start_season']}-{m['end_season']}")
           print(f"- Bets: **{o['bets']}** · ROI: **{pct(o['roi'])}** · Units: **{o['units']:.2f}**")
@@ -69,13 +71,14 @@ jobs:
           print(f"- Normalized CLV: **{pct(o['avg_clv'])}** over **{o['clv_samples']}** samples")
           print(f"- Week-block ROI 95% CI: **{o['roi_ci_95']}**")
           print(f"- Evidence: **{e['status']}** · Deployment mode: **{p['deployment_mode']}**")
+          print(f"- Edge regimes: **{r.get('persistent_regimes',0)} persistent candidates** · **{r.get('watch_regimes',0)} watch**")
           PY
       - name: Commit reports
         shell: bash
         run: |
           git config user.name "harbin-model-bot"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add reports docs/backtest_summary.json docs/evidence.json docs/policy.json
+          git add reports docs/backtest_summary.json docs/evidence.json docs/policy.json docs/edge_regimes.json docs/edge_regimes.csv
           if ! git diff --cached --quiet; then
             git commit -m "backtest: refresh evidence and production policy"
             git pull --rebase origin main
