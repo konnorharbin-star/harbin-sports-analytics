@@ -213,7 +213,7 @@ def build_edge_regime_report(bets):
     data = bets.copy() if isinstance(bets, pd.DataFrame) else pd.DataFrame(bets)
     if data.empty:
         return {
-            "schema_version": 2,
+            "schema_version": EDGE_REGIME_SCHEMA_VERSION,
             "status": "NO_SAMPLE",
             "regimes": [],
             "persistent_regimes": 0,
@@ -275,7 +275,7 @@ def build_edge_regime_report(bets):
         )
     )
     return {
-        "schema_version": 1,
+        "schema_version": EDGE_REGIME_SCHEMA_VERSION,
         "status": "TRACKING",
         "regimes": regimes,
         "persistent_regimes": int(
