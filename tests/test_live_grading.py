@@ -200,3 +200,26 @@ def test_clean_tier_grading_uses_first_eligible_pre_kickoff_snapshot():
     assert clean_ml["book"] == "Book A"
     assert clean_ml["projected_margin_home"] == 6.0
     assert clean_ml["projected_total"] == 52.0
+
+
+def test_display_market_entry_rejects_quote_after_prediction_snapshot():
+    row = pd.Series(
+        {
+            "home_team": "Home",
+            "away_team": "Away",
+            "calibrated_home_probability": 0.60,
+            "snapshot_at": "2026-10-06T18:00:00Z",
+            "ml_badge": "STRONG",
+            "ml_team": "Home",
+            "ml_odds": 120,
+            "ml_edge_pp": 14.5,
+            "ml_est_roi": 0.32,
+            "ml_book": "Book A",
+            "ml_quote_at": "2026-10-06T18:01:00Z",
+            "ml_quote_time_source": "source_last_update",
+        }
+    )
+
+    entry = _display_market_entry(row, "moneyline")
+
+    assert entry["price_verified"] is False
