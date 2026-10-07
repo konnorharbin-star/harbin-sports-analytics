@@ -115,6 +115,39 @@ jobs:
             fi
           done
 
+          # The walk-forward backtest is the sole publisher of historical
+          # evidence/policy files. The live model may read/regenerate them locally,
+          # but must never race the backtest when committing generated state.
+          BACKTEST_OWNED=(
+            reports/backtest_bets.csv
+            reports/backtest_predictions.csv
+            reports/backtest_summary.json
+            reports/backtest_by_edge.csv
+            reports/backtest_by_signal.csv
+            reports/backtest_by_conference.csv
+            reports/backtest_by_role.csv
+            reports/backtest_by_season.csv
+            reports/backtest_by_week.csv
+            reports/calibration.csv
+            reports/edge_regimes.json
+            reports/edge_regimes.csv
+            reports/evidence_report.json
+            reports/production_policy.json
+            docs/backtest_summary.json
+            docs/evidence.json
+            docs/policy.json
+            docs/edge_regimes.json
+            docs/edge_regimes.csv
+          )
+          for f in "${BACKTEST_OWNED[@]}"; do
+            if git ls-files --error-unmatch "$f" >/dev/null 2>&1; then
+              git restore --staged --worktree "$f" || true
+            else
+              git rm --cached -f --ignore-unmatch "$f" >/dev/null 2>&1 || true
+              rm -f "$f"
+            fi
+          done
+
           if ! git diff --cached --quiet; then
             git commit -m "model: automated CFB v7 refresh"
             git pull --rebase origin main
