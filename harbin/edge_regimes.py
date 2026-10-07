@@ -16,6 +16,7 @@ PERSISTENT_MIN_SEASON_BETS = 50
 WATCH_MIN_BETS = 100
 SUBGROUP_MIN_BETS = 45
 SUBGROUP_MIN_SEASON_BETS = 12
+EDGE_REGIME_SCHEMA_VERSION = 2
 
 
 def _finite(v):
@@ -312,18 +313,43 @@ def write_edge_regime_report(bets, json_path, csv_path=None):
     return report
 
 
+def _edge_report_compatible(report):
+    if not isinstance(report, dict):
+        return False
+    if int(report.get("schema_version", 0) or 0) < EDGE_REGIME_SCHEMA_VERSION:
+        return False
+    for row in report.get("regimes") or []:
+        if (
+            str(row.get("market") or "").lower() == "spread"
+            and row.get("status") == "PERSISTENT_CANDIDATE"
+            and not isinstance(row.get("subgroups"), dict)
+        ):
+            return False
+    return True
+
+
 def load_or_build_edge_regime_report(reports_dir="reports"):
     reports = Path(reports_dir)
     path = reports / "edge_regimes.json"
     if path.exists():
         try:
-            return json.loads(path.read_text())
+            cached = json.loads(path.read_text())
+            if _edge_report_compatible(cached):
+                return cached
         except Exception:
             pass
+
     bets_path = reports / "backtest_bets.csv"
     if bets_path.exists():
         try:
-            return build_edge_regime_report(pd.read_csv(bets_path, low_memory=False))
+            rebuilt = build_edge_regime_report(
+                pd.read_csv(bets_path, low_memory=False)
+            )
+            try:
+                path.write_text(json.dumps(rebuilt, indent=2))
+            except Exception:
+                pass
+            return rebuilt
         except Exception:
             pass
     return build_edge_regime_report(pd.DataFrame())
