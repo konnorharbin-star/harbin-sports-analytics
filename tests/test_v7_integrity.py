@@ -53,9 +53,11 @@ def test_market_intel_selects_executable_best_lines_and_prices():
     g = SimpleNamespace(provider="BookA", home_ml=-150, away_ml=130, home_spread=-3.5, market_total=56)
     quotes = [
         {"provider":"BookA","home_ml":-150,"away_ml":130,"home_spread":-3.5,"market_total":56,
-         "home_spread_price":-110,"away_spread_price":-110,"over_price":-108,"under_price":-112},
+         "home_spread_price":-110,"away_spread_price":-110,"over_price":-108,"under_price":-112,
+         "last_update":"2026-10-06T17:58:00Z"},
         {"provider":"BookB","home_ml":-145,"away_ml":135,"home_spread":-3.0,"market_total":55.5,
-         "home_spread_price":-105,"away_spread_price":-115,"over_price":-110,"under_price":-110},
+         "home_spread_price":-105,"away_spread_price":-115,"over_price":-110,"under_price":-110,
+         "last_update":"2026-10-06T17:59:00Z"},
     ]
     s = MarketIntelligence._summary(g, quotes)
     assert s["best_home_spread"] == -3.0
@@ -65,6 +67,12 @@ def test_market_intel_selects_executable_best_lines_and_prices():
     assert s["best_home_spread_odds"] == -105
     assert s["best_home_ml"] == -145
     assert s["best_away_ml"] == 135
+    assert s["best_home_ml_quote_at"] == "2026-10-06T17:59:00Z"
+    assert s["best_away_ml_quote_at"] == "2026-10-06T17:59:00Z"
+    assert s["best_home_spread_quote_at"] == "2026-10-06T17:59:00Z"
+    assert s["best_away_spread_quote_at"] == "2026-10-06T17:58:00Z"
+    assert s["best_over_quote_at"] == "2026-10-06T17:59:00Z"
+    assert s["best_under_quote_at"] == "2026-10-06T17:58:00Z"
 
 
 def test_portfolio_caps_same_kickoff_cluster(tmp_path):
