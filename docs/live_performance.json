@@ -1536,7 +1536,7 @@
     ],
     "validated_cells": 0,
     "underperforming_cells": 0,
-    "methodology": "first timestamp-safe displayed tier per game/market; flat 1u risk; P/L is independent of Kelly/portfolio sizing; actual stored American odds are used when available; spread/total fall back to -110 only when the stored display snapshot has no price; pushes are excluded from hit-rate/calibration denominators; VALIDATED requires >=100 bets, positive 95% ROI lower bound, positive average execution CLV and |calibration gap| <= 8 percentage points; only rows whose stored display badge recomputes from the stored displayed line/price and whose execution price is verified may contribute to validation status"
+    "methodology": "posted matrix uses the first timestamp-safe displayed tier per game/market; clean matrix uses the first pre-kickoff tier that satisfies price provenance and badge-consistency requirements; flat 1u risk; P/L is independent of Kelly/portfolio sizing; actual stored American odds are used when available; spread/total fall back to -110 only when the stored display snapshot has no price; pushes are excluded from hit-rate/calibration denominators; VALIDATED requires >=100 bets, positive 95% ROI lower bound, positive average execution CLV and |calibration gap| <= 8 percentage points; only rows whose stored display badge recomputes from the stored displayed line/price and whose execution price is verified may contribute to validation status"
   },
   "clv_method": "latest timestamp-valid snapshot strictly before kickoff; spread/total use consensus close when available; moneyline uses consensus no-vig probability; execution CLV retains the actual bet price",
   "verified_close_clv_samples": 56,
