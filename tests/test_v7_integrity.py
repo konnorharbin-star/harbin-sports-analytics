@@ -117,7 +117,13 @@ def test_market_intel_uses_capture_time_when_source_timestamp_is_missing():
 
     s = MarketIntelligence._summary(g, quotes)
 
-    assert s["best_home_ml_quote_at"], s
+    assert s["best_home_ml_quote_at"], {
+        "best_home_ml": s.get("best_home_ml"),
+        "best_home_ml_book": s.get("best_home_ml_book"),
+        "best_home_ml_quote_at": s.get("best_home_ml_quote_at"),
+        "best_home_ml_quote_time_source": s.get("best_home_ml_quote_time_source"),
+        "market_quotes_json": s.get("market_quotes_json"),
+    }
     assert s["best_home_ml_quote_time_source"] == "captured_at"
     assert s["best_home_spread_quote_time_source"] == "captured_at"
     assert s["best_over_quote_time_source"] == "captured_at"
