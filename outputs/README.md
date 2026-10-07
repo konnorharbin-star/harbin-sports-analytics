@@ -2,7 +2,7 @@
 
 **Model:** v7.1.0  
 **Season / Week:** 2026 / 6  
-**Updated:** Oct 7, 2026 · 5:24 PM CT  
+**Updated:** Oct 7, 2026 · 5:33 PM CT  
 **Market:** LIVE MARKET DATA — all 57 games have verified market data from ESPN live (site.web.api.espn.com) + ESPN Core supplement.  
 **Dynamic advanced-feature live coverage:** 100%  
 **System health:** 84.1/100 *(readiness, not predicted profitability)*
@@ -16,6 +16,8 @@
 - [Edge-regime watchlist](edge_watchlist.csv)
 - [Historically contraindicated edge subgroups](edge_exclusions.csv)
 - [Edge-regime evidence](edge_regimes.json)
+- [Forward edge performance](edge_forward_performance.json)
+- [Forward graded edge ledger](edge_forward_graded.csv)
 - [Full model CSV](cfb_model_2026_week6.csv)
 - [Metadata / diagnostics](cfb_model_2026_week6_metadata.json)
 - [System health report](system_health.json)
@@ -26,11 +28,11 @@
 - [Clean validation-entry ledger](live_graded_tiers_clean.csv)
 
 ## Fresh PNGs for mobile
-- [Fresh page 1 — cache-safe](cfb_model_2026_week6_run_20261007_172437_CT_page1.png)
-- [Fresh page 2 — cache-safe](cfb_model_2026_week6_run_20261007_172437_CT_page2.png)
-- [Fresh page 3 — cache-safe](cfb_model_2026_week6_run_20261007_172437_CT_page3.png)
-- [Fresh page 4 — cache-safe](cfb_model_2026_week6_run_20261007_172437_CT_page4.png)
-- [Fresh page 5 — cache-safe](cfb_model_2026_week6_run_20261007_172437_CT_page5.png)
+- [Fresh page 1 — cache-safe](cfb_model_2026_week6_run_20261007_173345_CT_page1.png)
+- [Fresh page 2 — cache-safe](cfb_model_2026_week6_run_20261007_173345_CT_page2.png)
+- [Fresh page 3 — cache-safe](cfb_model_2026_week6_run_20261007_173345_CT_page3.png)
+- [Fresh page 4 — cache-safe](cfb_model_2026_week6_run_20261007_173345_CT_page4.png)
+- [Fresh page 5 — cache-safe](cfb_model_2026_week6_run_20261007_173345_CT_page5.png)
 
 These filenames change on every run so GitHub mobile cannot reuse an old image preview.
 
