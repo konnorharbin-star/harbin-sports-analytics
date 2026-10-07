@@ -71,7 +71,7 @@
     {
       "name": "live_monitoring",
       "passed": true,
-      "value": 94.9,
+      "value": 94.8,
       "requirement": "live readiness >= 90/100",
       "detail": ""
     },

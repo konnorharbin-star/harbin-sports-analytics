@@ -25,12 +25,12 @@
     "reason": "graded history has no usable profit rows"
   },
   "production_block_reason": "",
-  "proposed_units": 5.12,
-  "risk_adjusted_proposed_units": 5.12,
-  "performance_adjusted_proposed_units": 5.12,
+  "proposed_units": 5.04,
+  "risk_adjusted_proposed_units": 5.04,
+  "performance_adjusted_proposed_units": 5.04,
   "approved_units": 0.0,
-  "paper_allocated_units": 3.47,
-  "paper_or_shadow_allocated_units": 3.47,
+  "paper_allocated_units": 3.43,
+  "paper_or_shadow_allocated_units": 3.43,
   "bets": 20,
   "approved_bets": 0,
   "execution_blocked_bets": 0,
@@ -76,43 +76,43 @@
     "max_book_units": 2.0
   },
   "allocated_by_market": {
-    "spread": 2.4,
-    "total": 0.46,
-    "moneyline": 0.61
+    "total": 0.57,
+    "spread": 2.26,
+    "moneyline": 0.6
   },
   "allocated_by_book": {
+    "ActionNetwork book 68": 0.64,
     "ActionNetwork book 71": 0.47,
-    "ActionNetwork book 69": 0.64,
-    "ActionNetwork book 30": 0.73,
+    "ActionNetwork book 30": 0.59,
     "ActionNetwork book 15": 0.39,
-    "DraftKings": 0.25,
-    "ActionNetwork book 75": 0.46,
-    "ActionNetwork book 68": 0.17,
+    "DraftKings": 0.24,
+    "ActionNetwork book 75": 0.28,
+    "ActionNetwork book 69": 0.46,
     "ActionNetwork book 49": 0.36
   },
   "allocated_by_kickoff_window": {
-    "2026-10-10 21:00:00+00:00": 0.9,
-    "2026-10-10 18:00:00+00:00": 1.04,
-    "2026-10-10 15:00:00+00:00": 0.85,
+    "2026-10-10 18:00:00+00:00": 0.89,
+    "2026-10-10 21:00:00+00:00": 1.02,
+    "2026-10-10 15:00:00+00:00": 0.84,
     "2026-10-10 00:00:00+00:00": 0.13,
     "2026-10-08 21:00:00+00:00": 0.38,
     "2026-10-11 00:00:00+00:00": 0.17
   },
   "allocated_by_team_exposure": {
-    "San Diego State": 0.27,
     "Georgia Tech": 0.18,
     "Duke": 0.18,
+    "San Diego State": 0.27,
     "Vanderbilt": 0.25,
-    "Alabama": 0.15,
-    "Georgia": 0.15,
+    "Alabama": 0.16,
+    "Georgia": 0.16,
     "UCF": 0.21,
     "Iowa": 0.13,
+    "James Madison": 0.19,
     "Nebraska": 0.13,
     "Indiana": 0.13,
-    "Texas A&M": 0.12,
     "Liberty": 0.2,
-    "James Madison": 0.18,
     "Hawai'i": 0.17,
+    "Texas A&M": 0.11,
     "California": 0.18,
     "Virginia": 0.16,
     "Michigan State": 0.13,
@@ -121,10 +121,11 @@
     "Arizona": 0.23,
     "Air Force": 0.14,
     "Western Michigan": 0.15,
-    "Temple": 0.15
+    "Louisiana Tech": 0.1,
+    "Louisiana": 0.1
   },
   "limit_hit_counts": {
-    "max bet count": 17
+    "max bet count": 16
   },
   "release_blockers": [
     "complete_market_coverage: >= 95% games with ML + spread + total",
