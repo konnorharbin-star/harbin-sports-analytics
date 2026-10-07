@@ -8,6 +8,7 @@ import numpy as np
 import pandas as pd
 
 from .market import roi
+from .edge_price import price_evidence
 
 
 EDGE_BINS = (0.0, 2.0, 3.0, 4.0, 5.0, 6.0, 8.0, 10.0, 15.0, 999.0)
@@ -665,6 +666,8 @@ def current_edge_board(frame, report, statuses=None, include_contraindicated=Fal
             effective = effective_edge_status(regime, subgroup)
             if effective == "CONTRAINDICATED_SUBGROUP" and not include_contraindicated:
                 continue
+            evidence_stats = subgroup if effective == "SUPPORTED_SUBGROUP" else regime
+            price_info = price_evidence(candidate["odds"], evidence_stats)
             rows.append(
                 {
                     "game_id": game.get("game_id"),
@@ -721,6 +724,7 @@ def current_edge_board(frame, report, statuses=None, include_contraindicated=Fal
                     ),
                     "selected_quant_signal": game.get("quant_signal"),
                     "selected_quant_ev": game.get("quant_ev"),
+                    **price_info,
                 }
             )
     out = pd.DataFrame(rows)
@@ -731,10 +735,12 @@ def current_edge_board(frame, report, statuses=None, include_contraindicated=Fal
             "WATCH": 2,
             "CONTRAINDICATED_SUBGROUP": 9,
         }
+        price_rank = {"CONFIRMED": 0, "PLAUSIBLE": 1, "OVERPRICED": 2, "UNKNOWN": 3}
         out["_reliability_rank"] = out["edge_reliability_status"].map(rank).fillna(5)
+        out["_price_rank"] = out["price_evidence_status"].map(price_rank).fillna(4)
         out = out.sort_values(
-            ["_reliability_rank", "historical_roi", "ev"],
-            ascending=[True, False, False],
-        ).drop(columns=["_reliability_rank"]).reset_index(drop=True)
+            ["_reliability_rank", "_price_rank", "historical_roi", "ev"],
+            ascending=[True, True, False, False],
+        ).drop(columns=["_reliability_rank", "_price_rank"]).reset_index(drop=True)
     return out
 
