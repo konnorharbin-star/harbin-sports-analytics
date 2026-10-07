@@ -339,6 +339,8 @@ def run_week(season=None,week=None,history_start=None,root="."):
             "graded_bets":edge_forward.get("graded_bets",0),
             "roi":edge_forward.get("roi"),
             "avg_execution_clv":edge_forward.get("avg_execution_clv"),
+            "by_edge_class":edge_forward.get("by_edge_class",{}),
+            "by_price_evidence":edge_forward.get("by_price_evidence",{}),
         }
         for name in ("edge_forward_performance.json","edge_forward_graded.csv"):
             src=reports/name
