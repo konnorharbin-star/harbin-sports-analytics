@@ -1,14 +1,14 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-10-07T10:28:03.763008+00:00",
+  "generated_at": "2026-10-07T10:40:04.642737+00:00",
   "status": "WARN",
   "identity": {
     "platform_version": "7.4.0",
     "model_version": "7.1.0",
     "season": 2026,
     "week": 6,
-    "model_generated_at": "2026-10-07T10:26:59.869016+00:00",
-    "updated_at_ct": "Oct 7, 2026 \u00b7 5:26 AM CT",
+    "model_generated_at": "2026-10-07T10:39:16.150650+00:00",
+    "updated_at_ct": "Oct 7, 2026 \u00b7 5:39 AM CT",
     "prediction_rows": 57
   },
   "release": {
@@ -70,14 +70,14 @@
       {
         "name": "probability_brier",
         "passed": true,
-        "value": 0.1747649201336038,
+        "value": 0.17476492013360306,
         "requirement": "Brier <= 0.18 on chronological release holdout",
         "detail": ""
       },
       {
         "name": "probability_ece",
         "passed": false,
-        "value": 0.06218232013495966,
+        "value": 0.06218232013495895,
         "requirement": "ECE <= 0.05 on chronological release holdout",
         "detail": ""
       },
@@ -160,15 +160,15 @@
   },
   "model": {
     "validation": "nested whole-week chronology: core fit -> tune weight -> OOF calibration -> untouched evaluation; final refit keeps the tune-selected weight and uses OOF probability calibration",
-    "margin_mae": 12.958502962449392,
+    "margin_mae": 12.95850296244939,
     "margin_baseline_mae": 13.50210922129303,
     "margin_release_weight": 0.75,
-    "total_mae": 12.591604334877207,
+    "total_mae": 12.59160433487721,
     "total_baseline_mae": 12.648615389536973,
     "total_release_weight": 0.30000000000000004,
-    "win_brier": 0.1747649201336038,
-    "win_log_loss": 0.522280638362974,
-    "win_ece": 0.06218232013495966,
+    "win_brier": 0.17476492013360306,
+    "win_log_loss": 0.5222806383629722,
+    "win_ece": 0.06218232013495895,
     "selection_uses_evaluation": false
   },
   "coverage": {
@@ -189,7 +189,7 @@
       "advanced_coverage": 100.0,
       "multi_book": 98.24561403508771,
       "context": 100.0,
-      "calibration": 84.45441996626009,
+      "calibration": 84.45441996626026,
       "freshness": 100.0,
       "drift_margin": 98.5,
       "drift_total": 90.9,
@@ -202,10 +202,10 @@
         "stability_score": 98.5,
         "mean_z": 0.029,
         "std_ratio": 0.9683,
-        "live_mean": 4.355031977491928,
-        "reference_mean": 4.007587882019203,
-        "live_std": 11.613978827637336,
-        "reference_std": 11.99409006138559,
+        "live_mean": 4.355031977491922,
+        "reference_mean": 4.007587882019208,
+        "live_std": 11.613978827637327,
+        "reference_std": 11.994090061385586,
         "live_n": 57,
         "reference_n": 2398
       },
@@ -213,10 +213,10 @@
         "stability_score": 90.9,
         "mean_z": 0.1714,
         "std_ratio": 0.8242,
-        "live_mean": 52.63153363221129,
-        "reference_mean": 53.69890163853031,
-        "live_std": 5.1326358888525405,
-        "reference_std": 6.227517524699614,
+        "live_mean": 52.63153363221127,
+        "reference_mean": 53.698901638530316,
+        "live_std": 5.132635888852556,
+        "reference_std": 6.2275175246996115,
         "live_n": 57,
         "reference_n": 2398
       },
@@ -225,9 +225,9 @@
         "mean_z": 0.0124,
         "std_ratio": 0.985,
         "live_mean": 0.5856800251175757,
-        "reference_mean": 0.582714657203369,
+        "reference_mean": 0.5827146572033706,
         "live_std": 0.2358832384251206,
-        "reference_std": 0.2394736173752905,
+        "reference_std": 0.23947361737529083,
         "live_n": 57,
         "reference_n": 2398
       }
@@ -481,19 +481,6 @@
   },
   "trend": [
     {
-      "generated_at": "2026-10-05T02:03:57.891127+00:00",
-      "model_generated_at": "2026-10-05T02:03:56.760231+00:00",
-      "season": 2026,
-      "week": 6,
-      "platform_version": "7.4.0",
-      "release_state": "RESEARCH",
-      "publication_status": "WARN",
-      "live_readiness_score": 94.0,
-      "distribution_stability": 95.8,
-      "approved_units": 0.0,
-      "data_quality_status": "PASS"
-    },
-    {
       "generated_at": "2026-10-06T03:03:34.562277+00:00",
       "model_generated_at": "2026-10-06T03:03:33.069712+00:00",
       "season": 2026,
@@ -626,6 +613,19 @@
     {
       "generated_at": "2026-10-07T03:16:53.002595+00:00",
       "model_generated_at": "2026-10-07T03:16:11.695176+00:00",
+      "season": 2026,
+      "week": 6,
+      "platform_version": "7.4.0",
+      "release_state": "RESEARCH",
+      "publication_status": "WARN",
+      "live_readiness_score": 94.9,
+      "distribution_stability": 96.2,
+      "approved_units": 0.0,
+      "data_quality_status": "PASS"
+    },
+    {
+      "generated_at": "2026-10-07T10:28:03.763008+00:00",
+      "model_generated_at": "2026-10-07T10:26:59.869016+00:00",
       "season": 2026,
       "week": 6,
       "platform_version": "7.4.0",
