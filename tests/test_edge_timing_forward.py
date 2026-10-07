@@ -121,6 +121,10 @@ def test_primary_first_future_same_book_observation_and_final_hour(tmp_path):
     assert graded.iloc[0]["primary_observed_at"] == "2026-10-08T02:15:00+00:00"
     assert graded.iloc[0]["near_kickoff_line"] == -10
     assert graded.iloc[0]["near_kickoff_observed_at"] == "2026-10-10T19:45:00+00:00"
+    assert report["overall"]["near_kickoff_conclusive"] == 1
+    assert report["overall"]["near_kickoff_correct"] == 1
+    assert report["overall"]["near_kickoff_accuracy"] == 1.0
+    assert report["overall"]["primary_quote_coverage"] == 1.0
     assert report["no_official_close_claim"]
     assert not report["betting_authorized"]
 
