@@ -144,6 +144,62 @@ def _dedupe_quotes(quotes):
     return list(chosen.values())
 
 
+def _line_cluster(quotes, field, floor, cap):
+    """Return a robust same-market quote cluster and reject alternate/live outliers."""
+
+    vals=[]
+    for q in quotes or []:
+        x=_num((q or {}).get(field))
+        if math.isfinite(x):
+            vals.append((q,float(x)))
+    if not vals:
+        return [],0,np.nan,np.nan,False
+    raw=[x for _,x in vals]
+    center=float(np.median(raw))
+    if len(vals)==1:
+        return [vals[0][0]],0,center,float(floor),True
+    if len(vals)==2:
+        if abs(raw[0]-raw[1])>float(cap):
+            return [],len(vals),center,float(cap),False
+        return [q for q,_ in vals],0,center,float(cap),True
+
+    mad=float(np.median(np.abs(np.asarray(raw,float)-center)))
+    tol=min(float(cap),max(float(floor),3.0*mad))
+    accepted=[q for q,x in vals if abs(x-center)<=tol+1e-12]
+    rejected=len(vals)-len(accepted)
+    return accepted,rejected,center,tol,len(accepted)>=2
+
+
+def _home_novig_probability(q):
+    hm=_num((q or {}).get("home_ml")); am=_num((q or {}).get("away_ml"))
+    if not (math.isfinite(hm) and math.isfinite(am)):
+        return np.nan
+    try:
+        _,ph=no_vig(am,hm)
+        return float(ph)
+    except Exception:
+        return np.nan
+
+
+def _moneyline_cluster(quotes, floor=.04, cap=.12):
+    pairs=[(q,_home_novig_probability(q)) for q in quotes or []]
+    pairs=[(q,p) for q,p in pairs if math.isfinite(p)]
+    if not pairs:
+        return [],0,np.nan,np.nan,False
+    vals=[p for _,p in pairs]; center=float(np.median(vals))
+    if len(pairs)==1:
+        return [pairs[0][0]],0,center,float(floor),True
+    if len(pairs)==2:
+        if abs(vals[0]-vals[1])>float(cap):
+            return [],len(pairs),center,float(cap),False
+        return [q for q,_ in pairs],0,center,float(cap),True
+    mad=float(np.median(np.abs(np.asarray(vals,float)-center)))
+    tol=min(float(cap),max(float(floor),3.0*mad))
+    accepted=[q for q,p in pairs if abs(p-center)<=tol+1e-12]
+    rejected=len(pairs)-len(accepted)
+    return accepted,rejected,center,tol,len(accepted)>=2
+
+
 def _best_quote(quotes,line_field=None,price_field=None,line_direction=1,odds_field=None):
     candidates=[]
     for q in quotes or []:
@@ -151,10 +207,13 @@ def _best_quote(quotes,line_field=None,price_field=None,line_direction=1,odds_fi
             odds=_num(q.get(odds_field))
             if math.isfinite(odds): candidates.append((float(odds),q))
             continue
-        line=_num(q.get(line_field));
+        line=_num(q.get(line_field))
         if not math.isfinite(line): continue
         price=_num(q.get(price_field)) if price_field else np.nan
-        price_score=float(price) if math.isfinite(price) else -1e12
+        if price_field and not math.isfinite(price):
+            # A better line without a price is not executable and must not win line-shopping.
+            continue
+        price_score=float(price) if math.isfinite(price) else 0.0
         candidates.append(((float(line_direction)*float(line),price_score),q))
     if not candidates: return None
     return max(candidates,key=lambda x:x[0])[1]
@@ -322,23 +381,37 @@ class MarketIntelligence:
             for k in ("home_ml","away_ml","home_spread","market_total"):
                 if ex.get(k) is None and base.get(k) is not None: ex[k]=float(base[k])
         providers=[_provider(q) for q in qs]
-        sp=_finite_values(q.get("home_spread") for q in qs); to=_finite_values(q.get("market_total") for q in qs)
-        ph=[]
-        for q in qs:
-            if math.isfinite(_num(q.get("home_ml"))) and math.isfinite(_num(q.get("away_ml"))):
-                try: _,x=no_vig(q["away_ml"],q["home_ml"]); ph.append(float(x))
-                except Exception: pass
+        raw_sp=_finite_values(q.get("home_spread") for q in qs)
+        raw_to=_finite_values(q.get("market_total") for q in qs)
+        raw_ph=[_home_novig_probability(q) for q in qs]
+        raw_ph=[x for x in raw_ph if math.isfinite(x)]
 
-        hb=_best_quote(qs,"home_spread","home_spread_price",1); ab=_best_quote(qs,"home_spread","away_spread_price",-1)
-        ob=_best_quote(qs,"market_total","over_price",-1); ub=_best_quote(qs,"market_total","under_price",1)
-        hml=_best_quote(qs,odds_field="home_ml"); aml=_best_quote(qs,odds_field="away_ml")
+        spread_qs,spread_rejected,spread_center,spread_tol,spread_ok=_line_cluster(qs,"home_spread",2.0,6.0)
+        total_qs,total_rejected,total_center,total_tol,total_ok=_line_cluster(qs,"market_total",3.0,7.0)
+        ml_qs,ml_rejected,ml_center,ml_tol,ml_ok=_moneyline_cluster(qs)
+        sp=_finite_values(q.get("home_spread") for q in spread_qs)
+        to=_finite_values(q.get("market_total") for q in total_qs)
+        ph=[_home_novig_probability(q) for q in ml_qs]
+        ph=[x for x in ph if math.isfinite(x)]
+
+        hb=_best_quote(spread_qs,"home_spread","home_spread_price",1)
+        ab=_best_quote(spread_qs,"home_spread","away_spread_price",-1)
+        ob=_best_quote(total_qs,"market_total","over_price",-1)
+        ub=_best_quote(total_qs,"market_total","under_price",1)
+        hml=_best_quote(ml_qs,odds_field="home_ml")
+        aml=_best_quote(ml_qs,odds_field="away_ml")
         bhr=_num(hb.get("home_spread")) if hb else np.nan; bar=-_num(ab.get("home_spread")) if ab else np.nan
         bot=_num(ob.get("market_total")) if ob else np.nan; but=_num(ub.get("market_total")) if ub else np.nan
-        sr=(max(sp)-min(sp)) if len(sp)>1 else (0. if sp else np.nan); tr=(max(to)-min(to)) if len(to)>1 else (0. if to else np.nan)
-        cq=min(1.,len(providers)/4.)
+        sr=(max(sp)-min(sp)) if len(sp)>1 else (0. if sp else np.nan)
+        tr=(max(to)-min(to)) if len(to)>1 else (0. if to else np.nan)
+        raw_sr=(max(raw_sp)-min(raw_sp)) if len(raw_sp)>1 else (0. if raw_sp else np.nan)
+        raw_tr=(max(raw_to)-min(raw_to)) if len(raw_to)>1 else (0. if raw_to else np.nan)
+        usable=set(_provider(q) for q in (spread_qs+total_qs+ml_qs))
+        cq=min(1.,len(usable)/4.)
         if len(sp)>1: cq*=max(.55,1-min(1.,float(np.std(sp))/2.5)*.35)
         if len(to)>1: cq*=max(.55,1-min(1.,float(np.std(to))/3.5)*.35)
         if len(ph)>1: cq*=max(.70,1-min(1.,float(np.std(ph))/.08)*.20)
+        rejected_total=int(spread_rejected+total_rejected+ml_rejected)
         serial=[_clean_quote(q) for q in sorted(qs,key=lambda q:_provider(q).lower())]
         sources=sorted({str(q.get("source") or "unknown") for q in qs})
 
@@ -348,8 +421,13 @@ class MarketIntelligence:
         def selected_quote_time_source(q):
             return _quote_time_source(q) if q else None
         return {
-            "market_book_count":len(providers),"market_books":" | ".join(providers[:20]),"market_quote_sources":" | ".join(sources),"market_quotes_json":json.dumps(serial,sort_keys=True,separators=(",",":")),
+            "market_book_count":len(providers),"market_usable_book_count":len(usable),"market_books":" | ".join(providers[:20]),"market_quote_sources":" | ".join(sources),"market_quotes_json":json.dumps(serial,sort_keys=True,separators=(",",":")),
             "consensus_home_spread":_median(sp),"consensus_total":_median(to),"spread_market_std":float(np.std(sp)) if len(sp)>1 else 0. if sp else np.nan,"total_market_std":float(np.std(to)) if len(to)>1 else 0. if to else np.nan,"spread_market_range":sr,"total_market_range":tr,
+            "raw_spread_market_range":raw_sr,"raw_total_market_range":raw_tr,
+            "spread_quote_rejected_count":int(spread_rejected),"total_quote_rejected_count":int(total_rejected),"moneyline_quote_rejected_count":int(ml_rejected),
+            "spread_cluster_tolerance":spread_tol,"total_cluster_tolerance":total_tol,"moneyline_cluster_tolerance":ml_tol,
+            "spread_market_integrity":bool(spread_ok),"total_market_integrity":bool(total_ok),"moneyline_market_integrity":bool(ml_ok),
+            "market_outlier_rejected_count":rejected_total,"market_outlier_flag":bool(rejected_total>0),
             "best_home_spread":bhr,"best_away_spread":bar,"best_home_spread_odds":_num(hb.get("home_spread_price")) if hb else np.nan,"best_away_spread_odds":_num(ab.get("away_spread_price")) if ab else np.nan,"best_home_spread_book":_provider(hb) if hb else None,"best_away_spread_book":_provider(ab) if ab else None,"best_home_spread_quote_at":selected_quote_at(hb),"best_away_spread_quote_at":selected_quote_at(ab),"best_home_spread_quote_time_source":selected_quote_time_source(hb),"best_away_spread_quote_time_source":selected_quote_time_source(ab),
             "best_over_total":bot,"best_under_total":but,"best_over_odds":_num(ob.get("over_price")) if ob else np.nan,"best_under_odds":_num(ub.get("under_price")) if ub else np.nan,"best_over_book":_provider(ob) if ob else None,"best_under_book":_provider(ub) if ub else None,"best_over_quote_at":selected_quote_at(ob),"best_under_quote_at":selected_quote_at(ub),"best_over_quote_time_source":selected_quote_time_source(ob),"best_under_quote_time_source":selected_quote_time_source(ub),
             "best_home_ml":_num(hml.get("home_ml")) if hml else np.nan,"best_away_ml":_num(aml.get("away_ml")) if aml else np.nan,"best_home_ml_book":_provider(hml) if hml else None,"best_away_ml_book":_provider(aml) if aml else None,"best_home_ml_quote_at":selected_quote_at(hml),"best_away_ml_quote_at":selected_quote_at(aml),"best_home_ml_quote_time_source":selected_quote_time_source(hml),"best_away_ml_quote_time_source":selected_quote_time_source(aml),
@@ -369,4 +447,4 @@ class MarketIntelligence:
             z=_apply_capture_fallback(z,datetime.now(timezone.utc).isoformat())
             for k,v in z.items(): out.at[i,k]=v
             covered+=int(z["market_book_count"]>0); multi+=int(z["market_book_count"]>=2)
-        return out,{"coverage":covered/len(out),"multi_book_coverage":multi/len(out),"odds_api_configured":bool(self.odds_key),"odds_api_used":self.odds_api_used,"action_network_enabled":self.action_network_enabled,"action_network_used":self.action_network_used,"action_network_match_coverage":action_matched/len(out),"errors":self.errors[-20:],"best_line_fields":["best_home_ml","best_away_ml","best_home_spread","best_away_spread","best_over_total","best_under_total"],"best_line_provenance_fields":["best_home_ml_book","best_away_ml_book","best_home_ml_quote_at","best_away_ml_quote_at","best_home_ml_quote_time_source","best_away_ml_quote_time_source","best_home_spread_book","best_away_spread_book","best_home_spread_quote_at","best_away_spread_quote_at","best_home_spread_quote_time_source","best_away_spread_quote_time_source","best_over_book","best_under_book","best_over_quote_at","best_under_quote_at","best_over_quote_time_source","best_under_quote_time_source"]}
+        return out,{"coverage":covered/len(out),"multi_book_coverage":multi/len(out),"market_integrity_filter":"robust consensus cluster; executable-price line shopping","odds_api_configured":bool(self.odds_key),"odds_api_used":self.odds_api_used,"action_network_enabled":self.action_network_enabled,"action_network_used":self.action_network_used,"action_network_match_coverage":action_matched/len(out),"errors":self.errors[-20:],"best_line_fields":["best_home_ml","best_away_ml","best_home_spread","best_away_spread","best_over_total","best_under_total"],"best_line_provenance_fields":["best_home_ml_book","best_away_ml_book","best_home_ml_quote_at","best_away_ml_quote_at","best_home_ml_quote_time_source","best_away_ml_quote_time_source","best_home_spread_book","best_away_spread_book","best_home_spread_quote_at","best_away_spread_quote_at","best_home_spread_quote_time_source","best_away_spread_quote_time_source","best_over_book","best_under_book","best_over_quote_at","best_under_quote_at","best_over_quote_time_source","best_under_quote_time_source"]}
