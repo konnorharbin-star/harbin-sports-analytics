@@ -1,14 +1,14 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-10-07T02:10:00.414856+00:00",
+  "generated_at": "2026-10-07T02:13:17.397419+00:00",
   "status": "WARN",
   "identity": {
     "platform_version": "7.4.0",
     "model_version": "7.1.0",
     "season": 2026,
     "week": 6,
-    "model_generated_at": "2026-10-07T02:09:58.803144+00:00",
-    "updated_at_ct": "Oct 6, 2026 \u00b7 9:09 PM CT",
+    "model_generated_at": "2026-10-07T02:13:16.008831+00:00",
+    "updated_at_ct": "Oct 6, 2026 \u00b7 9:13 PM CT",
     "prediction_rows": 58
   },
   "release": {
@@ -281,12 +281,12 @@
       "reason": "graded history has no usable profit rows"
     },
     "production_block_reason": "",
-    "proposed_units": 6.46,
-    "risk_adjusted_proposed_units": 6.46,
-    "performance_adjusted_proposed_units": 6.46,
+    "proposed_units": 6.45,
+    "risk_adjusted_proposed_units": 6.45,
+    "performance_adjusted_proposed_units": 6.45,
     "approved_units": 0.0,
-    "paper_allocated_units": 3.97,
-    "paper_or_shadow_allocated_units": 3.97,
+    "paper_allocated_units": 3.96,
+    "paper_or_shadow_allocated_units": 3.96,
     "bets": 20,
     "approved_bets": 0,
     "execution_blocked_bets": 41,
@@ -333,11 +333,12 @@
     },
     "allocated_by_market": {
       "moneyline": 0.99,
-      "spread": 2.35,
+      "spread": 2.34,
       "total": 0.63
     },
     "allocated_by_book": {
-      "ActionNetwork book 49": 0.5,
+      "ActionNetwork book 49": 0.2,
+      "ActionNetwork book 69": 0.29,
       "ActionNetwork book 71": 0.43,
       "ActionNetwork book 30": 2.0,
       "ActionNetwork book 15": 0.13,
@@ -347,7 +348,7 @@
     },
     "allocated_by_kickoff_window": {
       "2026-10-08 21:00:00+00:00": 0.39,
-      "2026-10-07 00:00:00+00:00": 0.3,
+      "2026-10-07 00:00:00+00:00": 0.29,
       "2026-10-10 21:00:00+00:00": 0.85,
       "2026-10-10 18:00:00+00:00": 1.29,
       "2026-10-10 00:00:00+00:00": 0.14,
@@ -357,7 +358,7 @@
     },
     "allocated_by_team_exposure": {
       "South Florida": 0.2,
-      "Southern Miss": 0.3,
+      "Southern Miss": 0.29,
       "San Diego State": 0.29,
       "Vanderbilt": 0.25,
       "Temple": 0.29,
@@ -424,8 +425,8 @@
   "tier_validation": {
     "status": "TRACKING",
     "graded_tier_bets": 144,
-    "validation_eligible_bets": 0,
-    "excluded_from_validation": 0,
+    "validation_eligible_bets": 101,
+    "excluded_from_validation": 43,
     "validated_cells": 0,
     "underperforming_cells": 0
   },
@@ -478,25 +479,12 @@
         "name": "approved_not_above_allocation",
         "passed": true,
         "severity": "ERROR",
-        "detail": "approved=0.00 allocated=3.97"
+        "detail": "approved=0.00 allocated=3.96"
       }
     ],
     "errors": []
   },
   "trend": [
-    {
-      "generated_at": "2026-10-03T19:58:30.094769+00:00",
-      "model_generated_at": "2026-10-03T19:58:28.907837+00:00",
-      "season": 2026,
-      "week": 5,
-      "platform_version": "7.4.0",
-      "release_state": "RESEARCH",
-      "publication_status": "WARN",
-      "live_readiness_score": 95.3,
-      "distribution_stability": 93.8,
-      "approved_units": 0.0,
-      "data_quality_status": "PASS"
-    },
     {
       "generated_at": "2026-10-03T22:36:25.428156+00:00",
       "model_generated_at": "2026-10-03T22:36:24.828074+00:00",
@@ -636,6 +624,19 @@
       "release_state": "RESEARCH",
       "publication_status": "WARN",
       "live_readiness_score": 94.0,
+      "distribution_stability": 95.8,
+      "approved_units": 0.0,
+      "data_quality_status": "PASS"
+    },
+    {
+      "generated_at": "2026-10-07T02:10:00.414856+00:00",
+      "model_generated_at": "2026-10-07T02:09:58.803144+00:00",
+      "season": 2026,
+      "week": 6,
+      "platform_version": "7.4.0",
+      "release_state": "RESEARCH",
+      "publication_status": "WARN",
+      "live_readiness_score": 93.7,
       "distribution_stability": 95.8,
       "approved_units": 0.0,
       "data_quality_status": "PASS"
