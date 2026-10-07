@@ -4,6 +4,7 @@ import math
 import numpy as np
 
 from .execution_market import install_execution_timestamp_patch
+from .edge_regimes import match_edge_regime
 from .market import roi
 from .policy import signal_from_policy, load_policy, DEFAULT_POLICY, market_allowed
 
@@ -70,8 +71,13 @@ def _market_reliability_multiplier(market, side):
     return 1.0
 
 
-def select_best_market(row, risk_multiplier=1.0, policy_path=PRODUCTION_POLICY_PATH):
-    """Select only markets with an actual executable price and carry quote provenance."""
+def select_best_market(row, risk_multiplier=1.0, policy_path=PRODUCTION_POLICY_PATH, edge_report=None):
+    """Select an executable market, prioritizing proven persistent edge regimes.
+
+    Historical regime evidence can change which already-qualified positive-EV market
+    is selected, but never changes the fair projection, probability, raw EV, tier,
+    or increases sizing.
+    """
     candidates=[]; week=row.get("week")
 
     if _finite(row.get("quant_best_ml_roi")):
@@ -115,7 +121,21 @@ def select_best_market(row, risk_multiplier=1.0, policy_path=PRODUCTION_POLICY_P
             if not allowed: blocked.append(f"{m}: {reason}")
         return {"quant_signal":"PASS","quant_market":None,"quant_side":None,"quant_book":None,"quant_quote_at":None,"quant_ev":0.0,"stake_units":0.0,"quant_probability":np.nan,"quant_odds":np.nan,"policy_block_reason":" | ".join(blocked)}
 
-    best=max(candidates,key=lambda x:x["ev"])
+    raw_best=max(candidates,key=lambda x:x["ev"])
+    for candidate in candidates:
+        regime=match_edge_regime(edge_report,candidate["market"],candidate["edge"]) if edge_report else None
+        candidate["edge_regime_status"]=(regime or {}).get("status","UNSUPPORTED")
+        candidate["edge_regime_band"]=(regime or {}).get("edge_band","")
+        candidate["edge_regime_bets"]=int((regime or {}).get("bets",0) or 0)
+        candidate["edge_regime_roi"]=(regime or {}).get("roi")
+        candidate["edge_regime_profitable_seasons"]=int((regime or {}).get("profitable_seasons",0) or 0)
+        candidate["edge_regime_season_count"]=int((regime or {}).get("season_count",0) or 0)
+
+    persistent=[x for x in candidates if x["edge_regime_status"]=="PERSISTENT_CANDIDATE"]
+    best=max(persistent,key=lambda x:x["ev"]) if persistent else raw_best
+    override=bool(persistent) and (
+        best["market"]!=raw_best["market"] or str(best["side"])!=str(raw_best["side"])
+    )
     segment_multiplier=_market_reliability_multiplier(best["market"],best["side"])
     units=fractional_kelly_units(best["p"],best["odds"],risk_multiplier*segment_multiplier,policy_path=policy_path)
     return {
@@ -123,6 +143,18 @@ def select_best_market(row, risk_multiplier=1.0, policy_path=PRODUCTION_POLICY_P
         "quant_price":best["line"],"quant_odds":best["odds"],"quant_ev":best["ev"],
         "quant_probability":best["p"],"quant_edge":best["edge"],"stake_units":round(units,2),
         "historical_segment_multiplier":segment_multiplier,
+        "selection_basis":"persistent_edge_regime" if persistent else "highest_raw_ev",
+        "edge_selection_override":override,
+        "raw_ev_best_market":raw_best["market"],
+        "raw_ev_best_side":raw_best["side"],
+        "raw_ev_best_ev":raw_best["ev"],
+        "edge_regime_status":best["edge_regime_status"],
+        "edge_regime_band":best["edge_regime_band"],
+        "edge_regime_bets":best["edge_regime_bets"],
+        "edge_regime_roi":best["edge_regime_roi"],
+        "edge_regime_profitable_seasons":best["edge_regime_profitable_seasons"],
+        "edge_regime_season_count":best["edge_regime_season_count"],
+        "edge_regime_candidate":best["edge_regime_status"]=="PERSISTENT_CANDIDATE",
         "policy_block_reason":"",
     }
 
