@@ -17,6 +17,7 @@ MAX_QUOTE_AGE_MINUTES = 120
 MAX_SNAPSHOT_QUOTE_GAP_MINUTES = 120
 CLOCK_TOLERANCE_MINUTES = 5
 MIN_MOVEMENT_MINUTES = 10
+MAX_MOVEMENT_LOOKBACK_HOURS = 12
 
 
 def _ts(value):
@@ -161,6 +162,9 @@ def _status(row, history, as_of):
     if priority not in {"ROBUST_CORE", "CORE"}:
         result.update(timing_action="PASS", timing_reason="NOT_PRIORITY_CORE")
         return result
+    if str(row.get("market")) != "spread":
+        result.update(timing_action="NO_TIMING_SIGNAL", timing_reason="MARKET_DIRECTION_NOT_CALIBRATED")
+        return result
     if pd.isna(cutoff) or cutoff <= as_of:
         result.update(timing_action="PASS", timing_reason="GAME_STARTED_OR_BAD_KICKOFF")
         return result
@@ -188,6 +192,7 @@ def _status(row, history, as_of):
     # Historic quotes must precede the current quote by at least ten minutes;
     # different prices at a different book are never called line movement.
     same = same[same["_seen"] <= quote - pd.Timedelta(minutes=MIN_MOVEMENT_MINUTES)]
+    same = same[same["_seen"] >= quote - pd.Timedelta(hours=MAX_MOVEMENT_LOOKBACK_HOURS)]
     result["timing_observations"] = int(len(same))
     if same.empty:
         return result
