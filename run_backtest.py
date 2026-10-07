@@ -6,6 +6,7 @@ from pathlib import Path
 from harbin.backtest_audit import run_backtest
 from harbin.policy import derive_production_policy, DEFAULT_POLICY
 from harbin.proof import build_evidence_report
+from harbin.edge_regimes import write_edge_regime_report
 
 p=argparse.ArgumentParser(description="Leakage-safe historical CFB market backtest")
 p.add_argument("--start-season",type=int,default=2023)
@@ -14,6 +15,7 @@ p.add_argument("--history-start",type=int,default=2018)
 a=p.parse_args()
 
 bets,summary=run_backtest(a.start_season,a.end_season,a.history_start)
+edge_regimes=write_edge_regime_report(bets,"reports/edge_regimes.json","reports/edge_regimes.csv")
 
 # Evidence is frozen before policy calibration. The policy may read that evidence,
 # but the untouched policy-evaluation block can never rewrite historical outcomes.
@@ -47,4 +49,6 @@ print("Promotion CLV:",evidence.get("overall",{}).get("avg_clv"))
 print("Promotion ROI 95% week-block CI:",evidence.get("overall",{}).get("roi_ci_95"))
 print("Evidence:",evidence["status"])
 print("Deployment mode:",policy["deployment_mode"])
-print("Open reports/backtest_summary.json, reports/evidence_report.json, and reports/production_policy.json.")
+print("Persistent edge regimes:",edge_regimes.get("persistent_regimes",0))
+print("Watch edge regimes:",edge_regimes.get("watch_regimes",0))
+print("Open reports/backtest_summary.json, reports/edge_regimes.json, reports/evidence_report.json, and reports/production_policy.json.")
