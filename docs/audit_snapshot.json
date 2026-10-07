@@ -1,14 +1,14 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-10-07T02:46:23.950836+00:00",
+  "generated_at": "2026-10-07T02:53:53.564472+00:00",
   "status": "WARN",
   "identity": {
     "platform_version": "7.4.0",
     "model_version": "7.1.0",
     "season": 2026,
     "week": 6,
-    "model_generated_at": "2026-10-07T02:46:23.061767+00:00",
-    "updated_at_ct": "Oct 6, 2026 \u00b7 9:46 PM CT",
+    "model_generated_at": "2026-10-07T02:53:52.313987+00:00",
+    "updated_at_ct": "Oct 6, 2026 \u00b7 9:53 PM CT",
     "prediction_rows": 58
   },
   "release": {
@@ -281,12 +281,12 @@
       "reason": "graded history has no usable profit rows"
     },
     "production_block_reason": "",
-    "proposed_units": 6.7,
-    "risk_adjusted_proposed_units": 6.7,
-    "performance_adjusted_proposed_units": 6.7,
+    "proposed_units": 6.69,
+    "risk_adjusted_proposed_units": 6.69,
+    "performance_adjusted_proposed_units": 6.69,
     "approved_units": 0.0,
-    "paper_allocated_units": 4.21,
-    "paper_or_shadow_allocated_units": 4.21,
+    "paper_allocated_units": 4.2,
+    "paper_or_shadow_allocated_units": 4.2,
     "bets": 20,
     "approved_bets": 0,
     "execution_blocked_bets": 1,
@@ -332,21 +332,22 @@
       "max_book_units": 2.0
     },
     "allocated_by_market": {
-      "total": 1.19,
+      "total": 1.18,
       "moneyline": 0.99,
       "spread": 2.03
     },
     "allocated_by_book": {
-      "ActionNetwork book 71": 0.97,
+      "ActionNetwork book 49": 0.55,
       "ActionNetwork book 69": 0.2,
+      "ActionNetwork book 71": 0.41,
       "ActionNetwork book 30": 2.0,
       "ActionNetwork book 15": 0.13,
       "ActionNetwork book 75": 0.61,
-      "DraftKings": 0.12,
+      "Draft Kings": 0.12,
       "ActionNetwork book 68": 0.18
     },
     "allocated_by_kickoff_window": {
-      "2026-10-07 00:00:00+00:00": 0.56,
+      "2026-10-07 00:00:00+00:00": 0.55,
       "2026-10-08 21:00:00+00:00": 0.39,
       "2026-10-10 21:00:00+00:00": 0.83,
       "2026-10-10 18:00:00+00:00": 1.29,
@@ -356,8 +357,8 @@
       "2026-10-09 21:00:00+00:00": 0.18
     },
     "allocated_by_team_exposure": {
-      "Troy": 0.56,
-      "Southern Miss": 0.56,
+      "Troy": 0.55,
+      "Southern Miss": 0.55,
       "South Florida": 0.2,
       "San Diego State": 0.27,
       "Vanderbilt": 0.25,
@@ -479,25 +480,12 @@
         "name": "approved_not_above_allocation",
         "passed": true,
         "severity": "ERROR",
-        "detail": "approved=0.00 allocated=4.21"
+        "detail": "approved=0.00 allocated=4.20"
       }
     ],
     "errors": []
   },
   "trend": [
-    {
-      "generated_at": "2026-10-04T14:32:19.932186+00:00",
-      "model_generated_at": "2026-10-04T14:32:18.542702+00:00",
-      "season": 2026,
-      "week": 6,
-      "platform_version": "7.4.0",
-      "release_state": "RESEARCH",
-      "publication_status": "WARN",
-      "live_readiness_score": 80.7,
-      "distribution_stability": 95.8,
-      "approved_units": 0.0,
-      "data_quality_status": "WARN"
-    },
     {
       "generated_at": "2026-10-04T14:34:39.936928+00:00",
       "model_generated_at": "2026-10-04T14:34:38.935626+00:00",
@@ -637,6 +625,19 @@
       "release_state": "RESEARCH",
       "publication_status": "WARN",
       "live_readiness_score": 93.7,
+      "distribution_stability": 95.8,
+      "approved_units": 0.0,
+      "data_quality_status": "PASS"
+    },
+    {
+      "generated_at": "2026-10-07T02:46:23.950836+00:00",
+      "model_generated_at": "2026-10-07T02:46:23.061767+00:00",
+      "season": 2026,
+      "week": 6,
+      "platform_version": "7.4.0",
+      "release_state": "RESEARCH",
+      "publication_status": "WARN",
+      "live_readiness_score": 94.9,
       "distribution_stability": 95.8,
       "approved_units": 0.0,
       "data_quality_status": "PASS"

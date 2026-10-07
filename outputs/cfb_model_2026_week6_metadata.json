@@ -481,8 +481,8 @@
   },
   "calibrated_margin_sigma": 16.288777071580245,
   "calibrated_total_sigma": 16.102959927363244,
-  "generated_at": "2026-10-07T02:46:23.061767+00:00",
-  "updated_at_ct": "Oct 6, 2026 \u00b7 9:46 PM CT",
+  "generated_at": "2026-10-07T02:53:52.313987+00:00",
+  "updated_at_ct": "Oct 6, 2026 \u00b7 9:53 PM CT",
   "schedule_source": "sportsdataverse/cfbfastR-data",
   "odds_source": "ESPN live (site.web.api.espn.com) + ESPN Core supplement",
   "odds_errors": [],
@@ -599,12 +599,18 @@
       null
     ],
     "max_drawdown": 0.0,
+    "by_market": {},
+    "by_signal": {},
+    "by_book": {},
+    "by_edge_bucket": {},
+    "by_season": {},
+    "clv_method": "first execution-ready cap-constrained portfolio decision strictly before kickoff; close is latest timestamp-valid market snapshot strictly before kickoff",
+    "verified_close_clv_samples": 0,
     "portfolio_verified": true,
     "evidence_source": "portfolio_decisions_v1",
-    "eligible_decisions": 0,
-    "timing_excluded_rows": 68,
-    "status": "live/shadow evidence only; not historical backtest evidence",
-    "clv_method": "first execution-ready cap-constrained portfolio decision strictly before kickoff; close is latest timestamp-valid market snapshot strictly before kickoff"
+    "eligible_decisions": 19,
+    "timing_excluded_rows": 69,
+    "status": "live/shadow evidence only; not historical backtest evidence"
   },
   "tier_validation": {
     "status": "EARLY_SAMPLE",
@@ -615,7 +621,7 @@
     "underperforming_cells": 0
   },
   "health": {
-    "system_health_score": 84.0,
+    "system_health_score": 84.2,
     "meaning": "engineering/model-readiness score only; not a profitability or win-rate guarantee",
     "components": {
       "pipeline_and_data": 100.0,
@@ -625,7 +631,7 @@
       "probability_calibration": 87.6,
       "market_intelligence": 99.4,
       "current_context": 100.0,
-      "live_monitoring": 93.7,
+      "live_monitoring": 94.9,
       "historical_betting_proof": 25.0
     },
     "betting_proof_status": "UNPROVEN",
@@ -878,12 +884,12 @@
       "reason": "graded history has no usable profit rows"
     },
     "production_block_reason": "",
-    "proposed_units": 6.7,
-    "risk_adjusted_proposed_units": 6.7,
-    "performance_adjusted_proposed_units": 6.7,
+    "proposed_units": 6.69,
+    "risk_adjusted_proposed_units": 6.69,
+    "performance_adjusted_proposed_units": 6.69,
     "approved_units": 0.0,
-    "paper_allocated_units": 4.21,
-    "paper_or_shadow_allocated_units": 4.21,
+    "paper_allocated_units": 4.2,
+    "paper_or_shadow_allocated_units": 4.2,
     "bets": 20,
     "approved_bets": 0,
     "execution_blocked_bets": 1,
@@ -929,21 +935,22 @@
       "max_book_units": 2.0
     },
     "allocated_by_market": {
-      "total": 1.19,
+      "total": 1.18,
       "moneyline": 0.99,
       "spread": 2.03
     },
     "allocated_by_book": {
-      "ActionNetwork book 71": 0.97,
+      "ActionNetwork book 49": 0.55,
       "ActionNetwork book 69": 0.2,
+      "ActionNetwork book 71": 0.41,
       "ActionNetwork book 30": 2.0,
       "ActionNetwork book 15": 0.13,
       "ActionNetwork book 75": 0.61,
-      "DraftKings": 0.12,
+      "Draft Kings": 0.12,
       "ActionNetwork book 68": 0.18
     },
     "allocated_by_kickoff_window": {
-      "2026-10-07 00:00:00+00:00": 0.56,
+      "2026-10-07 00:00:00+00:00": 0.55,
       "2026-10-08 21:00:00+00:00": 0.39,
       "2026-10-10 21:00:00+00:00": 0.83,
       "2026-10-10 18:00:00+00:00": 1.29,
@@ -953,8 +960,8 @@
       "2026-10-09 21:00:00+00:00": 0.18
     },
     "allocated_by_team_exposure": {
-      "Troy": 0.56,
-      "Southern Miss": 0.56,
+      "Troy": 0.55,
+      "Southern Miss": 0.55,
       "South Florida": 0.2,
       "San Diego State": 0.27,
       "Vanderbilt": 0.25,
@@ -995,6 +1002,6 @@
     "path": "history/portfolio_decisions_v1.csv",
     "eligible_rows": 20,
     "appended_rows": 20,
-    "total_rows": 353
+    "total_rows": 373
   }
 }
