@@ -1540,5 +1540,13 @@
   },
   "clv_method": "latest timestamp-valid snapshot strictly before kickoff; spread/total use consensus close when available; moneyline uses consensus no-vig probability; execution CLV retains the actual bet price",
   "verified_close_clv_samples": 56,
-  "status": "live/shadow evidence only; tier validation is display-model quality evidence and does not authorize portfolio stake"
+  "status": "live/shadow evidence only; tier validation is display-model quality evidence and does not authorize portfolio stake",
+  "edge_forward_validation": {
+    "schema_version": 1,
+    "status": "PENDING_FORWARD",
+    "observed_rows": 0,
+    "clean_entries": 0,
+    "graded_bets": 0,
+    "note": "No forward edge candidate history exists yet."
+  }
 }
