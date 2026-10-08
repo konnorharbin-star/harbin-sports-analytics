@@ -6,6 +6,10 @@ Automated college-football projection, probability, market-comparison, risk, mon
 
 The [read-only model command center](docs/command-center.html) brings the CFB and [NFL](https://github.com/konnorharbin-star/harbin-nfl-analytics) published audit, evidence, monitoring, and GitHub Actions status into one place. It does not approve bets or override release gates. [Operations and deployment guide](docs/COMMAND_CENTER.md).
 
+## Free forward research grading
+
+The [free forward grading workflow](docs/FREE_FORWARD_GRADING.md) reviews historical first-seen research watchlist entries against each model's already-public postgame grade ledger. Outputs are explicitly **hypothetical**, do not represent placed wagers, and cannot verify an actual execution price. This is a read-only, free-to-operate research feature.
+
 ## Run the live model
 
 1. Open **Actions**.
