@@ -325,7 +325,7 @@ def research_report(snapshot: dict[str, object]) -> str:
         "not verified profitable bets or bookmaker execution instructions.",
         "",
         f"Observed at: {snapshot['observed_at_utc']}",
-        f"Snapshot: \`{snapshot['snapshot_id']}\`",
+        f"Snapshot: `{snapshot['snapshot_id']}`",
         "",
     ]
     for league, data in snapshot["leagues"].items():
