@@ -327,13 +327,25 @@ def latest_movement_report(
     closing_quotes: dict[str, list[dict[str, Any]]],
     *,
     parse_diagnostics: dict[str, Any] | None = None,
+    as_of: datetime | None = None,
 ) -> dict[str, Any]:
+    if as_of is not None and as_of.tzinfo is None:
+        raise ValueError("as_of must be timezone aware")
     rows = []
     for cand in candidates:
         league = cand.get("league")
-        rows.append(select_later_same_book(cand, closing_quotes.get(league, [])))
+        comparison = select_later_same_book(cand, closing_quotes.get(league, []))
+        kickoff = utc_datetime(cand.get("kickoff_utc"))
+        if (
+            as_of is not None and kickoff is not None
+            and as_of.astimezone(timezone.utc) < kickoff
+            and comparison["status"]=="NO_VERIFIABLE_LATER_SAME_BOOK_SNAPSHOT"
+        ):
+            comparison["status"]="PREGAME_AWAITING_SAME_BOOK_CLOSE"
+        rows.append(comparison)
     rows.sort(key=lambda x:(str(x["league"]),str(x["game_id"]),str(x["market"])))
     matched = [x for x in rows if x["status"]=="OBSERVED_SAME_BOOK_NEAR_KICKOFF"]
+    pending = [x for x in rows if x["status"]=="PREGAME_AWAITING_SAME_BOOK_CLOSE"]
     return {
         "schema_version": 1, "mode": "READ_ONLY_SAME_BOOK_LINE_MOVEMENT",
         "automatic_betting_enabled": False, "paid_sources_used": False,
@@ -343,6 +355,8 @@ def latest_movement_report(
             "frozen_candidates": len(rows),
             "same_book_near_kickoff_observations": len(matched),
             "unverified_or_unmatched": len(rows)-len(matched),
+            "pregame_awaiting_close": len(pending),
+            "past_or_invalid_without_comparison": len(rows)-len(matched)-len(pending),
             "profitable_edge_proven": False,
         },
         "limitations": (
@@ -367,7 +381,8 @@ def markdown_report(report: dict[str, Any]) -> str:
         "",
         f"Frozen research candidates: {summary['frozen_candidates']}.",
         f"Near-kickoff same-book observations: {summary['same_book_near_kickoff_observations']}.",
-        f"Unavailable or invalid: {summary['unverified_or_unmatched']}.",
+        f"Pending pregame, waiting for a same-book close: {summary['pregame_awaiting_close']}.",
+        f"Past or invalid without comparison: {summary['past_or_invalid_without_comparison']}.",
         "",
         "| League | Game | Market / side | Book | Entry | Later prekickoff | Line advantage | Status |",
         "|---|---|---|---|---|---|---:|---|",
@@ -427,7 +442,10 @@ def main(argv: list[str] | None = None) -> int:
             else parse_cfb_market_rows(raw)
         )
         diagnostics[league]=stats
-    report=latest_movement_report(candidates,quotes,parse_diagnostics=diagnostics)
+    report=latest_movement_report(
+        candidates, quotes, parse_diagnostics=diagnostics,
+        as_of=datetime.now(timezone.utc),
+    )
     args.json_out.parent.mkdir(parents=True,exist_ok=True)
     args.markdown_out.parent.mkdir(parents=True,exist_ok=True)
     args.json_out.write_text(json.dumps(report,indent=2,sort_keys=True,allow_nan=False)+"\n")

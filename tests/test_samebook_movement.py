@@ -242,3 +242,37 @@ def test_entry_quote_newer_than_observation_fails_closed():
     qs,_=parse_cfb_market_rows(cfb_csv([cfb_quote()]))
     result=select_later_same_book(c,qs)
     assert result["status"]=="INVALID_OR_UNTIMED_ORIGINAL_QUOTE"
+
+
+def test_pending_games_not_mislabeled_as_failed_close():
+    from datetime import datetime
+    item=candidate()
+    before=datetime.fromisoformat("2026-10-08T23:00:00+00:00")
+    after=datetime.fromisoformat("2026-10-09T03:00:00+00:00")
+    pending=latest_movement_report([item],{"CFB":[]},as_of=before)
+    assert pending["summary"]["pregame_awaiting_close"] == 1
+    assert pending["summary"]["past_or_invalid_without_comparison"] == 0
+    assert pending["comparisons"][0]["status"] == "PREGAME_AWAITING_SAME_BOOK_CLOSE"
+    assert "Pending pregame" in markdown_report(pending)
+    past=latest_movement_report([item],{"CFB":[]},as_of=after)
+    assert past["summary"]["pregame_awaiting_close"] == 0
+    assert past["summary"]["past_or_invalid_without_comparison"] == 1
+    assert past["comparisons"][0]["status"] == "NO_VERIFIABLE_LATER_SAME_BOOK_SNAPSHOT"
+
+
+def test_invalid_publication_not_hidden_by_upcoming_kickoff():
+    from datetime import datetime
+    item=candidate()
+    item["source_contract_status"]="FAIL"
+    pending=latest_movement_report(
+        [item],{"CFB":[]},as_of=datetime.fromisoformat("2026-10-08T23:00:00+00:00")
+    )
+    assert pending["summary"]["pregame_awaiting_close"]==0
+    assert pending["comparisons"][0]["status"]=="ORIGINAL_PUBLICATION_CONTRACT_UNVERIFIED"
+
+
+def test_naive_asof_time_rejected():
+    from datetime import datetime
+    import pytest
+    with pytest.raises(ValueError):
+        latest_movement_report([candidate()],{"CFB":[]},as_of=datetime(2026,10,8,23))
