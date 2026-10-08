@@ -10,6 +10,7 @@
   "current_rows": 9,
   "current_actions": {
     "PASS": 6,
-    "NO_TIMING_SIGNAL": 3
+    "WAIT_MONITOR": 2,
+    "NO_TIMING_SIGNAL": 1
   }
 }

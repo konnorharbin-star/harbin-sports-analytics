@@ -6,7 +6,7 @@
     "advanced_coverage": 100.0,
     "multi_book": 98.18181818181819,
     "context": 100.0,
-    "calibration": 84.45441996626026,
+    "calibration": 84.45441996626012,
     "freshness": 100.0,
     "drift_margin": 98.5,
     "drift_total": 91.6,
@@ -21,7 +21,7 @@
       "std_ratio": 0.9812,
       "live_mean": 4.506152289355524,
       "reference_mean": 4.007587882019208,
-      "live_std": 11.768568833544725,
+      "live_std": 11.768568833544736,
       "reference_std": 11.994090061385586,
       "live_n": 55,
       "reference_n": 2398
@@ -32,7 +32,7 @@
       "std_ratio": 0.8364,
       "live_mean": 52.71177327605069,
       "reference_mean": 53.698901638530316,
-      "live_std": 5.2088435617378375,
+      "live_std": 5.208843561737831,
       "reference_std": 6.2275175246996115,
       "live_n": 55,
       "reference_n": 2398
