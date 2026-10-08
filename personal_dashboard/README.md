@@ -17,7 +17,11 @@ A **personal, password-gated, read-only Streamlit dashboard** for the published 
 - An ordinary public Streamlit deployment is **not** private without an actual access control layer. Do not deploy this to a public URL without configuring secret handling and authenticated access. For single-user remote access, a private network tunnel or host-level access control can be used, subject to its free-tier limits and terms.
 - App reads public GitHub Raw files; it does not need a GitHub API token, paid AI API, or odds subscription.
 - Odds and published prices may be stale. The display is research-only and does not place bets.
-- All-game views currently link to the native model boards; the next phase can normalize the model projection formats into one shared table.
+- All-game views parse the latest linked native model HTML boards into a searchable weekly table. The data is still read-only and retains native market tags.
+
+## Private phone setup
+
+Follow [PRIVATE_PHONE_SETUP.md](PRIVATE_PHONE_SETUP.md) for local Streamlit plus Tailscale Serve (private HTTPS tailnet access, no public hosting). Your computer must remain powered on to provide access. Do not use Tailscale Funnel.
 
 ## Sources
 
