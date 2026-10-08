@@ -9,6 +9,7 @@ from datetime import datetime, timezone
 
 import pandas as pd
 import requests
+from bs4 import BeautifulSoup
 import streamlit as st
 
 st.set_page_config(page_title="Harbin Sports | Private", page_icon="🏈", layout="wide")
@@ -106,6 +107,73 @@ def clean_view(frame: pd.DataFrame, limit: int = 200) -> pd.DataFrame:
     return view.head(limit)
 
 
+
+def latest_board_path(repo: str) -> tuple[str | None, str]:
+    """Resolve the weekly HTML from the model's published README, never hardcode week."""
+    content, error = fetch(repo, "outputs/README.md")
+    if content is None:
+        return None, error
+    raw = content.decode("utf-8", errors="replace")
+    # Markdown links in published output; resolve only HTML filenames under outputs/.
+    links = re.findall(r"\\[[^]]+\\]\\(([^)]+\\.html)\\)", raw)
+    for link in links:
+        if re.fullmatch(r"[A-Za-z0-9_.-]+\\.html", link) and (
+            link.startswith("nfl_week_") or link.startswith("cfb_model_")
+        ):
+            return f"outputs/{link}", ""
+    return None, "No current weekly HTML board published in outputs/README.md"
+
+
+def game_board(repo: str) -> tuple[pd.DataFrame, str]:
+    path, problem = latest_board_path(repo)
+    if not path:
+        return pd.DataFrame(), problem
+    raw, error = fetch(repo, path)
+    if raw is None:
+        return pd.DataFrame(), error
+    soup = BeautifulSoup(raw, "html.parser")
+    records = []
+    for tr in soup.select("table tbody tr"):
+        cells = tr.find_all("td", recursive=False)
+        if len(cells) < 6:
+            continue
+        matchup = cells[0].get_text(" ", strip=True)
+        if " @ " not in matchup:
+            continue
+        away, home = matchup.split(" @ ", 1)
+        # HTML rows contain the model's published percentages and picks.
+        records.append({
+            "Away": away.strip(),
+            "Home": home.strip(),
+            "Projected score (away–home)": cells[1].get_text(" ", strip=True),
+            "Win probability (projected favorite)": cells[2].get_text(" ", strip=True),
+            "Moneyline": cells[3].get_text(" ", strip=True),
+            "Spread": cells[4].get_text(" ", strip=True),
+            "Total": cells[5].get_text(" ", strip=True),
+        })
+    if not records:
+        return pd.DataFrame(), "Weekly HTML board contained no parseable game rows"
+    return pd.DataFrame(records), ""
+
+
+def portfolio_classification(frame: pd.DataFrame, sport: str) -> pd.Series:
+    """Approval is NEVER inferred from a STRONG/BET/LEAN research label."""
+    if frame.empty:
+        return pd.Series(dtype=str)
+    stake = pd.to_numeric(frame.get("portfolio_stake_units", pd.Series(0, index=frame.index)) if sport == "NFL"
+        else frame.get("stake_units", pd.Series(0, index=frame.index)), errors="coerce").fillna(0)
+    if sport == "NFL":
+        production = frame.get("production_signal", pd.Series("", index=frame.index)).astype(str).str.upper()
+        action = frame.get("portfolio_action", pd.Series("", index=frame.index)).astype(str).str.upper()
+        # Release may separately block staking. Never label approved without verified release state.
+        return pd.Series(["No approved wager" for _ in frame.index], index=frame.index) if not (
+            (production.isin(["BET", "STRONG"]) & action.isin(["BET", "STRONG"]) & (stake > 0)).any()
+        ) else pd.Series(["Portfolio stake present — verify release gate" if s > 0 and p in ("BET", "STRONG") and a in ("BET", "STRONG") else "No approved wager"
+                          for s, p, a in zip(stake, production, action)], index=frame.index)
+    return pd.Series(["Research allocation only — verify release gate" if s > 0 else "No approved wager"
+                      for s in stake], index=frame.index)
+
+
 gate()
 with st.sidebar:
     st.title("🏈 HARBIN")
@@ -144,22 +212,43 @@ with tabs[0]:
         st.caption("Prices can go stale. These signals do not override the production release gate.")
 
 with tabs[1]:
-    st.subheader("Model portfolio recommendations")
+    st.subheader("Portfolio status — never inferred from edge labels")
     portfolio, issue = table(repo, cfg["bets"])
     if issue:
-        st.warning(f"Portfolio file currently unavailable: {issue}")
+        st.warning(f"Portfolio source unavailable: {issue}")
     elif portfolio.empty:
-        st.info("No portfolio records published. No betting approval is implied.")
+        st.info("No published portfolio records.")
     else:
-        st.dataframe(clean_view(portfolio), hide_index=True, use_container_width=True)
-        st.caption("Check approval status and stake in the source report before betting.")
+        portfolio = portfolio.copy()
+        portfolio.insert(0, "Dashboard interpretation", portfolio_classification(portfolio, sport))
+        st.dataframe(portfolio[[c for c in [
+            "away_team", "home_team", "Dashboard interpretation",
+            "quant_signal", "production_signal", "research_signal",
+            "quant_market", "quant_side", "quant_price", "quant_odds",
+            "quant_probability", "quant_ev", "stake_units", "portfolio_stake_units",
+            "portfolio_action", "portfolio_limit_reason",
+        ] if c in portfolio.columns]], hide_index=True, use_container_width=True)
+        st.caption("A model allocation or label is not proof of production approval. Confirm release state in source reports.")
 
 with tabs[2]:
-    st.subheader("Complete weekly game projections")
-    st.write("Open the canonical prediction board, which includes games even when no bet qualifies.")
-    board = f"https://github.com/{OWNER}/{repo}/blob/main/outputs/README.md"
-    st.link_button(f"Open {sport} latest prediction board", board)
-    st.caption("The model's own live board remains the source of truth for all games and projected scores.")
+    st.subheader("Every published game — full weekly board")
+    games, issue = game_board(repo)
+    if issue:
+        st.warning(f"Could not load full weekly board: {issue}")
+    else:
+        st.metric("Games on board", len(games))
+        keyword = st.text_input("Search team", key=f"team_{sport}")
+        if keyword:
+            games = games[
+                games["Away"].str.contains(keyword, case=False, regex=False) |
+                games["Home"].str.contains(keyword, case=False, regex=False)
+            ]
+        st.dataframe(games, use_container_width=True, hide_index=True)
+        st.caption("Winner probability and market tags are copied from the canonical HTML board, not recalculated here.")
+    board_path, _ = latest_board_path(repo)
+    if board_path:
+        st.link_button("Open original published board",
+                       f"https://github.com/{OWNER}/{repo}/blob/main/{board_path}")
 
 with tabs[3]:
     st.subheader("Publication diagnostics")
