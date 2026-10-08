@@ -10,7 +10,8 @@ def test_command_center_is_standalone_and_links_both_repositories() -> None:
     assert "harbin-nfl-analytics" in page
     assert "audit_snapshot.json" in page
     assert "actions/runs" in page
-    assert "MODEL" not in page[:0]  # The page does not need runtime Python.
+    assert 'id="cfb-card"' in page
+    assert 'id="nfl-card"' in page
 
 
 def test_command_center_is_read_only_and_fails_closed() -> None:
