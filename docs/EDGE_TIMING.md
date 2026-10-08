@@ -95,3 +95,55 @@ The directional Wilson confidence intervals are descriptive and do not adjust
 for within-game clustering or data-availability selection. Missing snapshots,
 sportsbook quote timestamps, stale prices, and observation frequency must
 be monitored before drawing an operational conclusion.
+
+## Phase 4: fixed-baseline, paired forward assessment
+
+This module reports whether the **frozen** timing labels select a better
+**observed price direction** than simple alternatives, using the **same
+candidate, same sportsbook, same initial offer and same 6–9 hour window**.
+It does not estimate profitability, actual fillability or causal advantage.
+
+- **ALWAYS_NOW** selects the initial frozen offer.
+- **ALWAYS_WAIT** selects the first eligible recorded offer 6–9 hours later.
+- **CHRONOLOGICAL_MAJORITY** uses only conclusive quotes observed **before
+  the specific current decision** and from **earlier kickoff weeks**. Requires
+  20 earlier conclusive cases from 3 earlier kickoff weeks; it abstains on
+  insufficient data or a 50/50 tie, never labels hindsight as foresight.
+
+The benchmark outcome is observed-price **BETTER / WORSE** for the backed
+side, requiring spread/odds directional agreement. FLAT and MIXED_LINE_PRICE
+are unscored and counted explicitly; missing later same-book offers remain
+missing, not priced as an automatic WAIT failure or fictional BET NOW win.
+No historical decisions are retroactively synthesized.
+
+The paired comparison uses the *identical* unambiguous market moves for
+the timing label and the two fixed baselines. We report each strategy's
+conditional directional hit rate and **paired percentage-point lift**.
+Chronological-majority lift is evaluated only on cases where the baseline
+could have made a time-correct prediction. In addition, a second sensitivity
+table scores the last observed same-book quote in the final pre-kickoff hour;
+this is *not* a certified closing price. The grader now preserves the
+**actual observed bookmaker** for each future quote and audits that the
+benchmark used the frozen initial book and valid timestamps/prices.
+
+The report, `reports/edge_timing_baseline_performance.json`, and the
+case-by-case `reports/edge_timing_baseline_graded.csv` are published to
+`outputs/` and `docs/` by independent live grading.
+
+**Gates (research-only):** At least 100 unambiguous paired cases, at least
+80 distinct games, 8 kickoff weeks, and 20 cases for *each* action; at
+least 80% overall matured-window quote coverage, 70% for each action, and
+30 previously forecast chronological-majority comparisons. A predeclared
+deterministic kickoff-week-block bootstrap (2,000 repetitions) must have a
+positive 95% lower lift bound versus *all three* baseline policies.
+Before the sample threshold, confidence intervals are withheld. Even after
+passing, the status is **INDEPENDENT_REVIEW_ELIGIBLE_NOT_APPROVED**, never
+PRODUCTION or an instruction to stake.
+
+These cases are conditioned on prior selection into priority supported
+subgroups. They cannot show that the underlying edges outperform markets
+or that the timing strategy is better than no selection, since unselected
+games form no randomized control group. Uneven/noisy sportsbook capture,
+book disappearance and market spread/price ambiguity create selection
+bias. Directional price improvement itself is not ROI, CLV, positive EV,
+or demonstrable execute-at-price availability.
