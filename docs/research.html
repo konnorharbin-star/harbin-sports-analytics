@@ -1,0 +1,139 @@
+<!doctype html>
+<html lang="en"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="color-scheme" content="dark">
+<title>Harbin Research Board — Free, Manual Only</title>
+<style>
+:root{color-scheme:dark;font-family:Inter,system-ui,-apple-system,Segoe UI,sans-serif;background:#0b101a;color:#f0f5ff}
+*{box-sizing:border-box}body{margin:0}main{max-width:1180px;margin:auto;padding:30px 18px 65px}
+h1{font-size:clamp(25px,3.5vw,37px);letter-spacing:-.04em;margin:6px 0 10px}
+h2{font-size:18px;margin:26px 0 13px}
+a{color:#8cc0ff;text-decoration:none}a:hover{text-decoration:underline}
+small,.muted{font-size:12px;color:#aebbd0;line-height:1.6}
+.label{font-size:11px;letter-spacing:.16em;font-weight:800;color:#81b9fa;text-transform:uppercase}
+.banner{border:1px solid #394865;padding:16px 19px;background:#18263d;border-radius:14px;margin:20px 0}
+.banner strong{display:block;margin-bottom:6px;font-size:16px}
+.banner p{margin:0;color:#c6d2e2;font-size:13px;line-height:1.55}
+.toolbar{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin:20px 0}
+button{background:#182840;border:1px solid #334e73;color:#e7f0fd;padding:8px 13px;border-radius:8px;cursor:pointer;font:inherit;font-size:13px}
+button[aria-pressed=true]{border-color:#70aefa;background:#214166}
+button:hover{background:#2a4466}
+button:disabled{opacity:.55}
+#refresh{margin-left:auto}
+.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}
+.model{min-width:0;background:#121d2e;border:1px solid #2d3c54;padding:17px;border-radius:14px}
+.model-title{display:flex;justify-content:space-between;gap:8px;align-items:center}
+.model-title h3{font-size:18px;margin:0}
+.pill{font-size:10px;border-radius:5px;border:1px solid #69562c;background:#4a3b20;color:#ffe3a6;padding:5px 8px;font-weight:800}
+.pill.error{background:#4a252e;color:#ffb6c4;border-color:#753b48}
+.meta{margin:9px 0 14px;color:#a8bbd2;font-size:12px}
+.candidate{border-top:1px solid #2c3950;padding:12px 0;display:grid;gap:6px}
+.cardtop{display:flex;justify-content:space-between;align-items:flex-start;gap:12px}
+.cardtop strong{font-size:14px}
+.score{color:#b2d6ff;font-size:12px;white-space:nowrap}
+.details{color:#c1d0e1;font-size:12px;line-height:1.5}
+.flags{font-size:12px;color:#ffdb9a;line-height:1.45;overflow-wrap:anywhere}
+.errorbox{color:#ffc3cb;padding:20px 0;line-height:1.7}
+hr{border:none;border-top:1px solid #273750;margin:24px 0}
+footer{font-size:12px;color:#a0b0c5;line-height:1.8}
+@media(max-width:790px){.grid{grid-template-columns:1fr}main{padding:18px 13px 45px}}
+</style></head><body><main>
+<div class="label">Harbin Sports Analytics / Research</div>
+<h1>Model Research Board</h1>
+<p class="muted">Football model candidates with timestamped sources and integrity warnings. All analysis here is informational, never an instruction to place a wager.</p>
+<div class="banner">
+<strong>No automatic betting. No paid services. No verified best bets claimed.</strong>
+<p>The board reads the last archived public research observation from GitHub. Source-model EV is not a guarantee of profitability. If validation, quote quality, or publication health is insufficient, the opportunity remains research-only.</p>
+</div>
+<div class="toolbar" aria-label="Filter models">
+<button type="button" data-league="ALL" aria-pressed="true">Both leagues</button>
+<button type="button" data-league="NFL" aria-pressed="false">NFL</button>
+<button type="button" data-league="CFB" aria-pressed="false">College football</button>
+<button type="button" id="refresh">Refresh</button>
+</div>
+<div id="sourceStatus" class="muted" role="status" aria-live="polite">Checking published research history…</div>
+<div id="cards" class="grid" aria-label="Model research watchlists"></div>
+<hr>
+<footer>
+<strong>Methods and limitations:</strong> This page displays a read-only ranking of published model candidates. It refuses missing or invalid archives, does not show games after kickoff as current opportunities, and flags quotes over 90 minutes old. It does not verify independent profitability, create an account, submit a wager, or spend money. Source: <a href="https://github.com/konnorharbin-star/harbin-sports-analytics/tree/ops-evidence/history/free-observer">public append-only research archive</a>. Return to the <a href="./">CFB model</a> or <a href="https://konnorharbin-star.github.io/harbin-nfl-analytics/">NFL model</a>.
+</footer>
+</main><script>
+"use strict";
+const source="https://raw.githubusercontent.com/konnorharbin-star/harbin-sports-analytics/ops-evidence/history/free-observer/latest.json";
+let snapshot=null, selected="ALL";
+const node=id=>document.getElementById(id);
+function el(tag,cls,value){const n=document.createElement(tag);if(cls)n.className=cls;if(value!=null)n.textContent=String(value);return n;}
+function num(value){return typeof value==="number"&&Number.isFinite(value)?value:null;}
+function fmt(value){return num(value)===null?"Unavailable":value.toFixed(1);}
+function parseDate(value){const d=Date.parse(value||"");return Number.isFinite(d)?d:null;}
+function pill(value,fail){const p=el("span","pill"+(fail?" error":""),value);return p;}
+function render(){
+ const root=node("cards");root.replaceChildren();
+ if(!snapshot)return;
+ for(const league of ["NFL","CFB"]){
+   if(selected!=="ALL"&&selected!==league)continue;
+   const data=snapshot.leagues[league], card=el("section","model");
+   const head=el("div","model-title");
+   head.append(el("h3","",league==="NFL"?"NFL Model":"College Football"));
+   const unhealthy=data.reconciliation_status!=="PASS"||data.audit_status==="FAIL"||!data.publication_fresh;
+   head.append(pill(unhealthy?"AUDIT / STALE":"RESEARCH ONLY",unhealthy));
+   card.append(head);
+   card.append(el("div","meta",
+     "Season "+(data.season??"?")+" · Week "+(data.week??"?")+" · Release "+
+     (data.release_state||"UNKNOWN")+" · "+data.research_candidates_found+" archived candidates"));
+   const now=Date.now();
+   const watch=Array.isArray(data.research_watchlist)?data.research_watchlist:[];
+   const active=watch.filter(item=>{const at=parseDate(item.kickoff_utc);return at!==null&&at>now;});
+   if(!active.length) card.append(el("p","muted","No upcoming research candidates in the latest observed snapshot."));
+   active.slice(0,8).forEach((item,i)=>{
+     const wrap=el("div","candidate"),top=el("div","cardtop");
+     top.append(el("strong","",String(i+1)+". "+item.away_team+" @ "+item.home_team));
+     top.append(el("div","score",
+       (item.recalculated_ev==null?"EV unverified":"Raw model EV "+(100*item.recalculated_ev).toFixed(1)+"%")));
+     wrap.append(top);
+     const price=item.line==null?"":(" "+item.line);
+     const odds=num(item.american_odds)===null?"unavailable":((item.american_odds>=0?"+":"")+item.american_odds);
+     wrap.append(el("div","details",
+       item.side+" "+item.market+price+" · "+item.book+" · Odds "+odds));
+     const published=parseDate(item.quoted_at_utc);
+     const quoteOld=published===null||now-published>90*60*1000||published>now+120000;
+     const blockers=Array.isArray(item.blockers)?item.blockers:[];
+     const text=blockers.join(", ")+(quoteOld?(blockers.length?", ":"")+"quote_not_current":"");
+     wrap.append(el("div","flags","RESEARCH ONLY · "+(text||"Source-model EV not independently validated")));
+     if(published!==null)wrap.append(el("div","muted","Quote observed "+new Date(published).toLocaleString()));
+     card.append(wrap);
+   });
+   root.append(card);
+ }
+}
+async function reload(){
+ node("refresh").disabled=true;
+ node("sourceStatus").textContent="Loading public research archive…";
+ const controller=new AbortController(), t=setTimeout(()=>controller.abort(),12000);
+ try{
+   const response=await fetch(source+"?v="+Math.floor(Date.now()/300000),{signal:controller.signal,cache:"no-store"});
+   if(!response.ok)throw Error("HTTP "+response.status);
+   const data=await response.json();
+   if(data.schema_version!==1||data.mode!=="READ_ONLY_RESEARCH"||
+      data.automatic_betting_enabled!==false||!data.leagues?.NFL||!data.leagues?.CFB)throw Error("Invalid research archive schema");
+   const dt=parseDate(data.observed_at_utc);
+   if(dt===null||dt>Date.now()+300000)throw Error("Invalid snapshot timestamp");
+   snapshot=data;
+   const old=Date.now()-dt>24*60*60*1000;
+   node("sourceStatus").textContent="Archive observed "+new Date(dt).toLocaleString()+
+      (old?" · STALE (older than 24 hours)":" · Research observations, not validated bets");
+   render();
+ }catch(e){
+   snapshot=null;node("cards").replaceChildren();
+   node("sourceStatus").textContent="Research archive unavailable: "+e.message+
+      ". No market recommendations can be verified. The observer must be merged and run first.";
+ }finally{clearTimeout(t);node("refresh").disabled=false;}
+}
+document.querySelectorAll("button[data-league]").forEach(btn=>btn.addEventListener("click",()=>{
+ selected=btn.dataset.league;
+ document.querySelectorAll("button[data-league]").forEach(b=>b.setAttribute("aria-pressed",String(b===btn)));
+ render();
+}));
+node("refresh").addEventListener("click",reload);
+reload();
+</script></body></html>
