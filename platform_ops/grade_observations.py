@@ -18,6 +18,7 @@ from platform_ops.free_observer import (
     SOURCE_REPOS, american_profit, finite_number, get_public_bytes, utc_datetime
 )
 from platform_ops.score_verification import verification_index
+from platform_ops.forward_calibration import forward_calibration
 
 RESULTS_PATH = "reports/live_graded_bets.csv"
 MAX_KICKOFF_DIFF = timedelta(minutes=5)
@@ -306,6 +307,7 @@ def grade_archive(
         },
         "archive_integrity": audit_counts,
         "summary": summary,
+        "calibration": forward_calibration(graded),
         "graded": graded,
     }
 
@@ -333,6 +335,29 @@ def report_markdown(report: dict[str, Any]) -> str:
             f"| {league} | {stat['graded_observations']} | "
             f"{stat['wins']}/{stat['losses']}/{stat['pushes']} | {rate} |"
         )
+    lines.extend([
+        "",
+        "### Probability calibration (verified research only)",
+        "",
+        "| League | Valid binary observations | Brier | Log loss | Status |",
+        "|---|---:|---:|---:|---|",
+    ])
+    for league in ("NFL", "CFB"):
+        if report.get("calibration") is None:
+            break
+        stats = report["calibration"]["results"][league]["all_markets"]
+        brier = "N/A" if stats["brier"] is None else f"{stats['brier']:.4f}"
+        log_loss = "N/A" if stats["log_loss"] is None else f"{stats['log_loss']:.4f}"
+        lines.append(
+            f"| {league} | {stats['graded_probabilities']} | "
+            f"{brier} | {log_loss} | {stats['status']} |"
+        )
+    lines += [
+        "",
+        "These are descriptive scores of a selected research sample. A few correct "
+        "bets do not establish probability calibration or a profitable edge.",
+        "",
+    ]
     pending = report["unresolved"]
     lines += [
         "",
