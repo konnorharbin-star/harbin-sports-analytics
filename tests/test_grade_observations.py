@@ -21,6 +21,7 @@ def candidate(
     quoted=None, kickoff=None,
 ):
     return {
+        "league": "NFL",
         "game_id": "2026_05_TB_DAL", "away_team": "TB", "home_team": "DAL",
         "market": market, "side": side, "line": line,
         "american_odds": odds, "book": "Public Example Book",
