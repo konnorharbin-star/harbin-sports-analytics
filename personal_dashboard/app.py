@@ -243,8 +243,29 @@ with tabs[2]:
                 games["Away"].str.contains(keyword, case=False, regex=False) |
                 games["Home"].str.contains(keyword, case=False, regex=False)
             ]
-        st.dataframe(games, use_container_width=True, hide_index=True)
-        st.caption("Winner probability and market tags are copied from the canonical HTML board, not recalculated here.")
+        if games.empty:
+            st.info("No games match that team.")
+        else:
+            st.caption("Tap a matchup to inspect its model projection and market comparisons.")
+            labels = [f"{row['Away']} @ {row['Home']}" for _, row in games.iterrows()]
+            choice = st.selectbox("Matchup details", options=range(len(labels)),
+                                  format_func=lambda i: labels[i], key=f"matchup_{sport}")
+            selected_game = games.iloc[choice]
+            away_col, home_col = st.columns(2)
+            with away_col:
+                st.caption("Away team")
+                st.subheader(selected_game["Away"])
+            with home_col:
+                st.caption("Home team")
+                st.subheader(selected_game["Home"])
+            st.metric("Projected final (away–home)", selected_game["Projected score (away–home)"])
+            st.metric("Published favorite win probability", selected_game["Win probability (projected favorite)"])
+            for heading in ("Moneyline", "Spread", "Total"):
+                st.markdown(f"**{heading}**")
+                st.write(selected_game[heading])
+            with st.expander("See every game in one table"):
+                st.dataframe(games, use_container_width=True, hide_index=True)
+        st.caption("These are original published model projections, not newly inferred betting approvals.")
     board_path, _ = latest_board_path(repo)
     if board_path:
         st.link_button("Open original published board",
