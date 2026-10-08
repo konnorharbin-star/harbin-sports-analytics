@@ -5,12 +5,16 @@ import os
 import unittest
 from pathlib import Path
 
-from streamlit.testing.v1 import AppTest
+try:
+    from streamlit.testing.v1 import AppTest
+except ImportError:
+    AppTest = None
 
 
 APP = str(Path(__file__).with_name("app.py"))
 
 
+@unittest.skipUnless(AppTest is not None, "Streamlit dashboard dependencies not installed")
 class DashboardSmokeTests(unittest.TestCase):
     def test_missing_password_fails_closed(self):
         previous = os.environ.pop("DASHBOARD_PASSWORD", None)
