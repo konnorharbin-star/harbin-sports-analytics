@@ -11,6 +11,7 @@ from platform_ops.free_observer import (
     append_archive,
     build_snapshot,
     safe_candidate,
+    research_report,
     utc_datetime,
     write_sqlite_snapshot,
 )
@@ -162,3 +163,15 @@ def test_observer_has_no_sportsbook_placement_or_paid_services() -> None:
     for banned in ("place_bet(", "submit_wager(", "bet_slip(", "Stripe", "THE_ODDS_API_KEY"):
         assert banned not in source
     assert "automatic_betting_enabled" in source
+
+
+def test_report_shows_ranked_research_but_not_approved_wagers() -> None:
+    sources, hashes = inputs()
+    doc = research_report(build_snapshot(sources, hashes, NOW))
+    assert "# Harbin free model research" in doc
+    assert "NO AUTOMATIC WAGERS" in doc
+    assert "Validated best bets: NONE" in doc
+    assert "RESEARCH" in doc
+    assert "model_not_production_validated" in doc
+    assert "Samplebook" in doc
+    assert "unvalidated" in doc
