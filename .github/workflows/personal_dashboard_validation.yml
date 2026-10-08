@@ -1,0 +1,32 @@
+name: Personal Dashboard Validation
+
+on:
+  pull_request:
+    paths:
+      - 'personal_dashboard/**'
+      - '.github/workflows/personal_dashboard_validation.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  dashboard:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install dashboard dependencies
+        run: python -m pip install -r personal_dashboard/requirements.txt
+      - name: Syntax and import verification
+        run: |
+          python -m compileall -q personal_dashboard
+          python -c "import streamlit, pandas, requests, bs4"
+      - name: Check required entrypoints
+        run: |
+          test -f personal_dashboard/app.py
+          test -f personal_dashboard/PRIVATE_PHONE_SETUP.md
+          test -f personal_dashboard/requirements.txt
