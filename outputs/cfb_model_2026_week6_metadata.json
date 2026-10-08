@@ -481,8 +481,8 @@
   },
   "calibrated_margin_sigma": 16.28877707158025,
   "calibrated_total_sigma": 16.102959927363244,
-  "generated_at": "2026-10-07T23:54:38.793211+00:00",
-  "updated_at_ct": "Oct 7, 2026 \u00b7 6:54 PM CT",
+  "generated_at": "2026-10-08T00:01:51.037939+00:00",
+  "updated_at_ct": "Oct 7, 2026 \u00b7 7:01 PM CT",
   "schedule_source": "sportsdataverse/cfbfastR-data",
   "odds_source": "ESPN live (site.web.api.espn.com) + ESPN Core supplement",
   "odds_errors": [],
@@ -563,13 +563,13 @@
       "401871066"
     ],
     "invalid_kickoff_game_ids": [],
-    "cutoff_utc": "2026-10-07T23:54:38.793211+00:00"
+    "cutoff_utc": "2026-10-08T00:01:51.037939+00:00"
   },
   "edge_forward_snapshot": {
     "status": "APPENDED",
     "appended": 10,
-    "total_rows": 49,
-    "snapshot_at": "2026-10-07T23:54:38.793211+00:00",
+    "total_rows": 59,
+    "snapshot_at": "2026-10-08T00:01:51.037939+00:00",
     "path": "history/edge_candidate_snapshots.csv"
   },
   "edge_timing": {
@@ -586,6 +586,15 @@
       "PASS": 6,
       "NO_TIMING_SIGNAL": 3
     }
+  },
+  "timing_forward_decisions": {
+    "status": "NO_NEW_DECISIONS",
+    "schema_version": 1,
+    "appended": 0,
+    "total_decisions": 0,
+    "path": "history/timing_decisions_v1.csv",
+    "research_only": true,
+    "approved_units": 0
   },
   "current_context": {
     "coverage": 1.0,
@@ -662,13 +671,13 @@
     "verified_close_clv_samples": 0,
     "portfolio_verified": true,
     "evidence_source": "portfolio_decisions_v1",
-    "eligible_decisions": 318,
+    "eligible_decisions": 338,
     "timing_excluded_rows": 70,
     "status": "live/shadow evidence only; not historical backtest evidence"
   },
   "edge_forward_validation": {
     "status": "PENDING_FORWARD",
-    "observed_rows": 49,
+    "observed_rows": 59,
     "clean_entries": 0,
     "graded_bets": 0,
     "roi": null,
@@ -888,9 +897,9 @@
         "mean_z": 0.0416,
         "std_ratio": 0.9812,
         "live_mean": 4.506152289355529,
-        "reference_mean": 4.007587882019204,
+        "reference_mean": 4.007587882019208,
         "live_std": 11.768568833544736,
-        "reference_std": 11.994090061385588,
+        "reference_std": 11.994090061385586,
         "live_n": 55,
         "reference_n": 2398
       },
@@ -899,7 +908,7 @@
         "mean_z": 0.1585,
         "std_ratio": 0.8364,
         "live_mean": 52.7117732760507,
-        "reference_mean": 53.69890163853031,
+        "reference_mean": 53.698901638530316,
         "live_std": 5.2088435617378215,
         "reference_std": 6.2275175246996115,
         "live_n": 55,
@@ -910,9 +919,9 @@
         "mean_z": 0.021,
         "std_ratio": 1.0,
         "live_mean": 0.5877513237104882,
-        "reference_mean": 0.5827146572033696,
+        "reference_mean": 0.5827146572033706,
         "live_std": 0.23946479011694674,
-        "reference_std": 0.23947361737529071,
+        "reference_std": 0.23947361737529083,
         "live_n": 55,
         "reference_n": 2398
       }
@@ -1008,7 +1017,7 @@
       "ActionNetwork book 30": 0.55,
       "ActionNetwork book 69": 0.83,
       "ActionNetwork book 49": 0.56,
-      "DraftKings": 0.24,
+      "Draft Kings": 0.24,
       "ActionNetwork book 15": 0.13,
       "ActionNetwork book 68": 0.17,
       "ActionNetwork book 71": 0.28
@@ -1062,6 +1071,6 @@
     "path": "history/portfolio_decisions_v1.csv",
     "eligible_rows": 20,
     "appended_rows": 20,
-    "total_rows": 673
+    "total_rows": 693
   }
 }
