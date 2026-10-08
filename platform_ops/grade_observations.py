@@ -17,6 +17,7 @@ from typing import Any
 from platform_ops.free_observer import (
     SOURCE_REPOS, american_profit, finite_number, get_public_bytes, utc_datetime
 )
+from platform_ops.score_verification import verification_index
 
 RESULTS_PATH = "reports/live_graded_bets.csv"
 MAX_KICKOFF_DIFF = timedelta(minutes=5)
@@ -198,6 +199,10 @@ def grade_candidate(candidate: dict[str, Any], result: dict[str, Any]) -> dict[s
 def grade_archive(
     archive_root: Path, results: dict[str, str],
     as_of: datetime,
+    *,
+    independent_scores: dict[tuple[str, str], dict[str, Any]] | None = None,
+    require_independent: bool = False,
+    independent_meta: dict[str, Any] | None = None,
 ) -> dict[str, Any]:
     if as_of.tzinfo is None: raise ValueError("as_of must be timezone aware")
     candidates, audit_counts = collect_archived_candidates(archive_root)
@@ -209,6 +214,8 @@ def grade_archive(
     graded: list[dict[str, Any]] = []
     pending = 0
     unknown = 0
+    independent_missing = 0
+    independent_disagreement = 0
     for candidate in sorted(candidates, key=lambda c: (
         c["league"], c["kickoff_utc"], c["game_id"], c["market"]
     )):
@@ -220,10 +227,37 @@ def grade_archive(
         if result is None:
             unknown += 1
             continue
+        if require_independent:
+            second = (independent_scores or {}).get(
+                (candidate["league"], str(candidate["game_id"]))
+            )
+            if second is None:
+                independent_missing += 1
+                continue
+            same_scores = (
+                result["margin_home"] == second["margin_home"]
+                and result["total"] == second["total"]
+                and abs(utc_datetime(result["kickoff"]) -
+                        utc_datetime(second["kickoff"])) <= MAX_KICKOFF_DIFF
+                and str(result["home_team"]).casefold() ==
+                    str(second["home_team"]).casefold()
+                and str(result["away_team"]).casefold() ==
+                    str(second["away_team"]).casefold()
+            )
+            if not same_scores:
+                independent_disagreement += 1
+                continue
         grade = grade_candidate(candidate, result)
         if grade is None:
             unknown += 1
             continue
+        grade["independent_score_verified"] = require_independent
+        grade["independent_score_source"] = (
+            second["score_source"] if require_independent else None
+        )
+        grade["espn_event_id"] = (
+            second["espn_event_id"] if require_independent else None
+        )
         graded.append(grade)
     summary: dict[str, dict[str, Any]] = {}
     for league in ("CFB", "NFL"):
@@ -250,13 +284,25 @@ def grade_archive(
         "mode": "POSTGAME_RESEARCH_AUDIT",
         "automatic_betting_enabled": False,
         "paid_data_used": False,
-        "result_provenance": "model-authored existing public graded-bets ledgers, NOT independent official scores",
+        "result_provenance": (
+            "Existing model result ledger cross-checked against final-score"
+            " ESPN public scoreboard (unofficial API)" if require_independent else
+            "model-authored graded-bets ledgers, NOT independently confirmed"
+        ),
+        "independent_score_verification_required": require_independent,
+        "independent_score_report": independent_meta or {},
+
         "sample_limitation": (
             "First-seen research watchlist candidates only; subject to upstream selection "
             "and incomplete outcome coverage. Not representative of all games or executable bets."
         ),
         "verified_profitability_proven": False,
-        "unresolved": {"pending_games": pending, "outcomes_unavailable_or_mismatch": unknown},
+        "unresolved": {
+            "pending_games": pending,
+            "model_outcomes_unavailable_or_mismatch": unknown,
+            "independent_scores_missing": independent_missing,
+            "independent_scores_disagree": independent_disagreement,
+        },
         "archive_integrity": audit_counts,
         "summary": summary,
         "graded": graded,
@@ -269,8 +315,11 @@ def report_markdown(report: dict[str, Any]) -> str:
         "",
         "**No wagers placed. No automatic betting. All ROI here is hypothetical.**",
         "",
-        "Outcome sources are the existing model-authored graded-bets CSV reports, "
-        "not independent official score confirmation.",
+        ("Only rows matching both the existing model's grading ledger and a "
+         "completed ESPN public scoreboard are graded. ESPN's endpoint is "
+         "undocumented, not an official league certification."
+         if report["independent_score_verification_required"] else
+         "Model-authored results only; no independent score confirmation."),
         "",
         "| League | Graded observations | W / L / P | Hypothetical flat-stake ROI |",
         "|---|---:|---:|---:|",
@@ -283,7 +332,13 @@ def report_markdown(report: dict[str, Any]) -> str:
             f"| {league} | {stat['graded_observations']} | "
             f"{stat['wins']}/{stat['losses']}/{stat['pushes']} | {rate} |"
         )
-    lines += ["", "Not a validated betting edge. Late/missing/ambiguous"
+    pending = report["unresolved"]
+    lines += [
+        "",
+        f"Independent scores unavailable: {pending['independent_scores_missing']}; "
+        f"independent score disagreements: {pending['independent_scores_disagree']}.",
+        "",
+        "Not a validated betting edge. Late/missing/ambiguous"
               " quotes or results are omitted; no profitability promotion.", ""]
     return "\n".join(lines)
 
@@ -298,7 +353,14 @@ def main(argv: list[str] | None = None) -> int:
         league: get_public_bytes(repo, RESULTS_PATH).decode("utf-8-sig")
         for league, repo in SOURCE_REPOS.items()
     }
-    data = grade_archive(args.archive_root, results, datetime.now(timezone.utc))
+    frozen, _counts = collect_archived_candidates(args.archive_root)
+    independent_scores, verification_meta = verification_index(frozen)
+    data = grade_archive(
+        args.archive_root, results, datetime.now(timezone.utc),
+        independent_scores=independent_scores,
+        require_independent=True,
+        independent_meta=verification_meta,
+    )
     args.json_out.parent.mkdir(parents=True, exist_ok=True)
     args.markdown_out.parent.mkdir(parents=True, exist_ok=True)
     args.json_out.write_text(json.dumps(data, indent=2, sort_keys=True, allow_nan=False))
