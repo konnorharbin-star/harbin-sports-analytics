@@ -481,8 +481,8 @@
   },
   "calibrated_margin_sigma": 16.28877707158025,
   "calibrated_total_sigma": 16.102959927363244,
-  "generated_at": "2026-10-08T23:10:32.690254+00:00",
-  "updated_at_ct": "Oct 8, 2026 \u00b7 6:10 PM CT",
+  "generated_at": "2026-10-08T23:13:02.104887+00:00",
+  "updated_at_ct": "Oct 8, 2026 \u00b7 6:13 PM CT",
   "schedule_source": "sportsdataverse/cfbfastR-data",
   "odds_source": "ESPN live (site.web.api.espn.com) + ESPN Core supplement",
   "odds_errors": [],
@@ -565,13 +565,13 @@
       "401871052"
     ],
     "invalid_kickoff_game_ids": [],
-    "cutoff_utc": "2026-10-08T23:10:32.690254+00:00"
+    "cutoff_utc": "2026-10-08T23:13:02.104887+00:00"
   },
   "edge_forward_snapshot": {
     "status": "APPENDED",
     "appended": 8,
-    "total_rows": 149,
-    "snapshot_at": "2026-10-08T23:10:32.690254+00:00",
+    "total_rows": 157,
+    "snapshot_at": "2026-10-08T23:13:02.104887+00:00",
     "path": "history/edge_candidate_snapshots.csv"
   },
   "edge_timing": {
@@ -673,13 +673,13 @@
     "verified_close_clv_samples": 0,
     "portfolio_verified": true,
     "evidence_source": "portfolio_decisions_v1",
-    "eligible_decisions": 538,
+    "eligible_decisions": 558,
     "timing_excluded_rows": 70,
     "status": "live/shadow evidence only; not historical backtest evidence"
   },
   "edge_forward_validation": {
     "status": "PENDING_FORWARD",
-    "observed_rows": 149,
+    "observed_rows": 157,
     "clean_entries": 0,
     "graded_bets": 0,
     "roi": null,
@@ -959,12 +959,12 @@
       "reason": "graded history has no usable profit rows"
     },
     "production_block_reason": "",
-    "proposed_units": 4.86,
-    "risk_adjusted_proposed_units": 4.86,
-    "performance_adjusted_proposed_units": 4.86,
+    "proposed_units": 4.87,
+    "risk_adjusted_proposed_units": 4.87,
+    "performance_adjusted_proposed_units": 4.87,
     "approved_units": 0.0,
-    "paper_allocated_units": 3.33,
-    "paper_or_shadow_allocated_units": 3.33,
+    "paper_allocated_units": 3.34,
+    "paper_or_shadow_allocated_units": 3.34,
     "bets": 20,
     "approved_bets": 0,
     "execution_blocked_bets": 0,
@@ -1011,22 +1011,22 @@
     },
     "allocated_by_market": {
       "total": 0.68,
-      "spread": 2.03,
+      "spread": 2.04,
       "moneyline": 0.62
     },
     "allocated_by_book": {
       "ActionNetwork book 69": 0.9,
       "ActionNetwork book 71": 0.91,
-      "ActionNetwork book 30": 0.73,
+      "ActionNetwork book 30": 0.74,
       "ActionNetwork book 49": 0.32,
       "ActionNetwork book 75": 0.33,
-      "DraftKings": 0.14
+      "Draft Kings": 0.14
     },
     "allocated_by_kickoff_window": {
       "2026-10-10 18:00:00+00:00": 0.87,
       "2026-10-10 21:00:00+00:00": 1.04,
       "2026-10-10 15:00:00+00:00": 0.85,
-      "2026-10-08 21:00:00+00:00": 0.18,
+      "2026-10-08 21:00:00+00:00": 0.19,
       "2026-10-11 00:00:00+00:00": 0.19,
       "2026-10-10 00:00:00+00:00": 0.2
     },
@@ -1039,8 +1039,8 @@
       "Georgia": 0.16,
       "Nebraska": 0.14,
       "Indiana": 0.14,
+      "South Florida": 0.19,
       "UCF": 0.2,
-      "South Florida": 0.18,
       "Hawai'i": 0.19,
       "Texas A&M": 0.12,
       "Iowa": 0.12,
@@ -1072,6 +1072,6 @@
     "path": "history/portfolio_decisions_v1.csv",
     "eligible_rows": 20,
     "appended_rows": 20,
-    "total_rows": 893
+    "total_rows": 913
   }
 }

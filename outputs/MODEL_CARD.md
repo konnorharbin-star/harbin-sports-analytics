@@ -2,9 +2,9 @@
 
 ## Identity
 - Core model version: **7.1.0**
-- Repository revision: `81d615a81e66a04f08d5c7059f8d2a6137df6866`
+- Repository revision: `5c535acb30440ed9a2774a151c362bdecfc17c4b`
 - Season / Week: **2026 / 6**
-- Generated: **Oct 8, 2026 · 6:10 PM CT**
+- Generated: **Oct 8, 2026 · 6:13 PM CT**
 
 ## Intended use
 Independent CFB score, margin, total and win-probability estimation; sportsbook comparison; paper/production betting research with explicit uncertainty and risk controls. The Cooper-style table is a presentation layer, not the proprietary formula of any third party.
@@ -28,8 +28,8 @@ Independent CFB score, margin, total and win-probability estimation; sportsbook 
 - Live monitoring score: **94.8/100**
 - Portfolio mode: **PAPER**
 - Approved units: **0.0**
-- Proposed units before bankroll/concentration controls: **4.86**
-- Paper/shadow allocated units after controls: **3.33**
+- Proposed units before bankroll/concentration controls: **4.87**
+- Paper/shadow allocated units after controls: **3.34**
 - Unit-risk multiplier: **1.0**
 - Current live/shadow drawdown: **0.0 units**
 - Portfolio hard stop active: **False**
