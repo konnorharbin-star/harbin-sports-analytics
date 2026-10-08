@@ -82,6 +82,8 @@ def _strict_observation(row, prefix):
         "candidate_quote", "captured_market_quote"
     ):
         return ("INVALID_OBSERVATION", None)
+    if str(row.get(prefix + "_book") or "") != str(row.get("book") or ""):
+        return ("INVALID_OBSERVATION", None)
     entry_line, entry_odds = _num(row.get("entry_line")), _num(row.get("entry_odds"))
     future_line, future_odds = _num(row.get(prefix + "_line")), _num(row.get(prefix + "_odds"))
     if not all(np.isfinite(v) for v in (entry_line, entry_odds, future_line, future_odds)):
