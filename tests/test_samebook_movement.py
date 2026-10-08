@@ -23,6 +23,8 @@ def candidate(market="spread",side="away",line=9.5,odds=-110,book="ActionNetwork
         "home_team":"Home","away_team":"Away","line":line,"odds":odds,
         "book":book,"kickoff_utc":KICKOFF,"observed_at_utc":OBSERVED,
         "quoted_at_utc":ENTRY_QUOTE,"blockers":["model_not_production_validated"],
+        "source_contract_status":"PASS","source_reconciliation_status":"PASS",
+        "source_audit_status":"WARN",
     }
 
 
@@ -216,3 +218,27 @@ def test_raw_bad_quote_price_never_promoted():
     bad=candidate(odds=-25)
     report=select_later_same_book(bad,[])
     assert report["status"]=="INVALID_OR_UNTIMED_ORIGINAL_QUOTE"
+
+
+def test_wrong_game_kickoff_never_counted_as_clv():
+    close,_=parse_cfb_market_rows(cfb_csv([cfb_quote()],
+                     kickoff="2026-10-09T01:15:00+00:00"))
+    comparison=select_later_same_book(candidate(),close)
+    assert comparison["status"]=="NO_VERIFIABLE_LATER_SAME_BOOK_SNAPSHOT"
+
+
+def test_publication_contract_must_pass_before_calculating_movement():
+    c=candidate()
+    c["source_reconciliation_status"]="FAIL"
+    qs,_=parse_cfb_market_rows(cfb_csv([cfb_quote()]))
+    comparison=select_later_same_book(c,qs)
+    assert comparison["status"]=="ORIGINAL_PUBLICATION_CONTRACT_UNVERIFIED"
+    assert comparison["line_advantage_points"] is None
+
+
+def test_entry_quote_newer_than_observation_fails_closed():
+    c=candidate()
+    c["quoted_at_utc"]="2026-10-08T22:40:00+00:00"
+    qs,_=parse_cfb_market_rows(cfb_csv([cfb_quote()]))
+    result=select_later_same_book(c,qs)
+    assert result["status"]=="INVALID_OR_UNTIMED_ORIGINAL_QUOTE"
