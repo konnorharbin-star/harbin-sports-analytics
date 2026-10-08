@@ -222,7 +222,7 @@ def test_raw_bad_quote_price_never_promoted():
 
 def test_wrong_game_kickoff_never_counted_as_clv():
     close,_=parse_cfb_market_rows(cfb_csv([cfb_quote()],
-                     kickoff="2026-10-09T01:15:00+00:00"))
+                     kickoff="2026-10-09T00:50:00+00:00"))
     comparison=select_later_same_book(candidate(),close)
     assert comparison["status"]=="NO_VERIFIABLE_LATER_SAME_BOOK_SNAPSHOT"
 
