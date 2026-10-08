@@ -142,6 +142,9 @@ def test_duplicate_snapshots_are_not_appended_twice(tmp_path: Path) -> None:
     files = list(tmp_path.rglob("*.jsonl"))
     assert len(files) == 1
     assert len(files[0].read_text().splitlines()) == 1
+    latest = json.loads((tmp_path / "latest.json").read_text())
+    assert latest["snapshot_id"] == snapshot["snapshot_id"]
+    assert latest["automatic_betting_enabled"] is False
 
 
 def test_sqlite_is_idempotent_and_never_contains_bet_orders(tmp_path: Path) -> None:
@@ -175,3 +178,32 @@ def test_report_shows_ranked_research_but_not_approved_wagers() -> None:
     assert "model_not_production_validated" in doc
     assert "Samplebook" in doc
     assert "unvalidated" in doc
+
+
+def test_research_web_board_is_only_an_informational_view() -> None:
+    page = Path("docs/research.html").read_text()
+    assert "Research Board" in page
+    assert "No automatic betting" in page
+    assert "RESEARCH ONLY" in page
+    assert "source-model EV" in page.lower() or "Source-model EV" in page
+    assert "ops-evidence/history/free-observer/latest.json" in page
+    assert "snapshot.automatic_betting_enabled!==false" not in page
+    assert "data.automatic_betting_enabled!==false" in page
+    assert "placeBet" not in page
+    assert "submitBet" not in page
+
+
+def test_research_page_javascript_syntax(tmp_path: Path) -> None:
+    import re
+    import shutil
+    import subprocess
+
+    node = shutil.which("node")
+    if node is None:
+        return
+    scripts = re.findall(r"<script>(.*?)</script>", Path("docs/research.html").read_text(), re.S)
+    assert len(scripts) == 1
+    target = tmp_path / "research.js"
+    target.write_text(scripts[0])
+    result = subprocess.run([node, "--check", str(target)], capture_output=True, text=True)
+    assert result.returncode == 0, result.stderr
