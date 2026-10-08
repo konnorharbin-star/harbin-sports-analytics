@@ -37,6 +37,7 @@ def audit(league: str, *, status: str = "WARN", recon: str = "PASS",
 
 def row(league: str) -> dict[str, str]:
     result = {
+        "season": "2026", "week": "6" if league == "CFB" else "5",
         "game_id": "g1", "home_team": "DAL", "away_team": "TB",
         "date": "2026-10-09T00:15:00+00:00",
         "kickoff": "2026-10-09T00:15:00+00:00",
