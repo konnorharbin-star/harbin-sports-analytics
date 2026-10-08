@@ -287,7 +287,7 @@ def grade_archive(
         "result_provenance": (
             "Existing model result ledger cross-checked against final-score"
             " ESPN public scoreboard (unofficial API)" if require_independent else
-            "model-authored graded-bets ledgers, NOT independently confirmed"
+            "model-authored existing public graded-bets ledgers, NOT independent official scores"
         ),
         "independent_score_verification_required": require_independent,
         "independent_score_report": independent_meta or {},
@@ -299,6 +299,7 @@ def grade_archive(
         "verified_profitability_proven": False,
         "unresolved": {
             "pending_games": pending,
+            "outcomes_unavailable_or_mismatch": unknown,  # v1 compatibility
             "model_outcomes_unavailable_or_mismatch": unknown,
             "independent_scores_missing": independent_missing,
             "independent_scores_disagree": independent_disagreement,
