@@ -1,0 +1,65 @@
+name: Free Model Research Observer
+
+# Zero bookmaker actions and zero paid feeds: this job ONLY reads public model
+# publications and archives research observations in the ops-evidence branch.
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: "17 */6 * * *"
+
+permissions:
+  contents: write
+
+concurrency:
+  group: harbin-free-observer-archive
+  cancel-in-progress: false
+
+jobs:
+  observe:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - name: Checkout model infrastructure from main
+        uses: actions/checkout@v4
+        with:
+          ref: main
+          fetch-depth: 1
+
+      - name: Install free Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Capture two public model publications (read-only)
+        run: |
+          mkdir -p observer-artifacts
+          python -m platform_ops.free_observer capture \
+            --output observer-artifacts/current-research.json \
+            --sqlite observer-artifacts/current-research.sqlite
+
+      - name: Write append-only evidence history to isolated branch
+        run: |
+          set -euo pipefail
+          git fetch origin refs/heads/ops-evidence:refs/remotes/origin/ops-evidence
+          git worktree add --detach /tmp/harbin-ops-evidence origin/ops-evidence
+          python -m platform_ops.free_observer archive \
+            --snapshot observer-artifacts/current-research.json \
+            --archive-root /tmp/harbin-ops-evidence/history/free-observer
+          git -C /tmp/harbin-ops-evidence add history/free-observer
+          if git -C /tmp/harbin-ops-evidence diff --cached --quiet; then
+            echo "Published inputs unchanged: no archive commit needed"
+          else
+            git -C /tmp/harbin-ops-evidence \
+              -c user.name="harbin-evidence-bot" \
+              -c user.email="41898282+github-actions[bot]@users.noreply.github.com" \
+              commit -m "Archive free, read-only football evidence snapshot"
+            git -C /tmp/harbin-ops-evidence push origin HEAD:refs/heads/ops-evidence
+          fi
+
+      - name: Attach portable evidence outputs
+        uses: actions/upload-artifact@v4
+        with:
+          name: free-model-research
+          path: observer-artifacts/
+          retention-days: 30
+          if-no-files-found: error
