@@ -1,7 +1,7 @@
 {
   "schema_version": 2,
   "status": "PENDING_FORWARD",
-  "observed_rows": 49,
+  "observed_rows": 59,
   "clean_entries": 0,
   "graded_bets": 0,
   "wins": 0,
