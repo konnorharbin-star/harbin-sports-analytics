@@ -27,3 +27,25 @@ def test_command_center_is_read_only_and_fails_closed() -> None:
     assert 'li.textContent=String(item)' in page
     assert "Authorization: Bearer" not in page
     assert "github_pat_" not in page
+
+def test_command_center_embedded_javascript_syntax(tmp_path) -> None:
+    """Check the script parses when Node is available on the CI runner."""
+    import re
+    import shutil
+    import subprocess
+
+    node = shutil.which("node")
+    if node is None:
+        return
+    page = Path("docs/command-center.html").read_text()
+    scripts = re.findall(r"<script>(.*?)</script>", page, flags=re.DOTALL)
+    assert len(scripts) == 1
+    script_path = tmp_path / "command-center.js"
+    script_path.write_text(scripts[0])
+    result = subprocess.run(
+        [node, "--check", str(script_path)],
+        capture_output=True,
+        text=True,
+        check=False,
+    )
+    assert result.returncode == 0, result.stderr
