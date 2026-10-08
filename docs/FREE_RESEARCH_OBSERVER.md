@@ -8,7 +8,7 @@
 - **Price provenance**: preserves league, matchup, market, side, quoted odds, point line, bookmaker identity, and exact quote time when the source actually provides them.
 - **Model evidence**: records model-implied probability and independently recalculated EV; flags mismatches, missing quote times, stale quotes, games already kicked off, and unvalidated injury/edge regimes.
 - **Fail-closed release status**: copies audit, reconciliation, data quality, historical release blockers and published approved units. Every candidate is explicitly `RESEARCH_ONLY` even if a model reports high EV.
-- **Free storage**: saves the output as JSON, portable SQLite, and date-sharded append-only JSONL under a dedicated `ops-evidence` branch. No third-party database subscription.
+- **Free storage**: saves the output as JSON, a ranked human-readable Markdown research report, portable SQLite, and date-sharded append-only JSONL under a dedicated `ops-evidence` branch. No third-party database subscription.
 - **Scheduled collection**: standard GitHub Actions every six hours plus manual dispatch after the workflow is merged. The job uses public HTTP GETs only and attaches JSON + SQLite as a downloadable GitHub Actions artifact.
 
 All tools are Python 3.12 standard library or standard free GitHub Actions. No Odds API key or other paid source is necessary.
@@ -31,7 +31,8 @@ From repository root on Python 3.12:
 ```bash
 python -m platform_ops.free_observer capture \
   --output observer-artifacts/current-research.json \
-  --sqlite observer-artifacts/current-research.sqlite
+  --sqlite observer-artifacts/current-research.sqlite \
+  --report observer-artifacts/research-report.md
 python -m platform_ops.free_observer archive \
   --snapshot observer-artifacts/current-research.json \
   --archive-root local-free-evidence/
