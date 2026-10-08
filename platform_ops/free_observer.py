@@ -269,6 +269,11 @@ def append_archive(snapshot: dict[str, object], root: Path) -> bool:
         raise ValueError("Invalid snapshot identity")
     archive = root / f"{observed:%Y}" / f"{observed:%m}" / f"{observed:%d}.jsonl"
     archive.parent.mkdir(parents=True, exist_ok=True)
+    # Latest observation is overwritten only in this dedicated evidence branch.
+    # Immutable date-sharded source versions remain in the JSONL files.
+    (root / "latest.json").write_text(
+        json.dumps(snapshot, indent=2, sort_keys=True, allow_nan=False) + "\n"
+    )
     if archive.exists():
         for line in archive.read_text().splitlines():
             if json.loads(line).get("snapshot_id") == digest:
