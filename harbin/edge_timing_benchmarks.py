@@ -254,9 +254,9 @@ def _rate(frame, column):
 
 
 def _group(frame):
-    eligible = frame[frame["primary_eligible"]] if not frame.empty else frame
-    observed = eligible[eligible["primary_quote_observed"]]
-    scored = eligible[eligible["primary_direction_scored"]]
+    eligible = frame.loc[frame["primary_eligible"].astype(bool)]
+    observed = eligible.loc[eligible["primary_quote_observed"].astype(bool)]
+    scored = eligible.loc[eligible["primary_direction_scored"].astype(bool)]
     chronological = scored[scored["chrono_direction_correct"].notna()]
     n_eligible = len(eligible)
     matured = eligible[eligible["primary_status"].ne("PENDING_HORIZON")]
@@ -295,7 +295,7 @@ def _summary(frame, source):
         action: _group(frame[frame["timing_action"].eq(action)])
         for action in ACTIONS
     }
-    scored = frame[frame["primary_direction_scored"]].copy()
+    scored = frame.loc[frame["primary_direction_scored"].astype(bool)].copy()
     weeks = int(scored["kickoff_week"].nunique()) if len(scored) else 0
     games = int(scored["game_id"].nunique()) if len(scored) else 0
     confidence = {
