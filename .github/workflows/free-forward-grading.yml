@@ -39,7 +39,7 @@ jobs:
           git fetch --no-tags origin refs/heads/ops-evidence:refs/remotes/origin/ops-evidence
           git worktree add --detach /tmp/harbin-grade-history origin/ops-evidence
 
-      - name: Grade against public existing postgame ledgers
+      - name: Cross-check free public final scores and grade matched model results
         run: |
           mkdir -p grader-artifacts
           python -m platform_ops.grade_observations \
