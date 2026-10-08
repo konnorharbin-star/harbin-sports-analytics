@@ -5,7 +5,7 @@ This free, recommendation-only postgame audit evaluates archived football model 
 ## Inputs and cadence
 
 - Immutable first-seen pregame model observations from the public `ops-evidence` branch.
-- Public `reports/live_graded_bets.csv` published by each football model. These are model-authored grading data.
+- Public `reports/live_graded_bets.csv` published by each football model. These are model-authored grading data, not independently certified as received.
 - An independent check from ESPN's public final scoreboard data (unofficial, undocumented endpoint). The grader requires exact completed-final status, home/away identity, game ID or teams, kickoff alignment, and agreement with the model's own recorded final margin and total. ESPN reporting is not official league certification. If ESPN is unavailable or disagrees, the record is not graded.
 - GitHub Action `Free Forward Research Grading`: manual dispatch plus daily 13:29 UTC schedule. It runs with `contents: read` and uploads JSON and Markdown artifacts only.
 
