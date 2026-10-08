@@ -229,6 +229,9 @@ def select_later_same_book(
         "entry_line": original_line, "entry_american_odds": entry_price,
         "entry_observed_at_utc": candidate.get("observed_at_utc"),
         "entry_quote_at_utc": candidate.get("quoted_at_utc"),
+        "original_research_blockers": candidate.get("blockers", []),
+        "source_contract_status": candidate.get("source_contract_status"),
+        "source_reconciliation_status": candidate.get("source_reconciliation_status"),
         "status": "NO_VERIFIABLE_LATER_SAME_BOOK_SNAPSHOT",
         "closing_line": None, "closing_american_odds": None,
         "closing_captured_at_utc": None, "source_quote_at_utc": None,
@@ -239,10 +242,18 @@ def select_later_same_book(
     if (
         role is None or kickoff is None or observed is None or quoted is None
         or quoted >= kickoff or observed >= kickoff
+        or quoted > observed + MAX_FUTURE_SKEW
         or entry_price is None or not _book(book)
         or (market != "moneyline" and original_line is None)
     ):
         base["status"] = "INVALID_OR_UNTIMED_ORIGINAL_QUOTE"
+        return base
+    if (
+        candidate.get("source_contract_status") != "PASS"
+        or candidate.get("source_reconciliation_status") != "PASS"
+        or candidate.get("source_audit_status") in ("FAIL", "ERROR", "UNKNOWN")
+    ):
+        base["status"] = "ORIGINAL_PUBLICATION_CONTRACT_UNVERIFIED"
         return base
     valid = []
     for close in closes:
@@ -251,13 +262,15 @@ def select_later_same_book(
             or str(close["game_id"]) != str(candidate.get("game_id"))
             or close["market"] != market or close["role"] != role
             or _book(close["book"]) != _book(book)
+            or (close_kickoff := utc_datetime(close.get("kickoff_utc"))) is None
+            or abs(close_kickoff - kickoff) > timedelta(minutes=5)
         ):
             continue
         captured = utc_datetime(close["captured_at_utc"])
         source_dt = utc_datetime(close["source_quote_at_utc"])
         if (captured is None or source_dt is None
             or captured <= observed + MIN_CAPTURE_AFTER_ENTRY
-            or source_dt <= quoted
+            or source_dt <= quoted or source_dt <= observed
             or captured >= kickoff or source_dt >= kickoff
             or kickoff - captured > MAX_CLOSE_AGE
             or kickoff - source_dt > MAX_CLOSE_AGE
