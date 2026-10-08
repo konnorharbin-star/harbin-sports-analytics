@@ -181,7 +181,9 @@ def grade_candidate(candidate: dict[str, Any], result: dict[str, Any]) -> dict[s
     else:
         return None
     outcome = "WIN" if diff > 1e-8 else "LOSS" if diff < -1e-8 else "PUSH"
-    payout = american_profit(candidate["odds"])
+    # Accept the frozen archive field or a source-shaped research fixture.
+    # Missing/malformed odds fail closed instead of raising during grading.
+    payout = american_profit(candidate.get("odds", candidate.get("american_odds")))
     if payout is None: return None
     profit = payout if outcome == "WIN" else -1.0 if outcome == "LOSS" else 0.0
     return {
