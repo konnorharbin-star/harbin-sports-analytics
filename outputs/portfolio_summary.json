@@ -25,9 +25,9 @@
     "reason": "graded history has no usable profit rows"
   },
   "production_block_reason": "",
-  "proposed_units": 4.97,
-  "risk_adjusted_proposed_units": 4.97,
-  "performance_adjusted_proposed_units": 4.97,
+  "proposed_units": 5.02,
+  "risk_adjusted_proposed_units": 5.02,
+  "performance_adjusted_proposed_units": 5.02,
   "approved_units": 0.0,
   "paper_allocated_units": 3.43,
   "paper_or_shadow_allocated_units": 3.43,
@@ -76,53 +76,52 @@
     "max_book_units": 2.0
   },
   "allocated_by_market": {
-    "spread": 2.11,
-    "total": 0.72,
-    "moneyline": 0.6
+    "spread": 2.22,
+    "total": 0.59,
+    "moneyline": 0.62
   },
   "allocated_by_book": {
-    "ActionNetwork book 15": 0.64,
-    "ActionNetwork book 30": 0.75,
-    "ActionNetwork book 75": 0.31,
-    "ActionNetwork book 69": 0.55,
-    "Draft Kings": 0.24,
-    "ActionNetwork book 71": 0.58,
-    "ActionNetwork book 49": 0.36
+    "ActionNetwork book 68": 0.45,
+    "ActionNetwork book 30": 0.74,
+    "ActionNetwork book 69": 0.71,
+    "ActionNetwork book 49": 0.32,
+    "ActionNetwork book 75": 0.44,
+    "ActionNetwork book 71": 0.63,
+    "DraftKings": 0.14
   },
   "allocated_by_kickoff_window": {
-    "2026-10-10 21:00:00+00:00": 1.04,
+    "2026-10-10 21:00:00+00:00": 1.03,
     "2026-10-10 18:00:00+00:00": 0.86,
-    "2026-10-10 15:00:00+00:00": 0.84,
+    "2026-10-10 15:00:00+00:00": 0.85,
     "2026-10-08 21:00:00+00:00": 0.38,
-    "2026-10-10 00:00:00+00:00": 0.13,
-    "2026-10-11 00:00:00+00:00": 0.18
+    "2026-10-11 00:00:00+00:00": 0.19,
+    "2026-10-10 00:00:00+00:00": 0.12
   },
   "allocated_by_team_exposure": {
     "San Diego State": 0.27,
     "Georgia Tech": 0.18,
     "Duke": 0.18,
-    "Vanderbilt": 0.25,
+    "Vanderbilt": 0.24,
     "Alabama": 0.16,
     "Georgia": 0.16,
-    "Nebraska": 0.13,
-    "Indiana": 0.13,
+    "Nebraska": 0.14,
+    "Indiana": 0.14,
     "South Florida": 0.19,
-    "UCF": 0.22,
-    "Iowa": 0.13,
-    "Hawai'i": 0.18,
+    "UCF": 0.2,
     "Liberty": 0.19,
-    "Texas A&M": 0.11,
+    "Hawai'i": 0.19,
+    "Texas A&M": 0.12,
+    "Iowa": 0.12,
+    "Michigan State": 0.14,
     "Virginia": 0.18,
     "James Madison": 0.18,
-    "Michigan State": 0.13,
+    "Arizona": 0.24,
     "Louisiana Tech": 0.11,
     "Louisiana": 0.11,
-    "Arizona": 0.23,
     "South Carolina": 0.15,
     "Temple": 0.15,
     "Western Michigan": 0.15,
-    "Marshall": 0.14,
-    "Coastal Carolina": 0.14
+    "Air Force": 0.13
   },
   "limit_hit_counts": {
     "max bet count": 16
