@@ -35,7 +35,8 @@ jobs:
           mkdir -p observer-artifacts
           python -m platform_ops.free_observer capture \
             --output observer-artifacts/current-research.json \
-            --sqlite observer-artifacts/current-research.sqlite
+            --sqlite observer-artifacts/current-research.sqlite \
+            --report observer-artifacts/research-report.md
 
       - name: Write append-only evidence history to isolated branch
         run: |
