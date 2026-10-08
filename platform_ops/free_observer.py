@@ -202,12 +202,25 @@ def build_snapshot(
         release = audit.get("release") or {}
         portfolio = audit.get("portfolio") or {}
         audit_time = utc_datetime(audit.get("generated_at"))
+        expected_rows = finite_number(identity.get("prediction_rows"))
+        row_count_matches = (
+            expected_rows is not None and expected_rows.is_integer()
+            and int(expected_rows) == len(rows)
+        )
+        identity_matches = all(
+            str(row.get(key)) == str(identity[key])
+            for row in rows
+            for key in ("season", "week")
+            if identity.get(key) is not None
+        )
+        source_contract_ok = row_count_matches and identity_matches
         fresh = (
             audit_time is not None
             and timedelta(minutes=-2) <= observed_at - audit_time <= timedelta(hours=STALE_REPORT_HOURS)
         )
         clean = (
             fresh
+            and source_contract_ok
             and status(audit.get("status")) not in {"FAIL", "ERROR", "UNKNOWN"}
             and status(reconciliation.get("status")) == "PASS"
             and status(quality.get("status")) in {"OK", "PASS"}
@@ -232,6 +245,13 @@ def build_snapshot(
             "reconciliation_status": status(reconciliation.get("status")),
             "data_quality_status": status(quality.get("status")),
             "publication_fresh": fresh,
+            "source_contract_status": "PASS" if source_contract_ok else "FAIL",
+            "source_contract_detail": (
+                f"prediction_rows published={identity.get('prediction_rows')} "
+                f"downloaded={len(rows)}; season/week identity matches={identity_matches}"
+            ),
+            "model_version": identity.get("model_version"),
+            "model_generated_at": identity.get("model_generated_at"),
             "season": identity.get("season"),
             "week": identity.get("week"),
             "release_state": release_state,
