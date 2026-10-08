@@ -179,3 +179,14 @@ def test_unverified_archives_are_never_counted_as_executed_bets(tmp_path):
     assert not data["automatic_betting_enabled"]
     assert not data["paid_data_used"]
     assert "NOT independent official scores" in data["result_provenance"]
+
+def test_cfb_abbreviated_ou_side_is_settled_correctly():
+    actual = {
+        "game_id": "2026_05_TB_DAL", "home_team": "DAL", "away_team": "TB",
+        "kickoff": KICKOFF.isoformat(), "margin_home": 4.0, "total": 44.0,
+    }
+    record = {**candidate(market="total", side="U", line=47),
+              "odds": -110, "observed_at_utc": START.isoformat()}
+    assert grade_candidate(record, actual)["result"] == "WIN"
+    record["side"] = "O"
+    assert grade_candidate(record, actual)["result"] == "LOSS"
