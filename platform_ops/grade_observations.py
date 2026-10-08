@@ -171,8 +171,9 @@ def grade_candidate(candidate: dict[str, Any], result: dict[str, Any]) -> dict[s
         if role is None or line is None: return None
         diff = (margin if role == "home" else -margin) + line
     elif market == "total":
-        if line is None or side.casefold() not in ("over", "under"): return None
-        diff = (total - line) * (1 if side.casefold() == "over" else -1)
+        selection = side.casefold().strip()
+        if line is None or selection not in ("over", "under", "o", "u"): return None
+        diff = (total - line) * (1 if selection in ("over", "o") else -1)
     elif market == "moneyline":
         role = resolve_side(side, result["home_team"], result["away_team"])
         if role is None or margin == 0: return None  # Tie settlement varies by book.
