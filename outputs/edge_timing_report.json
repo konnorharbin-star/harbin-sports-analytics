@@ -1,15 +1,15 @@
 {
   "schema_version": 1,
-  "status": "PENDING_OBSERVATIONS",
-  "comparable_series": 0,
-  "survived_bet_to": 0,
-  "survival_rate": null,
+  "status": "DESCRIPTIVE_ONLY",
+  "comparable_series": 3,
+  "survived_bet_to": 3,
+  "survival_rate": 1.0,
   "closing_line_claim": false,
   "line_stage": "last_captured_pre_kickoff_not_official_close",
   "betting_authorized": false,
-  "current_rows": 8,
+  "current_rows": 7,
   "current_actions": {
-    "NO_TIMING_SIGNAL": 4,
-    "PASS": 4
+    "PASS": 4,
+    "NO_TIMING_SIGNAL": 3
   }
 }

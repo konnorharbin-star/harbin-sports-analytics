@@ -2,9 +2,9 @@
 
 ## Identity
 - Core model version: **7.1.0**
-- Repository revision: `db455d7e765764a4c1ce5264e26e4bcf9e223d02`
+- Repository revision: `cd0212b8a887a19816642981f3952ebf979bf194`
 - Season / Week: **2026 / 6**
-- Generated: **Oct 8, 2026 · 5:58 PM CT**
+- Generated: **Oct 8, 2026 · 6:04 PM CT**
 
 ## Intended use
 Independent CFB score, margin, total and win-probability estimation; sportsbook comparison; paper/production betting research with explicit uncertainty and risk controls. The Cooper-style table is a presentation layer, not the proprietary formula of any third party.
@@ -14,7 +14,7 @@ Independent CFB score, margin, total and win-probability estimation; sportsbook 
 - Schedule/results: sportsdataverse/cfbfastR-data
 - Live odds: ESPN live (site.web.api.espn.com) + ESPN Core supplement
 - Advanced feature coverage: **100.0%**
-- Multi-book coverage: **98.2%**
+- Multi-book coverage: **98.1%**
 - Current context sources: SportsDataverse ESPN injuries, SportsDataverse ESPN rosters, SportsDataverse ESPN teams, Open-Meteo forecast / indoor venue suppression, Venue geocoding / team metadata
 
 ## Validation
@@ -25,11 +25,11 @@ Independent CFB score, margin, total and win-probability estimation; sportsbook 
 - Calibration ECE: **0.06218232013495895**
 
 ## Operational controls
-- Live monitoring score: **94.7/100**
+- Live monitoring score: **94.8/100**
 - Portfolio mode: **PAPER**
 - Approved units: **0.0**
-- Proposed units before bankroll/concentration controls: **5.04**
-- Paper/shadow allocated units after controls: **3.45**
+- Proposed units before bankroll/concentration controls: **4.87**
+- Paper/shadow allocated units after controls: **3.34**
 - Unit-risk multiplier: **1.0**
 - Current live/shadow drawdown: **0.0 units**
 - Portfolio hard stop active: **False**

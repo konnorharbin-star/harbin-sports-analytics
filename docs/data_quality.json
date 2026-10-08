@@ -8,7 +8,7 @@
     "required_schema": true,
     "finite_core_predictions": true,
     "sanity_ranges": true,
-    "complete_market_rate": 0.945455
+    "complete_market_rate": 0.943396
   },
-  "rows": 55
+  "rows": 53
 }
