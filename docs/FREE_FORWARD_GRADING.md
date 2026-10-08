@@ -22,7 +22,7 @@ This free, recommendation-only postgame audit evaluates archived football model 
 
 ## Free, manual-only operating requirements
 
-- Python standard library, GitHub-hosted infrastructure and the two existing public model result ledgers. No paid data subscriptions.
+- Python standard library, GitHub-hosted infrastructure and the two existing public model result ledgers. no paid data subscriptions.
 - This workflow never mutates a repository, never makes sportsbook API calls, and never executes transactions.
 - If an input is unavailable, the grader fails visibly rather than inventing a score or fill.
 - The first run is triggered by this workflow file being merged to `main`; subsequent collection is daily or manually initiated.
