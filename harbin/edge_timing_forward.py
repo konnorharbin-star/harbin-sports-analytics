@@ -41,11 +41,11 @@ LEDGER_COLUMNS = [
     "decision_mode",
 ]
 GRADED_COLUMNS = LEDGER_COLUMNS + [
-    "primary_status", "primary_observed_at", "primary_source",
+    "primary_status", "primary_observed_at", "primary_source", "primary_book",
     "primary_line", "primary_odds", "primary_line_change",
     "primary_implied_change_pp", "primary_movement",
     "primary_action_correct",
-    "near_kickoff_status", "near_kickoff_observed_at", "near_kickoff_source",
+    "near_kickoff_status", "near_kickoff_observed_at", "near_kickoff_source", "near_kickoff_book",
     "near_kickoff_line", "near_kickoff_odds", "near_kickoff_line_change",
     "near_kickoff_implied_change_pp", "near_kickoff_movement",
     "near_kickoff_action_correct",
@@ -236,6 +236,7 @@ def _assign_observation(out, prefix, offer, action, entry):
         prefix + "_status": "OBSERVED",
         prefix + "_observed_at": offer["_seen"].isoformat(),
         prefix + "_source": offer.get("_source_name"),
+        prefix + "_book": offer.get("book"),
         prefix + "_line": float(offer["line"]), prefix + "_odds": float(offer["odds"]),
         prefix + "_line_change": line_delta,
         prefix + "_implied_change_pp": price_delta,
@@ -307,7 +308,7 @@ def grade_timing_forward(
             "primary_action_correct": None, "near_kickoff_action_correct": None,
         })
         for prefix in ("primary", "near_kickoff"):
-            for suffix in ("observed_at", "source", "line", "odds", "line_change",
+            for suffix in ("observed_at", "source", "book", "line", "odds", "line_change",
                            "implied_change_pp", "movement"):
                 record[prefix + "_" + suffix] = None
         target = decision + pd.Timedelta(hours=PRIMARY_HORIZON_HOURS)
