@@ -1,0 +1,248 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="color-scheme" content="dark">
+<title>Harbin | Model Operations Command Center</title>
+<style>
+:root{font-family:Inter,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;color:#edf3f8;background:#0a101b}
+*{box-sizing:border-box}body{margin:0;min-height:100vh}
+a{color:#9dc9ff;text-decoration:none}a:hover{text-decoration:underline}
+button{cursor:pointer;border:1px solid #375174;border-radius:9px;background:#18273c;color:#edf3f8;padding:10px 15px;font:inherit}
+button:hover{background:#243d5d}button:disabled{opacity:.6;cursor:progress}
+.wrapper{max-width:1240px;margin:0 auto;padding:32px 20px 70px}
+header{display:flex;gap:20px;align-items:flex-start;justify-content:space-between;flex-wrap:wrap;margin-bottom:25px}
+.overline{text-transform:uppercase;letter-spacing:.15em;font-size:11px;color:#9bc5f4;font-weight:750}
+h1{margin:6px 0 10px;letter-spacing:-.04em;font-size:clamp(25px,4vw,39px)}
+.sub{margin:0;color:#b5c0d1;max-width:770px;line-height:1.6;font-size:14px}
+.meta{margin-top:10px;color:#8fa0b5;font-size:12px}
+.hero{border:1px solid #24334b;border-radius:16px;padding:18px 20px;background:linear-gradient(115deg,#14243d,#101a2c);display:flex;gap:20px;justify-content:space-between;align-items:center;flex-wrap:wrap;margin-bottom:20px}
+.hero strong{font-size:18px}.hero p{margin:4px 0 0;color:#b7c4d5;font-size:13px;line-height:1.5}
+.status{display:inline-block;padding:5px 9px;border-radius:6px;background:#29354b;color:#d4e1f1;font-weight:750;font-size:11px;letter-spacing:.04em}
+.status.fail{background:#502a34;color:#ffb8c3}.status.warn{background:#4a3c24;color:#ffe2a4}
+.status.ok{background:#244938;color:#9defbc}.status.muted{background:#29354b;color:#d4e1f1}
+.models{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:18px}
+.card{border:1px solid #283851;border-radius:15px;background:#111b2b;padding:22px;min-width:0}
+.cardhead{display:flex;align-items:flex-start;gap:12px;justify-content:space-between;flex-wrap:wrap}
+h2{font-size:23px;margin:0 0 6px;letter-spacing:-.03em}
+.small{color:#9badc3;font-size:12px;line-height:1.5}
+.score{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;margin:18px 0}
+.metric{border:1px solid #293a54;border-radius:10px;padding:13px;background:#0d1625}
+.metric span{display:block;color:#aabbd0;font-size:11px;margin-bottom:7px}
+.metric strong{font-size:18px;overflow-wrap:anywhere}
+h3{font-size:13px;margin:23px 0 10px;color:#ccdbed}
+.rows{margin:0;display:grid;gap:9px}
+.rows>div{display:flex;justify-content:space-between;align-items:flex-start;gap:15px;font-size:13px;padding:0 0 9px;border-bottom:1px solid #243248}
+.rows dt{color:#a5b7cb}.rows dd{margin:0;text-align:right;font-weight:700;overflow-wrap:anywhere}
+.problem{margin:9px 0;color:#ffe1a5;font-size:12px;line-height:1.55;overflow-wrap:anywhere}
+.problem.error{color:#ffb7c1}
+.links{display:flex;gap:12px;flex-wrap:wrap;margin-top:16px;font-size:12px}
+.alerts{background:#0d1625;border:1px solid #263650;border-radius:10px;padding:9px 14px;margin-top:13px}
+.alerts ul{padding-left:17px;margin:5px 0 2px}.alerts li{margin:6px 0;color:#d7e1ef;font-size:12px;line-height:1.45}
+footer{border-top:1px solid #24344b;margin-top:25px;padding-top:17px;color:#a8b8cb;line-height:1.7;font-size:12px}
+@media(max-width:790px){.models{grid-template-columns:1fr}.wrapper{padding:20px 13px 50px}.card{padding:16px}}
+</style>
+</head>
+<body>
+<main class="wrapper">
+<header>
+  <div>
+    <div class="overline">Harbin Sports Analytics / Operations</div>
+    <h1>Model Command Center</h1>
+    <p class="sub">A read-only, cross-repository view of model engineering, audit integrity, evidence and release authorization. An operational green check does not mean a profitable betting model.</p>
+    <div class="meta" id="refreshed" role="status" aria-live="polite">Loading public model evidence…</div>
+  </div>
+  <button id="refresh" type="button">Refresh evidence</button>
+</header>
+<section class="hero" aria-label="System status">
+  <div>
+    <strong id="headline">Checking both models</strong>
+    <p id="explanation">The latest publication snapshots and GitHub Actions statuses are being loaded.</p>
+  </div>
+  <span id="systemStatus" class="status muted">CHECKING</span>
+</section>
+<section class="models">
+  <article class="card" id="cfb-card" aria-labelledby="cfb-title">
+    <div class="cardhead">
+      <div><div class="overline">NCAAF</div><h2 id="cfb-title">College football</h2><div class="small" id="cfb-source">Loading publication snapshot</div></div>
+      <span id="cfb-state" class="status muted">UNKNOWN</span>
+    </div>
+    <div class="score">
+      <div class="metric"><span>Season / week</span><strong id="cfb-week">—</strong></div>
+      <div class="metric"><span>Engineering readiness (not betting accuracy)</span><strong id="cfb-readiness">—</strong></div>
+      <div class="metric"><span>Historical evidence</span><strong id="cfb-evidence">—</strong></div>
+      <div class="metric"><span>Approved real stake</span><strong id="cfb-stake">—</strong></div>
+    </div>
+    <dl class="rows">
+      <div><dt>Publication audit</dt><dd id="cfb-audit">Unavailable</dd></div>
+      <div><dt>Reconciliation</dt><dd id="cfb-reconciliation">Unavailable</dd></div>
+      <div><dt>Data integrity</dt><dd id="cfb-quality">Unavailable</dd></div>
+      <div><dt>Release state</dt><dd id="cfb-release">Unavailable</dd></div>
+      <div><dt>Model workflow</dt><dd id="cfb-workflow">Unavailable</dd></div>
+    </dl>
+    <h3>Release blockers &amp; alerts</h3>
+    <div class="alerts"><ul id="cfb-blockers"><li>Checking sources</li></ul></div>
+    <div class="links">
+      <a href="https://konnorharbin-star.github.io/harbin-sports-analytics/">Weekly board ↗</a>
+      <a href="https://konnorharbin-star.github.io/harbin-sports-analytics/audit.html">Audit report ↗</a>
+      <a href="https://github.com/konnorharbin-star/harbin-sports-analytics/actions">Workflows ↗</a>
+    </div>
+  </article>
+  <article class="card" id="nfl-card" aria-labelledby="nfl-title">
+    <div class="cardhead">
+      <div><div class="overline">NFL</div><h2 id="nfl-title">National Football League</h2><div class="small" id="nfl-source">Loading publication snapshot</div></div>
+      <span id="nfl-state" class="status muted">UNKNOWN</span>
+    </div>
+    <div class="score">
+      <div class="metric"><span>Season / week</span><strong id="nfl-week">—</strong></div>
+      <div class="metric"><span>Engineering readiness (not betting accuracy)</span><strong id="nfl-readiness">—</strong></div>
+      <div class="metric"><span>Historical research ROI (not proof)</span><strong id="nfl-evidence">—</strong></div>
+      <div class="metric"><span>Approved real stake</span><strong id="nfl-stake">—</strong></div>
+    </div>
+    <dl class="rows">
+      <div><dt>Publication audit</dt><dd id="nfl-audit">Unavailable</dd></div>
+      <div><dt>Reconciliation</dt><dd id="nfl-reconciliation">Unavailable</dd></div>
+      <div><dt>Data integrity</dt><dd id="nfl-quality">Unavailable</dd></div>
+      <div><dt>Release state</dt><dd id="nfl-release">Unavailable</dd></div>
+      <div><dt>Model workflow</dt><dd id="nfl-workflow">Unavailable</dd></div>
+    </dl>
+    <h3>Release blockers &amp; alerts</h3>
+    <div class="alerts"><ul id="nfl-blockers"><li>Checking sources</li></ul></div>
+    <div class="links">
+      <a href="https://konnorharbin-star.github.io/harbin-nfl-analytics/">Weekly board ↗</a>
+      <a href="https://konnorharbin-star.github.io/harbin-nfl-analytics/audit.html">Audit report ↗</a>
+      <a href="https://github.com/konnorharbin-star/harbin-nfl-analytics/actions">Workflows ↗</a>
+    </div>
+  </article>
+</section>
+<footer>
+  <strong>Evidence policy:</strong> A passing GitHub workflow only establishes that a job completed. RESEARCH/PAPER states are not executable betting authorization. If an input is missing, stale, malformed or unavailable, the dashboard displays UNKNOWN instead of estimating values. All statistics are direct fields from published reports; no prices, stakes or probabilities are invented.
+  <div>Sources: public <code>docs/audit_snapshot.json</code> and GitHub Actions APIs for both repositories. Raw GitHub file caching and the GitHub Pages publish cycle can delay updates. No credentials are stored in this page.</div>
+</footer>
+</main>
+<script>
+"use strict";
+const MODELS = [
+  {id:"cfb",repo:"konnorharbin-star/harbin-sports-analytics",workflow:"CFB Model + Dashboard"},
+  {id:"nfl",repo:"konnorharbin-star/harbin-nfl-analytics",workflow:"NFL Model + Operations"}
+];
+const $ = id => document.getElementById(id);
+const put = (id,value) => {$(id).textContent = value == null ? "UNKNOWN" : String(value);};
+const str = value => typeof value === "string" && value.trim() ? value : "UNKNOWN";
+const number = value => typeof value === "number" && Number.isFinite(value) ? value : null;
+const percent = value => {const v=number(value);return v === null ? "UNKNOWN" : (v*100).toFixed(1)+"%";};
+function stateBadge(id,value) {
+  const s=str(value).toUpperCase();
+  put(id,s);
+  $(id).className="status "+(s==="FAIL"||s==="ERROR"?"fail":s==="PASS"||s==="OK"||s==="SUCCESS"?"ok":s==="UNKNOWN"?"muted":"warn");
+}
+function ageLabel(dateString) {
+  const parsed=Date.parse(dateString||"");
+  if(!Number.isFinite(parsed)) return {label:"Unknown publication time",old:true};
+  const age=Date.now()-parsed;
+  if(age < -300000) return {label:"Future timestamp — verify clock",old:true};
+  const ageMinutes=Math.max(0,Math.floor(age/60000));
+  if(ageMinutes<=90) return {label:"Updated "+ageMinutes+" min ago",old:false};
+  return {label:"Last publication "+new Date(parsed).toLocaleString()+" (may be stale)",old:age>24*60*60*1000};
+}
+async function json(url) {
+  const controller=new AbortController();
+  const timer=setTimeout(()=>controller.abort(),12000);
+  try {
+    const response=await fetch(url,{cache:"no-store",signal:controller.signal});
+    if(!response.ok) throw Error("HTTP "+response.status);
+    return await response.json();
+  } finally {clearTimeout(timer);}
+}
+function blockers(id,items) {
+  const node=$(id+"-blockers");
+  node.replaceChildren();
+  (items.length?items:["No blocker details available; do not infer readiness."]).slice(0,5).forEach(item=>{
+    const li=document.createElement("li");
+    li.textContent=String(item);
+    node.append(li);
+  });
+}
+function prepareError(id,message) {
+  stateBadge(id+"-state","UNKNOWN");
+  put(id+"-source",message);
+  for(const metric of ["week","readiness","evidence","stake","audit","reconciliation","quality","release","workflow"])put(id+"-"+metric,"UNKNOWN");
+  blockers(id,["Published audit unavailable. Do not trust last-known readiness."]);
+}
+function renderModel(model,audit,runs) {
+  const id=model.id;
+  const release=audit.release||{};
+  const identity=audit.identity||{};
+  const recon=audit.reconciliation||{};
+  const portfolio=audit.portfolio||{};
+  const monitoring=audit.monitoring||{};
+  const historical=audit.historical_evidence||{};
+  const quality=audit.data_quality||{};
+  const when=ageLabel(audit.generated_at);
+  const hasError=String(audit.status).toUpperCase()==="FAIL"||String(recon.status).toUpperCase()==="FAIL";
+  const releaseState=str(release.state);
+  stateBadge(id+"-state",hasError?"FAIL":releaseState);
+  put(id+"-source",when.label+(when.old?" · STALE/INVALID":""));
+  put(id+"-week",identity.season==null||identity.week==null?"UNKNOWN":identity.season+" / "+identity.week);
+  const readiness=number(monitoring.live_readiness_score);
+  put(id+"-readiness",readiness===null?"UNKNOWN":readiness.toFixed(1)+"/100");
+  const bets=number(historical.bets);
+  const roi=number(historical.roi);
+  if(id==="cfb")put(id+"-evidence",str(historical.status)+" · "+(bets===null?"?":bets)+" qualifying bets");
+  else put(id+"-evidence",roi===null?"UNKNOWN":percent(roi)+" ("+(bets===null?"?":bets)+" research bets)");
+  const approved=number(portfolio.approved_units);
+  put(id+"-stake",approved===null?"UNKNOWN":approved.toFixed(2)+" units");
+  put(id+"-audit",str(audit.status));
+  put(id+"-reconciliation",str(recon.status));
+  put(id+"-quality",str(quality.status));
+  put(id+"-release",releaseState+(release.production_eligible===true?" · eligible":" · not authorized"));
+  const errors=Array.isArray(recon.errors)?recon.errors.map(x=>x.detail||x.name||"Audit error"):[];
+  const releaseBlocks=Array.isArray(release.blockers)?release.blockers:[];
+  blockers(id,[...(when.old?["Publication may be stale or timestamp invalid"]:[]),...errors,...releaseBlocks]);
+  if(!runs||!Array.isArray(runs.workflow_runs)){put(id+"-workflow","UNKNOWN · GitHub API unavailable");}
+  else {
+    const entry=runs.workflow_runs.find(x=>x.name===model.workflow && x.head_branch==="main");
+    put(id+"-workflow",entry?(str(entry.conclusion||entry.status)+" · "+new Date(entry.created_at).toLocaleString()):"UNKNOWN · no recent main run");
+  }
+  return {unavailable:false,failed:hasError,old:when.old,releaseState,approved};
+}
+async function refresh() {
+  const button=$("refresh");
+  button.disabled=true;
+  put("refreshed","Checking current public reports...");
+  const results=await Promise.all(MODELS.map(async model=>{
+    const bucket=Math.floor(Date.now()/300000);
+    const auditUrl="https://raw.githubusercontent.com/"+model.repo+"/main/docs/audit_snapshot.json?at="+bucket;
+    const runsUrl="https://api.github.com/repos/"+model.repo+"/actions/runs?per_page=25";
+    const [audit,runs]=await Promise.allSettled([json(auditUrl),json(runsUrl)]);
+    if(audit.status!=="fulfilled"||!audit.value||!audit.value.identity||!audit.value.reconciliation){
+      prepareError(model.id,"Audit unavailable or malformed");
+      return {unavailable:true,failed:false,old:true,releaseState:"UNKNOWN"};
+    }
+    return renderModel(model,audit.value,runs.status==="fulfilled"?runs.value:null);
+  }));
+  const anyMissing=results.some(x=>x.unavailable);
+  const anyFail=results.some(x=>x.failed);
+  const anyOld=results.some(x=>x.old);
+  if(anyFail) {
+    stateBadge("systemStatus","FAIL");
+    put("headline","Publication audit requires attention");
+    put("explanation","At least one model's published audit or reconciliation failed. Inspect the affected repository before relying on reports.");
+  } else if(anyMissing||anyOld) {
+    stateBadge("systemStatus","UNKNOWN");
+    put("headline","Evidence incomplete or stale");
+    put("explanation","At least one model's published report cannot be confirmed as current. No readiness is inferred.");
+  } else {
+    stateBadge("systemStatus","RESEARCH / PAPER");
+    put("headline","Both models reporting");
+    put("explanation","This is a monitoring view, not approval to place bets. Inspect release blockers and historical evidence before any operational change.");
+  }
+  put("refreshed","Checked "+new Date().toLocaleString()+" · Public sources; updates may be cached");
+  button.disabled=false;
+}
+$("refresh").addEventListener("click",refresh);
+refresh();
+</script>
+</body>
+</html>
