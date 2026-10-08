@@ -9,6 +9,7 @@
 - **Model evidence**: records model-implied probability and independently recalculated EV; flags mismatches, missing quote times, stale quotes, games already kicked off, and unvalidated injury/edge regimes.
 - **Fail-closed release status**: copies audit, reconciliation, data quality, historical release blockers and published approved units. Every candidate is explicitly `RESEARCH_ONLY` even if a model reports high EV.
 - **Free storage**: saves the output as JSON, a ranked human-readable Markdown research report, portable SQLite, and date-sharded append-only JSONL under a dedicated `ops-evidence` branch. No third-party database subscription.
+- **Phone-friendly report**: the free [research board](research.html) shows the latest archived candidates, current quote age and risk blockers, without any betting controls. The archive also maintains an overwritten read-only `latest.json` index for the board.
 - **Scheduled collection**: standard GitHub Actions every six hours plus manual dispatch after the workflow is merged. The job uses public HTTP GETs only and attaches JSON + SQLite as a downloadable GitHub Actions artifact.
 
 All tools are Python 3.12 standard library or standard free GitHub Actions. No Odds API key or other paid source is necessary.
@@ -40,7 +41,7 @@ python -m platform_ops.free_observer archive \
 
 The capture fails loudly if a published source is unavailable or malformed. It never fills in missing prices, probabilities, bookmakers or quote timestamps.
 
-After merging this branch, open **Actions → Free Model Research Observer → Run workflow** to perform the first collection. This workflow can also run on its six-hour schedule. The workflow appends to the already-created `ops-evidence` branch and uploads the two output files as a 30-day artifact.
+After merging this branch, open **Actions → Free Model Research Observer → Run workflow** to perform the first collection. This workflow can also run on its six-hour schedule. The workflow appends to the already-created `ops-evidence` branch and uploads JSON, portable SQLite and Markdown research-report files as a 30-day artifact. The separate research board appears at `https://konnorharbin-star.github.io/harbin-sports-analytics/research.html` once merged and published.
 
 ## How to audit a candidate
 
@@ -51,7 +52,7 @@ Each `research_watchlist` entry includes `recalculated_ev`, `blockers`, `quoted_
 - `snapshot_id`: SHA-256 of both public source digests.
 - `source_sha256`: SHA-256 over audit raw bytes + separator + CSV raw bytes.
 - `observed_at_utc`: collector UTC timestamp.
-- Archive: `ops-evidence/history/free-observer/YYYY/MM/DD.jsonl`, one JSON record per newly observed source version within that day.
+- Archive: `ops-evidence/history/free-observer/YYYY/MM/DD.jsonl`, one JSON record per newly observed source version within that day, plus `ops-evidence/history/free-observer/latest.json` for the browser's most recent observation.
 - SQLite: `snapshots` and `research_candidates` tables for downstream analysis, with no funds, stakes, orders or user accounts.
 - Versioned format: `schema_version=1`.
 
