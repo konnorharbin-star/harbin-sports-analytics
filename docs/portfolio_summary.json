@@ -25,12 +25,12 @@
     "reason": "graded history has no usable profit rows"
   },
   "production_block_reason": "",
-  "proposed_units": 5.02,
-  "risk_adjusted_proposed_units": 5.02,
-  "performance_adjusted_proposed_units": 5.02,
+  "proposed_units": 5.04,
+  "risk_adjusted_proposed_units": 5.04,
+  "performance_adjusted_proposed_units": 5.04,
   "approved_units": 0.0,
-  "paper_allocated_units": 3.43,
-  "paper_or_shadow_allocated_units": 3.43,
+  "paper_allocated_units": 3.45,
+  "paper_or_shadow_allocated_units": 3.45,
   "bets": 20,
   "approved_bets": 0,
   "execution_blocked_bets": 0,
@@ -76,31 +76,31 @@
     "max_book_units": 2.0
   },
   "allocated_by_market": {
-    "spread": 2.22,
-    "total": 0.59,
+    "total": 0.6,
+    "spread": 2.23,
     "moneyline": 0.62
   },
   "allocated_by_book": {
-    "ActionNetwork book 68": 0.45,
+    "ActionNetwork book 68": 0.19,
+    "ActionNetwork book 71": 0.91,
     "ActionNetwork book 30": 0.74,
     "ActionNetwork book 69": 0.71,
     "ActionNetwork book 49": 0.32,
     "ActionNetwork book 75": 0.44,
-    "ActionNetwork book 71": 0.63,
     "DraftKings": 0.14
   },
   "allocated_by_kickoff_window": {
-    "2026-10-10 21:00:00+00:00": 1.03,
-    "2026-10-10 18:00:00+00:00": 0.86,
+    "2026-10-10 18:00:00+00:00": 0.87,
+    "2026-10-10 21:00:00+00:00": 1.04,
     "2026-10-10 15:00:00+00:00": 0.85,
     "2026-10-08 21:00:00+00:00": 0.38,
     "2026-10-11 00:00:00+00:00": 0.19,
     "2026-10-10 00:00:00+00:00": 0.12
   },
   "allocated_by_team_exposure": {
-    "San Diego State": 0.27,
-    "Georgia Tech": 0.18,
-    "Duke": 0.18,
+    "Georgia Tech": 0.19,
+    "Duke": 0.19,
+    "San Diego State": 0.28,
     "Vanderbilt": 0.24,
     "Alabama": 0.16,
     "Georgia": 0.16,
