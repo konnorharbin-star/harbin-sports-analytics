@@ -2,6 +2,10 @@
 
 Automated college-football projection, probability, market-comparison, risk, monitoring, and evidence system that lives in this GitHub repository.
 
+## Cross-sport command center
+
+The [read-only model command center](docs/command-center.html) brings the CFB and [NFL](https://github.com/konnorharbin-star/harbin-nfl-analytics) published audit, evidence, monitoring, and GitHub Actions status into one place. It does not approve bets or override release gates. [Operations and deployment guide](docs/COMMAND_CENTER.md).
+
 ## Run the live model
 
 1. Open **Actions**.
