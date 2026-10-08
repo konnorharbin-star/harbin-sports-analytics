@@ -115,9 +115,9 @@ def latest_board_path(repo: str) -> tuple[str | None, str]:
         return None, error
     raw = content.decode("utf-8", errors="replace")
     # Markdown links in published output; resolve only HTML filenames under outputs/.
-    links = re.findall(r"\\[[^]]+\\]\\(([^)]+\\.html)\\)", raw)
+    links = re.findall(r"\[[^]]+\]\(([^)]+\.html)\)", raw)
     for link in links:
-        if re.fullmatch(r"[A-Za-z0-9_.-]+\\.html", link) and (
+        if re.fullmatch(r"[A-Za-z0-9_.-]+\.html", link) and (
             link.startswith("nfl_week_") or link.startswith("cfb_model_")
         ):
             return f"outputs/{link}", ""
