@@ -353,10 +353,18 @@ def main(argv: list[str] | None = None) -> int:
         league: get_public_bytes(repo, RESULTS_PATH).decode("utf-8-sig")
         for league, repo in SOURCE_REPOS.items()
     }
+    as_of = datetime.now(timezone.utc)
     frozen, _counts = collect_archived_candidates(args.archive_root)
-    independent_scores, verification_meta = verification_index(frozen)
+    # Only request independently reported finals for games whose kickoff passed.
+    # This avoids unnecessary free-source calls for future games.
+    completed = [
+        row for row in frozen
+        if (kickoff := utc_datetime(row.get("kickoff_utc"))) is not None
+        and kickoff < as_of
+    ]
+    independent_scores, verification_meta = verification_index(completed)
     data = grade_archive(
-        args.archive_root, results, datetime.now(timezone.utc),
+        args.archive_root, results, as_of,
         independent_scores=independent_scores,
         require_independent=True,
         independent_meta=verification_meta,
