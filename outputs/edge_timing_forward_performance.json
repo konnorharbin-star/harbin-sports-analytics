@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "status": "PENDING_FORWARD",
+  "status": "EARLY_FORWARD",
   "research_only": true,
   "betting_authorized": false,
   "approved_units": 0,
@@ -20,22 +20,33 @@
       "each_action": 20
     }
   },
-  "raw_decision_rows": 0,
-  "clean_unique_decisions": 0,
+  "raw_decision_rows": 2,
+  "clean_unique_decisions": 2,
   "invalid_or_duplicate_decisions": 0,
   "primary_distinct_games": 0,
   "primary_distinct_weeks": 0,
   "overall": {
-    "decisions": 0,
+    "decisions": 2,
+    "distinct_games": 2,
     "primary_observed": 0,
+    "primary_quote_coverage": 0.0,
     "conclusive": 0,
     "correct": 0,
+    "incorrect": 0,
     "accuracy": null,
     "accuracy_wilson_95": null,
+    "primary_mixed": 0,
+    "primary_flat": 0,
+    "primary_pending": 0,
+    "primary_missing": 2,
+    "primary_insufficient_window": 0,
     "near_kickoff_observed": 0,
     "near_kickoff_conclusive": 0,
     "near_kickoff_correct": 0,
-    "near_kickoff_accuracy": null
+    "near_kickoff_accuracy": null,
+    "near_kickoff_accuracy_wilson_95": null,
+    "near_kickoff_mixed": 0,
+    "near_kickoff_missing": 0
   },
   "by_action": {
     "BET_NOW_RESEARCH": {
@@ -51,16 +62,27 @@
       "near_kickoff_accuracy": null
     },
     "WAIT_MONITOR": {
-      "decisions": 0,
+      "decisions": 2,
+      "distinct_games": 2,
       "primary_observed": 0,
+      "primary_quote_coverage": 0.0,
       "conclusive": 0,
       "correct": 0,
+      "incorrect": 0,
       "accuracy": null,
       "accuracy_wilson_95": null,
+      "primary_mixed": 0,
+      "primary_flat": 0,
+      "primary_pending": 0,
+      "primary_missing": 2,
+      "primary_insufficient_window": 0,
       "near_kickoff_observed": 0,
       "near_kickoff_conclusive": 0,
       "near_kickoff_correct": 0,
-      "near_kickoff_accuracy": null
+      "near_kickoff_accuracy": null,
+      "near_kickoff_accuracy_wilson_95": null,
+      "near_kickoff_mixed": 0,
+      "near_kickoff_missing": 0
     }
   },
   "notes": [
