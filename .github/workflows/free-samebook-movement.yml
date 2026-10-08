@@ -1,0 +1,57 @@
+name: Free Same-Book Line Movement Research
+
+# Pure research: reads only GitHub public market snapshot history.
+# Never connect to sportsbooks, place bets, use paid APIs, or stake funds.
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/free-samebook-movement.yml'
+  schedule:
+    - cron: "41 12 * * *"
+
+permissions:
+  contents: read
+
+concurrency:
+  group: free-samebook-quote-research
+  cancel-in-progress: true
+
+jobs:
+  audit:
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    steps:
+      - name: Checkout public model code
+        uses: actions/checkout@v4
+        with:
+          ref: main
+          fetch-depth: 1
+
+      - name: Python standard library only
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Read existing free pregame research archive
+        run: |
+          set -euo pipefail
+          git fetch --no-tags origin refs/heads/ops-evidence:refs/remotes/origin/ops-evidence
+          git worktree add --detach /tmp/harbin-free-market-evidence origin/ops-evidence
+
+      - name: Compare only later same-book near-kickoff observations
+        run: |
+          mkdir -p movement-artifacts
+          python -m platform_ops.samebook_movement \
+            --archive-root /tmp/harbin-free-market-evidence/history/free-observer \
+            --json-out movement-artifacts/samebook-movement.json \
+            --markdown-out movement-artifacts/samebook-movement.md
+
+      - name: Upload read-only, non-executable comparisons
+        uses: actions/upload-artifact@v4
+        with:
+          name: free-samebook-movement
+          path: movement-artifacts/
+          retention-days: 30
+          if-no-files-found: error
