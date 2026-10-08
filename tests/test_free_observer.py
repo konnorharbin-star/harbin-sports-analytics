@@ -26,7 +26,7 @@ def audit(league: str, *, status: str = "WARN", recon: str = "PASS",
     return {
         "generated_at": stamp,
         "status": status,
-        "identity": {"season": 2026, "week": 6 if league == "CFB" else 5},
+        "identity": {"season": 2026, "week": 6 if league == "CFB" else 5, "prediction_rows": 1},
         "reconciliation": {"status": recon},
         "data_quality": {"status": "PASS" if league == "CFB" else "OK"},
         "release": {"state": "RESEARCH", "production_eligible": False,
@@ -207,3 +207,17 @@ def test_research_page_javascript_syntax(tmp_path: Path) -> None:
     target.write_text(scripts[0])
     result = subprocess.run([node, "--check", str(target)], capture_output=True, text=True)
     assert result.returncode == 0, result.stderr
+
+
+def test_mismatched_publication_files_fail_closed() -> None:
+    sources, hashes = inputs()
+    sources["NFL"]["audit"]["identity"]["prediction_rows"] = 3
+    report = build_snapshot(sources, hashes, NOW)
+    nfl = report["leagues"]["NFL"]
+    assert nfl["source_contract_status"] == "FAIL"
+    assert "published_audit_not_clean" in nfl["research_watchlist"][0]["blockers"]
+
+    sources["NFL"]["audit"]["identity"]["prediction_rows"] = 1
+    sources["NFL"]["rows"][0]["week"] = "4"
+    report = build_snapshot(sources, hashes, NOW)
+    assert report["leagues"]["NFL"]["source_contract_status"] == "FAIL"
