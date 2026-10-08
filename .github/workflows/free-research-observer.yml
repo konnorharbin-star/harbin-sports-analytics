@@ -4,6 +4,12 @@ name: Free Model Research Observer
 # publications and archives research observations in the ops-evidence branch.
 on:
   workflow_dispatch:
+  # One initial run after this workflow is updated on main. Model-generated
+  # output pushes do not match this path, so this does not become a loop.
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/free-research-observer.yml'
   schedule:
     - cron: "17 */6 * * *"
 
