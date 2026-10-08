@@ -30,3 +30,5 @@ jobs:
           test -f personal_dashboard/app.py
           test -f personal_dashboard/PRIVATE_PHONE_SETUP.md
           test -f personal_dashboard/requirements.txt
+      - name: Runtime smoke checks (locked access)
+        run: python -m unittest discover -s personal_dashboard -p 'test_smoke.py' -v
