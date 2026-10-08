@@ -316,12 +316,71 @@ def write_sqlite_snapshot(snapshot: dict[str, object], path: Path) -> None:
                 )
 
 
-def capture(output: Path, sqlite_path: Path) -> None:
+def research_report(snapshot: dict[str, object]) -> str:
+    """Readable ranking for human review only; never claims executable wagers."""
+    lines = [
+        "# Harbin free model research — candidate report",
+        "",
+        "**READ-ONLY / NO AUTOMATIC WAGERS.** Rankings are research signals,",
+        "not verified profitable bets or bookmaker execution instructions.",
+        "",
+        f"Observed at: {snapshot['observed_at_utc']}",
+        f"Snapshot: \`{snapshot['snapshot_id']}\`",
+        "",
+    ]
+    for league, data in snapshot["leagues"].items():
+        lines.extend([
+            f"## {league} — {data['release_state']}",
+            "",
+            f"Publication: {data['audit_status']} | Reconciliation: "
+            f"{data['reconciliation_status']} | Fresh: {data['publication_fresh']}",
+            f"Research candidates: {data['research_candidates_found']}",
+            "",
+            "**Validated best bets: NONE established by this observer.** "
+            "The source models' calibration and execution quality need independent review.",
+            "",
+        ])
+        candidates = data["research_watchlist"]
+        if not candidates:
+            lines.extend(["No current research candidates from published signals.", ""])
+            continue
+        lines.extend([
+            "| Candidate | Published line/odds | Model EV | Research blockers |",
+            "|---|---|---:|---|",
+        ])
+        for item in candidates[:8]:
+            def safe(value: object) -> str:
+                return str(value if value is not None else "—").replace("|", "\\|").replace("\n", " ")
+            odds = item["american_odds"]
+            odds_text = "—" if odds is None else f"{odds:+g}"
+            line = "—" if item["line"] is None else f"{item['line']:g}"
+            ev = item["recalculated_ev"]
+            ev_text = "—" if ev is None else f"{ev * 100:+.1f}% (unvalidated)"
+            flags = ", ".join(item["blockers"]) or "No data-quality flags; edge still unverified"
+            match = f"{item['away_team']} @ {item['home_team']}: " \
+                f"{item['side']} {item['market']}"
+            lines.append(
+                f"| {safe(match)} | {safe(item['book'])} {line} ({odds_text}) | "
+                f"{ev_text} | {safe(flags)} |"
+            )
+        lines.extend([
+            "",
+            "Research ranking is based on source-model EV, which may be miscalibrated. "
+            "Do not interpret this table as approval to wager.",
+            "",
+        ])
+    return "\n".join(lines) + "\n"
+
+
+def capture(output: Path, sqlite_path: Path, report_path: Path | None = None) -> None:
     sources, hashes = load_published_sources()
     snapshot = build_snapshot(sources, hashes, datetime.now(timezone.utc))
     output.parent.mkdir(parents=True, exist_ok=True)
     output.write_text(json.dumps(snapshot, indent=2, sort_keys=True, allow_nan=False) + "\n")
     write_sqlite_snapshot(snapshot, sqlite_path)
+    if report_path is not None:
+        report_path.parent.mkdir(parents=True, exist_ok=True)
+        report_path.write_text(research_report(snapshot))
     print(json.dumps({
         "snapshot_id": snapshot["snapshot_id"],
         "mode": snapshot["mode"],
@@ -343,12 +402,13 @@ def main(argv: list[str] | None = None) -> int:
     collect = sub.add_parser("capture")
     collect.add_argument("--output", type=Path, required=True)
     collect.add_argument("--sqlite", type=Path, required=True)
+    collect.add_argument("--report", type=Path)
     archive = sub.add_parser("archive")
     archive.add_argument("--snapshot", type=Path, required=True)
     archive.add_argument("--archive-root", type=Path, required=True)
     args = parser.parse_args(argv)
     if args.command == "capture":
-        capture(args.output, args.sqlite)
+        capture(args.output, args.sqlite, args.report)
     else:
         snapshot = json.loads(args.snapshot.read_text())
         print("appended" if append_archive(snapshot, args.archive_root) else "duplicate_snapshot_skipped")
