@@ -1,0 +1,56 @@
+name: Free Forward Research Grading
+
+# Read-only evaluation. No betting actions, paid feeds or staking.
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/free-forward-grading.yml'
+  schedule:
+    - cron: "29 13 * * *"
+
+permissions:
+  contents: read
+
+concurrency:
+  group: free-research-outcome-grade
+  cancel-in-progress: true
+
+jobs:
+  grade:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Checkout source code
+        uses: actions/checkout@v4
+        with:
+          ref: main
+          fetch-depth: 1
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Read pregame research history
+        run: |
+          set -euo pipefail
+          git fetch --no-tags origin refs/heads/ops-evidence:refs/remotes/origin/ops-evidence
+          git worktree add --detach /tmp/harbin-grade-history origin/ops-evidence
+
+      - name: Grade against public existing postgame ledgers
+        run: |
+          mkdir -p grader-artifacts
+          python -m platform_ops.grade_observations \
+            --archive-root /tmp/harbin-grade-history/history/free-observer \
+            --json-out grader-artifacts/forward-research-grades.json \
+            --markdown-out grader-artifacts/forward-research-grades.md
+
+      - name: Upload read-only grading artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: free-forward-research-grades
+          path: grader-artifacts/
+          retention-days: 30
+          if-no-files-found: error
