@@ -1544,7 +1544,7 @@
   "edge_forward_validation": {
     "schema_version": 2,
     "status": "PENDING_FORWARD",
-    "observed_rows": 20,
+    "observed_rows": 49,
     "clean_entries": 0,
     "graded_bets": 0,
     "wins": 0,
@@ -1571,5 +1571,78 @@
     "by_market": {},
     "methodology": "First provenance-complete pre-kickoff observation per game/market; schema v2 preserves CORE/PLAUSIBLE/parent-only price class at entry; flat 1u risk at the observed executable price; results only after final; CLV uses the latest timestamp-valid pre-kickoff market snapshot. Historical regime statistics never alter forward P/L. FORWARD_VALIDATED requires >=100 graded bets, positive 95% ROI lower bound, and positive average execution CLV.",
     "note": "Forward edge validation is independent evidence. It does not authorize production staking by itself."
+  },
+  "timing_forward_validation": {
+    "schema_version": 1,
+    "status": "PENDING_FORWARD",
+    "research_only": true,
+    "betting_authorized": false,
+    "approved_units": 0,
+    "no_official_close_claim": true,
+    "no_executed_fill_claim": true,
+    "evaluation_design": {
+      "freeze": "first_clean_signal_per_game_market_side",
+      "primary": "first_observed_same_book_quote_6_to_9_hours_after_decision",
+      "near_kickoff": "last_observed_same_book_quote_in_final_60_minutes",
+      "price_comparison": "selected_side_spread_and_break_even_prob; opposing_changes_are_mixed",
+      "selection": "all_primary_observations; no_after_the_fact_best_quote",
+      "staked": false,
+      "independent_review_thresholds": {
+        "conclusive": 100,
+        "distinct_games": 80,
+        "distinct_weeks": 8,
+        "each_action": 20
+      }
+    },
+    "raw_decision_rows": 0,
+    "clean_unique_decisions": 0,
+    "invalid_or_duplicate_decisions": 0,
+    "primary_distinct_games": 0,
+    "primary_distinct_weeks": 0,
+    "overall": {
+      "decisions": 0,
+      "primary_observed": 0,
+      "conclusive": 0,
+      "correct": 0,
+      "accuracy": null,
+      "accuracy_wilson_95": null,
+      "near_kickoff_observed": 0,
+      "near_kickoff_conclusive": 0,
+      "near_kickoff_correct": 0,
+      "near_kickoff_accuracy": null
+    },
+    "by_action": {
+      "BET_NOW_RESEARCH": {
+        "decisions": 0,
+        "primary_observed": 0,
+        "conclusive": 0,
+        "correct": 0,
+        "accuracy": null,
+        "accuracy_wilson_95": null,
+        "near_kickoff_observed": 0,
+        "near_kickoff_conclusive": 0,
+        "near_kickoff_correct": 0,
+        "near_kickoff_accuracy": null
+      },
+      "WAIT_MONITOR": {
+        "decisions": 0,
+        "primary_observed": 0,
+        "conclusive": 0,
+        "correct": 0,
+        "accuracy": null,
+        "accuracy_wilson_95": null,
+        "near_kickoff_observed": 0,
+        "near_kickoff_conclusive": 0,
+        "near_kickoff_correct": 0,
+        "near_kickoff_accuracy": null
+      }
+    },
+    "notes": [
+      "Observed sportsbook quotations are not guaranteed fills.",
+      "Last-hour observation is not an official closing line.",
+      "Wilson intervals assume independent rows; same-game clustering may reduce effective sample.",
+      "Directional accuracy alone does not establish expected-value profitability.",
+      "No automatic promotion or change to production staking."
+    ]
   }
 }
