@@ -7,10 +7,10 @@
   "closing_line_claim": false,
   "line_stage": "last_captured_pre_kickoff_not_official_close",
   "betting_authorized": false,
-  "current_rows": 9,
+  "current_rows": 8,
   "current_actions": {
-    "PASS": 6,
-    "WAIT_MONITOR": 2,
-    "NO_TIMING_SIGNAL": 1
+    "NO_TIMING_SIGNAL": 4,
+    "PASS": 3,
+    "WAIT_MONITOR": 1
   }
 }
