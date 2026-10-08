@@ -6,6 +6,10 @@ Automated college-football projection, probability, market-comparison, risk, mon
 
 The [read-only model command center](docs/command-center.html) brings the CFB and [NFL](https://github.com/konnorharbin-star/harbin-nfl-analytics) published audit, evidence, monitoring, and GitHub Actions status into one place. It does not approve bets or override release gates. [Operations and deployment guide](docs/COMMAND_CENTER.md).
 
+## Free same-book near-kickoff market research
+
+The [free read-only line movement audit](docs/FREE_SAMEBOOK_MOVEMENT.md) compares each archived pregame research observation against later market snapshots **from the same sportsbook** only. It explicitly distinguishes point-line movement from raw American-odds movement, reports source and timing failures, and never treats a public near-kickoff quote as an official bookmaker closing line, a verified executable wager, or proof of profitability.
+
 ## Free forward research grading
 
 The [free forward grading workflow](docs/FREE_FORWARD_GRADING.md) reviews historical first-seen research watchlist entries against each model's already-public postgame grade ledger. Outputs are explicitly **hypothetical**, do not represent placed wagers, and cannot verify an actual execution price. This is a read-only, free-to-operate research feature.
