@@ -16,7 +16,7 @@ class DashboardSmokeTests(unittest.TestCase):
         previous = os.environ.pop("DASHBOARD_PASSWORD", None)
         try:
             app = AppTest.from_file(APP, default_timeout=15).run()
-            errors = [str(item.message) for item in app.error]
+            errors = [str(item.value) for item in app.error]
             self.assertTrue(
                 any("Access locked" in msg for msg in errors),
                 f"Expected password configuration lock, got: {errors}",
