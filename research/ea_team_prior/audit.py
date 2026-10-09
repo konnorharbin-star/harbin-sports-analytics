@@ -12,6 +12,7 @@ import hashlib
 import json
 import math
 import re
+import unicodedata
 from collections import defaultdict
 from datetime import date, datetime
 from pathlib import Path
@@ -49,7 +50,11 @@ CFB_ALIASES = {
 def canonical(name: str, sport: str) -> str:
     if sport == "nfl":
         return NFL_ABBR.get(name, name).strip().upper()
-    key = re.sub(r"[^a-z0-9]+", " ", name.casefold()).strip()
+    ascii_name = "".join(
+        char for char in unicodedata.normalize("NFKD", name.casefold())
+        if not unicodedata.combining(char)
+    )
+    key = re.sub(r"[^a-z0-9]+", " ", ascii_name).strip()
     return CFB_ALIASES.get(key, key)
 
 
@@ -300,6 +305,11 @@ def main() -> None:
     print(json.dumps({
         "status": results["status"], "games": results["matched_games"],
         "coverage": results["coverage"],
+        "base_margin_mae": results["base_margin_mae"],
+        "base_total_mae": results["base_total_mae"],
+        "talent_residual_margin_corr": results["talent_residual_margin_corr"],
+        "talent_residual_total_corr": results["talent_residual_total_corr"],
+        "missing_team_ids": results["missing_team_ids"],
     }, sort_keys=True))
 
 
