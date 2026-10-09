@@ -1,14 +1,14 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-10-09T02:58:26.774622+00:00",
+  "generated_at": "2026-10-09T03:42:13.684536+00:00",
   "status": "WARN",
   "identity": {
     "platform_version": "7.4.0",
     "model_version": "7.1.0",
     "season": 2026,
     "week": 6,
-    "model_generated_at": "2026-10-09T02:57:41.022948+00:00",
-    "updated_at_ct": "Oct 8, 2026 \u00b7 9:57 PM CT",
+    "model_generated_at": "2026-10-09T03:41:12.699266+00:00",
+    "updated_at_ct": "Oct 8, 2026 \u00b7 10:41 PM CT",
     "prediction_rows": 51
   },
   "release": {
@@ -70,14 +70,14 @@
       {
         "name": "probability_brier",
         "passed": true,
-        "value": 0.17476492013360306,
+        "value": 0.1747649201336038,
         "requirement": "Brier <= 0.18 on chronological release holdout",
         "detail": ""
       },
       {
         "name": "probability_ece",
         "passed": false,
-        "value": 0.06218232013495895,
+        "value": 0.06218232013495966,
         "requirement": "ECE <= 0.05 on chronological release holdout",
         "detail": ""
       },
@@ -160,15 +160,15 @@
   },
   "model": {
     "validation": "nested whole-week chronology: core fit -> tune weight -> OOF calibration -> untouched evaluation; final refit keeps the tune-selected weight and uses OOF probability calibration",
-    "margin_mae": 12.95850296244939,
+    "margin_mae": 12.958502962449392,
     "margin_baseline_mae": 13.50210922129303,
     "margin_release_weight": 0.75,
-    "total_mae": 12.59160433487721,
+    "total_mae": 12.591604334877207,
     "total_baseline_mae": 12.648615389536973,
     "total_release_weight": 0.30000000000000004,
-    "win_brier": 0.17476492013360306,
-    "win_log_loss": 0.5222806383629722,
-    "win_ece": 0.06218232013495895,
+    "win_brier": 0.1747649201336038,
+    "win_log_loss": 0.522280638362974,
+    "win_ece": 0.06218232013495966,
     "selection_uses_evaluation": false
   },
   "coverage": {
@@ -189,22 +189,22 @@
       "advanced_coverage": 100.0,
       "multi_book": 98.0392156862745,
       "context": 100.0,
-      "calibration": 84.45441996626026,
+      "calibration": 84.45441996626009,
       "freshness": 100.0,
       "drift_margin": 99.0,
       "drift_total": 91.6,
       "drift_probability": 99.3,
       "distribution_stability": 96.6,
-      "output_completeness": 88.94381281924535
+      "output_completeness": 89.2156862745098
     },
     "drift": {
       "margin": {
         "stability_score": 99.0,
         "mean_z": 0.0371,
         "std_ratio": 0.9968,
-        "live_mean": 4.45269263607477,
+        "live_mean": 4.452692636074778,
         "reference_mean": 4.007587882019208,
-        "live_std": 11.95626554351805,
+        "live_std": 11.95626554351806,
         "reference_std": 11.994090061385586,
         "live_n": 51,
         "reference_n": 2398
@@ -213,9 +213,9 @@
         "stability_score": 91.6,
         "mean_z": 0.185,
         "std_ratio": 0.8615,
-        "live_mean": 52.547027338140154,
+        "live_mean": 52.54702733814016,
         "reference_mean": 53.698901638530316,
-        "live_std": 5.364703545187665,
+        "live_std": 5.364703545187649,
         "reference_std": 6.2275175246996115,
         "live_n": 51,
         "reference_n": 2398
@@ -342,7 +342,7 @@
       "ActionNetwork book 30": 0.55,
       "ActionNetwork book 49": 0.32,
       "ActionNetwork book 75": 0.33,
-      "Draft Kings": 0.14
+      "DraftKings": 0.14
     },
     "allocated_by_kickoff_window": {
       "2026-10-10 18:00:00+00:00": 0.87,
@@ -370,9 +370,9 @@
       "Louisiana Tech": 0.11,
       "Louisiana": 0.11,
       "Virginia": 0.16,
-      "South Carolina": 0.15,
       "Temple": 0.15,
       "Western Michigan": 0.15,
+      "South Carolina": 0.15,
       "Air Force": 0.13,
       "BYU": 0.08,
       "Iowa State": 0.08,
@@ -481,19 +481,6 @@
     "errors": []
   },
   "trend": [
-    {
-      "generated_at": "2026-10-08T02:44:34.562090+00:00",
-      "model_generated_at": "2026-10-08T02:43:33.015258+00:00",
-      "season": 2026,
-      "week": 6,
-      "platform_version": "7.4.0",
-      "release_state": "RESEARCH",
-      "publication_status": "WARN",
-      "live_readiness_score": 94.7,
-      "distribution_stability": 96.5,
-      "approved_units": 0.0,
-      "data_quality_status": "PASS"
-    },
     {
       "generated_at": "2026-10-08T17:54:41.274732+00:00",
       "model_generated_at": "2026-10-08T17:53:55.435967+00:00",
@@ -634,6 +621,19 @@
       "publication_status": "WARN",
       "live_readiness_score": 94.8,
       "distribution_stability": 96.8,
+      "approved_units": 0.0,
+      "data_quality_status": "PASS"
+    },
+    {
+      "generated_at": "2026-10-09T02:58:26.774622+00:00",
+      "model_generated_at": "2026-10-09T02:57:41.022948+00:00",
+      "season": 2026,
+      "week": 6,
+      "platform_version": "7.4.0",
+      "release_state": "RESEARCH",
+      "publication_status": "WARN",
+      "live_readiness_score": 94.7,
+      "distribution_stability": 96.6,
       "approved_units": 0.0,
       "data_quality_status": "PASS"
     }

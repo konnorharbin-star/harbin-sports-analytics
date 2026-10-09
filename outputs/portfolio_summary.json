@@ -86,7 +86,7 @@
     "ActionNetwork book 30": 0.55,
     "ActionNetwork book 49": 0.32,
     "ActionNetwork book 75": 0.33,
-    "Draft Kings": 0.14
+    "DraftKings": 0.14
   },
   "allocated_by_kickoff_window": {
     "2026-10-10 18:00:00+00:00": 0.87,
@@ -114,9 +114,9 @@
     "Louisiana Tech": 0.11,
     "Louisiana": 0.11,
     "Virginia": 0.16,
-    "South Carolina": 0.15,
     "Temple": 0.15,
     "Western Michigan": 0.15,
+    "South Carolina": 0.15,
     "Air Force": 0.13,
     "BYU": 0.08,
     "Iowa State": 0.08,
