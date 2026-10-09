@@ -2,6 +2,7 @@ import pandas as pd
 
 from harbin.context import (
     _context_quality,
+    _severity,
     normalize_injury_rows,
     summarize_injury_rows,
     summarize_roster_rows,
@@ -82,3 +83,45 @@ def test_health_uses_context_quality_not_source_name(tmp_path):
     h = build_health_report(meta, reports_dir=tmp_path)
     assert h["components"]["current_context"] == 40.0
     assert any("context" in x for x in h["blockers"])
+
+
+def test_inactive_and_unavailable_qb_are_not_classified_active():
+    assert _severity("Inactive") == 1.0
+    assert _severity("Unavailable") == 1.0
+    assert _severity("Not cleared") == 1.0
+    assert _severity("Available") == 0.0
+
+
+def test_qb_injury_evidence_needs_dated_report():
+    reports = pd.DataFrame(
+        [
+            {
+                "team_id": 1,
+                "athlete_id": 9,
+                "position": "QB",
+                "status": "Questionable",
+                "date": None,
+                "week": 5,
+            }
+        ]
+    )
+    norm = normalize_injury_rows(
+        reports, as_of="2026-09-29T12:00:00Z", target_week=5
+    )
+    audit = summarize_injury_rows(norm)
+    assert audit["qb_injury_evidence_status"] == "UNKNOWN_TIMESTAMP"
+    assert audit["qb_injury_timestamp_coverage"] == 0.0
+
+
+def test_unknown_qb_roster_status_not_claimed_active():
+    roster = pd.DataFrame(
+        [
+            {"athlete_id": 10, "position": "QB", "status": ""},
+            {"athlete_id": 11, "position": "QB", "status": "Active"},
+        ]
+    )
+    result = summarize_roster_rows(roster)
+    assert result["qb_roster_count"] == 2
+    assert result["active_qb_count"] == 1
+    assert result["qb_status_unknown_count"] == 1
+    assert result["qb_status_verified_count"] == 1
