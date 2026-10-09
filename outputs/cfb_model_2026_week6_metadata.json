@@ -481,8 +481,8 @@
   },
   "calibrated_margin_sigma": 16.288777071580245,
   "calibrated_total_sigma": 16.102959927363244,
-  "generated_at": "2026-10-09T17:27:45.256597+00:00",
-  "updated_at_ct": "Oct 9, 2026 \u00b7 12:27 PM CT",
+  "generated_at": "2026-10-09T18:22:50.231582+00:00",
+  "updated_at_ct": "Oct 9, 2026 \u00b7 1:22 PM CT",
   "schedule_source": "sportsdataverse/cfbfastR-data",
   "odds_source": "ESPN live (site.web.api.espn.com) + ESPN Core supplement",
   "odds_errors": [],
@@ -567,13 +567,13 @@
       "401869933"
     ],
     "invalid_kickoff_game_ids": [],
-    "cutoff_utc": "2026-10-09T17:27:45.256597+00:00"
+    "cutoff_utc": "2026-10-09T18:22:50.231582+00:00"
   },
   "edge_forward_snapshot": {
     "status": "APPENDED",
     "appended": 8,
-    "total_rows": 203,
-    "snapshot_at": "2026-10-09T17:27:45.256597+00:00",
+    "total_rows": 211,
+    "snapshot_at": "2026-10-09T18:22:50.231582+00:00",
     "path": "history/edge_candidate_snapshots.csv"
   },
   "edge_timing": {
@@ -587,8 +587,8 @@
     "betting_authorized": false,
     "current_rows": 7,
     "current_actions": {
-      "PASS": 4,
-      "NO_TIMING_SIGNAL": 3
+      "PASS": 5,
+      "NO_TIMING_SIGNAL": 2
     }
   },
   "timing_forward_decisions": {
@@ -628,16 +628,16 @@
     "persistent_candidates": 8,
     "supported_subgroup_candidates": 7,
     "core_price_confirmed_candidates": 7,
-    "priority_actionable_candidates": 3,
+    "priority_actionable_candidates": 2,
     "robust_core_candidates": 2,
-    "core_candidates": 1,
+    "core_candidates": 0,
     "line_thin_core_candidates": 2,
-    "price_thin_core_candidates": 2,
+    "price_thin_core_candidates": 3,
     "price_plausible_supported_candidates": 0,
     "price_overpriced_supported_candidates": 0,
     "parent_only_candidates": 1,
     "contraindicated_candidates": 1,
-    "watch_candidates": 29,
+    "watch_candidates": 30,
     "methodology": "Fixed edge bands; market-specific walk-forward bet outcomes; PERSISTENT_CANDIDATE requires >=180 bets, >=3 seasons, >=50 bets in every season, positive ROI in every season, >=3% aggregate ROI, and positive average CLV. WATCH requires >=100 bets, positive aggregate ROI, and profit in at least two-thirds of seasons. Spread parent regimes are decomposed into favorite/underdog \u00d7 home/away children using chronological confirmation: all but the latest represented season are discovery and the latest season is a holdout. SUPPORTED_SUBGROUP requires >=45 total bets, >=2 discovery seasons with >=12 bets each, >=5% discovery ROI with every discovery season profitable, >=12 holdout bets with positive holdout ROI, and positive full-sample CLV. CONTRAINDICATED_SUBGROUP requires the same sample floor, every discovery season negative with <=-3% discovery ROI, a negative holdout ROI, and <=-3% full-sample ROI. Regime evidence can prioritize research and surface candidates but cannot create an edge, modify the fair line, probability, EV, or inflate stake."
   },
   "quant_picks": {
@@ -675,13 +675,13 @@
     "verified_close_clv_samples": 0,
     "portfolio_verified": true,
     "evidence_source": "portfolio_decisions_v1",
-    "eligible_decisions": 678,
+    "eligible_decisions": 698,
     "timing_excluded_rows": 70,
     "status": "live/shadow evidence only; not historical backtest evidence"
   },
   "edge_forward_validation": {
     "status": "PENDING_FORWARD",
-    "observed_rows": 203,
+    "observed_rows": 211,
     "clean_entries": 0,
     "graded_bets": 0,
     "roi": null,
@@ -961,9 +961,9 @@
       "reason": "graded history has no usable profit rows"
     },
     "production_block_reason": "",
-    "proposed_units": 4.66,
-    "risk_adjusted_proposed_units": 4.66,
-    "performance_adjusted_proposed_units": 4.66,
+    "proposed_units": 4.65,
+    "risk_adjusted_proposed_units": 4.65,
+    "performance_adjusted_proposed_units": 4.65,
     "approved_units": 0.0,
     "paper_allocated_units": 3.22,
     "paper_or_shadow_allocated_units": 3.22,
@@ -1013,24 +1013,25 @@
     },
     "allocated_by_market": {
       "total": 0.78,
-      "spread": 1.83,
-      "moneyline": 0.61
+      "spread": 1.82,
+      "moneyline": 0.62
     },
     "allocated_by_book": {
       "ActionNetwork book 49": 0.39,
-      "ActionNetwork book 71": 0.69,
+      "ActionNetwork book 71": 0.78,
       "ActionNetwork book 30": 0.56,
       "ActionNetwork book 15": 0.29,
-      "ActionNetwork book 75": 0.39,
-      "DraftKings": 0.25,
+      "Draft Kings": 0.26,
+      "ActionNetwork book 75": 0.12,
+      "ActionNetwork book 68": 0.17,
       "ActionNetwork book 69": 0.65
     },
     "allocated_by_kickoff_window": {
       "2026-10-10 18:00:00+00:00": 0.98,
       "2026-10-10 21:00:00+00:00": 1.01,
-      "2026-10-10 15:00:00+00:00": 0.93,
-      "2026-10-11 00:00:00+00:00": 0.18,
-      "2026-10-10 00:00:00+00:00": 0.12
+      "2026-10-10 15:00:00+00:00": 0.94,
+      "2026-10-10 00:00:00+00:00": 0.12,
+      "2026-10-11 00:00:00+00:00": 0.17
     },
     "allocated_by_team_exposure": {
       "Georgia Tech": 0.19,
@@ -1042,10 +1043,10 @@
       "UCF": 0.2,
       "Nebraska": 0.14,
       "Indiana": 0.14,
-      "Hawai'i": 0.18,
+      "Texas A&M": 0.12,
       "Michigan State": 0.14,
       "Iowa": 0.12,
-      "Texas A&M": 0.11,
+      "Hawai'i": 0.17,
       "James Madison": 0.18,
       "Arizona": 0.24,
       "Louisiana Tech": 0.1,
@@ -1054,10 +1055,10 @@
       "Miami (OH)": 0.1,
       "South Carolina": 0.15,
       "Virginia": 0.16,
-      "Western Michigan": 0.15,
-      "Temple": 0.15,
       "App State": 0.09,
       "Old Dominion": 0.09,
+      "Western Michigan": 0.15,
+      "Temple": 0.15,
       "Memphis": 0.13
     },
     "limit_hit_counts": {
@@ -1075,6 +1076,6 @@
     "path": "history/portfolio_decisions_v1.csv",
     "eligible_rows": 20,
     "appended_rows": 20,
-    "total_rows": 1033
+    "total_rows": 1053
   }
 }

@@ -9,7 +9,7 @@
   "betting_authorized": false,
   "current_rows": 7,
   "current_actions": {
-    "PASS": 4,
-    "NO_TIMING_SIGNAL": 3
+    "PASS": 5,
+    "NO_TIMING_SIGNAL": 2
   }
 }

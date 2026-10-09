@@ -25,9 +25,9 @@
     "reason": "graded history has no usable profit rows"
   },
   "production_block_reason": "",
-  "proposed_units": 4.66,
-  "risk_adjusted_proposed_units": 4.66,
-  "performance_adjusted_proposed_units": 4.66,
+  "proposed_units": 4.65,
+  "risk_adjusted_proposed_units": 4.65,
+  "performance_adjusted_proposed_units": 4.65,
   "approved_units": 0.0,
   "paper_allocated_units": 3.22,
   "paper_or_shadow_allocated_units": 3.22,
@@ -77,24 +77,25 @@
   },
   "allocated_by_market": {
     "total": 0.78,
-    "spread": 1.83,
-    "moneyline": 0.61
+    "spread": 1.82,
+    "moneyline": 0.62
   },
   "allocated_by_book": {
     "ActionNetwork book 49": 0.39,
-    "ActionNetwork book 71": 0.69,
+    "ActionNetwork book 71": 0.78,
     "ActionNetwork book 30": 0.56,
     "ActionNetwork book 15": 0.29,
-    "ActionNetwork book 75": 0.39,
-    "DraftKings": 0.25,
+    "Draft Kings": 0.26,
+    "ActionNetwork book 75": 0.12,
+    "ActionNetwork book 68": 0.17,
     "ActionNetwork book 69": 0.65
   },
   "allocated_by_kickoff_window": {
     "2026-10-10 18:00:00+00:00": 0.98,
     "2026-10-10 21:00:00+00:00": 1.01,
-    "2026-10-10 15:00:00+00:00": 0.93,
-    "2026-10-11 00:00:00+00:00": 0.18,
-    "2026-10-10 00:00:00+00:00": 0.12
+    "2026-10-10 15:00:00+00:00": 0.94,
+    "2026-10-10 00:00:00+00:00": 0.12,
+    "2026-10-11 00:00:00+00:00": 0.17
   },
   "allocated_by_team_exposure": {
     "Georgia Tech": 0.19,
@@ -106,10 +107,10 @@
     "UCF": 0.2,
     "Nebraska": 0.14,
     "Indiana": 0.14,
-    "Hawai'i": 0.18,
+    "Texas A&M": 0.12,
     "Michigan State": 0.14,
     "Iowa": 0.12,
-    "Texas A&M": 0.11,
+    "Hawai'i": 0.17,
     "James Madison": 0.18,
     "Arizona": 0.24,
     "Louisiana Tech": 0.1,
@@ -118,10 +119,10 @@
     "Miami (OH)": 0.1,
     "South Carolina": 0.15,
     "Virginia": 0.16,
-    "Western Michigan": 0.15,
-    "Temple": 0.15,
     "App State": 0.09,
     "Old Dominion": 0.09,
+    "Western Michigan": 0.15,
+    "Temple": 0.15,
     "Memphis": 0.13
   },
   "limit_hit_counts": {
