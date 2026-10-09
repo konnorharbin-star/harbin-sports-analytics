@@ -24,7 +24,7 @@ jobs:
         run: |
           python -m pip install ruff
           ruff format research/ea_talent
-          ruff check research/ea_talent --fix
+          ruff check research/ea_talent --fix --unsafe-fixes
           ruff format research/ea_talent
           ruff check research/ea_talent
       - name: Commit formatting corrections
