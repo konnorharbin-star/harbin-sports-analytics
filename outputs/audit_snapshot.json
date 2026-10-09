@@ -1,14 +1,14 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-10-09T03:42:13.684536+00:00",
+  "generated_at": "2026-10-09T17:12:48.566227+00:00",
   "status": "WARN",
   "identity": {
     "platform_version": "7.4.0",
     "model_version": "7.1.0",
     "season": 2026,
     "week": 6,
-    "model_generated_at": "2026-10-09T03:41:12.699266+00:00",
-    "updated_at_ct": "Oct 8, 2026 \u00b7 10:41 PM CT",
+    "model_generated_at": "2026-10-09T17:11:50.389840+00:00",
+    "updated_at_ct": "Oct 9, 2026 \u00b7 12:11 PM CT",
     "prediction_rows": 51
   },
   "release": {
@@ -203,9 +203,9 @@
         "mean_z": 0.0371,
         "std_ratio": 0.9968,
         "live_mean": 4.452692636074778,
-        "reference_mean": 4.007587882019208,
+        "reference_mean": 4.007587882019203,
         "live_std": 11.95626554351806,
-        "reference_std": 11.994090061385586,
+        "reference_std": 11.99409006138559,
         "live_n": 51,
         "reference_n": 2398
       },
@@ -214,9 +214,9 @@
         "mean_z": 0.185,
         "std_ratio": 0.8615,
         "live_mean": 52.54702733814016,
-        "reference_mean": 53.698901638530316,
+        "reference_mean": 53.69890163853031,
         "live_std": 5.364703545187649,
-        "reference_std": 6.2275175246996115,
+        "reference_std": 6.227517524699614,
         "live_n": 51,
         "reference_n": 2398
       },
@@ -225,9 +225,9 @@
         "mean_z": 0.0136,
         "std_ratio": 1.0136,
         "live_mean": 0.5859682202041008,
-        "reference_mean": 0.5827146572033706,
+        "reference_mean": 0.582714657203369,
         "live_std": 0.2427297499503319,
-        "reference_std": 0.23947361737529083,
+        "reference_std": 0.2394736173752905,
         "live_n": 51,
         "reference_n": 2398
       }
@@ -281,12 +281,12 @@
       "reason": "graded history has no usable profit rows"
     },
     "production_block_reason": "",
-    "proposed_units": 4.56,
-    "risk_adjusted_proposed_units": 4.56,
-    "performance_adjusted_proposed_units": 4.56,
+    "proposed_units": 4.66,
+    "risk_adjusted_proposed_units": 4.66,
+    "performance_adjusted_proposed_units": 4.66,
     "approved_units": 0.0,
-    "paper_allocated_units": 3.27,
-    "paper_or_shadow_allocated_units": 3.27,
+    "paper_allocated_units": 3.22,
+    "paper_or_shadow_allocated_units": 3.22,
     "bets": 20,
     "approved_bets": 0,
     "execution_blocked_bets": 0,
@@ -332,55 +332,57 @@
       "max_book_units": 2.0
     },
     "allocated_by_market": {
-      "total": 0.82,
+      "total": 0.78,
       "spread": 1.83,
-      "moneyline": 0.62
+      "moneyline": 0.61
     },
     "allocated_by_book": {
-      "ActionNetwork book 69": 0.88,
-      "ActionNetwork book 71": 1.05,
-      "ActionNetwork book 30": 0.55,
-      "ActionNetwork book 49": 0.32,
-      "ActionNetwork book 75": 0.33,
-      "DraftKings": 0.14
+      "ActionNetwork book 49": 0.39,
+      "ActionNetwork book 71": 0.69,
+      "ActionNetwork book 30": 0.56,
+      "ActionNetwork book 15": 0.29,
+      "ActionNetwork book 75": 0.39,
+      "DraftKings": 0.25,
+      "ActionNetwork book 69": 0.55,
+      "ActionNetwork book 68": 0.1
     },
     "allocated_by_kickoff_window": {
-      "2026-10-10 18:00:00+00:00": 0.87,
-      "2026-10-10 21:00:00+00:00": 1.16,
-      "2026-10-10 15:00:00+00:00": 0.85,
-      "2026-10-11 00:00:00+00:00": 0.19,
-      "2026-10-10 00:00:00+00:00": 0.2
+      "2026-10-10 18:00:00+00:00": 0.98,
+      "2026-10-10 21:00:00+00:00": 1.01,
+      "2026-10-10 15:00:00+00:00": 0.93,
+      "2026-10-11 00:00:00+00:00": 0.18,
+      "2026-10-10 00:00:00+00:00": 0.12
     },
     "allocated_by_team_exposure": {
       "Georgia Tech": 0.19,
       "Duke": 0.19,
       "San Diego State": 0.28,
-      "Vanderbilt": 0.24,
+      "Vanderbilt": 0.25,
       "Alabama": 0.16,
       "Georgia": 0.16,
+      "UCF": 0.2,
       "Nebraska": 0.14,
       "Indiana": 0.14,
-      "UCF": 0.2,
-      "Hawai'i": 0.19,
-      "Texas A&M": 0.12,
-      "Iowa": 0.12,
+      "Hawai'i": 0.18,
       "Michigan State": 0.14,
+      "Iowa": 0.12,
+      "Texas A&M": 0.11,
       "James Madison": 0.18,
       "Arizona": 0.24,
-      "Louisiana Tech": 0.11,
-      "Louisiana": 0.11,
-      "Virginia": 0.16,
-      "Temple": 0.15,
-      "Western Michigan": 0.15,
+      "Louisiana Tech": 0.1,
+      "Louisiana": 0.1,
       "South Carolina": 0.15,
-      "Air Force": 0.13,
-      "BYU": 0.08,
-      "Iowa State": 0.08,
-      "Marshall": 0.14,
-      "Coastal Carolina": 0.14
+      "Virginia": 0.16,
+      "Western Michigan": 0.15,
+      "Massachusetts": 0.1,
+      "Miami (OH)": 0.1,
+      "Temple": 0.15,
+      "App State": 0.09,
+      "Old Dominion": 0.09,
+      "Memphis": 0.13
     },
     "limit_hit_counts": {
-      "max bet count": 13
+      "max bet count": 14
     },
     "release_blockers": [
       "complete_market_coverage: >= 95% games with ML + spread + total",
@@ -475,25 +477,12 @@
         "name": "approved_not_above_allocation",
         "passed": true,
         "severity": "ERROR",
-        "detail": "approved=0.00 allocated=3.27"
+        "detail": "approved=0.00 allocated=3.22"
       }
     ],
     "errors": []
   },
   "trend": [
-    {
-      "generated_at": "2026-10-08T17:54:41.274732+00:00",
-      "model_generated_at": "2026-10-08T17:53:55.435967+00:00",
-      "season": 2026,
-      "week": 6,
-      "platform_version": "7.4.0",
-      "release_state": "RESEARCH",
-      "publication_status": "WARN",
-      "live_readiness_score": 94.7,
-      "distribution_stability": 96.5,
-      "approved_units": 0.0,
-      "data_quality_status": "PASS"
-    },
     {
       "generated_at": "2026-10-08T22:07:30.838667+00:00",
       "model_generated_at": "2026-10-08T22:06:15.224173+00:00",
@@ -627,6 +616,19 @@
     {
       "generated_at": "2026-10-09T02:58:26.774622+00:00",
       "model_generated_at": "2026-10-09T02:57:41.022948+00:00",
+      "season": 2026,
+      "week": 6,
+      "platform_version": "7.4.0",
+      "release_state": "RESEARCH",
+      "publication_status": "WARN",
+      "live_readiness_score": 94.7,
+      "distribution_stability": 96.6,
+      "approved_units": 0.0,
+      "data_quality_status": "PASS"
+    },
+    {
+      "generated_at": "2026-10-09T03:42:13.684536+00:00",
+      "model_generated_at": "2026-10-09T03:41:12.699266+00:00",
       "season": 2026,
       "week": 6,
       "platform_version": "7.4.0",

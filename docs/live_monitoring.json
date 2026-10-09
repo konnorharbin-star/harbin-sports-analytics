@@ -20,9 +20,9 @@
       "mean_z": 0.0371,
       "std_ratio": 0.9968,
       "live_mean": 4.452692636074778,
-      "reference_mean": 4.007587882019208,
+      "reference_mean": 4.007587882019203,
       "live_std": 11.95626554351806,
-      "reference_std": 11.994090061385586,
+      "reference_std": 11.99409006138559,
       "live_n": 51,
       "reference_n": 2398
     },
@@ -31,9 +31,9 @@
       "mean_z": 0.185,
       "std_ratio": 0.8615,
       "live_mean": 52.54702733814016,
-      "reference_mean": 53.698901638530316,
+      "reference_mean": 53.69890163853031,
       "live_std": 5.364703545187649,
-      "reference_std": 6.2275175246996115,
+      "reference_std": 6.227517524699614,
       "live_n": 51,
       "reference_n": 2398
     },
@@ -42,9 +42,9 @@
       "mean_z": 0.0136,
       "std_ratio": 1.0136,
       "live_mean": 0.5859682202041008,
-      "reference_mean": 0.5827146572033706,
+      "reference_mean": 0.582714657203369,
       "live_std": 0.2427297499503319,
-      "reference_std": 0.23947361737529083,
+      "reference_std": 0.2394736173752905,
       "live_n": 51,
       "reference_n": 2398
     }
