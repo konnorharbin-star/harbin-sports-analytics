@@ -87,8 +87,7 @@
     "ActionNetwork book 15": 0.29,
     "ActionNetwork book 75": 0.39,
     "DraftKings": 0.25,
-    "ActionNetwork book 69": 0.55,
-    "ActionNetwork book 68": 0.1
+    "ActionNetwork book 69": 0.65
   },
   "allocated_by_kickoff_window": {
     "2026-10-10 18:00:00+00:00": 0.98,
@@ -115,11 +114,11 @@
     "Arizona": 0.24,
     "Louisiana Tech": 0.1,
     "Louisiana": 0.1,
+    "Massachusetts": 0.1,
+    "Miami (OH)": 0.1,
     "South Carolina": 0.15,
     "Virginia": 0.16,
     "Western Michigan": 0.15,
-    "Massachusetts": 0.1,
-    "Miami (OH)": 0.1,
     "Temple": 0.15,
     "App State": 0.09,
     "Old Dominion": 0.09,
