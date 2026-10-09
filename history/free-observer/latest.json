@@ -2,15 +2,15 @@
   "automatic_betting_enabled": false,
   "leagues": {
     "CFB": {
-      "audit_generated_at": "2026-10-08T22:56:11.893404+00:00",
+      "audit_generated_at": "2026-10-09T03:42:13.684536+00:00",
       "audit_status": "WARN",
       "data_quality_status": "PASS",
-      "model_generated_at": "2026-10-08T22:55:02.477044+00:00",
+      "model_generated_at": "2026-10-09T03:41:12.699266+00:00",
       "model_version": "7.1.0",
       "production_eligible": false,
       "publication_fresh": true,
       "published_approved_units": 0.0,
-      "raw_rows_read": 55,
+      "raw_rows_read": 51,
       "reconciliation_status": "PASS",
       "release_blockers": [
         "complete_market_coverage: >= 95% games with ML + spread + total",
@@ -20,14 +20,15 @@
         "live_shadow_evidence: >=300 portfolio-verified graded live/shadow bets, non-negative ROI and positive pre-kickoff CLV proxy"
       ],
       "release_state": "RESEARCH",
-      "research_candidates_found": 36,
+      "research_candidates_found": 33,
       "research_watchlist": [
         {
           "american_odds": -105.0,
           "away_team": "Duke",
           "blockers": [
             "execution_context_not_ready",
-            "model_not_production_validated"
+            "model_not_production_validated",
+            "quote_stale"
           ],
           "book": "ActionNetwork book 69",
           "game_id": "401858255",
@@ -40,7 +41,7 @@
           "notes": "No betting execution is implemented. A positive model EV is not verified edge.",
           "published_model_ev": 0.5052021226911134,
           "qualification": "RESEARCH_ONLY",
-          "quoted_at_utc": "2026-10-08T22:55:52.935680+00:00",
+          "quoted_at_utc": "2026-10-09T03:42:04.054613+00:00",
           "recalculated_ev": 0.5052021226911134,
           "side": "O",
           "source_signal": "STRONG"
@@ -50,7 +51,8 @@
           "away_team": "San Diego State",
           "blockers": [
             "execution_context_not_ready",
-            "model_not_production_validated"
+            "model_not_production_validated",
+            "quote_stale"
           ],
           "book": "ActionNetwork book 71",
           "game_id": "401860902",
@@ -63,7 +65,7 @@
           "notes": "No betting execution is implemented. A positive model EV is not verified edge.",
           "published_model_ev": 0.47236286358706525,
           "qualification": "RESEARCH_ONLY",
-          "quoted_at_utc": "2026-10-08T22:55:52.979753+00:00",
+          "quoted_at_utc": "2026-10-09T03:42:04.098445+00:00",
           "recalculated_ev": 0.47236286358706525,
           "side": "San Diego State",
           "source_signal": "STRONG"
@@ -73,7 +75,8 @@
           "away_team": "Ole Miss",
           "blockers": [
             "execution_context_not_ready",
-            "model_not_production_validated"
+            "model_not_production_validated",
+            "quote_stale"
           ],
           "book": "ActionNetwork book 30",
           "game_id": "401856718",
@@ -86,7 +89,7 @@
           "notes": "No betting execution is implemented. A positive model EV is not verified edge.",
           "published_model_ev": 0.3892384758733666,
           "qualification": "RESEARCH_ONLY",
-          "quoted_at_utc": "2026-10-08T22:55:52.929875+00:00",
+          "quoted_at_utc": "2026-10-09T03:42:04.048675+00:00",
           "recalculated_ev": 0.3892384758733666,
           "side": "Vanderbilt",
           "source_signal": "STRONG"
@@ -96,7 +99,8 @@
           "away_team": "Georgia",
           "blockers": [
             "execution_context_not_ready",
-            "model_not_production_validated"
+            "model_not_production_validated",
+            "quote_stale"
           ],
           "book": "ActionNetwork book 30",
           "game_id": "401856712",
@@ -109,7 +113,7 @@
           "notes": "No betting execution is implemented. A positive model EV is not verified edge.",
           "published_model_ev": 0.38196330366911646,
           "qualification": "RESEARCH_ONLY",
-          "quoted_at_utc": "2026-10-08T22:55:52.997474+00:00",
+          "quoted_at_utc": "2026-10-09T03:42:04.115943+00:00",
           "recalculated_ev": 0.38196330366911646,
           "side": "O",
           "source_signal": "STRONG"
@@ -119,7 +123,8 @@
           "away_team": "Indiana",
           "blockers": [
             "execution_context_not_ready",
-            "model_not_production_validated"
+            "model_not_production_validated",
+            "quote_stale"
           ],
           "book": "ActionNetwork book 69",
           "game_id": "401858481",
@@ -132,7 +137,7 @@
           "notes": "No betting execution is implemented. A positive model EV is not verified edge.",
           "published_model_ev": 0.365967600494462,
           "qualification": "RESEARCH_ONLY",
-          "quoted_at_utc": "2026-10-08T22:55:52.906361+00:00",
+          "quoted_at_utc": "2026-10-09T03:42:04.025287+00:00",
           "recalculated_ev": 0.365967600494462,
           "side": "O",
           "source_signal": "STRONG"
@@ -142,7 +147,8 @@
           "away_team": "Texas A&M",
           "blockers": [
             "execution_context_not_ready",
-            "model_not_production_validated"
+            "model_not_production_validated",
+            "quote_stale"
           ],
           "book": "ActionNetwork book 49",
           "game_id": "401856716",
@@ -155,40 +161,18 @@
           "notes": "No betting execution is implemented. A positive model EV is not verified edge.",
           "published_model_ev": 0.33920000000000006,
           "qualification": "RESEARCH_ONLY",
-          "quoted_at_utc": "2026-10-08T22:55:52.891386+00:00",
+          "quoted_at_utc": "2026-10-09T03:42:04.010612+00:00",
           "recalculated_ev": 0.33920000000000006,
           "side": "Texas A&M",
           "source_signal": "BET"
-        },
-        {
-          "american_odds": -100.0,
-          "away_team": "South Florida",
-          "blockers": [
-            "execution_context_not_ready",
-            "model_not_production_validated"
-          ],
-          "book": "ActionNetwork book 30",
-          "game_id": "401862794",
-          "home_team": "UTSA",
-          "kickoff_utc": "2026-10-08T23:30:00+00:00",
-          "league": "CFB",
-          "line": 6.5,
-          "market": "spread",
-          "model_probability": 0.6622004280214538,
-          "notes": "No betting execution is implemented. A positive model EV is not verified edge.",
-          "published_model_ev": 0.3244008560429077,
-          "qualification": "RESEARCH_ONLY",
-          "quoted_at_utc": "2026-10-08T22:55:52.871215+00:00",
-          "recalculated_ev": 0.3244008560429077,
-          "side": "South Florida",
-          "source_signal": "STRONG"
         },
         {
           "american_odds": -108.0,
           "away_team": "UCF",
           "blockers": [
             "execution_context_not_ready",
-            "model_not_production_validated"
+            "model_not_production_validated",
+            "quote_stale"
           ],
           "book": "ActionNetwork book 49",
           "game_id": "401856824",
@@ -201,7 +185,7 @@
           "notes": "No betting execution is implemented. A positive model EV is not verified edge.",
           "published_model_ev": 0.3190036661321869,
           "qualification": "RESEARCH_ONLY",
-          "quoted_at_utc": "2026-10-08T22:55:52.897546+00:00",
+          "quoted_at_utc": "2026-10-09T03:42:04.016514+00:00",
           "recalculated_ev": 0.3190036661321869,
           "side": "UCF",
           "source_signal": "STRONG"
@@ -211,7 +195,8 @@
           "away_team": "Hawai'i",
           "blockers": [
             "execution_context_not_ready",
-            "model_not_production_validated"
+            "model_not_production_validated",
+            "quote_stale"
           ],
           "book": "ActionNetwork book 71",
           "game_id": "401856808",
@@ -224,55 +209,9 @@
           "notes": "No betting execution is implemented. A positive model EV is not verified edge.",
           "published_model_ev": 0.3184234483414027,
           "qualification": "RESEARCH_ONLY",
-          "quoted_at_utc": "2026-10-08T22:55:53.018325+00:00",
+          "quoted_at_utc": "2026-10-09T03:42:04.136521+00:00",
           "recalculated_ev": 0.3184234483414027,
           "side": "Hawai'i",
-          "source_signal": "STRONG"
-        },
-        {
-          "american_odds": -110.0,
-          "away_team": "Syracuse",
-          "blockers": [
-            "execution_context_not_ready",
-            "model_not_production_validated"
-          ],
-          "book": "ActionNetwork book 69",
-          "game_id": "401858258",
-          "home_team": "Virginia",
-          "kickoff_utc": "2026-10-10T23:30:00+00:00",
-          "league": "CFB",
-          "line": -8.5,
-          "market": "spread",
-          "model_probability": 0.683538357602436,
-          "notes": "No betting execution is implemented. A positive model EV is not verified edge.",
-          "published_model_ev": 0.30493686451374136,
-          "qualification": "RESEARCH_ONLY",
-          "quoted_at_utc": "2026-10-08T22:55:53.000373+00:00",
-          "recalculated_ev": 0.30493686451374136,
-          "side": "Virginia",
-          "source_signal": "STRONG"
-        },
-        {
-          "american_odds": -108.0,
-          "away_team": "Sam Houston",
-          "blockers": [
-            "execution_context_not_ready",
-            "model_not_production_validated"
-          ],
-          "book": "ActionNetwork book 75",
-          "game_id": "401870766",
-          "home_team": "Liberty",
-          "kickoff_utc": "2026-10-08T23:00:00+00:00",
-          "league": "CFB",
-          "line": -13.5,
-          "market": "spread",
-          "model_probability": 0.6751752201760324,
-          "notes": "No betting execution is implemented. A positive model EV is not verified edge.",
-          "published_model_ev": 0.3003374610797661,
-          "qualification": "RESEARCH_ONLY",
-          "quoted_at_utc": "2026-10-08T22:55:52.827268+00:00",
-          "recalculated_ev": 0.3003374610797661,
-          "side": "Liberty",
           "source_signal": "STRONG"
         },
         {
@@ -280,9 +219,10 @@
           "away_team": "Illinois",
           "blockers": [
             "execution_context_not_ready",
-            "model_not_production_validated"
+            "model_not_production_validated",
+            "quote_stale"
           ],
-          "book": "Draft Kings",
+          "book": "DraftKings",
           "game_id": "401858480",
           "home_team": "Michigan State",
           "kickoff_utc": "2026-10-10T19:30:00+00:00",
@@ -293,30 +233,102 @@
           "notes": "No betting execution is implemented. A positive model EV is not verified edge.",
           "published_model_ev": 0.30000000000000004,
           "qualification": "RESEARCH_ONLY",
-          "quoted_at_utc": "2026-10-08T22:55:52.944505+00:00",
+          "quoted_at_utc": "2026-10-09T03:42:04.063294+00:00",
           "recalculated_ev": 0.30000000000000004,
           "side": "Michigan State",
+          "source_signal": "STRONG"
+        },
+        {
+          "american_odds": 135.0,
+          "away_team": "Iowa",
+          "blockers": [
+            "execution_context_not_ready",
+            "model_not_production_validated",
+            "quote_stale"
+          ],
+          "book": "ActionNetwork book 75",
+          "game_id": "401858487",
+          "home_team": "Washington",
+          "kickoff_utc": "2026-10-10T01:00:00+00:00",
+          "league": "CFB",
+          "line": 135.0,
+          "market": "moneyline",
+          "model_probability": 0.5507246376811594,
+          "notes": "No betting execution is implemented. A positive model EV is not verified edge.",
+          "published_model_ev": 0.2942028985507247,
+          "qualification": "RESEARCH_ONLY",
+          "quoted_at_utc": "2026-10-09T03:42:03.999229+00:00",
+          "recalculated_ev": 0.2942028985507247,
+          "side": "Iowa",
+          "source_signal": "BET"
+        },
+        {
+          "american_odds": -113.0,
+          "away_team": "South Carolina",
+          "blockers": [
+            "execution_context_not_ready",
+            "model_not_production_validated",
+            "quote_stale"
+          ],
+          "book": "ActionNetwork book 71",
+          "game_id": "401856714",
+          "home_team": "Florida",
+          "kickoff_utc": "2026-10-10T16:45:00+00:00",
+          "league": "CFB",
+          "line": 12.5,
+          "market": "spread",
+          "model_probability": 0.6812827127747019,
+          "notes": "No betting execution is implemented. A positive model EV is not verified edge.",
+          "published_model_ev": 0.28418776832753545,
+          "qualification": "RESEARCH_ONLY",
+          "quoted_at_utc": "2026-10-09T03:42:04.036951+00:00",
+          "recalculated_ev": 0.28418776832753545,
+          "side": "South Carolina",
+          "source_signal": "STRONG"
+        },
+        {
+          "american_odds": -113.0,
+          "away_team": "James Madison",
+          "blockers": [
+            "execution_context_not_ready",
+            "model_not_production_validated",
+            "quote_stale"
+          ],
+          "book": "ActionNetwork book 71",
+          "game_id": "401869949",
+          "home_team": "Georgia Southern",
+          "kickoff_utc": "2026-10-10T23:30:00+00:00",
+          "league": "CFB",
+          "line": -7.0,
+          "market": "spread",
+          "model_probability": 0.6730704806454143,
+          "notes": "No betting execution is implemented. A positive model EV is not verified edge.",
+          "published_model_ev": 0.26870807413693143,
+          "qualification": "RESEARCH_ONLY",
+          "quoted_at_utc": "2026-10-09T03:42:04.127700+00:00",
+          "recalculated_ev": 0.26870807413693143,
+          "side": "James Madison",
           "source_signal": "STRONG"
         }
       ],
       "season": 2026,
-      "source_contract_detail": "prediction_rows published=55 downloaded=55; season/week identity matches=True",
+      "source_contract_detail": "prediction_rows published=51 downloaded=51; season/week identity matches=True",
       "source_contract_status": "PASS",
       "source_repo": "konnorharbin-star/harbin-sports-analytics",
-      "source_sha256": "cdefd76b4a656aa0ad499ff395a5e8e91d211a223233963efd5f746122fd6902",
+      "source_sha256": "97e43bbcdc6348001e5f3e60c4c552157dfb0e61e80cbf17d53b3d2fa7cd8c2c",
       "summary": "Observational model evidence only, not bets to execute.",
       "week": 6
     },
     "NFL": {
-      "audit_generated_at": "2026-10-08T22:55:07.239135+00:00",
+      "audit_generated_at": "2026-10-09T03:51:57.055135+00:00",
       "audit_status": "WARN",
       "data_quality_status": "OK",
-      "model_generated_at": "2026-10-08T22:55:04.613249+00:00",
+      "model_generated_at": "2026-10-09T03:51:55.157272+00:00",
       "model_version": null,
       "production_eligible": false,
       "publication_fresh": true,
       "published_approved_units": 0.0,
-      "raw_rows_read": 45,
+      "raw_rows_read": 42,
       "reconciliation_status": "PASS",
       "release_blockers": [
         "quarterback_context_coverage: >=95% current games with identified, decision-ready expected starting-QB state",
@@ -333,17 +345,17 @@
       "research_candidates_found": 0,
       "research_watchlist": [],
       "season": 2026,
-      "source_contract_detail": "prediction_rows published=45 downloaded=45; season/week identity matches=True",
+      "source_contract_detail": "prediction_rows published=42 downloaded=42; season/week identity matches=True",
       "source_contract_status": "PASS",
       "source_repo": "konnorharbin-star/harbin-nfl-analytics",
-      "source_sha256": "2af3fda89ee85adb64593c2d3cdf5f5bb190b34687170ad8b0f0aae342d7abc5",
+      "source_sha256": "bc582c86e249ffc0035d05114a5b82cc0cf55468cd13ed3bfd987b5488735687",
       "summary": "Observational model evidence only, not bets to execute.",
       "week": 5
     }
   },
   "mode": "READ_ONLY_RESEARCH",
-  "observed_at_utc": "2026-10-08T22:57:58.043638+00:00",
+  "observed_at_utc": "2026-10-09T06:15:33.290482+00:00",
   "paid_data_sources_used": false,
   "schema_version": 1,
-  "snapshot_id": "191178979af7a0b81b03070287f72e8bcedbbc955c892254918c16bf3c30c2b3"
+  "snapshot_id": "575d69709ef76fade89e42db95db6501f029b3e3f105fb88c62384f74ef17858"
 }
