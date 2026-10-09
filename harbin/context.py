@@ -62,6 +62,13 @@ def _boolish(v):
 def _severity(value):
     """Conservative current-availability severity from ESPN-style status text."""
     s = str(value or "").lower()
+    # Definitive negative statuses must win before substring checks:
+    # "inactive" contains "active" and "unavailable" contains "available".
+    if any(x in s for x in (
+        "inactive", "unavailable", "not active", "not available",
+        "not cleared", "ruled out", "won't play", "will not play",
+    )):
+        return 1.0
     if any(x in s for x in ("active", "available", "cleared", "healthy", "will play", "returned")):
         return 0.0
     if any(x in s for x in ("season-ending", "season ending", "out for season", "injured reserve")):
@@ -150,18 +157,37 @@ def normalize_injury_rows(df: pd.DataFrame, as_of=None, target_week=None) -> pd.
 
 def summarize_injury_rows(df: pd.DataFrame) -> dict:
     if not isinstance(df, pd.DataFrame) or df.empty:
-        return {"injury_count": 0, "injury_risk": 0.0, "qb_injury_risk": 0.0, "injury_report_age_days": np.nan, "injury_reports": 0}
+        return {
+            "injury_count": 0, "injury_risk": 0.0, "qb_injury_risk": 0.0,
+            "injury_report_age_days": np.nan, "injury_reports": 0,
+            "qb_injury_evidence_status": "NO_QB_REPORT",
+            "qb_injury_timestamp_coverage": 0.0,
+        }
     sev = pd.to_numeric(df.get("_severity", 0), errors="coerce").fillna(0.0)
     active = sev >= 0.05
     pos = df.get("_position", pd.Series("", index=df.index)).fillna("").astype(str).str.upper()
     qb = pos.str.contains(r"(?:^|\b)QB(?:\b|$)|QUARTERBACK", regex=True)
     ages = pd.to_numeric(df.get("_report_age_days", np.nan), errors="coerce")
+    qb_ages = ages[qb] if qb.any() else pd.Series(dtype=float)
+    qb_timestamp_coverage = (
+        float(qb_ages.notna().mean()) if len(qb_ages) else 0.0
+    )
+    if not qb.any():
+        qb_evidence = "NO_QB_REPORT"
+    elif qb_timestamp_coverage < 1.0:
+        qb_evidence = "UNKNOWN_TIMESTAMP"
+    elif float(qb_ages.max()) > 7.0:
+        qb_evidence = "STALE"
+    else:
+        qb_evidence = "FRESH"
     return {
         "injury_count": int(active.sum()),
         "injury_risk": float(sev[active].sum()),
         "qb_injury_risk": float(sev[qb].max()) if qb.any() else 0.0,
         "injury_report_age_days": float(ages.min()) if ages.notna().any() else np.nan,
         "injury_reports": int(len(df)),
+        "qb_injury_evidence_status": qb_evidence,
+        "qb_injury_timestamp_coverage": qb_timestamp_coverage,
     }
 
 
@@ -190,7 +216,9 @@ def summarize_roster_rows(df: pd.DataFrame) -> dict:
         return {
             "roster_count": 0, "roster_active_count": 0, "roster_inactive_count": 0,
             "roster_inactive_share": np.nan, "qb_roster_count": 0, "active_qb_count": 0,
-            "roster_availability_risk": 0.0, "roster_status_known": False, "roster_position_known": False,
+            "roster_availability_risk": 0.0, "roster_status_known": False,
+            "roster_position_known": False, "qb_status_verified_count": 0,
+            "qb_status_unknown_count": 0,
         }
     aid = _col(df.columns, "athlete_id", "player_id", "id")
     an = _col(df.columns, "athlete_name", "player_name", "full_name", "name")
@@ -217,17 +245,21 @@ def summarize_roster_rows(df: pd.DataFrame) -> dict:
         pos = work[posc].fillna("").astype(str).str.upper()
         qb = pos.str.contains(r"(?:^|\b)QB(?:\b|$)|QUARTERBACK", regex=True)
         qb_count = int(qb.sum())
-        active_qbs = int((qb & active).sum())
+        active_qbs = int((qb & active & known).sum())
+        known_qbs = int((qb & known).sum())
+        unknown_qbs = int((qb & ~known).sum())
         position_known = bool(pos.str.len().gt(0).any())
     else:
-        qb_count = active_qbs = 0
+        qb_count = active_qbs = known_qbs = unknown_qbs = 0
         position_known = False
     risk = min(0.45, 2.0 * float(inactive_share)) if _finite(inactive_share) else 0.0
     if position_known and qb_count > 0:
-        if active_qbs == 0:
+        if active_qbs == 0 and known_qbs == qb_count:
             risk = max(risk, 0.75)
-        elif active_qbs == 1:
+        elif active_qbs == 1 and known_qbs == qb_count:
             risk = max(risk, 0.08)
+        elif unknown_qbs:
+            risk = max(risk, 0.20)
     return {
         "roster_count": roster_count, "roster_active_count": active_count,
         "roster_inactive_count": inactive_count,
@@ -235,6 +267,7 @@ def summarize_roster_rows(df: pd.DataFrame) -> dict:
         "qb_roster_count": qb_count, "active_qb_count": active_qbs,
         "roster_availability_risk": float(min(1.0, risk)),
         "roster_status_known": bool(known.any()), "roster_position_known": position_known,
+        "qb_status_verified_count": known_qbs, "qb_status_unknown_count": unknown_qbs,
     }
 
 
@@ -572,12 +605,19 @@ class ContextStore:
             out.at[i, "away_injury_count"] = a["injury_count"]
             out.at[i, "home_qb_injury_risk"] = h["qb_injury_risk"]
             out.at[i, "away_qb_injury_risk"] = a["qb_injury_risk"]
+            out.at[i, "home_qb_injury_evidence_status"] = h["qb_injury_evidence_status"]
+            out.at[i, "away_qb_injury_evidence_status"] = a["qb_injury_evidence_status"]
             out.at[i, "home_injury_report_age_days"] = h["injury_report_age_days"]
             out.at[i, "away_injury_report_age_days"] = a["injury_report_age_days"]
             out.at[i, "home_roster_count"] = hrst["roster_count"]
             out.at[i, "away_roster_count"] = arst["roster_count"]
             out.at[i, "home_active_qb_count"] = hrst["active_qb_count"]
             out.at[i, "away_active_qb_count"] = arst["active_qb_count"]
+            out.at[i, "home_qb_status_unknown_count"] = hrst["qb_status_unknown_count"]
+            out.at[i, "away_qb_status_unknown_count"] = arst["qb_status_unknown_count"]
+            # The roster/injury feeds do not certify which QB will start.
+            out.at[i, "home_qb_starter_verified"] = False
+            out.at[i, "away_qb_starter_verified"] = False
             out.at[i, "home_roster_availability_risk"] = hrst["roster_availability_risk"]
             out.at[i, "away_roster_availability_risk"] = arst["roster_availability_risk"]
             out.at[i, "home_availability_risk"] = home_avail
