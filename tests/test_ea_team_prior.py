@@ -15,6 +15,7 @@ def test_nfl_crosswalk_and_cfb_abbreviations():
     assert canonical("Miami (OH)", "cfb") == "miami oh"
     assert canonical("Miami", "cfb") == "miami"
     assert canonical("North Dakota State", "cfb") == "ndsu"
+    assert canonical("San José State", "cfb") == "san jose state"
 
 
 def test_source_validation_and_duplicate_fails(tmp_path):
