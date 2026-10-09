@@ -25,12 +25,12 @@
     "reason": "graded history has no usable profit rows"
   },
   "production_block_reason": "",
-  "proposed_units": 4.87,
-  "risk_adjusted_proposed_units": 4.87,
-  "performance_adjusted_proposed_units": 4.87,
+  "proposed_units": 4.56,
+  "risk_adjusted_proposed_units": 4.56,
+  "performance_adjusted_proposed_units": 4.56,
   "approved_units": 0.0,
-  "paper_allocated_units": 3.34,
-  "paper_or_shadow_allocated_units": 3.34,
+  "paper_allocated_units": 3.27,
+  "paper_or_shadow_allocated_units": 3.27,
   "bets": 20,
   "approved_bets": 0,
   "execution_blocked_bets": 0,
@@ -76,23 +76,22 @@
     "max_book_units": 2.0
   },
   "allocated_by_market": {
-    "total": 0.68,
-    "spread": 2.04,
+    "total": 0.82,
+    "spread": 1.83,
     "moneyline": 0.62
   },
   "allocated_by_book": {
-    "ActionNetwork book 69": 0.9,
-    "ActionNetwork book 71": 0.91,
-    "ActionNetwork book 30": 0.74,
+    "ActionNetwork book 69": 0.88,
+    "ActionNetwork book 71": 1.05,
+    "ActionNetwork book 30": 0.55,
     "ActionNetwork book 49": 0.32,
     "ActionNetwork book 75": 0.33,
     "Draft Kings": 0.14
   },
   "allocated_by_kickoff_window": {
     "2026-10-10 18:00:00+00:00": 0.87,
-    "2026-10-10 21:00:00+00:00": 1.04,
+    "2026-10-10 21:00:00+00:00": 1.16,
     "2026-10-10 15:00:00+00:00": 0.85,
-    "2026-10-08 21:00:00+00:00": 0.19,
     "2026-10-11 00:00:00+00:00": 0.19,
     "2026-10-10 00:00:00+00:00": 0.2
   },
@@ -105,26 +104,27 @@
     "Georgia": 0.16,
     "Nebraska": 0.14,
     "Indiana": 0.14,
-    "South Florida": 0.19,
     "UCF": 0.2,
     "Hawai'i": 0.19,
     "Texas A&M": 0.12,
     "Iowa": 0.12,
     "Michigan State": 0.14,
-    "Virginia": 0.18,
     "James Madison": 0.18,
     "Arizona": 0.24,
     "Louisiana Tech": 0.11,
     "Louisiana": 0.11,
+    "Virginia": 0.16,
     "South Carolina": 0.15,
     "Temple": 0.15,
     "Western Michigan": 0.15,
     "Air Force": 0.13,
     "BYU": 0.08,
-    "Iowa State": 0.08
+    "Iowa State": 0.08,
+    "Marshall": 0.14,
+    "Coastal Carolina": 0.14
   },
   "limit_hit_counts": {
-    "max bet count": 15
+    "max bet count": 13
   },
   "release_blockers": [
     "complete_market_coverage: >= 95% games with ML + spread + total",

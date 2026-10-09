@@ -2,9 +2,9 @@
 
 ## Identity
 - Core model version: **7.1.0**
-- Repository revision: `c5323ffc2cc8556fe14908cd05671bcc294830ed`
+- Repository revision: `5325379e2d50652ed06b2b7cf4caf6e03e0a14f0`
 - Season / Week: **2026 / 6**
-- Generated: **Oct 8, 2026 · 6:25 PM CT**
+- Generated: **Oct 8, 2026 · 9:57 PM CT**
 
 ## Intended use
 Independent CFB score, margin, total and win-probability estimation; sportsbook comparison; paper/production betting research with explicit uncertainty and risk controls. The Cooper-style table is a presentation layer, not the proprietary formula of any third party.
@@ -14,22 +14,22 @@ Independent CFB score, margin, total and win-probability estimation; sportsbook 
 - Schedule/results: sportsdataverse/cfbfastR-data
 - Live odds: ESPN live (site.web.api.espn.com) + ESPN Core supplement
 - Advanced feature coverage: **100.0%**
-- Multi-book coverage: **98.1%**
+- Multi-book coverage: **98.0%**
 - Current context sources: SportsDataverse ESPN injuries, SportsDataverse ESPN rosters, SportsDataverse ESPN teams, Open-Meteo forecast / indoor venue suppression, Venue geocoding / team metadata
 
 ## Validation
 - Method: nested whole-week chronology: core fit -> tune weight -> OOF calibration -> untouched evaluation; final refit keeps the tune-selected weight and uses OOF probability calibration
-- Margin MAE: **12.958502962449392** vs baseline **13.50210922129303**
-- Total MAE: **12.591604334877207** vs baseline **12.648615389536973**
-- Win-probability Brier: **0.1747649201336038**
-- Calibration ECE: **0.06218232013495966**
+- Margin MAE: **12.95850296244939** vs baseline **13.50210922129303**
+- Total MAE: **12.59160433487721** vs baseline **12.648615389536973**
+- Win-probability Brier: **0.17476492013360306**
+- Calibration ECE: **0.06218232013495895**
 
 ## Operational controls
-- Live monitoring score: **94.8/100**
+- Live monitoring score: **94.7/100**
 - Portfolio mode: **PAPER**
 - Approved units: **0.0**
-- Proposed units before bankroll/concentration controls: **4.87**
-- Paper/shadow allocated units after controls: **3.34**
+- Proposed units before bankroll/concentration controls: **4.56**
+- Paper/shadow allocated units after controls: **3.27**
 - Unit-risk multiplier: **1.0**
 - Current live/shadow drawdown: **0.0 units**
 - Portfolio hard stop active: **False**

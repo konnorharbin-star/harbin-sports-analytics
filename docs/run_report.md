@@ -13,8 +13,8 @@
 - Selection uses untouched evaluation outcomes: **False**.
 
 ## Monitoring and execution
-- Live readiness: **94.8/100**; distribution stability **96.8/100**.
-- Portfolio mode: **PAPER**; proposed **4.87u**; approved **0.00u**.
+- Live readiness: **94.7/100**; distribution stability **96.6/100**.
+- Portfolio mode: **PAPER**; proposed **4.56u**; approved **0.00u**.
 - Historical evidence: **0 bets**, ROI **—**, CLV **—**.
 - Independent live evidence: **0 bets**, ROI **—**, CLV **—**.
 
