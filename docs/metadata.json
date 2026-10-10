@@ -5,7 +5,7 @@
   "history_start": 2021,
   "historical_games": 4135,
   "training_rows": 4135,
-  "upcoming_games": 18,
+  "upcoming_games": 16,
   "validation": "nested whole-week chronology: core fit -> tune weight -> OOF calibration -> untouched evaluation; final refit keeps the tune-selected weight and uses OOF probability calibration",
   "metrics": {
     "temporal_partition": {
@@ -481,19 +481,19 @@
   },
   "calibrated_margin_sigma": 16.28877707158025,
   "calibrated_total_sigma": 16.102959927363244,
-  "generated_at": "2026-10-10T20:10:32.436134+00:00",
-  "updated_at_ct": "Oct 10, 2026 \u00b7 3:10 PM CT",
+  "generated_at": "2026-10-10T20:19:24.846900+00:00",
+  "updated_at_ct": "Oct 10, 2026 \u00b7 3:19 PM CT",
   "schedule_source": "sportsdataverse/cfbfastR-data",
   "odds_source": "ESPN live (site.web.api.espn.com) + ESPN Core supplement",
   "odds_errors": [],
   "market_coverage": {
-    "games": 18,
-    "any_market": 18,
-    "moneyline": 17,
-    "spread": 18,
-    "total": 18
+    "games": 16,
+    "any_market": 16,
+    "moneyline": 16,
+    "spread": 16,
+    "total": 16
   },
-  "market_status": "LIVE MARKET DATA \u2014 all 18 games have verified market data from ESPN live (site.web.api.espn.com) + ESPN Core supplement.",
+  "market_status": "LIVE MARKET DATA \u2014 all 16 games have verified market data from ESPN live (site.web.api.espn.com) + ESPN Core supplement.",
   "advanced_features": {
     "train_coverage": 1.0,
     "live_coverage": 1.0,
@@ -554,8 +554,8 @@
   },
   "pregame_filter": {
     "returned_games": 58,
-    "upcoming_games": 18,
-    "started_excluded": 40,
+    "upcoming_games": 16,
+    "started_excluded": 42,
     "invalid_kickoff_excluded": 0,
     "started_game_ids": [
       "401871090",
@@ -597,16 +597,18 @@
       "401858484",
       "401862796",
       "401861964",
-      "401862797"
+      "401862797",
+      "401858483",
+      "401856713"
     ],
     "invalid_kickoff_game_ids": [],
-    "cutoff_utc": "2026-10-10T20:10:32.349564+00:00"
+    "cutoff_utc": "2026-10-10T20:19:24.757288+00:00"
   },
   "edge_forward_snapshot": {
     "status": "APPENDED",
     "appended": 2,
-    "total_rows": 308,
-    "snapshot_at": "2026-10-10T20:10:32.436134+00:00",
+    "total_rows": 310,
+    "snapshot_at": "2026-10-10T20:19:24.846900+00:00",
     "path": "history/edge_candidate_snapshots.csv"
   },
   "edge_timing": {
@@ -646,12 +648,12 @@
     "source_available": true
   },
   "line_history": {
-    "tracked_games": 18,
+    "tracked_games": 16,
     "coverage": 1.0,
     "snapshot_rows": 2507,
-    "hourly_snapshot_games": 18,
+    "hourly_snapshot_games": 16,
     "legacy_fallback_games": 0,
-    "consensus_close_games": 18,
+    "consensus_close_games": 16,
     "source": "hourly_market_snapshots"
   },
   "edge_discovery": {
@@ -669,7 +671,7 @@
     "price_overpriced_supported_candidates": 0,
     "parent_only_candidates": 1,
     "contraindicated_candidates": 0,
-    "watch_candidates": 12,
+    "watch_candidates": 11,
     "methodology": "Fixed edge bands; market-specific walk-forward bet outcomes; PERSISTENT_CANDIDATE requires >=180 bets, >=3 seasons, >=50 bets in every season, positive ROI in every season, >=3% aggregate ROI, and positive average CLV. WATCH requires >=100 bets, positive aggregate ROI, and profit in at least two-thirds of seasons. Spread parent regimes are decomposed into favorite/underdog \u00d7 home/away children using chronological confirmation: all but the latest represented season are discovery and the latest season is a holdout. SUPPORTED_SUBGROUP requires >=45 total bets, >=2 discovery seasons with >=12 bets each, >=5% discovery ROI with every discovery season profitable, >=12 holdout bets with positive holdout ROI, and positive full-sample CLV. CONTRAINDICATED_SUBGROUP requires the same sample floor, every discovery season negative with <=-3% discovery ROI, a negative holdout ROI, and <=-3% full-sample ROI. Regime evidence can prioritize research and surface candidates but cannot create an edge, modify the fair line, probability, EV, or inflate stake."
   },
   "quant_picks": {
@@ -707,13 +709,13 @@
     "verified_close_clv_samples": 0,
     "portfolio_verified": true,
     "evidence_source": "portfolio_decisions_v1",
-    "eligible_decisions": 1037,
+    "eligible_decisions": 1048,
     "timing_excluded_rows": 71,
     "status": "live/shadow evidence only; not historical backtest evidence"
   },
   "edge_forward_validation": {
     "status": "PENDING_FORWARD",
-    "observed_rows": 308,
+    "observed_rows": 310,
     "clean_entries": 0,
     "graded_bets": 0,
     "roi": null,
@@ -730,17 +732,17 @@
     "underperforming_cells": 0
   },
   "health": {
-    "system_health_score": 84.2,
+    "system_health_score": 84.7,
     "meaning": "engineering/model-readiness score only; not a profitability or win-rate guarantee",
     "components": {
       "pipeline_and_data": 100.0,
-      "market_coverage": 94.4,
+      "market_coverage": 100.0,
       "advanced_features": 100.0,
       "model_validation": 92.1,
       "probability_calibration": 87.6,
       "market_intelligence": 100.0,
       "current_context": 100.0,
-      "live_monitoring": 94.7,
+      "live_monitoring": 94.1,
       "historical_betting_proof": 25.0
     },
     "betting_proof_status": "UNPROVEN",
@@ -759,9 +761,9 @@
       "required_schema": true,
       "finite_core_predictions": true,
       "sanity_ranges": true,
-      "complete_market_rate": 0.944444
+      "complete_market_rate": 1.0
     },
-    "rows": 18
+    "rows": 16
   },
   "release_gate": {
     "release_state": "RESEARCH",
@@ -779,8 +781,8 @@
       },
       {
         "name": "complete_market_coverage",
-        "passed": false,
-        "value": 0.9444,
+        "passed": true,
+        "value": 1.0,
         "requirement": ">= 95% games with ML + spread + total",
         "detail": ""
       },
@@ -836,7 +838,7 @@
       {
         "name": "live_monitoring",
         "passed": true,
-        "value": 94.1,
+        "value": 94.8,
         "requirement": "live readiness >= 90/100",
         "detail": ""
       },
@@ -898,7 +900,6 @@
       }
     ],
     "blockers": [
-      "complete_market_coverage: >= 95% games with ML + spread + total",
       "probability_ece: ECE <= 0.05 on chronological release holdout",
       "historical_entry_integrity: historical promotion sample uses explicit verified opening-entry fields only",
       "historical_market_edge: ROBUST evidence: >=1000 verified opening-entry bets, ROI 95% CI lower bound >0, positive CLV, >=2 positive markets and >=2 positive seasons with minimum segment samples",
@@ -913,52 +914,52 @@
   },
   "live_monitoring": {
     "status": "OK",
-    "live_readiness_score": 94.1,
+    "live_readiness_score": 94.8,
     "scores": {
-      "market_coverage": 94.44444444444444,
+      "market_coverage": 100.0,
       "advanced_coverage": 100.0,
       "multi_book": 100.0,
       "context": 100.0,
       "calibration": 84.45441996626009,
       "freshness": 100.0,
-      "drift_margin": 94.0,
-      "drift_total": 83.0,
-      "drift_probability": 90.6,
-      "distribution_stability": 89.2,
-      "output_completeness": 91.48451730418944
+      "drift_margin": 91.6,
+      "drift_total": 83.4,
+      "drift_probability": 91.6,
+      "distribution_stability": 88.9,
+      "output_completeness": 91.75204918032787
     },
     "drift_details": {
       "margin": {
-        "stability_score": 94.0,
-        "mean_z": 0.1358,
-        "std_ratio": 1.1104,
-        "live_mean": 2.3792587879726264,
+        "stability_score": 91.6,
+        "mean_z": 0.2405,
+        "std_ratio": 0.9081,
+        "live_mean": 1.122571079592639,
         "reference_mean": 4.007587882019203,
-        "live_std": 13.317661892535524,
+        "live_std": 10.891745282873059,
         "reference_std": 11.99409006138559,
-        "live_n": 18,
+        "live_n": 16,
         "reference_n": 2398
       },
       "total": {
-        "stability_score": 83.0,
-        "mean_z": 0.0753,
-        "std_ratio": 0.5463,
-        "live_mean": 53.22980532490531,
+        "stability_score": 83.4,
+        "mean_z": 0.1011,
+        "std_ratio": 0.5696,
+        "live_mean": 53.06943033452795,
         "reference_mean": 53.69890163853031,
-        "live_std": 3.4019829065238154,
+        "live_std": 3.547125437458447,
         "reference_std": 6.227517524699614,
-        "live_n": 18,
+        "live_n": 16,
         "reference_n": 2398
       },
       "probability": {
-        "stability_score": 90.6,
-        "mean_z": 0.1894,
-        "std_ratio": 1.2069,
-        "live_mean": 0.5373529759716025,
+        "stability_score": 91.6,
+        "mean_z": 0.216,
+        "std_ratio": 1.1263,
+        "live_mean": 0.5309945555951714,
         "reference_mean": 0.582714657203369,
-        "live_std": 0.2890135287201436,
+        "live_std": 0.2697300248899971,
         "reference_std": 0.2394736173752905,
-        "live_n": 18,
+        "live_n": 16,
         "reference_n": 2398
       }
     },
@@ -1079,7 +1080,6 @@
     },
     "limit_hit_counts": {},
     "release_blockers": [
-      "complete_market_coverage: >= 95% games with ML + spread + total",
       "probability_ece: ECE <= 0.05 on chronological release holdout",
       "historical_entry_integrity: historical promotion sample uses explicit verified opening-entry fields only",
       "historical_market_edge: ROBUST evidence: >=1000 verified opening-entry bets, ROI 95% CI lower bound >0, positive CLV, >=2 positive markets and >=2 positive seasons with minimum segment samples",
@@ -1090,6 +1090,6 @@
     "path": "history/portfolio_decisions_v1.csv",
     "eligible_rows": 11,
     "appended_rows": 11,
-    "total_rows": 1384
+    "total_rows": 1395
   }
 }
