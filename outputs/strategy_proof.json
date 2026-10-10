@@ -1,0 +1,66 @@
+{
+  "schema_version": 1,
+  "hypothesis": "spread|favorite|home|6-8",
+  "hypothesis_status": "RETROSPECTIVELY_SELECTED_NOT_PROVEN",
+  "historical_sample": {
+    "bets": 59,
+    "wins": 43,
+    "losses": 15,
+    "pushes": 1,
+    "roi": 0.40832,
+    "verified_entry_quotes": 0
+  },
+  "discovery_2023_2024": {
+    "bets": 38,
+    "wins": 24,
+    "losses": 13,
+    "pushes": 1,
+    "roi": 0.232057,
+    "verified_entry_quotes": 0
+  },
+  "retrospective_2025_holdout": {
+    "bets": 21,
+    "wins": 19,
+    "losses": 2,
+    "pushes": 0,
+    "roi": 0.727273,
+    "verified_entry_quotes": 0
+  },
+  "historical_quote_eligibility": "UNVERIFIED",
+  "multiple_testing_warning": "The 6-8 band and favorite/home category were identified from retrospective searches across markets and subgroups. The 2025 subset is not proof of a fully preregistered independent test.",
+  "forward_overall_clean_entries": 0,
+  "forward_overall_graded_bets": 0,
+  "forward_subgroup_graded_bets": 0,
+  "forward_subgroup_roi": null,
+  "forward_subgroup_roi_ci_95": null,
+  "forward_subgroup_execution_clv": null,
+  "forward_subgroup_preliminary_gate": false,
+  "candidate_specific_independent_evidence": "NOT_AVAILABLE",
+  "profitability_proven": false,
+  "production_eligible": false,
+  "bet_approved_by_this_report": false,
+  "research_candidates": [
+    {
+      "game_id": "401866439",
+      "matchup": "Kent State @ Western Michigan",
+      "side": "Western Michigan",
+      "line": -13.5,
+      "odds": -114.0,
+      "decision": "RECHECK_PRICE",
+      "reasons": "UNRESOLVED_BOOK;BOOK_EXECUTION_UNVERIFIED;PROVIDER_TIMESTAMP_UNVERIFIED;GLOBAL_RELEASE_BLOCKED",
+      "quote_verified": false
+    },
+    {
+      "game_id": "401866438",
+      "matchup": "Central Michigan @ Ohio",
+      "side": "Ohio",
+      "line": -1.5,
+      "odds": -115.0,
+      "decision": "RECHECK_PRICE",
+      "reasons": "UNRESOLVED_BOOK;BOOK_EXECUTION_UNVERIFIED;PROVIDER_TIMESTAMP_UNVERIFIED;GLOBAL_RELEASE_BLOCKED",
+      "quote_verified": false
+    }
+  ],
+  "next_validation": "Freeze eligible games and their sportsbook quote identity, odds, line and source timestamp before kickoff; grade one first-seen entry per game after final; require candidate-specific ROI CI lower bound > 0, positive timestamp-valid CLV and enough weeks/games.",
+  "disclaimer": "Archived fallback prices are not verified placed bets. No automated wager placement or claim of demonstrated profit."
+}

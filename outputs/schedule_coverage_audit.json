@@ -1,10 +1,10 @@
 {
   "season": 2026,
   "week": 6,
-  "model_cutoff_utc": "2026-10-10T00:37:50.088167+00:00",
+  "model_cutoff_utc": "2026-10-10T01:24:46.501048+00:00",
   "counts": {
-    "PREDICTED": 50,
-    "STARTED_EXCLUDED": 8
+    "PREDICTED": 47,
+    "STARTED_EXCLUDED": 11
   },
   "missing_upcoming": [],
   "predicted_not_in_source": []
