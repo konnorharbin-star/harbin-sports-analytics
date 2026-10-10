@@ -25,9 +25,9 @@
     "reason": "graded history has no usable profit rows"
   },
   "production_block_reason": "",
-  "proposed_units": 4.3,
-  "risk_adjusted_proposed_units": 4.3,
-  "performance_adjusted_proposed_units": 4.3,
+  "proposed_units": 4.21,
+  "risk_adjusted_proposed_units": 4.21,
+  "performance_adjusted_proposed_units": 4.21,
   "approved_units": 0.0,
   "paper_allocated_units": 3.17,
   "paper_or_shadow_allocated_units": 3.17,
@@ -81,27 +81,26 @@
     "moneyline": 0.49
   },
   "allocated_by_book": {
-    "ActionNetwork book 49": 0.65,
-    "ActionNetwork book 15": 0.69,
-    "ActionNetwork book 30": 0.55,
+    "ActionNetwork book 49": 0.36,
+    "ActionNetwork book 15": 0.73,
+    "ActionNetwork book 30": 0.69,
+    "ActionNetwork book 68": 0.45,
     "ActionNetwork book 75": 0.14,
     "DraftKings": 0.26,
     "ActionNetwork book 69": 0.35,
-    "ActionNetwork book 68": 0.34,
     "ActionNetwork book 71": 0.19
   },
   "allocated_by_kickoff_window": {
-    "2026-10-10 18:00:00+00:00": 1.15,
-    "2026-10-10 21:00:00+00:00": 0.98,
+    "2026-10-10 18:00:00+00:00": 1.16,
+    "2026-10-10 21:00:00+00:00": 1.05,
     "2026-10-10 15:00:00+00:00": 0.79,
-    "2026-10-11 00:00:00+00:00": 0.17,
-    "2026-10-10 00:00:00+00:00": 0.08
+    "2026-10-11 00:00:00+00:00": 0.17
   },
   "allocated_by_team_exposure": {
     "Georgia Tech": 0.19,
     "Duke": 0.19,
     "San Diego State": 0.27,
-    "Vanderbilt": 0.24,
+    "Vanderbilt": 0.25,
     "Alabama": 0.16,
     "Georgia": 0.16,
     "UCF": 0.21,
@@ -121,14 +120,14 @@
     "Old Dominion": 0.09,
     "Temple": 0.15,
     "Western Michigan": 0.15,
-    "Virginia": 0.14,
     "Marshall": 0.13,
     "Coastal Carolina": 0.13,
-    "BYU": 0.08,
-    "Iowa State": 0.08
+    "UTEP": 0.08,
+    "Nevada": 0.08,
+    "Memphis": 0.13
   },
   "limit_hit_counts": {
-    "max bet count": 11
+    "max bet count": 10
   },
   "release_blockers": [
     "complete_market_coverage: >= 95% games with ML + spread + total",
