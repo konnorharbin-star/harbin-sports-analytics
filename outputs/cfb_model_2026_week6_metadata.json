@@ -481,8 +481,8 @@
   },
   "calibrated_margin_sigma": 16.288777071580245,
   "calibrated_total_sigma": 16.102959927363244,
-  "generated_at": "2026-10-09T23:32:49.436157+00:00",
-  "updated_at_ct": "Oct 9, 2026 \u00b7 6:32 PM CT",
+  "generated_at": "2026-10-10T00:37:50.088167+00:00",
+  "updated_at_ct": "Oct 9, 2026 \u00b7 7:37 PM CT",
   "schedule_source": "sportsdataverse/cfbfastR-data",
   "odds_source": "ESPN live (site.web.api.espn.com) + ESPN Core supplement",
   "odds_errors": [],
@@ -568,13 +568,13 @@
       "401858254"
     ],
     "invalid_kickoff_game_ids": [],
-    "cutoff_utc": "2026-10-09T23:32:49.436157+00:00"
+    "cutoff_utc": "2026-10-10T00:37:50.088167+00:00"
   },
   "edge_forward_snapshot": {
     "status": "APPENDED",
     "appended": 8,
-    "total_rows": 219,
-    "snapshot_at": "2026-10-09T23:32:49.436157+00:00",
+    "total_rows": 227,
+    "snapshot_at": "2026-10-10T00:37:50.088167+00:00",
     "path": "history/edge_candidate_snapshots.csv"
   },
   "edge_timing": {
@@ -589,14 +589,13 @@
     "current_rows": 7,
     "current_actions": {
       "PASS": 4,
-      "NO_TIMING_SIGNAL": 2,
-      "WAIT_MONITOR": 1
+      "NO_TIMING_SIGNAL": 3
     }
   },
   "timing_forward_decisions": {
-    "status": "APPENDED",
+    "status": "NO_NEW_DECISIONS",
     "schema_version": 1,
-    "appended": 1,
+    "appended": 0,
     "total_decisions": 4,
     "path": "history/timing_decisions_v1.csv",
     "research_only": true,
@@ -677,13 +676,13 @@
     "verified_close_clv_samples": 0,
     "portfolio_verified": true,
     "evidence_source": "portfolio_decisions_v1",
-    "eligible_decisions": 718,
+    "eligible_decisions": 738,
     "timing_excluded_rows": 70,
     "status": "live/shadow evidence only; not historical backtest evidence"
   },
   "edge_forward_validation": {
     "status": "PENDING_FORWARD",
-    "observed_rows": 219,
+    "observed_rows": 227,
     "clean_entries": 0,
     "graded_bets": 0,
     "roi": null,
@@ -1024,7 +1023,7 @@
       "ActionNetwork book 30": 0.56,
       "ActionNetwork book 68": 0.55,
       "ActionNetwork book 75": 0.26,
-      "Draft Kings": 0.26,
+      "DraftKings": 0.26,
       "ActionNetwork book 69": 0.51,
       "ActionNetwork book 71": 0.19
     },
@@ -1079,6 +1078,6 @@
     "path": "history/portfolio_decisions_v1.csv",
     "eligible_rows": 20,
     "appended_rows": 20,
-    "total_rows": 1073
+    "total_rows": 1093
   }
 }

@@ -1,14 +1,14 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-10-09T23:33:59.559160+00:00",
+  "generated_at": "2026-10-10T00:38:40.884616+00:00",
   "status": "WARN",
   "identity": {
     "platform_version": "7.4.0",
     "model_version": "7.1.0",
     "season": 2026,
     "week": 6,
-    "model_generated_at": "2026-10-09T23:32:49.436157+00:00",
-    "updated_at_ct": "Oct 9, 2026 \u00b7 6:32 PM CT",
+    "model_generated_at": "2026-10-10T00:37:50.088167+00:00",
+    "updated_at_ct": "Oct 9, 2026 \u00b7 7:37 PM CT",
     "prediction_rows": 50
   },
   "release": {
@@ -342,7 +342,7 @@
       "ActionNetwork book 30": 0.56,
       "ActionNetwork book 68": 0.55,
       "ActionNetwork book 75": 0.26,
-      "Draft Kings": 0.26,
+      "DraftKings": 0.26,
       "ActionNetwork book 69": 0.51,
       "ActionNetwork book 71": 0.19
     },
@@ -485,19 +485,6 @@
   },
   "trend": [
     {
-      "generated_at": "2026-10-08T22:56:11.893404+00:00",
-      "model_generated_at": "2026-10-08T22:55:02.477044+00:00",
-      "season": 2026,
-      "week": 6,
-      "platform_version": "7.4.0",
-      "release_state": "RESEARCH",
-      "publication_status": "WARN",
-      "live_readiness_score": 94.7,
-      "distribution_stability": 96.5,
-      "approved_units": 0.0,
-      "data_quality_status": "PASS"
-    },
-    {
       "generated_at": "2026-10-08T22:59:23.010369+00:00",
       "model_generated_at": "2026-10-08T22:58:25.953860+00:00",
       "season": 2026,
@@ -637,6 +624,19 @@
       "publication_status": "WARN",
       "live_readiness_score": 94.7,
       "distribution_stability": 96.6,
+      "approved_units": 0.0,
+      "data_quality_status": "PASS"
+    },
+    {
+      "generated_at": "2026-10-09T23:33:59.559160+00:00",
+      "model_generated_at": "2026-10-09T23:32:49.436157+00:00",
+      "season": 2026,
+      "week": 6,
+      "platform_version": "7.4.0",
+      "release_state": "RESEARCH",
+      "publication_status": "WARN",
+      "live_readiness_score": 94.7,
+      "distribution_stability": 96.4,
       "approved_units": 0.0,
       "data_quality_status": "PASS"
     }
