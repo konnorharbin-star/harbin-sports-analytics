@@ -1,0 +1,129 @@
+{
+  "folds": [
+    {
+      "evaluation_season": 2025,
+      "training_seasons": [
+        2023
+      ],
+      "tuning_season": 2024,
+      "games": 778,
+      "selections": {
+        "market_calibration": {
+          "weights": [
+            0.0,
+            0.0
+          ],
+          "reason": "REJECTED_ON_TUNING",
+          "ridge": null,
+          "tuning_market": {
+            "brier": 0.18601059591927616,
+            "log_loss": 0.5474289206799444
+          }
+        },
+        "football_residual": {
+          "weights": [
+            0.0,
+            0.0
+          ],
+          "reason": "REJECTED_ON_TUNING",
+          "ridge": null,
+          "tuning_market": {
+            "brier": 0.18601059591927616,
+            "log_loss": 0.5474289206799444
+          }
+        }
+      },
+      "metrics": {
+        "market": {
+          "brier": 0.18199839717756927,
+          "log_loss": 0.5387499179832199
+        },
+        "market_calibration": {
+          "brier": 0.18199839717756927,
+          "log_loss": 0.5387499179832199
+        },
+        "football_residual": {
+          "brier": 0.18199839717756927,
+          "log_loss": 0.5387499179832199
+        }
+      }
+    }
+  ],
+  "evaluation_games": 778,
+  "status": "EXPLORATORY_CHRONOLOGICAL_PRICING_RESEARCH",
+  "betting_authorized": false,
+  "promotion_eligible": false,
+  "historical_untouched_holdout": false,
+  "economic_evidence_eligible": false,
+  "spec": "chronological_pricing_v1",
+  "limits": [
+    "Previously inspected archives are not a pristine holdout",
+    "Archive entry timestamps and executable prices remain unverified",
+    "No thresholds, wagers, ROI or CLV inferred from prediction scores",
+    "Frozen prospective assessment and external release review required"
+  ],
+  "metrics": {
+    "market": {
+      "brier": 0.18199839717756927,
+      "log_loss": 0.5387499179832199
+    },
+    "market_calibration": {
+      "brier": 0.18199839717756927,
+      "log_loss": 0.5387499179832199
+    },
+    "football_residual": {
+      "brier": 0.18199839717756927,
+      "log_loss": 0.5387499179832199
+    }
+  },
+  "week_clusters": 16,
+  "paired_improvement": {
+    "market_calibration": {
+      "brier": {
+        "market_minus_candidate": 0.0,
+        "familywise_95_ci": [
+          0.0,
+          0.0
+        ]
+      },
+      "log_loss": {
+        "market_minus_candidate": 0.0,
+        "familywise_95_ci": [
+          0.0,
+          0.0
+        ]
+      }
+    },
+    "football_residual": {
+      "brier": {
+        "market_minus_candidate": 0.0,
+        "familywise_95_ci": [
+          0.0,
+          0.0
+        ]
+      },
+      "log_loss": {
+        "market_minus_candidate": 0.0,
+        "familywise_95_ci": [
+          0.0,
+          0.0
+        ]
+      }
+    }
+  },
+  "candidate_decisions": {
+    "market_calibration": "NO_SUPPORTED_MARKET_IMPROVEMENT",
+    "football_residual": "NO_SUPPORTED_MARKET_IMPROVEMENT"
+  },
+  "sport": "cfb",
+  "input_sha256": "962b25cd14a3137f17b42f1a90f90bd670e2c2c351b7ec3cbeca7afe5149dee0",
+  "source_metadata": {
+    "games": 2316,
+    "omitted_missing_pair_or_probability_or_tie": 82,
+    "prediction_sha256": "c7a8cbbe29ed6413ed0d6901cdc80cbae4e7c8bf489588b67e00a6a55c8c2205",
+    "archive_sha256": "7ae899d9035750dccf22470d7923087a2659052aeb37a44204c35fbf6bf38d4d",
+    "archive_source": "https://raw.githubusercontent.com/sportsdataverse/cfbfastR-data/main/betting/csv/cfb_line_odds.csv.gz",
+    "verified_entry_timestamps": 0,
+    "economic_evidence_eligible": false
+  }
+}
