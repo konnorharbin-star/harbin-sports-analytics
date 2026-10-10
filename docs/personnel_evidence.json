@@ -1,6 +1,6 @@
 {
   "betting_authorized": false,
-  "capture_id": "058b3b5667d24c51a63a16f9",
+  "capture_id": "cdcc3a385f35ae4fb802385d",
   "error": null,
   "limitations": [
     "Source response timestamp does not establish item freshness",
@@ -9,12 +9,10 @@
     "Current-only evidence is never backfilled into historical models"
   ],
   "model_score_change_enabled": false,
-  "observed_at": "2026-10-10T18:28:20.699164+00:00",
+  "observed_at": "2026-10-10T19:21:12.692291+00:00",
   "official_report_verified": false,
-  "record_states": {
-    "games_already_started": 1
-  },
-  "response_generated_at": "2026-10-10T18:28:16Z",
+  "record_states": {},
+  "response_generated_at": "2026-10-10T19:21:05Z",
   "source_record_date_states": {
     "STALE_ITEM_DATE": 3
   },

@@ -4,7 +4,6 @@
   "by_season": {},
   "capture": {
     "already_frozen": 32,
-    "already_started": 1,
     "missing_named_paired_market": 2,
     "source_errors": []
   },
@@ -20,7 +19,7 @@
     "No threshold/weight fitting; six paired tests use Bonferroni week-block intervals",
     "Prospective probability improvement alone cannot authorize bets"
   ],
-  "observed_at": "2026-10-10T18:28:20.933145+00:00",
+  "observed_at": "2026-10-10T19:21:13.645330+00:00",
   "promotion_eligible": false,
   "scores": {
     "games": 0,
