@@ -106,6 +106,22 @@ def _audited_market_bets(game, margin, total, p_home, sigma_m, sigma_t, q):
     return bets
 
 
+def _verification_breakdown(bets: pd.DataFrame, dimension: str) -> dict:
+    """Explain excluded archived entries without classifying them as real bets."""
+    if bets.empty or dimension not in bets.columns:
+        return {}
+    mask = verified_entry_mask(bets)
+    output = {}
+    for group_name, group in bets.groupby(dimension, dropna=False):
+        matched = mask.loc[group.index]
+        output[str(group_name)] = {
+            "archive_bets": int(len(group)),
+            "verified_opening_entry_bets": int(matched.sum()),
+            "excluded_unverified_bets": int((~matched).sum()),
+        }
+    return output
+
+
 def run_backtest(start_season=2023, end_season=2025, history_start=2018, reports_dir="reports"):
     # The original backtest resolves these globals when each run executes, so patching
     # here changes only the market archive/evidence layer, not the fair-score model.
@@ -119,6 +135,8 @@ def run_backtest(start_season=2023, end_season=2025, history_start=2018, reports
         "verified_opening_entry_bets": verified,
         "unverified_or_final_fallback_bets": int(max(0, len(bdf) - verified)),
         "verified_opening_entry_rate": float(verified / len(bdf)) if len(bdf) else 0.0,
+        "by_market": _verification_breakdown(bdf, "market"),
+        "by_season": _verification_breakdown(bdf, "season"),
         "promotion_rule": "only entry_quote_verified=true rows may contribute to production evidence or policy calibration",
     }
     summary.setdefault("methodology", {})["promotion_entry"] = "explicit non-null archived opening fields for the selected sportsbook/market; final-quote fallbacks are diagnostics only"
