@@ -76,7 +76,8 @@ def test_archive_opening_pair_requires_real_side_and_same_book(monkeypatch):
     from harbin.backtest_audit import AuditedArchiveMarketStore
     from harbin.backtest_runtime import CanonicalArchiveMarketStore
 
-    game = SimpleNamespace(game_id="10", home_team="Home", away_team="Away")
+    game = SimpleNamespace(game_id="10", home_team="Home", away_team="Away",
+                           date="2024-09-02T12:00:00Z")
 
     def fake_base_quote(_store, _game):
         return {"book": "BookA"}
@@ -120,8 +121,31 @@ def test_archive_opening_pair_requires_real_side_and_same_book(monkeypatch):
     ])
     store.by_id["10"] = pd.concat([store.by_id["10"], extra], ignore_index=True)
     quote = store.quote(game)
+    assert quote["open_moneyline_fields_complete"] is True
+    assert quote["open_spread_fields_complete"] is True
+    assert quote["open_total_fields_complete"] is True
+    # Source documentation contains opening prices but no sportsbook publish times.
+    assert quote["open_moneyline_verified"] is False
+    assert quote["open_spread_verified"] is False
+    assert quote["open_total_verified"] is False
+
+    # Publication time is independent of when our collector downloaded the CSV.
+    store.by_id["10"]["opening_quote_published_at"] = "2024-08-30T18:00:00Z"
+    quote = store.quote(game)
     assert quote["open_moneyline_verified"] is True
     assert quote["open_spread_verified"] is True
+    assert quote["open_total_verified"] is True
+
+    # A price posted after kickoff must never count as entry evidence.
+    last_away_spread = store.by_id["10"].index[
+        (store.by_id["10"]["book"] == "BookA")
+        & (store.by_id["10"]["market_type"] == "spread")
+        & (store.by_id["10"]["abbr"] == "Away")
+    ][-1]
+    store.by_id["10"].at[last_away_spread, "opening_quote_published_at"] = "2024-09-02T13:00:00Z"
+    quote = store.quote(game)
+    assert quote["open_moneyline_verified"] is True
+    assert quote["open_spread_verified"] is False
     assert quote["open_total_verified"] is True
 
 
