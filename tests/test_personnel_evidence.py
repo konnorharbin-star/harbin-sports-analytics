@@ -22,7 +22,11 @@ def record(**changes):
 
 def state(r):
     return evidence_state(
-        r, observed=NOW, kickoff=NOW + timedelta(days=1), source_season=2026, game_season=2026
+        r,
+        observed=NOW,
+        kickoff=NOW + timedelta(days=1),
+        source_season=2026,
+        game_season=2026,
     )
 
 
@@ -37,7 +41,10 @@ def test_report_requires_aware_item_time(dated):
 
 
 def test_future_report_and_identity_mismatch_block():
-    assert state(record(source_item_date="2026-10-11T15:35Z")) == "FUTURE_OR_POSTKICKOFF_ITEM_DATE"
+    assert (
+        state(record(source_item_date="2026-10-11T15:35Z"))
+        == "FUTURE_OR_POSTKICKOFF_ITEM_DATE"
+    )
     assert state(record(group_team_id="wrong")) == "TEAM_IDENTITY_MISMATCH"
     assert state(record(player_id=None)) == "MISSING_PLAYER_ID_OR_STATUS"
 
@@ -89,7 +96,11 @@ def test_player_id_is_extracted_from_source_link_without_name_guessing():
                         "status": "Out",
                         "athlete": {
                             "displayName": "Fixture",
-                            "links": [{"href": "https://www.espn.com/nfl/player/_/id/123/fixture"}],
+                            "links": [
+                                {
+                                    "href": "https://www.espn.com/nfl/player/_/id/123/fixture"
+                                }
+                            ],
                             "team": {"id": "2", "abbreviation": "BUF"},
                             "position": {"abbreviation": "QB"},
                         },
@@ -102,3 +113,17 @@ def test_player_id_is_extracted_from_source_link_without_name_guessing():
     assert r["player_id"] == "123" and r["source_item_date"] == "2026-10-10T15:35Z"
     payload["injuries"][0]["injuries"][0]["athlete"]["id"] = "456"
     assert injury_records(payload)[0]["player_id"] is None
+
+
+@pytest.mark.parametrize(
+    "payload",
+    [
+        [],
+        {"injuries": None},
+        {"injuries": ["bad"]},
+        {"injuries": [{"injuries": ["bad"]}]},
+    ],
+)
+def test_changed_source_schema_is_explicitly_rejected(payload):
+    with pytest.raises(TypeError):
+        injury_records(payload)
