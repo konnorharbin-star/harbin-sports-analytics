@@ -102,3 +102,9 @@ Stage 6 monitoring compares live prediction distributions with the stored walk-f
 ## What “10/10” means here
 
 Engineering components can reach full readiness when their hard checks pass. **Profitability cannot be assigned a perfect score by code changes.** It must be earned by a sufficiently large, leakage-safe out-of-sample and forward sample with positive CLV, positive ROI across multiple markets/seasons, acceptable drawdown, calibrated probabilities, and a confidence interval that clears zero. The release gate is intentionally designed to keep the model in research/paper/shadow mode until that evidence exists.
+
+### Prospective paper recommendation records
+
+[Operating contract](docs/RECOMMENDATION_OPERATIONS.md) · [NFL + CFB dashboard](docs/operations.html).
+
+Communicated BETs require a permanent pre-kickoff GitHub receipt; legacy research signals are separate. No real wagers are placed.

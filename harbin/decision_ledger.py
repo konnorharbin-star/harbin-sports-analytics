@@ -1,9 +1,13 @@
 from __future__ import annotations
 
-from datetime import datetime, timezone
+from datetime import UTC, datetime
 from pathlib import Path
 import json
+import hashlib
 import math
+import csv
+import os
+import fcntl
 
 import pandas as pd
 
@@ -82,63 +86,67 @@ def _signature(row) -> str:
 
 
 def append_portfolio_decisions(
-    pred: pd.DataFrame,
+    decisions,
     path="history/portfolio_decisions_v1.csv",
     decision_at: str | None = None,
 ) -> dict:
-    """Persist cap-constrained portfolio decisions for independent forward grading.
+    """Append research decisions without rewriting any historical bytes.
 
-    The ledger records PAPER/SHADOW/PRODUCTION portfolio decisions after Stage 5 has
-    applied execution and concentration controls.  Repeated model runs append only when
-    a game's executable portfolio state changes.  Grading can therefore use the first
-    timestamp-valid decision as the simulated entry without treating raw model signals
-    as wagers.
+    This is the legacy research ledger, not a receipt proving a user recommendation.
+    Lock concurrent writers and deduplicate all prior signatures per game/market.
+    Fail closed on unreadable or incompatible history rather than replacing it.
     """
-    p = Path(path)
-    p.parent.mkdir(parents=True, exist_ok=True)
-    if not isinstance(pred, pd.DataFrame) or pred.empty:
-        return {"path": str(p), "eligible_rows": 0, "appended_rows": 0}
-
-    units = pd.to_numeric(pred.get("portfolio_candidate_units", 0), errors="coerce").fillna(0.0)
-    action = pred.get("portfolio_action", pd.Series("PASS", index=pred.index)).fillna("PASS").astype(str).str.upper()
-    eligible = pred[(units > 0) & action.isin({"PAPER", "SHADOW", "BET"})].copy()
-    if eligible.empty:
-        return {"path": str(p), "eligible_rows": 0, "appended_rows": 0}
-
-    stamp = decision_at or datetime.now(timezone.utc).isoformat()
-    cols = [c for c in LEDGER_FIELDS if c in eligible.columns]
-    rows = eligible[cols].copy()
-    rows.insert(0, "decision_at", stamp)
-    rows["decision_signature"] = rows.apply(_signature, axis=1)
-
-    if p.exists() and p.stat().st_size > 0:
-        try:
-            old = pd.read_csv(p, low_memory=False)
-        except Exception:
-            old = pd.DataFrame()
-    else:
-        old = pd.DataFrame()
-
-    if not old.empty and {"game_id", "decision_signature"}.issubset(old.columns):
-        old_ts = pd.to_datetime(old.get("decision_at"), utc=True, errors="coerce")
-        old = old.assign(_decision_ts=old_ts).sort_values(["_decision_ts"], kind="mergesort")
-        latest = old.groupby(old["game_id"].astype(str), sort=False).tail(1)
-        last_sig = dict(zip(latest["game_id"].astype(str), latest["decision_signature"].astype(str)))
-        keep = rows.apply(
-            lambda r: str(r.get("decision_signature")) != last_sig.get(str(r.get("game_id"))),
-            axis=1,
-        )
-        rows = rows[keep].copy()
-        old = old.drop(columns=["_decision_ts"], errors="ignore")
-
-    if rows.empty:
-        return {"path": str(p), "eligible_rows": int(len(eligible)), "appended_rows": 0}
-
-    combined = pd.concat([old, rows], ignore_index=True, sort=False) if not old.empty else rows
-    combined.to_csv(p, index=False)
-    return {
-        "path": str(p),
-        "eligible_rows": int(len(eligible)),
-        "appended_rows": int(len(rows)),
-        "total_rows": int(len(combined)),
-    }
+    source = Path(path)
+    source.parent.mkdir(parents=True, exist_ok=True)
+    records = decisions.to_dict("records")
+    rows = [r for r in records if float(r.get("portfolio_candidate_units") or 0) > 0
+            and str(r.get("portfolio_action") or "PASS").upper() in {"PAPER", "SHADOW", "BET"}]
+    if not rows:
+        return {"path": str(source), "eligible_rows": 0, "appended_rows": 0}
+    stamp = decision_at or datetime.now(UTC).isoformat()
+    expected = ["decision_at", *LEDGER_FIELDS, "decision_signature"]
+    with source.open("a+", newline="") as handle:
+        fcntl.flock(handle, fcntl.LOCK_EX)
+        handle.seek(0)
+        reader = csv.DictReader(handle)
+        fields = reader.fieldnames or expected
+        if reader.fieldnames and not {"decision_at", "game_id", "quant_market", "decision_signature"}.issubset(fields):
+            raise ValueError("Incompatible decision ledger schema; history preserved")
+        old = list(reader)
+        seen = {(str(r.get("game_id") or ""), str(r.get("quant_market") or ""),
+                 str(r.get("decision_signature") or "")) for r in old}
+        additions = []
+        for row in rows:
+            signature = _signature(row)
+            key = (str(row.get("game_id") or ""), str(row.get("quant_market") or ""), signature)
+            if not key[0] or not key[1]:
+                raise ValueError("Decision requires game and market identity")
+            if key in seen:
+                continue
+            additions.append({"decision_at": stamp, **{k: row.get(k) for k in LEDGER_FIELDS},
+                              "decision_signature": signature})
+            seen.add(key)
+        # Legacy headers stay byte-for-byte intact. Freeze the complete modern
+        # row in a sidecar so new context fields are never silently discarded.
+        if set(LEDGER_FIELDS) - set(fields):
+            events = source.with_suffix(".events")
+            events.mkdir(exist_ok=True)
+            for record in additions:
+                identity = {k: record.get(k) for k in
+                            ("game_id", "quant_market", "decision_signature")}
+                event_id = hashlib.sha256(json.dumps(identity, sort_keys=True).encode()).hexdigest()
+                event_path = events / (event_id + ".json")
+                if not event_path.exists():
+                    with event_path.open("x") as event:
+                        json.dump(record, event, sort_keys=True, default=str)
+                        event.flush()
+                        os.fsync(event.fileno())
+        handle.seek(0, 2)
+        writer = csv.DictWriter(handle, fieldnames=fields, extrasaction="ignore")
+        if handle.tell() == 0:
+            writer.writeheader()
+        writer.writerows(additions)
+        handle.flush()
+        os.fsync(handle.fileno())
+    return {"path": str(source), "eligible_rows": len(rows),
+            "appended_rows": len(additions), "total_rows": len(old) + len(additions)}
