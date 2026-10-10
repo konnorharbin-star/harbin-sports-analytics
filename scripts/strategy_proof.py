@@ -9,7 +9,10 @@ Only independently time-valid forward entries can validate the hypothesis.
 from __future__ import annotations
 
 import json
+import math
+import re
 from pathlib import Path
+import numpy as np
 import pandas as pd
 
 CANDIDATE = "spread|favorite|home|6-8"
@@ -35,7 +38,89 @@ def _summary(rows: pd.DataFrame) -> dict:
     }
 
 
-def evaluate(backtest: pd.DataFrame, forward: dict, gate: dict, board: pd.DataFrame) -> dict:
+
+def candidate_forward_evidence(graded: pd.DataFrame | None) -> dict:
+    """Study only frozen prospective entries matching the exact fixed hypothesis.
+
+    Observed offers are shadow-market prices, not claimed sportsbook fills.
+    Week-clustered bootstrap protects against multiple selections per weekend.
+    """
+    pending = {"status": "PENDING_FORWARD", "bets": 0, "distinct_weeks": 0,
+               "roi": None, "roi_ci_95": [None, None],
+               "avg_execution_clv": None, "execution_clv_samples": 0,
+               "invalid_rows": 0, "paper_validated": False}
+    if graded is None or graded.empty:
+        return pending
+    required = {"game_id", "date", "market", "subgroup_key",
+                "regime_band", "entry_snapshot", "entry_quote_at",
+                "book", "odds", "result", "profit", "execution_clv"}
+    if required - set(graded):
+        raise ValueError(f"Forward graded schema missing: {sorted(required-set(graded))}")
+    subset = graded.loc[
+        graded.market.astype(str).eq("spread")
+        & graded.subgroup_key.astype(str).eq("favorite|home")
+        & graded.regime_band.astype(str).eq("6-8")
+    ].copy()
+    if subset.empty:
+        return pending
+    kickoff = pd.to_datetime(subset.date, utc=True, errors="coerce")
+    frozen = pd.to_datetime(subset.entry_snapshot, utc=True, errors="coerce")
+    quoted = pd.to_datetime(subset.entry_quote_at, utc=True, errors="coerce")
+    prices = pd.to_numeric(subset.odds, errors="coerce")
+    payout = pd.to_numeric(subset.profit, errors="coerce")
+    named = ~subset.book.fillna("").astype(str).str.fullmatch(
+        r"(?i)(?:actionnetwork\\s+book\\s+\\d+|book\\s*\\d+|"
+        r"unknown|consensus|open|opening|unresolved|primary|\\s*)"
+    )
+    valid = (
+        kickoff.notna() & frozen.notna() & quoted.notna()
+        & (quoted <= frozen) & (frozen < kickoff)
+        & named & prices.notna() & (prices.abs() >= 100) & payout.notna()
+    )
+    excluded = int((~valid).sum())
+    subset = subset.loc[valid].copy()
+    if subset.empty:
+        return {**pending, "invalid_rows": excluded}
+    subset["_frozen"] = pd.to_datetime(subset.entry_snapshot, utc=True)
+    subset = subset.sort_values("_frozen").drop_duplicates(
+        ["game_id", "market"], keep="first")
+    subset["_week"] = pd.to_datetime(subset.date, utc=True).dt.strftime("%G-W%V")
+    profit = pd.to_numeric(subset.profit).to_numpy(dtype=float)
+    clv = pd.to_numeric(subset.execution_clv, errors="coerce")
+    groups = [
+        pd.to_numeric(group.profit).to_numpy(dtype=float)
+        for _, group in subset.groupby("_week", sort=True)
+    ]
+    weeks = len(groups)
+    lower, upper = None, None
+    if weeks >= 2:
+        rng = np.random.default_rng(20261009)
+        boot = []
+        for _ in range(2000):
+            indices = rng.integers(0, weeks, size=weeks)
+            sample = np.concatenate([groups[i] for i in indices])
+            boot.append(float(sample.mean()))
+        lower, upper = (float(x) for x in np.quantile(boot, [.025, .975]))
+    n = len(subset)
+    clv_n = int(clv.notna().sum())
+    clv_mean = float(clv.dropna().mean()) if clv_n else None
+    validated = bool(
+        n >= FORWARD_MIN_BETS and weeks >= 8
+        and lower is not None and lower > 0
+        and clv_n >= math.ceil(.8 * n)
+        and clv_mean is not None and clv_mean > 0
+    )
+    return {
+        "status": "PAPER_VALIDATED" if validated else "EARLY_FORWARD",
+        "bets": n, "distinct_weeks": weeks,
+        "roi": float(profit.mean()), "roi_ci_95": [lower, upper],
+        "avg_execution_clv": clv_mean, "execution_clv_samples": clv_n,
+        "invalid_rows": excluded, "paper_validated": validated,
+    }
+
+
+def evaluate(backtest: pd.DataFrame, forward: dict, gate: dict, board: pd.DataFrame,
+             graded: pd.DataFrame | None = None) -> dict:
     required = {"market", "market_role", "side_location", "edge_bucket",
                 "season", "result", "profit", "entry_quote_verified"}
     if required - set(backtest):
@@ -47,6 +132,7 @@ def evaluate(backtest: pd.DataFrame, forward: dict, gate: dict, board: pd.DataFr
         (backtest["edge_bucket"].astype(str) == "6-8")
     ].copy()
     sample = _summary(observed)
+    specific_forward = candidate_forward_evidence(graded)
     discovery = _summary(observed[observed.season.astype(str).isin(["2023", "2024"])])
     retrospective_holdout = _summary(observed[observed.season.astype(str) == "2025"])
     other_seasons = sorted(set(observed.season.astype(str)) - {"2023", "2024", "2025"})
@@ -103,7 +189,7 @@ def evaluate(backtest: pd.DataFrame, forward: dict, gate: dict, board: pd.DataFr
         "forward_subgroup_roi_ci_95": subgroup_ci,
         "forward_subgroup_execution_clv": subgroup_clv,
         "forward_subgroup_preliminary_gate": bool(verified_positive_forward),
-        "candidate_specific_independent_evidence": "NOT_AVAILABLE",
+        "candidate_specific_independent_evidence": specific_forward,
         "profitability_proven": False,
         "production_eligible": bool(gate.get("production_eligible", False)),
         "bet_approved_by_this_report": False,
@@ -127,7 +213,15 @@ def main(root=Path(".")):
     forward = json.loads((root / "reports" / "edge_forward_performance.json").read_text())
     gate = json.loads((root / "reports" / "release_gate.json").read_text())
     board = pd.read_csv(root / "outputs" / "final_edge_board.csv", dtype={"game_id": str})
-    report = evaluate(backtest, forward, gate, board)
+    graded_path = root / "reports" / "edge_forward_graded.csv"
+    if graded_path.exists() and graded_path.stat().st_size:
+        try:
+            graded = pd.read_csv(graded_path, low_memory=False)
+        except pd.errors.EmptyDataError:
+            graded = pd.DataFrame()
+    else:
+        graded = pd.DataFrame()
+    report = evaluate(backtest, forward, gate, board, graded)
     for folder in ("outputs", "reports", "docs"):
         path = root / folder / "strategy_proof.json"
         path.parent.mkdir(parents=True, exist_ok=True)
