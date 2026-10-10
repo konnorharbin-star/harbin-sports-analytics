@@ -52,18 +52,7 @@
   "profitability_proven": false,
   "production_eligible": false,
   "bet_approved_by_this_report": false,
-  "research_candidates": [
-    {
-      "game_id": "401866439",
-      "matchup": "Kent State @ Western Michigan",
-      "side": "Western Michigan",
-      "line": -13.5,
-      "odds": -114.0,
-      "decision": "RECHECK_PRICE",
-      "reasons": "UNRESOLVED_BOOK;BOOK_EXECUTION_UNVERIFIED;PROVIDER_TIMESTAMP_UNVERIFIED;GLOBAL_RELEASE_BLOCKED",
-      "quote_verified": false
-    }
-  ],
+  "research_candidates": [],
   "next_validation": "Freeze eligible games and their sportsbook quote identity, odds, line and source timestamp before kickoff; grade one first-seen entry per game after final; require candidate-specific ROI CI lower bound > 0, positive timestamp-valid CLV and enough weeks/games.",
   "disclaimer": "Archived fallback prices are not verified placed bets. No automated wager placement or claim of demonstrated profit."
 }

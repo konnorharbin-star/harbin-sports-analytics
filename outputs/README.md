@@ -2,10 +2,10 @@
 
 **Model:** v7.1.0  
 **Season / Week:** 2026 / 6  
-**Updated:** Oct 10, 2026 · 2:22 PM CT  
-**Market:** LIVE MARKET DATA — all 34 games have verified market data from ESPN live (site.web.api.espn.com) + ESPN Core supplement.  
+**Updated:** Oct 10, 2026 · 3:10 PM CT  
+**Market:** LIVE MARKET DATA — all 18 games have verified market data from ESPN live (site.web.api.espn.com) + ESPN Core supplement.  
 **Dynamic advanced-feature live coverage:** 100%  
-**System health:** 84.1/100 *(readiness, not predicted profitability)*
+**System health:** 84.2/100 *(readiness, not predicted profitability)*
 
 ## Use these
 - [Interactive Cooper-style table](cfb_model_2026_week6.html)
@@ -38,16 +38,14 @@
 - [Clean validation-entry ledger](live_graded_tiers_clean.csv)
 
 ## Fresh PNGs for mobile
-- [Fresh page 1 — cache-safe](cfb_model_2026_week6_run_20261010_142241_CT_page1.png)
-- [Fresh page 2 — cache-safe](cfb_model_2026_week6_run_20261010_142241_CT_page2.png)
-- [Fresh page 3 — cache-safe](cfb_model_2026_week6_run_20261010_142241_CT_page3.png)
+- [Fresh page 1 — cache-safe](cfb_model_2026_week6_run_20261010_151032_CT_page1.png)
+- [Fresh page 2 — cache-safe](cfb_model_2026_week6_run_20261010_151032_CT_page2.png)
 
 These filenames change on every run so GitHub mobile cannot reuse an old image preview.
 
 ## Stable PNG names
 - [Stable page 1](cfb_model_2026_week6_page1.png)
 - [Stable page 2](cfb_model_2026_week6_page2.png)
-- [Stable page 3](cfb_model_2026_week6_page3.png)
 
 The Cooper-style table is the reconstructed presentation layer. The Quant card is the independent EV/risk layer. Missing verified markets display **NO LINE**. Run the separate **CFB Backtest** workflow before treating signals as historically established.
 

@@ -1,16 +1,15 @@
 {
   "approved_bets": 0,
   "decision_counts": {
-    "NO_BET": 3,
-    "RECHECK_PRICE": 1
+    "NO_BET": 1
   },
   "disclaimer": "A research edge is not a proved profitable bet. Do not wager at an unverified or stale quote.",
-  "distinct_games": 4,
-  "evaluated_at": "2026-10-10T19:22:45.657775+00:00",
+  "distinct_games": 1,
+  "evaluated_at": "2026-10-10T20:10:36.830521+00:00",
   "method": "ONE_PER_GAME_CONSERVATIVE_EV_PRIORITY",
   "no_model_or_stake_change": true,
   "production_eligible": false,
-  "raw_market_candidates": 4,
+  "raw_market_candidates": 1,
   "release_blockers": [
     "complete_market_coverage: >= 95% games with ML + spread + total",
     "probability_ece: ECE <= 0.05 on chronological release holdout",

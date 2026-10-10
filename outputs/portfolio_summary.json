@@ -25,13 +25,13 @@
     "reason": "graded history has no usable profit rows"
   },
   "production_block_reason": "",
-  "proposed_units": 3.09,
-  "risk_adjusted_proposed_units": 3.09,
-  "performance_adjusted_proposed_units": 3.09,
+  "proposed_units": 1.63,
+  "risk_adjusted_proposed_units": 1.63,
+  "performance_adjusted_proposed_units": 1.63,
   "approved_units": 0.0,
-  "paper_allocated_units": 2.93,
-  "paper_or_shadow_allocated_units": 2.93,
-  "bets": 20,
+  "paper_allocated_units": 1.63,
+  "paper_or_shadow_allocated_units": 1.63,
+  "bets": 11,
   "approved_bets": 0,
   "execution_blocked_bets": 0,
   "limits": {
@@ -76,55 +76,40 @@
     "max_book_units": 2.0
   },
   "allocated_by_market": {
-    "spread": 2.06,
-    "total": 0.65,
-    "moneyline": 0.22
+    "spread": 1.09,
+    "total": 0.46,
+    "moneyline": 0.08
   },
   "allocated_by_book": {
     "ActionNetwork book 68": 0.58,
-    "ActionNetwork book 71": 0.31,
-    "ActionNetwork book 30": 0.85,
-    "Draft Kings": 0.22,
-    "ActionNetwork book 15": 0.32,
-    "ActionNetwork book 49": 0.28,
-    "ActionNetwork book 69": 0.27,
-    "ActionNetwork book 75": 0.1
+    "ActionNetwork book 30": 0.36,
+    "ActionNetwork book 15": 0.29,
+    "ActionNetwork book 49": 0.19,
+    "ActionNetwork book 71": 0.13,
+    "DraftKings": 0.08
   },
   "allocated_by_kickoff_window": {
-    "2026-10-10 21:00:00+00:00": 1.26,
-    "2026-10-10 18:00:00+00:00": 1.29,
+    "2026-10-10 21:00:00+00:00": 1.25,
     "2026-10-11 00:00:00+00:00": 0.38
   },
   "allocated_by_team_exposure": {
     "San Diego State": 0.27,
-    "Georgia Tech": 0.18,
-    "Duke": 0.18,
-    "Vanderbilt": 0.25,
     "Alabama": 0.16,
     "Georgia": 0.16,
     "Fresno State": 0.2,
     "James Madison": 0.18,
-    "Michigan State": 0.14,
     "Hawai'i": 0.18,
     "UTEP": 0.1,
     "Nevada": 0.1,
-    "Western Michigan": 0.15,
-    "Temple": 0.15,
     "Louisiana Tech": 0.09,
     "Louisiana": 0.09,
-    "Ohio": 0.14,
     "Memphis": 0.13,
     "Air Force": 0.13,
-    "Marshall": 0.12,
-    "Coastal Carolina": 0.12,
-    "East Carolina": 0.1,
-    "Akron": 0.09,
-    "Texas": 0.09,
+    "Marshall": 0.11,
+    "Coastal Carolina": 0.11,
     "Penn State": 0.08
   },
-  "limit_hit_counts": {
-    "max bet count": 2
-  },
+  "limit_hit_counts": {},
   "release_blockers": [
     "complete_market_coverage: >= 95% games with ML + spread + total",
     "probability_ece: ECE <= 0.05 on chronological release holdout",

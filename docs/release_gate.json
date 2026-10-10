@@ -15,7 +15,7 @@
     {
       "name": "complete_market_coverage",
       "passed": false,
-      "value": 0.9412,
+      "value": 0.9444,
       "requirement": ">= 95% games with ML + spread + total",
       "detail": ""
     },
@@ -71,7 +71,7 @@
     {
       "name": "live_monitoring",
       "passed": true,
-      "value": 94.7,
+      "value": 94.1,
       "requirement": "live readiness >= 90/100",
       "detail": ""
     },
