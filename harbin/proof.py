@@ -6,6 +6,8 @@ from pathlib import Path
 import numpy as np
 import pandas as pd
 
+from .entry_provenance import verified_entry_mask
+
 MIN_SEGMENT_BETS = 50
 
 
@@ -69,13 +71,15 @@ def _overall(df):
 
 
 def _promotion_sample(bets: pd.DataFrame):
-    if "entry_quote_verified" in bets.columns:
-        flag = bets["entry_quote_verified"].fillna(False).astype(bool)
-        return bets[flag].copy(), "entry_quote_verified"
-    if "used_distinct_open" in bets.columns:
-        flag = bets["used_distinct_open"].fillna(False).astype(bool)
-        return bets[flag].copy(), "legacy_used_distinct_open"
-    return bets.iloc[0:0].copy(), "unverified"
+    """Only explicit affirmative verification can enter promotion evidence.
+
+    Legacy used_distinct_open merely describes archive fields and cannot prove
+    the quote existed at the decision time.
+    """
+    if "entry_quote_verified" not in bets.columns:
+        return bets.iloc[0:0].copy(), "unverified"
+    flag = verified_entry_mask(bets)
+    return bets.loc[flag].copy(), "entry_quote_verified"
 
 
 def _positive_segments(segments):
