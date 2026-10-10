@@ -58,6 +58,11 @@ jobs:
         run: python -m scripts.audit_schedule_coverage
       - name: Preserve first-seen pregame predictions
         run: python -m scripts.archive_first_seen_predictions
+      - name: Freeze Walters key-number first-pregame research and grade committed finals
+        run: |
+          python -m scripts.walters_key_forward --sport cfb \
+            --historical reports/backtest_predictions.csv
+
       - name: Validate published dashboard bundle
         run: python validate_publication.py
       - name: Build release-gated final edge decision board
