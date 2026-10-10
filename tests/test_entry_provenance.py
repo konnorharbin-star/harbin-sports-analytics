@@ -69,3 +69,57 @@ def test_evidence_report_never_counts_string_false_as_verified(tmp_path):
     assert report["overall"]["bets"] == 1
     assert report["overall"]["roi"] == -1
     assert report["status"] == "UNPROVEN"
+
+
+def test_archive_opening_pair_requires_real_side_and_same_book(monkeypatch):
+    from types import SimpleNamespace
+    from harbin.backtest_audit import AuditedArchiveMarketStore
+    from harbin.backtest_runtime import CanonicalArchiveMarketStore
+
+    game = SimpleNamespace(game_id="10", home_team="Home", away_team="Away")
+
+    def fake_base_quote(_store, _game):
+        return {"book": "BookA"}
+
+    monkeypatch.setattr(CanonicalArchiveMarketStore, "quote", fake_base_quote)
+    store = object.__new__(AuditedArchiveMarketStore)
+    store.by_id = {
+        "10": pd.DataFrame([
+            # Two opening rows for Home do NOT mean both sides are available.
+            {"book": "BookA", "market_type": "moneyline", "abbr": "Home",
+             "opening_odds": -160, "opening_lines": None},
+            {"book": "BookA", "market_type": "moneyline", "abbr": "Home",
+             "opening_odds": -150, "opening_lines": None},
+            {"book": "BookA", "market_type": "spread", "abbr": "Home",
+             "opening_odds": -110, "opening_lines": -3.5},
+            {"book": "BookA", "market_type": "spread", "abbr": "Away",
+             "opening_odds": None, "opening_lines": 3.5},
+            {"book": "BookA", "market_type": "total", "abbr": "Over",
+             "opening_odds": -110, "opening_lines": 51.5},
+            {"book": "BookA", "market_type": "total", "abbr": "Over",
+             "opening_odds": -115, "opening_lines": 51.5},
+            # Another sportsbook cannot fill a missing selected-book quote.
+            {"book": "BookB", "market_type": "moneyline", "abbr": "Away",
+             "opening_odds": 135, "opening_lines": None},
+            {"book": "BookB", "market_type": "total", "abbr": "Under",
+             "opening_odds": -105, "opening_lines": 51.5},
+        ])
+    }
+    quote = store.quote(game)
+    assert quote["open_moneyline_verified"] is False
+    assert quote["open_spread_verified"] is False
+    assert quote["open_total_verified"] is False
+
+    extra = pd.DataFrame([
+        {"book": "BookA", "market_type": "moneyline", "abbr": "Away",
+         "opening_odds": 135, "opening_lines": None},
+        {"book": "BookA", "market_type": "spread", "abbr": "Away",
+         "opening_odds": -110, "opening_lines": 3.5},
+        {"book": "BookA", "market_type": "total", "abbr": "Under",
+         "opening_odds": -105, "opening_lines": 51.5},
+    ])
+    store.by_id["10"] = pd.concat([store.by_id["10"], extra], ignore_index=True)
+    quote = store.quote(game)
+    assert quote["open_moneyline_verified"] is True
+    assert quote["open_spread_verified"] is True
+    assert quote["open_total_verified"] is True
