@@ -237,9 +237,18 @@ def _clean_forward_entries(history: pd.DataFrame) -> pd.DataFrame:
         .fillna("")
         .astype(str)
     )
-    data["_book_ok"] = data.get(
+    book_names = data.get(
         "book", pd.Series(index=data.index, dtype=object)
-    ).map(_present)
+    ).fillna("").astype(str).str.strip()
+    # A numeric source identifier, generic consensus, or opening-market
+    # baseline is not a resolved sportsbook. Preserve raw observations but
+    # never count them as clean forward betting evidence.
+    unresolved = book_names.str.fullmatch(
+        r"(?i)(?:actionnetwork\\s+book\\s+\\d+|book\\s*\\d+|"
+        r"unknown|consensus|open|opening|unresolved|primary)",
+        na=False,
+    )
+    data["_book_ok"] = book_names.map(_present) & ~unresolved
 
     clean = data[
         data["_snapshot"].notna()
