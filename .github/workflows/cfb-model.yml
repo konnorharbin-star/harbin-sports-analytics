@@ -36,6 +36,8 @@ jobs:
       THE_ODDS_API_KEY: ${{ secrets.THE_ODDS_API_KEY }}
     steps:
       - uses: actions/checkout@v7
+        with:
+          fetch-depth: 0
       - uses: actions/setup-python@v7
         with:
           python-version: "3.12"
@@ -62,6 +64,9 @@ jobs:
         run: |
           python -m scripts.walters_key_forward --sport cfb \
             --historical reports/backtest_predictions.csv
+
+      - name: Compare immutable independent key numbers with source-attested book spreads
+        run: python -m scripts.walters_key_market_gate
 
       - name: Validate published dashboard bundle
         run: python validate_publication.py
