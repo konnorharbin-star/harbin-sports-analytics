@@ -52,3 +52,15 @@ def test_forward_snapshot_refuses_started_matchup(tmp_path):
             frame, tmp_path / "snapshots.csv",
             snapshot_at="2026-10-09T23:12:00+00:00",
         )
+
+
+def test_unresolved_source_book_is_not_qualified_forward_evidence(tmp_path):
+    path = tmp_path / "snapshots.csv"
+    candidate = _edge(quote="2026-10-09T23:11:45+00:00")
+    candidate.loc[0, "book"] = "ActionNetwork book 15"
+    out = append_edge_candidate_snapshots(
+        candidate, path, snapshot_at="2026-10-09T23:12:00+00:00",
+    )
+    assert out["appended"] == 1
+    clean = _clean_forward_entries(pd.read_csv(path, low_memory=False))
+    assert len(clean) == 0
