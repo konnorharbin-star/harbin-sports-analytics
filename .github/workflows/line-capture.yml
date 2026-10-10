@@ -40,14 +40,14 @@ jobs:
           [ -n "${{ inputs.week }}" ] && ARGS="$ARGS --week ${{ inputs.week }}"
           python capture_lines.py $ARGS
       - name: Compare captured identical-line prices
-        run: python -m scripts.price_comparison_scan --sport cfb
+        run: python -m scripts.price_comparison_scan --sport cfb --out docs/price_comparison_scan_line.json
       - name: Commit line history
         shell: bash
         run: |
           git config user.name "harbin-line-bot"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           [ -f history/market_snapshots.csv ] && git add history/market_snapshots.csv || true
-          git add history/price_scan_v1 docs/price_comparison_scan.json
+          git add history/price_scan_v1 docs/price_comparison_scan_line.json
           [ -f outputs/line_capture_status.json ] && git add outputs/line_capture_status.json || true
           if ! git diff --cached --quiet; then
             git commit -m "lines: capture verified pre-kickoff market snapshot"

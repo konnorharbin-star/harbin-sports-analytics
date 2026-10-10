@@ -78,13 +78,7 @@ def normalize(game, q, observed):
             "away",
             ("home_spread_price", "away_spread_price"),
         ),
-        (
-            "total",
-            number(q.get("market_total")),
-            "over",
-            "under",
-            ("over_price", "under_price"),
-        ),
+        ("total", number(q.get("market_total")), "over", "under", ("over_price", "under_price")),
     ]:
         prices = [number(q.get(k)) for k in keys]
         if market != "moneyline" and line is None:
@@ -97,13 +91,7 @@ def normalize(game, q, observed):
             continue
         if all(decimal(p) is not None for p in prices):
             records.append(
-                {
-                    **base,
-                    "market": market,
-                    "line": line,
-                    "sides": [first, second],
-                    "odds": prices,
-                }
+                {**base, "market": market, "line": line, "sides": [first, second], "odds": prices}
             )
     return records
 
@@ -116,16 +104,12 @@ def load(sport):
         published = list(by_id.values())
         history = Path("history/market_snapshots.csv")
         if history.exists():
-            published.extend(
-                r for r in csv.DictReader(history.open()) if r["game_id"] in by_id
-            )
+            published.extend(r for r in csv.DictReader(history.open()) if r["game_id"] in by_id)
         for game in published:
             for q in json.loads(game.get("market_quotes_json") or "[]"):
                 if q.get("source") not in ("action_network", "espn_core", "espn"):
                     continue
-                result.extend(
-                    normalize(game, q, q.get("captured_at") or game.get("captured_at"))
-                )
+                result.extend(normalize(game, q, q.get("captured_at") or game.get("captured_at")))
         return games, result
     fields = [
         "captured_at",
@@ -147,10 +131,7 @@ def load(sport):
         "second_american_odds",
     ]
     for row in csv.DictReader(Path("history/market_snapshots.csv").open()):
-        if row["game_id"] not in by_id or row["provider"] not in (
-            "espn",
-            "action_network",
-        ):
+        if row["game_id"] not in by_id or row["provider"] not in ("espn", "action_network"):
             continue
         prices = {
             row["first_side"]: row["first_american_odds"],
@@ -185,9 +166,7 @@ def load(sport):
             "under_price": prices.get("under"),
         }
         normalized = normalize(by_id[row["game_id"]], q, row["captured_at"])
-        identity = json.dumps(
-            tuple(row.get(k) or "" for k in fields), separators=(",", ":")
-        )
+        identity = json.dumps(tuple(row.get(k) or "" for k in fields), separators=(",", ":"))
         sidecar = Path("history/market_snapshots.csv.events") / (
             hashlib.sha256(identity.encode()).hexdigest() + ".json"
         )
@@ -195,9 +174,7 @@ def load(sport):
             event = json.loads(sidecar.read_text())
             for item in normalized:
                 item["reported_source_time"] = event.get("source_quote_at")
-                item["source_quote_time_verified"] = (
-                    event.get("source_quote_time_verified") is True
-                )
+                item["source_quote_time_verified"] = event.get("source_quote_time_verified") is True
         result.extend(normalized)
     return games, result
 
@@ -206,11 +183,7 @@ def refresh(sport, games):
     """Existing free collectors only; optional paid/keyed source is never called."""
     now = datetime.now(UTC)
     targets = list(
-        {
-            r["game_id"]: r
-            for r in games
-            if timestamp(r.get("kickoff") or r["date"]) > now
-        }.values()
+        {r["game_id"]: r for r in games if timestamp(r.get("kickoff") or r["date"]) > now}.values()
     )
     result, errors = [], []
     if not targets:
@@ -234,10 +207,7 @@ def refresh(sport, games):
                 market.first_side: market.first_american_odds,
                 market.second_side: market.second_american_odds,
             }
-            lines = {
-                market.first_side: market.first_line,
-                market.second_side: market.second_line,
-            }
+            lines = {market.first_side: market.first_line, market.second_side: market.second_line}
             q = {
                 "provider": market.book,
                 "source": market.provider,
@@ -245,20 +215,12 @@ def refresh(sport, games):
                 "last_update": market.source_quote_at.isoformat()
                 if market.source_quote_at
                 else None,
-                "home_ml": sides.get("home")
-                if market.market_type == "moneyline"
-                else None,
-                "away_ml": sides.get("away")
-                if market.market_type == "moneyline"
-                else None,
+                "home_ml": sides.get("home") if market.market_type == "moneyline" else None,
+                "away_ml": sides.get("away") if market.market_type == "moneyline" else None,
                 "home_spread": lines.get("home"),
                 "away_spread": lines.get("away"),
-                "home_spread_price": sides.get("home")
-                if market.market_type == "spread"
-                else None,
-                "away_spread_price": sides.get("away")
-                if market.market_type == "spread"
-                else None,
+                "home_spread_price": sides.get("home") if market.market_type == "spread" else None,
+                "away_spread_price": sides.get("away") if market.market_type == "spread" else None,
                 "market_total": lines.get("over"),
                 "over_total": lines.get("over"),
                 "under_total": lines.get("under"),
@@ -284,21 +246,14 @@ def refresh(sport, games):
             continue
         try:
             if (
-                abs(
-                    (
-                        timestamp(matches[0]["start_time"]) - timestamp(game["date"])
-                    ).total_seconds()
-                )
+                abs((timestamp(matches[0]["start_time"]) - timestamp(game["date"])).total_seconds())
                 > 300
             ):
                 continue
         except (ValueError, TypeError):
             continue
         for q in matches[0]["quotes"]:
-            q = {
-                **q,
-                "source_url": "https://api.actionnetwork.com/web/v2/scoreboard/ncaaf",
-            }
+            q = {**q, "source_url": "https://api.actionnetwork.com/web/v2/scoreboard/ncaaf"}
             result.extend(normalize(game, q, observed))
     return result, errors
 
@@ -321,25 +276,14 @@ def scan(records, now):
         ):
             counts["invalid_pair"] += 1
             continue
-        key = (
-            r["game_id"],
-            r["home_team"],
-            r["away_team"],
-            kickoff,
-            r["market"],
-            r["line"],
-        )
+        key = (r["game_id"], r["home_team"], r["away_team"], kickoff, r["market"], r["line"])
         previous = groups[key].get(r["book_key"])
         if previous is None or observed > timestamp(previous["observed_at"]):
             groups[key][r["book_key"]] = r
     candidates = []
     for group in groups.values():
         newest = max(timestamp(r["observed_at"]) for r in group.values())
-        quotes = [
-            r
-            for r in group.values()
-            if newest - timestamp(r["observed_at"]) <= MAX_SKEW
-        ]
+        quotes = [r for r in group.values() if newest - timestamp(r["observed_at"]) <= MAX_SKEW]
         counts["fresh_exact_line_groups"] += 1
         if len(quotes) < MIN_REFERENCE_BOOKS + 1:
             counts["insufficient_same_line_books"] += 1
@@ -376,10 +320,7 @@ def scan(records, now):
                     "price_implied_probability": implied,
                     "reference_price_gap_pp": 100 * gap,
                     "sensitivity_gap_pp": 100 * (reference - haircut - implied),
-                    "reference_probability_range": [
-                        min(probabilities),
-                        max(probabilities),
-                    ],
+                    "reference_probability_range": [min(probabilities), max(probabilities)],
                     "status": "VERIFY_REQUIRED",
                     "betting_authorized": False,
                     "stake_units": 0,
@@ -394,9 +335,7 @@ def scan(records, now):
                     ],
                 }
             )
-    candidates.sort(
-        key=lambda r: (-r["sensitivity_gap_pp"], r["game_id"], r["market"], r["side"])
-    )
+    candidates.sort(key=lambda r: (-r["sensitivity_gap_pp"], r["game_id"], r["market"], r["side"]))
     return {
         "spec": SPEC,
         "observed_at": now.isoformat(),
@@ -419,6 +358,7 @@ def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("--sport", choices=("nfl", "cfb"), required=True)
     parser.add_argument("--refresh-market", action="store_true")
+    parser.add_argument("--out", type=Path, default=Path("docs/price_comparison_scan.json"))
     args = parser.parse_args()
     games, records = load(args.sport)
     errors = []
@@ -434,10 +374,7 @@ def main():
     for record in records:
         try:
             observed = timestamp(record["observed_at"])
-            if (
-                observed <= now < timestamp(record["kickoff"])
-                and now - observed <= MAX_AGE
-            ):
+            if observed <= now < timestamp(record["kickoff"]) and now - observed <= MAX_AGE:
                 current.append(record)
         except (ValueError, TypeError):
             pass
@@ -456,17 +393,14 @@ def main():
         if args.sport == "nfl"
         else "CFB normalized feed does not retain both spread/total side lines",
     )
-    identity = hashlib.sha256(json.dumps(report, sort_keys=True).encode()).hexdigest()[
-        :24
-    ]
+    identity = hashlib.sha256(json.dumps(report, sort_keys=True).encode()).hexdigest()[:24]
     report["capture_id"] = identity
     immutable(
         Path("history/price_scan_v1/captures") / (identity + ".json"),
         {"report": report, "source_records": current},
     )
-    Path("docs/price_comparison_scan.json").write_text(
-        json.dumps(report, indent=2, allow_nan=False) + "\n"
-    )
+    args.out.parent.mkdir(parents=True, exist_ok=True)
+    args.out.write_text(json.dumps(report, indent=2, allow_nan=False) + "\n")
     print(
         json.dumps(
             {
