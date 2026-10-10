@@ -36,7 +36,13 @@ def archive(root=Path(".")):
     columns = ["season", "week", "first_seen_utc", "game_id", "date",
                "away_team", "home_team", "away_score", "home_score",
                "model_margin_home", "model_total", "win_probability",
-               "market_spread_home", "market_total", "quant_signal"]
+               "market_spread_home", "market_total", "quant_signal",
+               "quant_market", "quant_side", "quant_price", "quant_odds",
+               "quant_book", "quant_quote_at", "quant_probability",
+               "quant_ev", "quant_edge", "quant_selection_basis",
+               "selection_basis", "ml_quote_time_source",
+               "spread_quote_time_source", "total_quote_time_source",
+               "market_execution_verified", "market_quote_timestamp_verified"]
     current.insert(0, "first_seen_utc", cutoff.isoformat())
     keep = current[[col for col in columns if col in current.columns]].copy()
     # Live model CSV already has season/week. Assign rather than insert, so
