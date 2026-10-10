@@ -481,8 +481,8 @@
   },
   "calibrated_margin_sigma": 16.28877707158025,
   "calibrated_total_sigma": 16.102959927363244,
-  "generated_at": "2026-10-10T17:22:01.766590+00:00",
-  "updated_at_ct": "Oct 10, 2026 \u00b7 12:22 PM CT",
+  "generated_at": "2026-10-10T17:55:16.011701+00:00",
+  "updated_at_ct": "Oct 10, 2026 \u00b7 12:55 PM CT",
   "schedule_source": "sportsdataverse/cfbfastR-data",
   "odds_source": "ESPN live (site.web.api.espn.com) + ESPN Core supplement",
   "odds_errors": [],
@@ -583,13 +583,13 @@
       "401869843"
     ],
     "invalid_kickoff_game_ids": [],
-    "cutoff_utc": "2026-10-10T17:22:01.659246+00:00"
+    "cutoff_utc": "2026-10-10T17:55:15.908729+00:00"
   },
   "edge_forward_snapshot": {
     "status": "APPENDED",
     "appended": 5,
-    "total_rows": 271,
-    "snapshot_at": "2026-10-10T17:22:01.766590+00:00",
+    "total_rows": 276,
+    "snapshot_at": "2026-10-10T17:55:16.011701+00:00",
     "path": "history/edge_candidate_snapshots.csv"
   },
   "edge_timing": {
@@ -653,11 +653,11 @@
     "price_overpriced_supported_candidates": 0,
     "parent_only_candidates": 1,
     "contraindicated_candidates": 1,
-    "watch_candidates": 21,
+    "watch_candidates": 19,
     "methodology": "Fixed edge bands; market-specific walk-forward bet outcomes; PERSISTENT_CANDIDATE requires >=180 bets, >=3 seasons, >=50 bets in every season, positive ROI in every season, >=3% aggregate ROI, and positive average CLV. WATCH requires >=100 bets, positive aggregate ROI, and profit in at least two-thirds of seasons. Spread parent regimes are decomposed into favorite/underdog \u00d7 home/away children using chronological confirmation: all but the latest represented season are discovery and the latest season is a holdout. SUPPORTED_SUBGROUP requires >=45 total bets, >=2 discovery seasons with >=12 bets each, >=5% discovery ROI with every discovery season profitable, >=12 holdout bets with positive holdout ROI, and positive full-sample CLV. CONTRAINDICATED_SUBGROUP requires the same sample floor, every discovery season negative with <=-3% discovery ROI, a negative holdout ROI, and <=-3% full-sample ROI. Regime evidence can prioritize research and surface candidates but cannot create an edge, modify the fair line, probability, EV, or inflate stake."
   },
   "quant_picks": {
-    "strong": 16,
+    "strong": 17,
     "bet": 7,
     "lean": 0
   },
@@ -691,13 +691,13 @@
     "verified_close_clv_samples": 0,
     "portfolio_verified": true,
     "evidence_source": "portfolio_decisions_v1",
-    "eligible_decisions": 878,
+    "eligible_decisions": 898,
     "timing_excluded_rows": 70,
     "status": "live/shadow evidence only; not historical backtest evidence"
   },
   "edge_forward_validation": {
     "status": "PENDING_FORWARD",
-    "observed_rows": 271,
+    "observed_rows": 276,
     "clean_entries": 0,
     "graded_bets": 0,
     "roi": null,
@@ -714,7 +714,7 @@
     "underperforming_cells": 0
   },
   "health": {
-    "system_health_score": 84.2,
+    "system_health_score": 84.1,
     "meaning": "engineering/model-readiness score only; not a profitability or win-rate guarantee",
     "components": {
       "pipeline_and_data": 100.0,
@@ -724,7 +724,7 @@
       "probability_calibration": 87.6,
       "market_intelligence": 100.0,
       "current_context": 100.0,
-      "live_monitoring": 94.8,
+      "live_monitoring": 94.7,
       "historical_betting_proof": 25.0
     },
     "betting_proof_status": "UNPROVEN",
@@ -909,7 +909,7 @@
       "drift_total": 92.4,
       "drift_probability": 96.0,
       "distribution_stability": 94.9,
-      "output_completeness": 89.62529274004683
+      "output_completeness": 89.53161592505855
     },
     "drift_details": {
       "margin": {
@@ -917,9 +917,9 @@
         "mean_z": 0.0745,
         "std_ratio": 1.0746,
         "live_mean": 4.90149513287929,
-        "reference_mean": 4.007587882019204,
+        "reference_mean": 4.007587882019203,
         "live_std": 12.889129724769122,
-        "reference_std": 11.994090061385588,
+        "reference_std": 11.99409006138559,
         "live_n": 35,
         "reference_n": 2398
       },
@@ -930,7 +930,7 @@
         "live_mean": 53.22273589320038,
         "reference_mean": 53.69890163853031,
         "live_std": 4.9553749105888585,
-        "reference_std": 6.2275175246996115,
+        "reference_std": 6.227517524699614,
         "live_n": 35,
         "reference_n": 2398
       },
@@ -939,9 +939,9 @@
         "mean_z": 0.0573,
         "std_ratio": 1.11,
         "live_mean": 0.5964389416149489,
-        "reference_mean": 0.5827146572033696,
+        "reference_mean": 0.582714657203369,
         "live_std": 0.26581730596814646,
-        "reference_std": 0.23947361737529071,
+        "reference_std": 0.2394736173752905,
         "live_n": 35,
         "reference_n": 2398
       }
@@ -977,12 +977,12 @@
       "reason": "graded history has no usable profit rows"
     },
     "production_block_reason": "",
-    "proposed_units": 3.11,
-    "risk_adjusted_proposed_units": 3.11,
-    "performance_adjusted_proposed_units": 3.11,
+    "proposed_units": 3.21,
+    "risk_adjusted_proposed_units": 3.21,
+    "performance_adjusted_proposed_units": 3.21,
     "approved_units": 0.0,
-    "paper_allocated_units": 2.87,
-    "paper_or_shadow_allocated_units": 2.87,
+    "paper_allocated_units": 2.88,
+    "paper_or_shadow_allocated_units": 2.88,
     "bets": 20,
     "approved_bets": 0,
     "execution_blocked_bets": 0,
@@ -1028,20 +1028,21 @@
       "max_book_units": 2.0
     },
     "allocated_by_market": {
-      "total": 0.85,
-      "spread": 1.88,
+      "total": 0.95,
+      "spread": 1.79,
       "moneyline": 0.14
     },
     "allocated_by_book": {
       "ActionNetwork book 71": 0.78,
       "ActionNetwork book 15": 0.72,
-      "ActionNetwork book 30": 0.64,
-      "ActionNetwork book 69": 0.14,
+      "ActionNetwork book 30": 0.55,
       "ActionNetwork book 68": 0.31,
-      "ActionNetwork book 49": 0.28
+      "Draft Kings": 0.14,
+      "ActionNetwork book 49": 0.28,
+      "ActionNetwork book 75": 0.1
     },
     "allocated_by_kickoff_window": {
-      "2026-10-10 18:00:00+00:00": 1.39,
+      "2026-10-10 18:00:00+00:00": 1.4,
       "2026-10-10 21:00:00+00:00": 1.18,
       "2026-10-11 00:00:00+00:00": 0.3
     },
@@ -1052,11 +1053,11 @@
       "Vanderbilt": 0.24,
       "Alabama": 0.16,
       "Georgia": 0.16,
-      "Michigan State": 0.14,
       "James Madison": 0.18,
+      "Michigan State": 0.14,
+      "Hawai'i": 0.18,
       "Massachusetts": 0.12,
       "Miami (OH)": 0.12,
-      "Hawai'i": 0.18,
       "UTEP": 0.1,
       "Nevada": 0.1,
       "Western Michigan": 0.15,
@@ -1064,6 +1065,8 @@
       "Louisiana Tech": 0.09,
       "Louisiana": 0.09,
       "Ohio": 0.15,
+      "East Carolina": 0.1,
+      "Rice": 0.1,
       "Memphis": 0.13,
       "Air Force": 0.13,
       "North Texas": 0.08,
@@ -1071,11 +1074,10 @@
       "Fresno State": 0.12,
       "Marshall": 0.12,
       "Coastal Carolina": 0.12,
-      "Akron": 0.09,
-      "Texas": 0.09
+      "Akron": 0.09
     },
     "limit_hit_counts": {
-      "max bet count": 3
+      "max bet count": 4
     },
     "release_blockers": [
       "complete_market_coverage: >= 95% games with ML + spread + total",
@@ -1089,6 +1091,6 @@
     "path": "history/portfolio_decisions_v1.csv",
     "eligible_rows": 20,
     "appended_rows": 20,
-    "total_rows": 1233
+    "total_rows": 1253
   }
 }
