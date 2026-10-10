@@ -1,0 +1,43 @@
+{
+  "away_team": "Virginia Tech",
+  "betting_authorized": false,
+  "captured_at": "2026-10-10T17:53:40.797850+00:00",
+  "decision": "RESEARCH_OBSERVATION",
+  "experiment_code_sha256": "cf5604fa88c8b7c65242f224c90436adc9be5bfbdee78d2c34414b10264b7c3a",
+  "game_id": "401858259",
+  "home_team": "California",
+  "id": "e8b3fcba67b4237bb4290464",
+  "kickoff": "2026-10-10T19:30:00+00:00",
+  "model_version": "7.1.0",
+  "original_paired_quote": {
+    "away_ml": -375.0,
+    "away_spread_price": null,
+    "captured_at": "2026-10-10T17:21:52.580797+00:00",
+    "home_ml": 295.0,
+    "home_spread": 10.0,
+    "home_spread_price": null,
+    "last_update": null,
+    "market_total": 53.5,
+    "over_price": null,
+    "provider": "DraftKings",
+    "source": "espn_core",
+    "under_price": null
+  },
+  "prediction_source_sha256": "640357a7ad9dee52e1ea824411ae6ba20f331f3a99a6c96b242e9bea3d349461",
+  "predictions": {
+    "independent_model": 0.4492753623188406,
+    "market": 0.24281150159744405,
+    "market_model_25pct": 0.2944274667777932,
+    "market_power_1_1": 0.22251679148744444
+  },
+  "quote_collector_observed_at": "2026-10-10T17:21:52.580797+00:00",
+  "reference_book": "DraftKings",
+  "season": 2026,
+  "source_prediction_generated_at": "2026-10-10T17:22:04.480065+00:00",
+  "source_quote_at": null,
+  "source_quote_origin_verified": false,
+  "spec": "market_first_moneyline_v1",
+  "sport": "cfb",
+  "stake_units": 0,
+  "week": 6
+}

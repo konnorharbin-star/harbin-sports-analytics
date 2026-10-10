@@ -1,0 +1,43 @@
+{
+  "away_team": "Louisiana",
+  "betting_authorized": false,
+  "captured_at": "2026-10-10T17:53:40.797850+00:00",
+  "decision": "RESEARCH_OBSERVATION",
+  "experiment_code_sha256": "cf5604fa88c8b7c65242f224c90436adc9be5bfbdee78d2c34414b10264b7c3a",
+  "game_id": "401869965",
+  "home_team": "Louisiana Tech",
+  "id": "ba567e5ee8fdce3b2ba793a3",
+  "kickoff": "2026-10-10T23:30:00+00:00",
+  "model_version": "7.1.0",
+  "original_paired_quote": {
+    "away_ml": 130.0,
+    "away_spread_price": null,
+    "captured_at": "2026-10-10T17:21:52.654945+00:00",
+    "home_ml": -155.0,
+    "home_spread": -3.0,
+    "home_spread_price": null,
+    "last_update": null,
+    "market_total": 48.5,
+    "over_price": null,
+    "provider": "DraftKings",
+    "source": "espn_core",
+    "under_price": null
+  },
+  "prediction_source_sha256": "640357a7ad9dee52e1ea824411ae6ba20f331f3a99a6c96b242e9bea3d349461",
+  "predictions": {
+    "independent_model": 0.5909090909090909,
+    "market": 0.5829926410466066,
+    "market_model_25pct": 0.5849717535122277,
+    "market_power_1_1": 0.5911152714636964
+  },
+  "quote_collector_observed_at": "2026-10-10T17:21:52.654945+00:00",
+  "reference_book": "DraftKings",
+  "season": 2026,
+  "source_prediction_generated_at": "2026-10-10T17:22:04.480065+00:00",
+  "source_quote_at": null,
+  "source_quote_origin_verified": false,
+  "spec": "market_first_moneyline_v1",
+  "sport": "cfb",
+  "stake_units": 0,
+  "week": 6
+}
