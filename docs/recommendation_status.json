@@ -1,0 +1,80 @@
+{
+  "actual_wagers": 0,
+  "board": {
+    "approved_bets": 0,
+    "decision_counts": {
+      "NO_BET": 34,
+      "RECHECK_PRICE": 2
+    },
+    "disclaimer": "A research edge is not a proved profitable bet. Do not wager at an unverified or stale quote.",
+    "distinct_games": 36,
+    "evaluated_at": "2026-10-10T17:20:34.798255+00:00",
+    "method": "ONE_PER_GAME_CONSERVATIVE_EV_PRIORITY",
+    "no_model_or_stake_change": true,
+    "production_eligible": false,
+    "raw_market_candidates": 36,
+    "release_blockers": [
+      "complete_market_coverage: >= 95% games with ML + spread + total",
+      "probability_ece: ECE <= 0.05 on chronological release holdout",
+      "historical_entry_integrity: historical promotion sample uses explicit verified opening-entry fields only",
+      "historical_market_edge: ROBUST evidence: >=1000 verified opening-entry bets, ROI 95% CI lower bound >0, positive CLV, >=2 positive markets and >=2 positive seasons with minimum segment samples",
+      "live_shadow_evidence: >=300 portfolio-verified graded live/shadow bets, non-negative ROI and positive pre-kickoff CLV proxy"
+    ],
+    "release_state": "RESEARCH",
+    "sport": "cfb",
+    "version": 1
+  },
+  "decision_counts": {
+    "NO_BET": 36
+  },
+  "grading_status": "Scheduled immutable receipt grading; research ledger remains separate",
+  "observed_at": "2026-10-10T17:20:34.798255+00:00",
+  "publication_requirement": "Verify receipt bytes in GitHub commit before communicating BET",
+  "receipt_ids": [
+    "e3632a4e99e084e44e7860224946b94d138d611412e871feadb90f9cb0b28dd2",
+    "0dcc46c85de2d7df364d308c5d44385625422c455cc7a550627af7a95448e2a9",
+    "2083ee3617968aff2082dcf622ead0f67bf57609c898131a595c95a0930bb3af",
+    "b199f68dba83d9fdab697a44e6b2f8e9550cdb29061f9e22ac02833a6908d318",
+    "c751ed88e5446d0f0728cfc98e600bfaa61e90ce35203f264157d9cf56c5d7bd",
+    "b0bbd850293c88e4071c84374d471405a5f868ac2a8a08c047aac49b25521fbc",
+    "314abde83a314e0dba7bec927d5fd011199509e34e2e990a896fd69f4a1f61d6",
+    "653412e4a61663f77b2d0589c3f3a27c58be273873b825e77568d46abee5169a",
+    "ee17cf7d9f4c00ebc6c2119f19a8993ea130bbb1e5a97bd5a2fd2b2ace535206",
+    "13c8adc9245bf2c611ff07e80237b244aef0956945a5f5c7b37b72e402ee1208",
+    "365f7594d4a9e196e5662dbb5747514043cc8240241db41971125a2a3a26f989",
+    "0c44aaa872a75d472ca9bb9d50288083b9b7f8d9fe04f1db5ccc1a2d8bfbb952",
+    "870626b407dbcff841fadd666574a3c9d2bb48087ef0e8908befcc9ea3c33dd1",
+    "14b48ae0404afdb0d1eba968aa6a73240f11582d9b7e4c63e374a7f442b60b20",
+    "6f9af14e0e076a9a60bf53bb699cbfa81fbb97fcb758dec4bcad7194a53e10b1",
+    "c9b61ca0bed45e70ccd1e0f0c82dd8a614ec54afdbf76c6e5df432c02a93e3d1",
+    "c024b88567a09fe54cff89b81c20d24688ab712d76d3e38fdcc0f37383832a83",
+    "699936faaaae7a21e9f9da1b3e40405ea38edd8125942d950d83064be0c10708",
+    "11aaf78b0a69dd7ca6679cbfb4d405fd19bff6de6a206355927b5490f3fd2cca",
+    "12c2d7e77b15d50af6eaa58d9ce7e6601d221b1f23d72e636e0298621a3489ac",
+    "ae3ee1725ac85836d2fd83375805948bbe9da88042b1eb14a8d43d629ec765f6",
+    "64b9c580621df51beae85897d29dc2b9a36257095a7c1e0fcd90bd2455206d75",
+    "781d0c353c879011b190c283f2bb68024b7fe1e9f9b5bb4a49f4b30b03dd48f8",
+    "e578131916410e7d36da55fd24ddeed3254ff6d5f00d88de289ddab231f7d2c1",
+    "bdbfa761e0dd310d8cc19cd88a2df273fb55577d219eb92d8d20a639e1ee720b",
+    "2c7aa59340d8bca4cbd181a68fe81f148eda23a8de9e4d8f9d229a323b2839e8",
+    "9b2ff12b817a9d17e5745f9b33733c5c98f558f3043a995134963aacad5065b6",
+    "0ab4eed6442eb7442bf4c416fb908b094f5ac534838be5b4f3f772fd5c9ae6ff",
+    "591cbd140bba522fe3a07293a1f9dd11062f4d43c5142c0757d800f28990fe5f",
+    "b65655299a5357e80b90e7a1d258ac1919c0a704956197ff74a019c74bb621db",
+    "a14e644d50ba87db470b6cccafe7cf69793bb4415cff4293a5b5d7c3203e88b0",
+    "0f429e694779dc7cd6d9bbc3e3dda49aab2971b6c5737461eb0806ca21718f69",
+    "4ee352a5d8ffe8eab23b7e2375917753d62c0680e71074bbea507452ca2570e3",
+    "0f58454cee685ef6cb76c23b61225244a39d9a6bca2640f071863a50cb0c783c",
+    "8989b745f87eb1f304f0a00cf051d77d1f244bd9b0124bb6281077829f2090a4",
+    "c511faa137cf7c451438a527b7527bcea3bbad2d9edd238bc29d63a849e7de44"
+  ],
+  "release_blockers": [
+    "complete_market_coverage: >= 95% games with ML + spread + total",
+    "probability_ece: ECE <= 0.05 on chronological release holdout",
+    "historical_entry_integrity: historical promotion sample uses explicit verified opening-entry fields only",
+    "historical_market_edge: ROBUST evidence: >=1000 verified opening-entry bets, ROI 95% CI lower bound >0, positive CLV, >=2 positive markets and >=2 positive seasons with minimum segment samples",
+    "live_shadow_evidence: >=300 portfolio-verified graded live/shadow bets, non-negative ROI and positive pre-kickoff CLV proxy"
+  ],
+  "release_state": "RESEARCH",
+  "sport": "cfb"
+}
