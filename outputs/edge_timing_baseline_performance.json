@@ -34,8 +34,8 @@
   "distinct_scored_games": 0,
   "distinct_scored_weeks": 0,
   "overall": {
-    "decisions": 3,
-    "primary_eligible": 3,
+    "decisions": 4,
+    "primary_eligible": 4,
     "matured_primary_windows": 3,
     "primary_observed": 1,
     "primary_coverage_on_matured": 0.3333333333333333,
@@ -83,8 +83,8 @@
       "near_kickoff_always_wait_accuracy": null
     },
     "WAIT_MONITOR": {
-      "decisions": 3,
-      "primary_eligible": 3,
+      "decisions": 4,
+      "primary_eligible": 4,
       "matured_primary_windows": 3,
       "primary_observed": 1,
       "primary_coverage_on_matured": 0.3333333333333333,
