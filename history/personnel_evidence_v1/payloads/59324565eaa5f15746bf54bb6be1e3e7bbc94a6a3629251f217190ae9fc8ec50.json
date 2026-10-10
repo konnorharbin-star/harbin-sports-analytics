@@ -1,0 +1,69 @@
+{
+  "records": [
+    {
+      "group_team_id": "57",
+      "player_id": "4693740",
+      "player_name": "Kahleil Jackson",
+      "position": "WR",
+      "source": {
+        "description": "basic/manual",
+        "id": "1",
+        "state": "basic"
+      },
+      "source_item_date": "2020-11-21T18:31Z",
+      "source_item_id": "139830",
+      "source_status": "Out",
+      "team": {
+        "abbreviation": "FLA",
+        "displayName": "Florida Gators",
+        "id": "57",
+        "location": null,
+        "shortDisplayName": null
+      }
+    },
+    {
+      "group_team_id": "242",
+      "player_id": "4869581",
+      "player_name": "Braylen Walker",
+      "position": "WR",
+      "source": {
+        "description": "basic/manual",
+        "id": "1",
+        "state": "basic"
+      },
+      "source_item_date": "2022-11-26T22:30Z",
+      "source_item_id": "169675",
+      "source_status": "Active",
+      "team": {
+        "abbreviation": "RICE",
+        "displayName": "Rice Owls",
+        "id": "242",
+        "location": null,
+        "shortDisplayName": null
+      }
+    },
+    {
+      "group_team_id": "258",
+      "player_id": "4871220",
+      "player_name": "Will Bettridge",
+      "position": "PK",
+      "source": {
+        "description": "basic/manual",
+        "id": "1",
+        "state": "basic"
+      },
+      "source_item_date": "2022-11-03T01:19Z",
+      "source_item_id": "167600",
+      "source_status": "Active",
+      "team": {
+        "abbreviation": "UVA",
+        "displayName": "Virginia Cavaliers",
+        "id": "258",
+        "location": null,
+        "shortDisplayName": null
+      }
+    }
+  ],
+  "schema": 1,
+  "sport": "cfb"
+}
