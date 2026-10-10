@@ -2,9 +2,10 @@ from __future__ import annotations
 
 """Stage 7 audit wrapper for historical betting evidence.
 
-The legacy archive remains useful for research diagnostics, but only rows with explicit,
-non-null archived opening fields qualify as promotion evidence.  This wrapper preserves
-all historical rows while marking their entry provenance market-by-market.
+The legacy archive remains useful for research diagnostics. Opening fields alone
+are not verified pregame executions: promotion also requires a sportsbook-origin
+quote timestamp strictly preceding kickoff. This wrapper preserves excluded rows
+without upgrading unverified archive prices to profitable entry evidence.
 """
 
 import json
@@ -55,6 +56,36 @@ def _valid_opening_total_side(rows: pd.DataFrame, side: str, fields: tuple[str, 
     return True
 
 
+# Only explicitly documented quote-publication fields qualify. Collector capture
+# timestamps and schedule/game start dates are not sportsbook quote timestamps.
+OPENING_SOURCE_TIME_COLUMNS = (
+    "opening_quote_published_at",
+    "provider_opening_quote_at",
+    "sportsbook_opening_quote_at",
+)
+
+
+def _source_quote_pre_kickoff(
+    rows: pd.DataFrame, side: str, kickoff, *, contains: bool = False
+) -> bool:
+    if pd.isna(kickoff):
+        return False
+    selected = rows[
+        rows["_side"].str.contains(side, na=False)
+        if contains else rows["_side"] == side
+    ]
+    if selected.empty:
+        return False
+    last = selected.iloc[-1]
+    for field in OPENING_SOURCE_TIME_COLUMNS:
+        if field not in rows.columns:
+            continue
+        timestamp = pd.to_datetime(last[field], utc=True, errors="coerce")
+        if pd.notna(timestamp) and timestamp < kickoff:
+            return True
+    return False
+
+
 class AuditedArchiveMarketStore(_rt.CanonicalArchiveMarketStore):
     def quote(self, game):
         q = super().quote(game)
@@ -78,17 +109,33 @@ class AuditedArchiveMarketStore(_rt.CanonicalArchiveMarketStore):
         ml = br[br["_market"].str.contains("money", na=False)]
         sp = br[br["_market"].str.contains("spread", na=False)]
         total = br[br["_market"].str.contains("total", na=False)]
-        q["open_moneyline_verified"] = (
+        q["open_moneyline_fields_complete"] = (
             _valid_opening_side(ml, home, ("opening_odds",))
             and _valid_opening_side(ml, away, ("opening_odds",))
         )
-        q["open_spread_verified"] = (
+        q["open_spread_fields_complete"] = (
             _valid_opening_side(sp, home, ("opening_lines", "opening_odds"))
             and _valid_opening_side(sp, away, ("opening_lines", "opening_odds"))
         )
-        q["open_total_verified"] = (
+        q["open_total_fields_complete"] = (
             _valid_opening_total_side(total, "over", ("opening_lines", "opening_odds"))
             and _valid_opening_total_side(total, "under", ("opening_lines", "opening_odds"))
+        )
+        kickoff = pd.to_datetime(getattr(game, "date", None), utc=True, errors="coerce")
+        q["open_moneyline_verified"] = bool(
+            q["open_moneyline_fields_complete"]
+            and _source_quote_pre_kickoff(ml, home, kickoff)
+            and _source_quote_pre_kickoff(ml, away, kickoff)
+        )
+        q["open_spread_verified"] = bool(
+            q["open_spread_fields_complete"]
+            and _source_quote_pre_kickoff(sp, home, kickoff)
+            and _source_quote_pre_kickoff(sp, away, kickoff)
+        )
+        q["open_total_verified"] = bool(
+            q["open_total_fields_complete"]
+            and _source_quote_pre_kickoff(total, "over", kickoff, contains=True)
+            and _source_quote_pre_kickoff(total, "under", kickoff, contains=True)
         )
         return q
 
@@ -102,7 +149,7 @@ def _audited_market_bets(game, margin, total, p_home, sigma_m, sigma_t, q):
             try: verified = verified and math.isfinite(float(b.get("odds")))
             except Exception: verified = False
         b["entry_quote_verified"] = bool(verified)
-        b["entry_quote_source"] = "archive_opening_fields" if verified else "archive_final_or_unverified_fallback"
+        b["entry_quote_source"] = "timestamped_provider_opening" if verified else "archive_opening_fields_or_final_unverified"
     return bets
 
 
@@ -137,9 +184,9 @@ def run_backtest(start_season=2023, end_season=2025, history_start=2018, reports
         "verified_opening_entry_rate": float(verified / len(bdf)) if len(bdf) else 0.0,
         "by_market": _verification_breakdown(bdf, "market"),
         "by_season": _verification_breakdown(bdf, "season"),
-        "promotion_rule": "only entry_quote_verified=true rows may contribute to production evidence or policy calibration",
+        "promotion_rule": "explicit two-sided opening line/price and sportsbook-origin pre-kickoff published timestamps required; missing timestamps fail closed",
     }
-    summary.setdefault("methodology", {})["promotion_entry"] = "explicit non-null archived opening fields for the selected sportsbook/market; final-quote fallbacks are diagnostics only"
+    summary.setdefault("methodology", {})["promotion_entry"] = "two-sided archived opening fields and sportsbook-origin pre-kickoff quote-published timestamps are mandatory; archive-only prices without publication times are diagnostics"
     reports = Path(reports_dir); bdf.to_csv(reports / "backtest_bets.csv", index=False)
     (reports / "backtest_summary.json").write_text(json.dumps(summary, indent=2))
     return bdf, summary
