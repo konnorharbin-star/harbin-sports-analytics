@@ -25,12 +25,12 @@
     "reason": "graded history has no usable profit rows"
   },
   "production_block_reason": "",
-  "proposed_units": 3.12,
-  "risk_adjusted_proposed_units": 3.12,
-  "performance_adjusted_proposed_units": 3.12,
+  "proposed_units": 3.0,
+  "risk_adjusted_proposed_units": 3.0,
+  "performance_adjusted_proposed_units": 3.0,
   "approved_units": 0.0,
-  "paper_allocated_units": 2.95,
-  "paper_or_shadow_allocated_units": 2.95,
+  "paper_allocated_units": 2.92,
+  "paper_or_shadow_allocated_units": 2.92,
   "bets": 20,
   "approved_bets": 0,
   "execution_blocked_bets": 0,
@@ -77,21 +77,21 @@
   },
   "allocated_by_market": {
     "total": 0.89,
-    "spread": 1.92,
+    "spread": 1.89,
     "moneyline": 0.14
   },
   "allocated_by_book": {
-    "ActionNetwork book 71": 0.81,
+    "ActionNetwork book 71": 0.82,
     "ActionNetwork book 15": 0.72,
-    "ActionNetwork book 30": 0.69,
+    "ActionNetwork book 30": 0.65,
     "ActionNetwork book 69": 0.14,
     "ActionNetwork book 68": 0.31,
     "ActionNetwork book 49": 0.28
   },
   "allocated_by_kickoff_window": {
-    "2026-10-10 18:00:00+00:00": 1.23,
+    "2026-10-10 18:00:00+00:00": 1.32,
     "2026-10-10 21:00:00+00:00": 1.18,
-    "2026-10-10 15:00:00+00:00": 0.24,
+    "2026-10-10 15:00:00+00:00": 0.12,
     "2026-10-11 00:00:00+00:00": 0.3
   },
   "allocated_by_team_exposure": {
@@ -102,9 +102,9 @@
     "Alabama": 0.16,
     "Georgia": 0.16,
     "Michigan State": 0.14,
-    "James Madison": 0.18,
     "App State": 0.12,
     "Old Dominion": 0.12,
+    "James Madison": 0.18,
     "Massachusetts": 0.12,
     "Miami (OH)": 0.12,
     "Hawai'i": 0.18,
@@ -115,16 +115,16 @@
     "Louisiana Tech": 0.09,
     "Louisiana": 0.09,
     "Ohio": 0.15,
-    "Air Force": 0.13,
     "Memphis": 0.13,
-    "South Carolina": 0.12,
+    "Air Force": 0.13,
     "Fresno State": 0.12,
     "Marshall": 0.12,
     "Coastal Carolina": 0.12,
-    "Akron": 0.09
+    "Akron": 0.09,
+    "Texas": 0.09
   },
   "limit_hit_counts": {
-    "max bet count": 2
+    "max bet count": 1
   },
   "release_blockers": [
     "complete_market_coverage: >= 95% games with ML + spread + total",
