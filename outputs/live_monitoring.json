@@ -6,13 +6,13 @@
     "advanced_coverage": 100.0,
     "multi_book": 100.0,
     "context": 100.0,
-    "calibration": 84.45441996626009,
+    "calibration": 84.45441996626026,
     "freshness": 100.0,
     "drift_margin": 97.7,
     "drift_total": 92.3,
     "drift_probability": 98.5,
     "distribution_stability": 96.2,
-    "output_completeness": 90.64504632929436
+    "output_completeness": 91.19743406985033
   },
   "drift_details": {
     "margin": {
@@ -21,7 +21,7 @@
       "std_ratio": 1.045,
       "live_mean": 4.586761740009328,
       "reference_mean": 4.007587882019203,
-      "live_std": 12.533938599292927,
+      "live_std": 12.533938599292915,
       "reference_std": 11.99409006138559,
       "live_n": 46,
       "reference_n": 2398
@@ -32,7 +32,7 @@
       "std_ratio": 0.8174,
       "live_mean": 53.038503696346,
       "reference_mean": 53.69890163853031,
-      "live_std": 5.09025557519232,
+      "live_std": 5.090255575192318,
       "reference_std": 6.227517524699614,
       "live_n": 46,
       "reference_n": 2398
