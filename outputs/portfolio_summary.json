@@ -178,12 +178,12 @@
     "reason": "CLV-first segment de-risking; multipliers never exceed 1.0"
   },
   "production_block_reason": "",
-  "proposed_units": 1.63,
-  "risk_adjusted_proposed_units": 1.63,
-  "performance_adjusted_proposed_units": 1.63,
+  "proposed_units": 1.64,
+  "risk_adjusted_proposed_units": 1.64,
+  "performance_adjusted_proposed_units": 1.64,
   "approved_units": 0.0,
-  "paper_allocated_units": 1.63,
-  "paper_or_shadow_allocated_units": 1.63,
+  "paper_allocated_units": 1.64,
+  "paper_or_shadow_allocated_units": 1.64,
   "bets": 11,
   "approved_bets": 0,
   "execution_blocked_bets": 0,
@@ -230,19 +230,19 @@
   },
   "allocated_by_market": {
     "spread": 1.1,
-    "total": 0.45,
+    "total": 0.46,
     "moneyline": 0.08
   },
   "allocated_by_book": {
-    "ActionNetwork book 68": 0.59,
+    "ActionNetwork book 15": 0.54,
     "ActionNetwork book 30": 0.36,
-    "ActionNetwork book 15": 0.38,
+    "ActionNetwork book 68": 0.32,
     "ActionNetwork book 49": 0.09,
-    "ActionNetwork book 71": 0.13,
-    "DraftKings": 0.08
+    "ActionNetwork book 71": 0.25,
+    "Draft Kings": 0.08
   },
   "allocated_by_kickoff_window": {
-    "2026-10-10 21:00:00+00:00": 1.25,
+    "2026-10-10 21:00:00+00:00": 1.26,
     "2026-10-11 00:00:00+00:00": 0.38
   },
   "allocated_by_team_exposure": {
@@ -258,8 +258,8 @@
     "Nevada": 0.09,
     "Air Force": 0.14,
     "Memphis": 0.13,
-    "Marshall": 0.11,
-    "Coastal Carolina": 0.11,
+    "Marshall": 0.12,
+    "Coastal Carolina": 0.12,
     "Penn State": 0.08
   },
   "limit_hit_counts": {},

@@ -1,25 +1,25 @@
 {
   "spec": "walters_key_number_forward_v1",
-  "evaluated_at": "2026-10-10T21:06:54.758378+00:00",
+  "evaluated_at": "2026-10-10T21:38:56.298694+00:00",
   "status": "FORWARD_SHADOW_RESEARCH_ONLY",
   "graded_games": 0,
   "ungraded": {
-    "401856712.json": "NO_VERIFIED_PREGAME_PUBLICATION",
-    "401856715.json": "NO_VERIFIED_PREGAME_PUBLICATION",
-    "401856808.json": "NO_VERIFIED_PREGAME_PUBLICATION",
-    "401856827.json": "NO_VERIFIED_PREGAME_PUBLICATION",
-    "401858258.json": "NO_VERIFIED_PREGAME_PUBLICATION",
-    "401858485.json": "NO_VERIFIED_PREGAME_PUBLICATION",
-    "401858486.json": "NO_VERIFIED_PREGAME_PUBLICATION",
-    "401860901.json": "NO_VERIFIED_PREGAME_PUBLICATION",
-    "401860902.json": "NO_VERIFIED_PREGAME_PUBLICATION",
-    "401862798.json": "NO_VERIFIED_PREGAME_PUBLICATION",
-    "401864516.json": "NO_VERIFIED_PREGAME_PUBLICATION",
-    "401864517.json": "NO_VERIFIED_PREGAME_PUBLICATION",
-    "401864518.json": "NO_VERIFIED_PREGAME_PUBLICATION",
-    "401869943.json": "NO_VERIFIED_PREGAME_PUBLICATION",
-    "401869949.json": "NO_VERIFIED_PREGAME_PUBLICATION",
-    "401869965.json": "NO_VERIFIED_PREGAME_PUBLICATION"
+    "401856712.json": "PENDING_KICKOFF",
+    "401856715.json": "PENDING_KICKOFF",
+    "401856808.json": "PENDING_KICKOFF",
+    "401856827.json": "PENDING_KICKOFF",
+    "401858258.json": "PENDING_KICKOFF",
+    "401858485.json": "PENDING_KICKOFF",
+    "401858486.json": "PENDING_KICKOFF",
+    "401860901.json": "PENDING_KICKOFF",
+    "401860902.json": "PENDING_KICKOFF",
+    "401862798.json": "PENDING_KICKOFF",
+    "401864516.json": "PENDING_KICKOFF",
+    "401864517.json": "PENDING_KICKOFF",
+    "401864518.json": "PENDING_KICKOFF",
+    "401869943.json": "PENDING_KICKOFF",
+    "401869949.json": "PENDING_KICKOFF",
+    "401869965.json": "PENDING_KICKOFF"
   },
   "betting_authorized": false,
   "production_promotion_authorized": false,
@@ -33,7 +33,7 @@
   "limitation": "Football probability scoring on synthetic fixed spreads only. No independently verified executable book prices or real CLV.",
   "graded_rows": [],
   "capture_summary": {
-    "newly_frozen": 16,
-    "already_frozen": 0
+    "newly_frozen": 0,
+    "already_frozen": 16
   }
 }
