@@ -15,6 +15,7 @@ import pandas as pd
 
 from . import backtest as _bt
 from . import backtest_runtime as _rt
+from .entry_provenance import verified_entry_mask
 
 
 def _numeric_present(series) -> int:
@@ -70,7 +71,7 @@ def run_backtest(start_season=2023, end_season=2025, history_start=2018, reports
     _bt._market_bets = _audited_market_bets
     _bt._group_summary = _rt._rigorous_group_summary
     bdf, summary = _rt.run_backtest(start_season, end_season, history_start, reports_dir)
-    verified = int(bdf.get("entry_quote_verified", pd.Series(False, index=bdf.index)).fillna(False).astype(bool).sum()) if len(bdf) else 0
+    verified = int(verified_entry_mask(bdf).sum())
     summary["quote_integrity"] = {
         "all_archive_bets": int(len(bdf)),
         "verified_opening_entry_bets": verified,
