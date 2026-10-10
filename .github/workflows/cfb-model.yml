@@ -52,6 +52,8 @@ jobs:
           [ -n "${{ inputs.week }}" ] && ARGS="$ARGS --week ${{ inputs.week }}"
           [ -n "${{ inputs.history_start }}" ] && ARGS="$ARGS --history-start ${{ inputs.history_start }}"
           python run_week.py $ARGS
+      - name: Compare current identical-line prices
+        run: python -m scripts.price_comparison_scan --sport cfb
       - name: Audit full schedule coverage and excluded games
         run: python -m scripts.audit_schedule_coverage
       - name: Preserve first-seen pregame predictions
