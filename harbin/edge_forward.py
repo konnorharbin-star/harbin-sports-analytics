@@ -105,6 +105,26 @@ def append_edge_candidate_snapshots(
             "path": str(target),
         }
 
+    # Never publish a first-seen entry whose quote could not have existed
+    # at its purported observation timestamp. This previously invalidated
+    # every v2 forward row when the pipeline reused its run-start timestamp.
+    if "quote_at" in frame:
+        quote_times = pd.to_datetime(frame["quote_at"], utc=True, errors="coerce")
+        future_quotes = quote_times.notna() & (quote_times > stamp)
+        if future_quotes.any():
+            raise ValueError(
+                f"Forward edge snapshot precedes {int(future_quotes.sum())} "
+                "captured quotes; use post-collection observation time"
+            )
+    if "date" in frame:
+        kickoff_times = pd.to_datetime(frame["date"], utc=True, errors="coerce")
+        after_kickoff = kickoff_times.notna() & (kickoff_times <= stamp)
+        if after_kickoff.any():
+            raise ValueError(
+                f"Forward edge snapshot contains {int(after_kickoff.sum())} "
+                "started games; remove them before freezing"
+            )
+
     frame["edge_forward_class"] = [
         edge_forward_class(reliability, price)
         for reliability, price in zip(
