@@ -40,7 +40,7 @@ def test_forward_aggregate_cannot_certify_specific_strategy():
                    "avg_execution_clv": 0.04}}}
     report = evaluate(bets, forward, {"production_eligible": True}, pd.DataFrame())
     assert report["forward_subgroup_preliminary_gate"] is True
-    assert report["candidate_specific_independent_evidence"] == "NOT_AVAILABLE"
+    assert report["candidate_specific_independent_evidence"]["status"] == "PENDING_FORWARD"
     assert report["profitability_proven"] is False
 
 
@@ -48,3 +48,32 @@ def test_missing_quote_verification_column_fails_closed():
     data = pd.DataFrame([row(2025, 0.91)]).drop(columns=["entry_quote_verified"])
     with pytest.raises(ValueError, match="entry_quote_verified"):
         evaluate(data, {}, {}, pd.DataFrame())
+
+
+def test_prospective_paper_study_rejects_unclear_book_and_future_quote():
+    from scripts.strategy_proof import candidate_forward_evidence
+    data = pd.DataFrame([
+        {"game_id": "valid", "date": "2026-10-10T19:00:00Z",
+         "market": "spread", "subgroup_key": "favorite|home",
+         "regime_band": "6-8", "entry_snapshot": "2026-10-09T20:00:00Z",
+         "entry_quote_at": "2026-10-09T19:59:30Z",
+         "book": "Named Book", "odds": -110, "result": 1, "profit": .90909,
+         "execution_clv": .05},
+        {"game_id": "unknown", "date": "2026-10-10T19:00:00Z",
+         "market": "spread", "subgroup_key": "favorite|home",
+         "regime_band": "6-8", "entry_snapshot": "2026-10-09T20:00:00Z",
+         "entry_quote_at": "2026-10-09T19:59:30Z",
+         "book": "ActionNetwork book 15", "odds": -110, "result": 1,
+         "profit": .90909, "execution_clv": .05},
+        {"game_id": "future", "date": "2026-10-10T19:00:00Z",
+         "market": "spread", "subgroup_key": "favorite|home",
+         "regime_band": "6-8", "entry_snapshot": "2026-10-09T20:00:00Z",
+         "entry_quote_at": "2026-10-09T20:00:30Z",
+         "book": "Named Book", "odds": -110, "result": -1,
+         "profit": -1, "execution_clv": -.05},
+    ])
+    x = candidate_forward_evidence(data)
+    assert x["bets"] == 1
+    assert x["invalid_rows"] == 2
+    assert x["status"] == "EARLY_FORWARD"
+    assert not x["paper_validated"]
