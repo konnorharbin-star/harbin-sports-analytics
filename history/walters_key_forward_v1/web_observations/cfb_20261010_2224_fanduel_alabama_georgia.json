@@ -1,0 +1,28 @@
+{
+  "spec": "walters_web_research_observation_v1",
+  "observation_id": "cfb_20261010_2224_fanduel_alabama_georgia",
+  "sport": "cfb",
+  "observed_at": "2026-10-10T22:24:26+00:00",
+  "source_kind": "public_webpage_read",
+  "source_url": "https://www.fanduel.com/research/alabama-vs-georgia-college-football-odds-picks-best-bets-for-10-10-2026",
+  "publisher": "FanDuel Research",
+  "book": "FanDuel",
+  "publisher_is_official_book": true,
+  "verified_executable_sportsbook_quote": false,
+  "page_price_updated_at": null,
+  "source_is_a_static_article_published_prior_to_observation": true,
+  "staleness_warning": "Two-day-old article (web search); separate aggregator shows Alabama -2.5, so published Alabama -1.5 in this article may be obsolete. Research archive only, not a current bettable offer.",
+  "quotes": [
+    {
+      "game_id": "401856712",
+      "home_team": "Alabama",
+      "away_team": "Georgia",
+      "kickoff": "2026-10-10T23:30:00+00:00",
+      "home_spread": -1.5,
+      "home_american_odds": -110,
+      "away_spread": 1.5,
+      "away_american_odds": -110,
+      "quote_context": "FanDuel Research Alabama vs Georgia October 10 article lists Alabama -1.5 (-110) and Georgia +1.5 (-110), published two days ago and potentially stale."
+    }
+  ]
+}
