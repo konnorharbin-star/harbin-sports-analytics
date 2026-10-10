@@ -53,9 +53,9 @@ jobs:
           [ -n "${{ inputs.history_start }}" ] && ARGS="$ARGS --history-start ${{ inputs.history_start }}"
           python run_week.py $ARGS
       - name: Audit full schedule coverage and excluded games
-        run: python scripts/audit_schedule_coverage.py
+        run: python -m scripts.audit_schedule_coverage
       - name: Preserve first-seen pregame predictions
-        run: python scripts/archive_first_seen_predictions.py
+        run: python -m scripts.archive_first_seen_predictions
       - name: Validate published dashboard bundle
         run: python validate_publication.py
       - name: Build release-gated final edge decision board
