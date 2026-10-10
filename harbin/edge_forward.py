@@ -244,7 +244,7 @@ def _clean_forward_entries(history: pd.DataFrame) -> pd.DataFrame:
     # baseline is not a resolved sportsbook. Preserve raw observations but
     # never count them as clean forward betting evidence.
     unresolved = book_names.str.fullmatch(
-        r"(?i)(?:actionnetwork\\s+book\\s+\\d+|book\\s*\\d+|"
+        r"(?i)(?:actionnetwork\s+book\s+\d+|book\s*\d+|"
         r"unknown|consensus|open|opening|unresolved|primary)",
         na=False,
     )
