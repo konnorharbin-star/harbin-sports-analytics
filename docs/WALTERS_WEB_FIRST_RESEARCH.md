@@ -75,9 +75,13 @@ The page explicitly warns that published odds may change; its displayed
 `Oct 11 ... UTC` labels are event kickoff, **not** bookmaker quote update
 timestamps. No price provenance beyond the page read is claimed.
 
-The CFB repo can accept a separate observation only when it is read while
-the game is still future and matched to one of its own frozen forecasts.
-We do not retroactively fabricate CFB pregame quotes.
+For CFB, `cfb_20261010_2224_fanduel_alabama_georgia.json` preserves the
+Alabama -1.5 (-110) / Georgia +1.5 (-110) pair from a **two-day-old
+FanDuel Research article**, read Oct 10 at 22:24:26 UTC ahead of the
+23:30 UTC kickoff. Another published aggregator already shows Alabama -2.5,
+so the article quote is **particularly likely stale**. It is archival
+research only, not an available real-time price or bet recommendation.
+We do not retroactively fabricate quotes after a game's kickoff.
 
 ## Running in GitHub
 
