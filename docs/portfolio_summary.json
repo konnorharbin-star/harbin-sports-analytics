@@ -85,9 +85,8 @@
     "ActionNetwork book 15": 0.72,
     "ActionNetwork book 30": 0.55,
     "ActionNetwork book 68": 0.31,
-    "Draft Kings": 0.14,
-    "ActionNetwork book 49": 0.28,
-    "ActionNetwork book 75": 0.1
+    "DraftKings": 0.14,
+    "ActionNetwork book 49": 0.38
   },
   "allocated_by_kickoff_window": {
     "2026-10-10 18:00:00+00:00": 1.4,
@@ -108,13 +107,13 @@
     "Miami (OH)": 0.12,
     "UTEP": 0.1,
     "Nevada": 0.1,
+    "East Carolina": 0.1,
+    "Rice": 0.1,
     "Western Michigan": 0.15,
     "Temple": 0.15,
     "Louisiana Tech": 0.09,
     "Louisiana": 0.09,
     "Ohio": 0.15,
-    "East Carolina": 0.1,
-    "Rice": 0.1,
     "Memphis": 0.13,
     "Air Force": 0.13,
     "North Texas": 0.08,
