@@ -40,12 +40,12 @@
     "primary_pending": 0,
     "primary_missing": 2,
     "primary_insufficient_window": 0,
-    "near_kickoff_observed": 0,
+    "near_kickoff_observed": 2,
     "near_kickoff_conclusive": 0,
     "near_kickoff_correct": 0,
     "near_kickoff_accuracy": null,
     "near_kickoff_accuracy_wilson_95": null,
-    "near_kickoff_mixed": 0,
+    "near_kickoff_mixed": 1,
     "near_kickoff_missing": 0
   },
   "by_action": {
@@ -76,12 +76,12 @@
       "primary_pending": 0,
       "primary_missing": 2,
       "primary_insufficient_window": 0,
-      "near_kickoff_observed": 0,
+      "near_kickoff_observed": 2,
       "near_kickoff_conclusive": 0,
       "near_kickoff_correct": 0,
       "near_kickoff_accuracy": null,
       "near_kickoff_accuracy_wilson_95": null,
-      "near_kickoff_mixed": 0,
+      "near_kickoff_mixed": 1,
       "near_kickoff_missing": 0
     }
   },
