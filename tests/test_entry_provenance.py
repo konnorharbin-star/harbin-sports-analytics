@@ -123,3 +123,23 @@ def test_archive_opening_pair_requires_real_side_and_same_book(monkeypatch):
     assert quote["open_moneyline_verified"] is True
     assert quote["open_spread_verified"] is True
     assert quote["open_total_verified"] is True
+
+
+def test_verification_breakdown_uses_safe_flags_by_market_and_season():
+    from harbin.backtest_audit import _verification_breakdown
+
+    bets = pd.DataFrame({
+        "market": ["spread", "spread", "moneyline", "total"],
+        "season": [2024, 2024, 2025, 2025],
+        "entry_quote_verified": ["False", "True", "False", None],
+    })
+    by_market = _verification_breakdown(bets, "market")
+    assert by_market["spread"] == {
+        "archive_bets": 2, "verified_opening_entry_bets": 1,
+        "excluded_unverified_bets": 1,
+    }
+    assert by_market["moneyline"]["verified_opening_entry_bets"] == 0
+    assert by_market["total"]["excluded_unverified_bets"] == 1
+    by_season = _verification_breakdown(bets, "season")
+    assert by_season["2024"]["verified_opening_entry_bets"] == 1
+    assert by_season["2025"]["excluded_unverified_bets"] == 2
