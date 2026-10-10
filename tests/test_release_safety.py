@@ -68,3 +68,20 @@ def test_release_gate_production_requires_history_and_live(tmp_path):
     gate=build_release_gate(meta,{"live_readiness_score":95},{"status":"PASS"},ep,lp)
     assert gate["release_state"]=="PRODUCTION"
     assert gate["production_eligible"]
+
+
+def test_release_gate_fails_closed_on_missing_or_contradictory_data_contracts(tmp_path):
+    meta=_engineering_ready_meta(1.0)
+    invalid=({}, {"status":"UNKNOWN"}, {"status":"FAIL"}, {"status":"PASS","errors":1}, {"status":"WARN","errors":[{"severity":"ERROR"}]})
+    for quality in invalid:
+        gate=build_release_gate(meta,{"live_readiness_score":95},quality,tmp_path/"missing.json",tmp_path/"missing-live.json")
+        checks={item["name"]:item for item in gate["checks"]}
+        assert checks["data_contracts"]["passed"] is False
+        assert gate["release_state"]=="RESEARCH"
+        assert gate["production_eligible"] is False
+
+    for valid in ({"status":"PASS","errors":0}, {"status":"WARN","errors":0}):
+        gate=build_release_gate(meta,{"live_readiness_score":95},valid,tmp_path/"missing.json",tmp_path/"missing-live.json")
+        checks={item["name"]:item for item in gate["checks"]}
+        assert checks["data_contracts"]["passed"] is True
+        assert gate["release_state"]=="PAPER"
