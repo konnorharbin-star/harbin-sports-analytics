@@ -1544,7 +1544,7 @@
   "edge_forward_validation": {
     "schema_version": 2,
     "status": "PENDING_FORWARD",
-    "observed_rows": 234,
+    "observed_rows": 241,
     "clean_entries": 0,
     "graded_bets": 0,
     "wins": 0,
