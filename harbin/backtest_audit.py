@@ -2,9 +2,10 @@ from __future__ import annotations
 
 """Stage 7 audit wrapper for historical betting evidence.
 
-The legacy archive remains useful for research diagnostics, but only rows with explicit,
-non-null archived opening fields qualify as promotion evidence.  This wrapper preserves
-all historical rows while marking their entry provenance market-by-market.
+The legacy archive remains useful for research diagnostics. Opening fields alone
+are not verified pregame executions: promotion also requires a sportsbook-origin
+quote timestamp strictly preceding kickoff. This wrapper preserves excluded rows
+without upgrading unverified archive prices to profitable entry evidence.
 """
 
 import json
@@ -13,12 +14,76 @@ from pathlib import Path
 
 import pandas as pd
 
+from .advanced import canon_team
 from . import backtest as _bt
 from . import backtest_runtime as _rt
+from .entry_provenance import verified_entry_mask
 
 
-def _numeric_present(series) -> int:
-    return int(pd.to_numeric(series, errors="coerce").notna().sum()) if series is not None else 0
+def _valid_opening_side(rows: pd.DataFrame, side: str, fields: tuple[str, ...]) -> bool:
+    """Require every opening field for the actual selected market side."""
+    selected = rows[rows["_side"] == side]
+    if selected.empty or any(field not in selected.columns for field in fields):
+        return False
+    # The base archive quote chooses the final matching row per side.
+    last = selected.iloc[-1]
+    for field in fields:
+        try:
+            value = float(last[field])
+        except (TypeError, ValueError):
+            return False
+        if not math.isfinite(value):
+            return False
+        if "odds" in field and (-100.0 < value < 100.0):
+            return False
+    return True
+
+
+def _valid_opening_total_side(rows: pd.DataFrame, side: str, fields: tuple[str, ...]) -> bool:
+    selected = rows[rows["_side"].str.contains(side, na=False)]
+    if selected.empty or any(field not in selected.columns for field in fields):
+        return False
+    last = selected.iloc[-1]
+    for field in fields:
+        try:
+            value = float(last[field])
+        except (TypeError, ValueError):
+            return False
+        if not math.isfinite(value):
+            return False
+        if "odds" in field and (-100.0 < value < 100.0):
+            return False
+    return True
+
+
+# Only explicitly documented quote-publication fields qualify. Collector capture
+# timestamps and schedule/game start dates are not sportsbook quote timestamps.
+OPENING_SOURCE_TIME_COLUMNS = (
+    "opening_quote_published_at",
+    "provider_opening_quote_at",
+    "sportsbook_opening_quote_at",
+)
+
+
+def _source_quote_pre_kickoff(
+    rows: pd.DataFrame, side: str, kickoff, *, contains: bool = False
+) -> bool:
+    if pd.isna(kickoff):
+        return False
+    selected = rows[
+        rows["_side"].str.contains(side, na=False)
+        if contains else rows["_side"] == side
+    ]
+    if selected.empty:
+        return False
+    last = selected.iloc[-1]
+    for field in OPENING_SOURCE_TIME_COLUMNS:
+        if field not in rows.columns:
+            continue
+        timestamp = pd.to_datetime(last[field], utc=True, errors="coerce")
+        if pd.notna(timestamp) and timestamp < kickoff:
+            return True
+    return False
 
 
 class AuditedArchiveMarketStore(_rt.CanonicalArchiveMarketStore):
@@ -32,21 +97,46 @@ class AuditedArchiveMarketStore(_rt.CanonicalArchiveMarketStore):
             "open_total_verified": False,
         })
         rows = self.by_id.get(_rt.canonical_game_id(game.game_id))
-        if rows is None or rows.empty or "book" not in rows.columns or "market_type" not in rows.columns:
+        if rows is None or rows.empty or not {"book", "market_type", "abbr"}.issubset(rows.columns):
             return q
         br = rows[rows["book"].astype(str) == str(q.get("book"))].copy()
         if br.empty:
             return q
         br["_market"] = br["market_type"].astype(str).str.lower().str.replace("-", "_", regex=False).str.replace(" ", "_", regex=False)
-
+        br["_side"] = br["abbr"].map(canon_team)
+        home = canon_team(game.home_team)
+        away = canon_team(game.away_team)
         ml = br[br["_market"].str.contains("money", na=False)]
         sp = br[br["_market"].str.contains("spread", na=False)]
-        to = br[br["_market"].str.contains("total", na=False)]
-        if "opening_odds" in br.columns:
-            q["open_moneyline_verified"] = _numeric_present(ml["opening_odds"]) >= 2
-        if {"opening_lines", "opening_odds"}.issubset(br.columns):
-            q["open_spread_verified"] = int((pd.to_numeric(sp["opening_lines"], errors="coerce").notna() & pd.to_numeric(sp["opening_odds"], errors="coerce").notna()).sum()) >= 2
-            q["open_total_verified"] = int((pd.to_numeric(to["opening_lines"], errors="coerce").notna() & pd.to_numeric(to["opening_odds"], errors="coerce").notna()).sum()) >= 2
+        total = br[br["_market"].str.contains("total", na=False)]
+        q["open_moneyline_fields_complete"] = (
+            _valid_opening_side(ml, home, ("opening_odds",))
+            and _valid_opening_side(ml, away, ("opening_odds",))
+        )
+        q["open_spread_fields_complete"] = (
+            _valid_opening_side(sp, home, ("opening_lines", "opening_odds"))
+            and _valid_opening_side(sp, away, ("opening_lines", "opening_odds"))
+        )
+        q["open_total_fields_complete"] = (
+            _valid_opening_total_side(total, "over", ("opening_lines", "opening_odds"))
+            and _valid_opening_total_side(total, "under", ("opening_lines", "opening_odds"))
+        )
+        kickoff = pd.to_datetime(getattr(game, "date", None), utc=True, errors="coerce")
+        q["open_moneyline_verified"] = bool(
+            q["open_moneyline_fields_complete"]
+            and _source_quote_pre_kickoff(ml, home, kickoff)
+            and _source_quote_pre_kickoff(ml, away, kickoff)
+        )
+        q["open_spread_verified"] = bool(
+            q["open_spread_fields_complete"]
+            and _source_quote_pre_kickoff(sp, home, kickoff)
+            and _source_quote_pre_kickoff(sp, away, kickoff)
+        )
+        q["open_total_verified"] = bool(
+            q["open_total_fields_complete"]
+            and _source_quote_pre_kickoff(total, "over", kickoff, contains=True)
+            and _source_quote_pre_kickoff(total, "under", kickoff, contains=True)
+        )
         return q
 
 
@@ -59,8 +149,24 @@ def _audited_market_bets(game, margin, total, p_home, sigma_m, sigma_t, q):
             try: verified = verified and math.isfinite(float(b.get("odds")))
             except Exception: verified = False
         b["entry_quote_verified"] = bool(verified)
-        b["entry_quote_source"] = "archive_opening_fields" if verified else "archive_final_or_unverified_fallback"
+        b["entry_quote_source"] = "timestamped_provider_opening" if verified else "archive_opening_fields_or_final_unverified"
     return bets
+
+
+def _verification_breakdown(bets: pd.DataFrame, dimension: str) -> dict:
+    """Explain excluded archived entries without classifying them as real bets."""
+    if bets.empty or dimension not in bets.columns:
+        return {}
+    mask = verified_entry_mask(bets)
+    output = {}
+    for group_name, group in bets.groupby(dimension, dropna=False):
+        matched = mask.loc[group.index]
+        output[str(group_name)] = {
+            "archive_bets": int(len(group)),
+            "verified_opening_entry_bets": int(matched.sum()),
+            "excluded_unverified_bets": int((~matched).sum()),
+        }
+    return output
 
 
 def run_backtest(start_season=2023, end_season=2025, history_start=2018, reports_dir="reports"):
@@ -70,15 +176,17 @@ def run_backtest(start_season=2023, end_season=2025, history_start=2018, reports
     _bt._market_bets = _audited_market_bets
     _bt._group_summary = _rt._rigorous_group_summary
     bdf, summary = _rt.run_backtest(start_season, end_season, history_start, reports_dir)
-    verified = int(bdf.get("entry_quote_verified", pd.Series(False, index=bdf.index)).fillna(False).astype(bool).sum()) if len(bdf) else 0
+    verified = int(verified_entry_mask(bdf).sum())
     summary["quote_integrity"] = {
         "all_archive_bets": int(len(bdf)),
         "verified_opening_entry_bets": verified,
         "unverified_or_final_fallback_bets": int(max(0, len(bdf) - verified)),
         "verified_opening_entry_rate": float(verified / len(bdf)) if len(bdf) else 0.0,
-        "promotion_rule": "only entry_quote_verified=true rows may contribute to production evidence or policy calibration",
+        "by_market": _verification_breakdown(bdf, "market"),
+        "by_season": _verification_breakdown(bdf, "season"),
+        "promotion_rule": "explicit two-sided opening line/price and sportsbook-origin pre-kickoff published timestamps required; missing timestamps fail closed",
     }
-    summary.setdefault("methodology", {})["promotion_entry"] = "explicit non-null archived opening fields for the selected sportsbook/market; final-quote fallbacks are diagnostics only"
+    summary.setdefault("methodology", {})["promotion_entry"] = "two-sided archived opening fields and sportsbook-origin pre-kickoff quote-published timestamps are mandatory; archive-only prices without publication times are diagnostics"
     reports = Path(reports_dir); bdf.to_csv(reports / "backtest_bets.csv", index=False)
     (reports / "backtest_summary.json").write_text(json.dumps(summary, indent=2))
     return bdf, summary

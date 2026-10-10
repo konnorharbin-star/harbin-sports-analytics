@@ -7,6 +7,8 @@ from pathlib import Path
 import numpy as np
 import pandas as pd
 
+from .entry_provenance import verified_entry_mask
+
 DEFAULT_POLICY = {
     "version": 4,
     "deployment_mode": "paper",
@@ -126,14 +128,12 @@ def _profit_stats(df: pd.DataFrame):
 
 
 def _promotion_sample(df: pd.DataFrame) -> pd.DataFrame:
-    """Only timestamp-safe archived opening entries may calibrate production policy."""
-    if "entry_quote_verified" in df.columns:
-        flag = df["entry_quote_verified"].fillna(False).astype(bool)
-        return df[flag].copy()
-    if "used_distinct_open" in df.columns:
-        flag = df["used_distinct_open"].fillna(False).astype(bool)
-        return df[flag].copy()
-    return df.iloc[0:0].copy()
+    """Only explicitly verified entries may calibrate a betting policy.
+
+    Archive opening-field presence alone (used_distinct_open) is not verification.
+    """
+    flag = verified_entry_mask(df)
+    return df.loc[flag].copy()
 
 
 def _chronological_blocks(df: pd.DataFrame):
