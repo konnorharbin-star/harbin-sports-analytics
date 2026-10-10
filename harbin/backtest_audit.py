@@ -13,13 +13,46 @@ from pathlib import Path
 
 import pandas as pd
 
+from .advanced import canon_team
 from . import backtest as _bt
 from . import backtest_runtime as _rt
 from .entry_provenance import verified_entry_mask
 
 
-def _numeric_present(series) -> int:
-    return int(pd.to_numeric(series, errors="coerce").notna().sum()) if series is not None else 0
+def _valid_opening_side(rows: pd.DataFrame, side: str, fields: tuple[str, ...]) -> bool:
+    """Require every opening field for the actual selected market side."""
+    selected = rows[rows["_side"] == side]
+    if selected.empty or any(field not in selected.columns for field in fields):
+        return False
+    # The base archive quote chooses the final matching row per side.
+    last = selected.iloc[-1]
+    for field in fields:
+        try:
+            value = float(last[field])
+        except (TypeError, ValueError):
+            return False
+        if not math.isfinite(value):
+            return False
+        if "odds" in field and (-100.0 < value < 100.0):
+            return False
+    return True
+
+
+def _valid_opening_total_side(rows: pd.DataFrame, side: str, fields: tuple[str, ...]) -> bool:
+    selected = rows[rows["_side"].str.contains(side, na=False)]
+    if selected.empty or any(field not in selected.columns for field in fields):
+        return False
+    last = selected.iloc[-1]
+    for field in fields:
+        try:
+            value = float(last[field])
+        except (TypeError, ValueError):
+            return False
+        if not math.isfinite(value):
+            return False
+        if "odds" in field and (-100.0 < value < 100.0):
+            return False
+    return True
 
 
 class AuditedArchiveMarketStore(_rt.CanonicalArchiveMarketStore):
@@ -33,21 +66,30 @@ class AuditedArchiveMarketStore(_rt.CanonicalArchiveMarketStore):
             "open_total_verified": False,
         })
         rows = self.by_id.get(_rt.canonical_game_id(game.game_id))
-        if rows is None or rows.empty or "book" not in rows.columns or "market_type" not in rows.columns:
+        if rows is None or rows.empty or not {"book", "market_type", "abbr"}.issubset(rows.columns):
             return q
         br = rows[rows["book"].astype(str) == str(q.get("book"))].copy()
         if br.empty:
             return q
         br["_market"] = br["market_type"].astype(str).str.lower().str.replace("-", "_", regex=False).str.replace(" ", "_", regex=False)
-
+        br["_side"] = br["abbr"].map(canon_team)
+        home = canon_team(game.home_team)
+        away = canon_team(game.away_team)
         ml = br[br["_market"].str.contains("money", na=False)]
         sp = br[br["_market"].str.contains("spread", na=False)]
-        to = br[br["_market"].str.contains("total", na=False)]
-        if "opening_odds" in br.columns:
-            q["open_moneyline_verified"] = _numeric_present(ml["opening_odds"]) >= 2
-        if {"opening_lines", "opening_odds"}.issubset(br.columns):
-            q["open_spread_verified"] = int((pd.to_numeric(sp["opening_lines"], errors="coerce").notna() & pd.to_numeric(sp["opening_odds"], errors="coerce").notna()).sum()) >= 2
-            q["open_total_verified"] = int((pd.to_numeric(to["opening_lines"], errors="coerce").notna() & pd.to_numeric(to["opening_odds"], errors="coerce").notna()).sum()) >= 2
+        total = br[br["_market"].str.contains("total", na=False)]
+        q["open_moneyline_verified"] = (
+            _valid_opening_side(ml, home, ("opening_odds",))
+            and _valid_opening_side(ml, away, ("opening_odds",))
+        )
+        q["open_spread_verified"] = (
+            _valid_opening_side(sp, home, ("opening_lines", "opening_odds"))
+            and _valid_opening_side(sp, away, ("opening_lines", "opening_odds"))
+        )
+        q["open_total_verified"] = (
+            _valid_opening_total_side(total, "over", ("opening_lines", "opening_odds"))
+            and _valid_opening_total_side(total, "under", ("opening_lines", "opening_odds"))
+        )
         return q
 
 
