@@ -54,8 +54,12 @@ def build_release_gate(meta: dict, monitor: dict | None=None, data_quality: dict
     portfolio_verified=bool(live.get("portfolio_verified",False))
     live_ready=(portfolio_verified and live_n>=300 and live_roi is not None and float(live_roi)>=0 and live_clv is not None and float(live_clv)>0)
 
+    # An absent/unknown contract report is not evidence of valid data.
+    # WARN is acceptable only when the report contains no ERROR findings.
+    contract_status=str(data_quality.get("status","UNKNOWN")).strip().upper()
+    contracts_ok=contract_status in {"PASS","OK","WARN"} and not data_quality.get("errors")
     checks=[
-        _check("data_contracts",data_quality.get("status")!="FAIL",data_quality.get("status","UNKNOWN"),"no ERROR-level data-contract violations"),
+        _check("data_contracts",contracts_ok,contract_status,"no ERROR-level data-contract violations"),
         _check("complete_market_coverage",complete>=.95,round(complete,4),">= 95% games with ML + spread + total"),
         _check("advanced_feature_coverage",broad_adv_cov>=.95,round(broad_adv_cov,4),">= 95% live advanced/static feature coverage"),
         _check("dynamic_advanced_feature_coverage",dynamic_adv_cov>=.90,round(dynamic_adv_cov,4),">= 90% live opponent-adjusted dynamic efficiency coverage"),
