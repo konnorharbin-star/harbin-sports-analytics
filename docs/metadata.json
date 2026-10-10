@@ -481,8 +481,8 @@
   },
   "calibrated_margin_sigma": 16.28877707158025,
   "calibrated_total_sigma": 16.102959927363244,
-  "generated_at": "2026-10-10T19:15:24.276539+00:00",
-  "updated_at_ct": "Oct 10, 2026 \u00b7 2:15 PM CT",
+  "generated_at": "2026-10-10T19:22:41.015128+00:00",
+  "updated_at_ct": "Oct 10, 2026 \u00b7 2:22 PM CT",
   "schedule_source": "sportsdataverse/cfbfastR-data",
   "odds_source": "ESPN live (site.web.api.espn.com) + ESPN Core supplement",
   "odds_errors": [],
@@ -584,13 +584,13 @@
       "401866440"
     ],
     "invalid_kickoff_game_ids": [],
-    "cutoff_utc": "2026-10-10T19:15:24.172195+00:00"
+    "cutoff_utc": "2026-10-10T19:22:40.911110+00:00"
   },
   "edge_forward_snapshot": {
     "status": "APPENDED",
     "appended": 5,
-    "total_rows": 301,
-    "snapshot_at": "2026-10-10T19:15:24.276539+00:00",
+    "total_rows": 306,
+    "snapshot_at": "2026-10-10T19:22:41.015128+00:00",
     "path": "history/edge_candidate_snapshots.csv"
   },
   "edge_timing": {
@@ -659,7 +659,7 @@
   },
   "quant_picks": {
     "strong": 16,
-    "bet": 7,
+    "bet": 6,
     "lean": 0
   },
   "snapshot_appended": true,
@@ -692,13 +692,13 @@
     "verified_close_clv_samples": 0,
     "portfolio_verified": true,
     "evidence_source": "portfolio_decisions_v1",
-    "eligible_decisions": 997,
+    "eligible_decisions": 1017,
     "timing_excluded_rows": 71,
     "status": "live/shadow evidence only; not historical backtest evidence"
   },
   "edge_forward_validation": {
     "status": "PENDING_FORWARD",
-    "observed_rows": 301,
+    "observed_rows": 306,
     "clean_entries": 0,
     "graded_bets": 0,
     "roi": null,
@@ -910,7 +910,7 @@
       "drift_total": 92.8,
       "drift_probability": 95.2,
       "distribution_stability": 94.5,
-      "output_completeness": 89.89874638379942
+      "output_completeness": 90.6702025072324
     },
     "drift_details": {
       "margin": {
@@ -978,12 +978,12 @@
       "reason": "graded history has no usable profit rows"
     },
     "production_block_reason": "",
-    "proposed_units": 3.16,
-    "risk_adjusted_proposed_units": 3.16,
-    "performance_adjusted_proposed_units": 3.16,
+    "proposed_units": 3.09,
+    "risk_adjusted_proposed_units": 3.09,
+    "performance_adjusted_proposed_units": 3.09,
     "approved_units": 0.0,
-    "paper_allocated_units": 2.92,
-    "paper_or_shadow_allocated_units": 2.92,
+    "paper_allocated_units": 2.93,
+    "paper_or_shadow_allocated_units": 2.93,
     "bets": 20,
     "approved_bets": 0,
     "execution_blocked_bets": 0,
@@ -1029,28 +1029,29 @@
       "max_book_units": 2.0
     },
     "allocated_by_market": {
-      "total": 0.73,
-      "spread": 2.05,
-      "moneyline": 0.14
+      "spread": 2.06,
+      "total": 0.65,
+      "moneyline": 0.22
     },
     "allocated_by_book": {
+      "ActionNetwork book 68": 0.58,
       "ActionNetwork book 71": 0.31,
-      "ActionNetwork book 68": 0.72,
       "ActionNetwork book 30": 0.85,
-      "Draft Kings": 0.14,
-      "ActionNetwork book 15": 0.3,
-      "ActionNetwork book 49": 0.37,
-      "ActionNetwork book 69": 0.23
+      "Draft Kings": 0.22,
+      "ActionNetwork book 15": 0.32,
+      "ActionNetwork book 49": 0.28,
+      "ActionNetwork book 69": 0.27,
+      "ActionNetwork book 75": 0.1
     },
     "allocated_by_kickoff_window": {
-      "2026-10-10 18:00:00+00:00": 1.36,
-      "2026-10-10 21:00:00+00:00": 1.18,
+      "2026-10-10 21:00:00+00:00": 1.26,
+      "2026-10-10 18:00:00+00:00": 1.29,
       "2026-10-11 00:00:00+00:00": 0.38
     },
     "allocated_by_team_exposure": {
+      "San Diego State": 0.27,
       "Georgia Tech": 0.18,
       "Duke": 0.18,
-      "San Diego State": 0.27,
       "Vanderbilt": 0.25,
       "Alabama": 0.16,
       "Georgia": 0.16,
@@ -1067,16 +1068,15 @@
       "Ohio": 0.14,
       "Memphis": 0.13,
       "Air Force": 0.13,
-      "North Texas": 0.08,
-      "Charlotte": 0.08,
       "Marshall": 0.12,
       "Coastal Carolina": 0.12,
+      "East Carolina": 0.1,
       "Akron": 0.09,
       "Texas": 0.09,
-      "East Carolina": 0.09
+      "Penn State": 0.08
     },
     "limit_hit_counts": {
-      "max bet count": 3
+      "max bet count": 2
     },
     "release_blockers": [
       "complete_market_coverage: >= 95% games with ML + spread + total",
@@ -1090,6 +1090,6 @@
     "path": "history/portfolio_decisions_v1.csv",
     "eligible_rows": 20,
     "appended_rows": 20,
-    "total_rows": 1353
+    "total_rows": 1373
   }
 }
