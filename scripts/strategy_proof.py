@@ -69,8 +69,8 @@ def candidate_forward_evidence(graded: pd.DataFrame | None) -> dict:
     prices = pd.to_numeric(subset.odds, errors="coerce")
     payout = pd.to_numeric(subset.profit, errors="coerce")
     named = ~subset.book.fillna("").astype(str).str.fullmatch(
-        r"(?i)(?:actionnetwork\\s+book\\s+\\d+|book\\s*\\d+|"
-        r"unknown|consensus|open|opening|unresolved|primary|\\s*)"
+        r"(?i)(?:actionnetwork\s+book\s+\d+|book\s*\d+|"
+        r"unknown|consensus|open|opening|unresolved|primary|\s*)"
     )
     valid = (
         kickoff.notna() & frozen.notna() & quoted.notna()
