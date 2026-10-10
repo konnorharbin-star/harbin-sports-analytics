@@ -481,8 +481,8 @@
   },
   "calibrated_margin_sigma": 16.28877707158025,
   "calibrated_total_sigma": 16.102959927363244,
-  "generated_at": "2026-10-10T18:29:40.894988+00:00",
-  "updated_at_ct": "Oct 10, 2026 \u00b7 1:29 PM CT",
+  "generated_at": "2026-10-10T18:46:35.574522+00:00",
+  "updated_at_ct": "Oct 10, 2026 \u00b7 1:46 PM CT",
   "schedule_source": "sportsdataverse/cfbfastR-data",
   "odds_source": "ESPN live (site.web.api.espn.com) + ESPN Core supplement",
   "odds_errors": [],
@@ -584,13 +584,13 @@
       "401866440"
     ],
     "invalid_kickoff_game_ids": [],
-    "cutoff_utc": "2026-10-10T18:29:40.792039+00:00"
+    "cutoff_utc": "2026-10-10T18:46:35.469553+00:00"
   },
   "edge_forward_snapshot": {
     "status": "APPENDED",
     "appended": 5,
-    "total_rows": 286,
-    "snapshot_at": "2026-10-10T18:29:40.894988+00:00",
+    "total_rows": 291,
+    "snapshot_at": "2026-10-10T18:46:35.574522+00:00",
     "path": "history/edge_candidate_snapshots.csv"
   },
   "edge_timing": {
@@ -633,7 +633,7 @@
   "line_history": {
     "tracked_games": 34,
     "coverage": 1.0,
-    "snapshot_rows": 2449,
+    "snapshot_rows": 2507,
     "hourly_snapshot_games": 34,
     "legacy_fallback_games": 0,
     "consensus_close_games": 34,
@@ -654,7 +654,7 @@
     "price_overpriced_supported_candidates": 0,
     "parent_only_candidates": 1,
     "contraindicated_candidates": 1,
-    "watch_candidates": 19,
+    "watch_candidates": 18,
     "methodology": "Fixed edge bands; market-specific walk-forward bet outcomes; PERSISTENT_CANDIDATE requires >=180 bets, >=3 seasons, >=50 bets in every season, positive ROI in every season, >=3% aggregate ROI, and positive average CLV. WATCH requires >=100 bets, positive aggregate ROI, and profit in at least two-thirds of seasons. Spread parent regimes are decomposed into favorite/underdog \u00d7 home/away children using chronological confirmation: all but the latest represented season are discovery and the latest season is a holdout. SUPPORTED_SUBGROUP requires >=45 total bets, >=2 discovery seasons with >=12 bets each, >=5% discovery ROI with every discovery season profitable, >=12 holdout bets with positive holdout ROI, and positive full-sample CLV. CONTRAINDICATED_SUBGROUP requires the same sample floor, every discovery season negative with <=-3% discovery ROI, a negative holdout ROI, and <=-3% full-sample ROI. Regime evidence can prioritize research and surface candidates but cannot create an edge, modify the fair line, probability, EV, or inflate stake."
   },
   "quant_picks": {
@@ -692,13 +692,13 @@
     "verified_close_clv_samples": 0,
     "portfolio_verified": true,
     "evidence_source": "portfolio_decisions_v1",
-    "eligible_decisions": 937,
+    "eligible_decisions": 957,
     "timing_excluded_rows": 71,
     "status": "live/shadow evidence only; not historical backtest evidence"
   },
   "edge_forward_validation": {
     "status": "PENDING_FORWARD",
-    "observed_rows": 286,
+    "observed_rows": 291,
     "clean_entries": 0,
     "graded_bets": 0,
     "roi": null,
@@ -978,12 +978,12 @@
       "reason": "graded history has no usable profit rows"
     },
     "production_block_reason": "",
-    "proposed_units": 3.12,
-    "risk_adjusted_proposed_units": 3.12,
-    "performance_adjusted_proposed_units": 3.12,
+    "proposed_units": 3.1,
+    "risk_adjusted_proposed_units": 3.1,
+    "performance_adjusted_proposed_units": 3.1,
     "approved_units": 0.0,
-    "paper_allocated_units": 2.96,
-    "paper_or_shadow_allocated_units": 2.96,
+    "paper_allocated_units": 2.94,
+    "paper_or_shadow_allocated_units": 2.94,
     "bets": 20,
     "approved_bets": 0,
     "execution_blocked_bets": 0,
@@ -1030,19 +1030,19 @@
     },
     "allocated_by_market": {
       "total": 0.73,
-      "spread": 2.09,
+      "spread": 2.07,
       "moneyline": 0.14
     },
     "allocated_by_book": {
-      "ActionNetwork book 71": 0.54,
-      "ActionNetwork book 15": 0.84,
+      "ActionNetwork book 71": 0.64,
+      "ActionNetwork book 15": 0.72,
       "ActionNetwork book 30": 0.85,
       "ActionNetwork book 68": 0.31,
       "DraftKings": 0.14,
       "ActionNetwork book 49": 0.28
     },
     "allocated_by_kickoff_window": {
-      "2026-10-10 18:00:00+00:00": 1.4,
+      "2026-10-10 18:00:00+00:00": 1.38,
       "2026-10-10 21:00:00+00:00": 1.18,
       "2026-10-11 00:00:00+00:00": 0.38
     },
@@ -1064,13 +1064,13 @@
       "Louisiana Tech": 0.09,
       "Louisiana": 0.09,
       "Ohio": 0.15,
-      "East Carolina": 0.12,
       "Memphis": 0.13,
       "Air Force": 0.13,
       "North Texas": 0.08,
       "Charlotte": 0.08,
       "Marshall": 0.12,
       "Coastal Carolina": 0.12,
+      "East Carolina": 0.1,
       "Akron": 0.09,
       "Texas": 0.09
     },
@@ -1089,6 +1089,6 @@
     "path": "history/portfolio_decisions_v1.csv",
     "eligible_rows": 20,
     "appended_rows": 20,
-    "total_rows": 1293
+    "total_rows": 1313
   }
 }

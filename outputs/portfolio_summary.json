@@ -25,12 +25,12 @@
     "reason": "graded history has no usable profit rows"
   },
   "production_block_reason": "",
-  "proposed_units": 3.12,
-  "risk_adjusted_proposed_units": 3.12,
-  "performance_adjusted_proposed_units": 3.12,
+  "proposed_units": 3.1,
+  "risk_adjusted_proposed_units": 3.1,
+  "performance_adjusted_proposed_units": 3.1,
   "approved_units": 0.0,
-  "paper_allocated_units": 2.96,
-  "paper_or_shadow_allocated_units": 2.96,
+  "paper_allocated_units": 2.94,
+  "paper_or_shadow_allocated_units": 2.94,
   "bets": 20,
   "approved_bets": 0,
   "execution_blocked_bets": 0,
@@ -77,19 +77,19 @@
   },
   "allocated_by_market": {
     "total": 0.73,
-    "spread": 2.09,
+    "spread": 2.07,
     "moneyline": 0.14
   },
   "allocated_by_book": {
-    "ActionNetwork book 71": 0.54,
-    "ActionNetwork book 15": 0.84,
+    "ActionNetwork book 71": 0.64,
+    "ActionNetwork book 15": 0.72,
     "ActionNetwork book 30": 0.85,
     "ActionNetwork book 68": 0.31,
     "DraftKings": 0.14,
     "ActionNetwork book 49": 0.28
   },
   "allocated_by_kickoff_window": {
-    "2026-10-10 18:00:00+00:00": 1.4,
+    "2026-10-10 18:00:00+00:00": 1.38,
     "2026-10-10 21:00:00+00:00": 1.18,
     "2026-10-11 00:00:00+00:00": 0.38
   },
@@ -111,13 +111,13 @@
     "Louisiana Tech": 0.09,
     "Louisiana": 0.09,
     "Ohio": 0.15,
-    "East Carolina": 0.12,
     "Memphis": 0.13,
     "Air Force": 0.13,
     "North Texas": 0.08,
     "Charlotte": 0.08,
     "Marshall": 0.12,
     "Coastal Carolina": 0.12,
+    "East Carolina": 0.1,
     "Akron": 0.09,
     "Texas": 0.09
   },

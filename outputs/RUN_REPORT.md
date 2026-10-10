@@ -14,7 +14,7 @@
 
 ## Monitoring and execution
 - Live readiness: **94.7/100**; distribution stability **94.5/100**.
-- Portfolio mode: **PAPER**; proposed **3.12u**; approved **0.00u**.
+- Portfolio mode: **PAPER**; proposed **3.10u**; approved **0.00u**.
 - Historical evidence: **0 bets**, ROI **—**, CLV **—**.
 - Independent live evidence: **0 bets**, ROI **—**, CLV **—**.
 
