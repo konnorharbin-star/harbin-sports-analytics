@@ -52,6 +52,8 @@ jobs:
           [ -n "${{ inputs.week }}" ] && ARGS="$ARGS --week ${{ inputs.week }}"
           [ -n "${{ inputs.history_start }}" ] && ARGS="$ARGS --history-start ${{ inputs.history_start }}"
           python run_week.py $ARGS
+      - name: Audit full schedule coverage and excluded games
+        run: python scripts/audit_schedule_coverage.py
       - name: Validate published dashboard bundle
         run: python validate_publication.py
       - name: Build release-gated final edge decision board
