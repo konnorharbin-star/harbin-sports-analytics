@@ -18,7 +18,7 @@ def _published(tmp_path, games):
 
 
 def _game(game_id="1", date="2026-10-10T23:00:00Z"):
-    return {"game_id": game_id, "date": date,
+    return {"season": 2026, "week": 6, "game_id": game_id, "date": date,
             "away_team": "Away", "home_team": "Home",
             "away_score": 20, "home_score": 24, "model_margin_home": 4,
             "model_total": 44, "win_probability": 0.63}
