@@ -1,14 +1,14 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-10-10T20:40:42.868224+00:00",
+  "generated_at": "2026-10-10T20:49:16.216309+00:00",
   "status": "WARN",
   "identity": {
     "platform_version": "7.4.0",
     "model_version": "7.1.0",
     "season": 2026,
     "week": 6,
-    "model_generated_at": "2026-10-10T20:40:41.458140+00:00",
-    "updated_at_ct": "Oct 10, 2026 \u00b7 3:40 PM CT",
+    "model_generated_at": "2026-10-10T20:49:13.844112+00:00",
+    "updated_at_ct": "Oct 10, 2026 \u00b7 3:49 PM CT",
     "prediction_rows": 16
   },
   "release": {
@@ -70,14 +70,14 @@
       {
         "name": "probability_brier",
         "passed": true,
-        "value": 0.17476492013360306,
+        "value": 0.1747649201336038,
         "requirement": "Brier <= 0.18 on chronological release holdout",
         "detail": ""
       },
       {
         "name": "probability_ece",
         "passed": false,
-        "value": 0.06218232013495895,
+        "value": 0.06218232013495966,
         "requirement": "ECE <= 0.05 on chronological release holdout",
         "detail": ""
       },
@@ -159,15 +159,15 @@
   },
   "model": {
     "validation": "nested whole-week chronology: core fit -> tune weight -> OOF calibration -> untouched evaluation; final refit keeps the tune-selected weight and uses OOF probability calibration",
-    "margin_mae": 12.95850296244939,
+    "margin_mae": 12.958502962449392,
     "margin_baseline_mae": 13.50210922129303,
     "margin_release_weight": 0.75,
-    "total_mae": 12.59160433487721,
+    "total_mae": 12.591604334877207,
     "total_baseline_mae": 12.648615389536973,
     "total_release_weight": 0.30000000000000004,
-    "win_brier": 0.17476492013360306,
-    "win_log_loss": 0.5222806383629722,
-    "win_ece": 0.06218232013495895,
+    "win_brier": 0.1747649201336038,
+    "win_log_loss": 0.522280638362974,
+    "win_ece": 0.06218232013495966,
     "selection_uses_evaluation": false
   },
   "coverage": {
@@ -188,7 +188,7 @@
       "advanced_coverage": 100.0,
       "multi_book": 100.0,
       "context": 100.0,
-      "calibration": 84.45441996626026,
+      "calibration": 84.45441996626009,
       "freshness": 100.0,
       "drift_margin": 91.6,
       "drift_total": 83.4,
@@ -201,9 +201,9 @@
         "stability_score": 91.6,
         "mean_z": 0.2405,
         "std_ratio": 0.9081,
-        "live_mean": 1.1225710795926687,
+        "live_mean": 1.122571079592639,
         "reference_mean": 4.007587882019203,
-        "live_std": 10.89174528287304,
+        "live_std": 10.891745282873059,
         "reference_std": 11.99409006138559,
         "live_n": 16,
         "reference_n": 2398
@@ -212,9 +212,9 @@
         "stability_score": 83.4,
         "mean_z": 0.1011,
         "std_ratio": 0.5696,
-        "live_mean": 53.06943033452798,
+        "live_mean": 53.06943033452795,
         "reference_mean": 53.69890163853031,
-        "live_std": 3.5471254374584373,
+        "live_std": 3.5471254374584467,
         "reference_std": 6.227517524699614,
         "live_n": 16,
         "reference_n": 2398
@@ -494,7 +494,7 @@
       "ActionNetwork book 15": 0.29,
       "ActionNetwork book 49": 0.19,
       "ActionNetwork book 71": 0.13,
-      "DraftKings": 0.08
+      "Draft Kings": 0.08
     },
     "allocated_by_kickoff_window": {
       "2026-10-10 21:00:00+00:00": 1.26,
@@ -616,19 +616,6 @@
     "errors": []
   },
   "trend": [
-    {
-      "generated_at": "2026-10-10T17:22:04.480065+00:00",
-      "model_generated_at": "2026-10-10T17:22:01.766590+00:00",
-      "season": 2026,
-      "week": 6,
-      "platform_version": "7.4.0",
-      "release_state": "RESEARCH",
-      "publication_status": "WARN",
-      "live_readiness_score": 94.7,
-      "distribution_stability": 94.9,
-      "approved_units": 0.0,
-      "data_quality_status": "PASS"
-    },
     {
       "generated_at": "2026-10-10T17:55:18.550223+00:00",
       "model_generated_at": "2026-10-10T17:55:16.011701+00:00",
@@ -762,6 +749,19 @@
     {
       "generated_at": "2026-10-10T20:36:25.252262+00:00",
       "model_generated_at": "2026-10-10T20:36:22.915007+00:00",
+      "season": 2026,
+      "week": 6,
+      "platform_version": "7.4.0",
+      "release_state": "RESEARCH",
+      "publication_status": "WARN",
+      "live_readiness_score": 94.8,
+      "distribution_stability": 88.9,
+      "approved_units": 0.0,
+      "data_quality_status": "PASS"
+    },
+    {
+      "generated_at": "2026-10-10T20:40:42.868224+00:00",
+      "model_generated_at": "2026-10-10T20:40:41.458140+00:00",
       "season": 2026,
       "week": 6,
       "platform_version": "7.4.0",
