@@ -178,13 +178,13 @@
     "reason": "CLV-first segment de-risking; multipliers never exceed 1.0"
   },
   "production_block_reason": "",
-  "proposed_units": 1.63,
-  "risk_adjusted_proposed_units": 1.63,
-  "performance_adjusted_proposed_units": 1.63,
+  "proposed_units": 1.36,
+  "risk_adjusted_proposed_units": 1.36,
+  "performance_adjusted_proposed_units": 1.36,
   "approved_units": 0.0,
-  "paper_allocated_units": 1.63,
-  "paper_or_shadow_allocated_units": 1.63,
-  "bets": 11,
+  "paper_allocated_units": 1.36,
+  "paper_or_shadow_allocated_units": 1.36,
+  "bets": 10,
   "approved_bets": 0,
   "execution_blocked_bets": 0,
   "limits": {
@@ -229,24 +229,23 @@
     "max_book_units": 2.0
   },
   "allocated_by_market": {
-    "spread": 1.09,
     "total": 0.46,
+    "spread": 0.82,
     "moneyline": 0.08
   },
   "allocated_by_book": {
-    "ActionNetwork book 15": 0.36,
     "ActionNetwork book 30": 0.36,
     "ActionNetwork book 68": 0.32,
     "ActionNetwork book 71": 0.42,
     "ActionNetwork book 49": 0.09,
-    "DraftKings": 0.08
+    "ActionNetwork book 15": 0.09,
+    "Draft Kings": 0.08
   },
   "allocated_by_kickoff_window": {
-    "2026-10-10 21:00:00+00:00": 1.26,
+    "2026-10-10 21:00:00+00:00": 0.99,
     "2026-10-11 00:00:00+00:00": 0.37
   },
   "allocated_by_team_exposure": {
-    "San Diego State": 0.27,
     "Alabama": 0.16,
     "Georgia": 0.16,
     "Fresno State": 0.2,

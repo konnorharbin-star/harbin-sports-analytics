@@ -1,0 +1,3626 @@
+{
+  "report": {
+    "betting_authorized": false,
+    "candidates": [
+      {
+        "american_odds": 360.0,
+        "away_team": "Air Force",
+        "betting_authorized": false,
+        "blockers": [
+          "Aggregator book identity and executable price unverified",
+          "Per-side source quote-origin timestamps unverified",
+          "Source market phase and settlement rules unverified",
+          "No verified sharp benchmark",
+          "Reference probabilities are not calibrated model probabilities",
+          "Market-reference strategy lacks validated prospective economic advantage",
+          "User book access and settlement rules unverified"
+        ],
+        "book_label": "ActionNetwork book 30",
+        "game_id": "401864516",
+        "home_team": "Northern Illinois",
+        "kickoff": "2026-10-10T23:30:00.000Z",
+        "line": null,
+        "market": "moneyline",
+        "price_implied_probability": 0.2173913043478261,
+        "quote_observed_at": "2026-10-10T22:27:13.215665+00:00",
+        "reference_books": 6,
+        "reference_price_gap_pp": 6.446850530373405,
+        "reference_probability": 0.28185980965156016,
+        "reference_probability_range": [
+          0.25,
+          0.2855593710464486
+        ],
+        "sensitivity_gap_pp": 2.8909134257285474,
+        "side": "home",
+        "stake_units": 0,
+        "status": "VERIFY_REQUIRED"
+      },
+      {
+        "american_odds": -142.0,
+        "away_team": "Coastal Carolina",
+        "betting_authorized": false,
+        "blockers": [
+          "Aggregator book identity and executable price unverified",
+          "Per-side source quote-origin timestamps unverified",
+          "Source market phase and settlement rules unverified",
+          "No verified sharp benchmark",
+          "Reference probabilities are not calibrated model probabilities",
+          "Market-reference strategy lacks validated prospective economic advantage",
+          "User book access and settlement rules unverified"
+        ],
+        "book_label": "ActionNetwork book 30",
+        "game_id": "401869943",
+        "home_team": "Marshall",
+        "kickoff": "2026-10-10T23:00:00.000Z",
+        "line": null,
+        "market": "moneyline",
+        "price_implied_probability": 0.5867768595041323,
+        "quote_observed_at": "2026-10-10T22:27:13.210967+00:00",
+        "reference_books": 6,
+        "reference_price_gap_pp": 3.8606634319302557,
+        "reference_probability": 0.6253834938234348,
+        "reference_probability_range": [
+          0.6092362344582594,
+          0.6341463414634148
+        ],
+        "sensitivity_gap_pp": 1.3696527314147167,
+        "side": "home",
+        "stake_units": 0,
+        "status": "VERIFY_REQUIRED"
+      },
+      {
+        "american_odds": -350.0,
+        "away_team": "Syracuse",
+        "betting_authorized": false,
+        "blockers": [
+          "Aggregator book identity and executable price unverified",
+          "Per-side source quote-origin timestamps unverified",
+          "Source market phase and settlement rules unverified",
+          "No verified sharp benchmark",
+          "Reference probabilities are not calibrated model probabilities",
+          "Market-reference strategy lacks validated prospective economic advantage",
+          "User book access and settlement rules unverified"
+        ],
+        "book_label": "ActionNetwork book 75",
+        "game_id": "401858258",
+        "home_team": "Virginia",
+        "kickoff": "2026-10-10T23:30:00.000Z",
+        "line": null,
+        "market": "moneyline",
+        "price_implied_probability": 0.7777777777777779,
+        "quote_observed_at": "2026-10-10T22:27:13.213511+00:00",
+        "reference_books": 5,
+        "reference_price_gap_pp": 3.4089081845955715,
+        "reference_probability": 0.8118668596237336,
+        "reference_probability_range": [
+          0.8092485549132947,
+          0.8345597564070032
+        ],
+        "sensitivity_gap_pp": 0.8777880352247247,
+        "side": "home",
+        "stake_units": 0,
+        "status": "VERIFY_REQUIRED"
+      },
+      {
+        "american_odds": -125.0,
+        "away_team": "Louisiana",
+        "betting_authorized": false,
+        "blockers": [
+          "Aggregator book identity and executable price unverified",
+          "Per-side source quote-origin timestamps unverified",
+          "Source market phase and settlement rules unverified",
+          "No verified sharp benchmark",
+          "Reference probabilities are not calibrated model probabilities",
+          "Market-reference strategy lacks validated prospective economic advantage",
+          "User book access and settlement rules unverified"
+        ],
+        "book_label": "ActionNetwork book 30",
+        "game_id": "401869965",
+        "home_team": "Louisiana Tech",
+        "kickoff": "2026-10-10T23:30:00.000Z",
+        "line": null,
+        "market": "moneyline",
+        "price_implied_probability": 0.5555555555555556,
+        "quote_observed_at": "2026-10-10T22:27:13.217789+00:00",
+        "reference_books": 6,
+        "reference_price_gap_pp": 2.4373156983729993,
+        "reference_probability": 0.5799287125392856,
+        "reference_probability_range": [
+          0.5735751996751048,
+          0.5829926410466066
+        ],
+        "sensitivity_gap_pp": 0.43731569837299755,
+        "side": "home",
+        "stake_units": 0,
+        "status": "VERIFY_REQUIRED"
+      },
+      {
+        "american_odds": 330.0,
+        "away_team": "LSU",
+        "betting_authorized": false,
+        "blockers": [
+          "Aggregator book identity and executable price unverified",
+          "Per-side source quote-origin timestamps unverified",
+          "Source market phase and settlement rules unverified",
+          "No verified sharp benchmark",
+          "Reference probabilities are not calibrated model probabilities",
+          "Market-reference strategy lacks validated prospective economic advantage",
+          "User book access and settlement rules unverified"
+        ],
+        "book_label": "ActionNetwork book 30",
+        "game_id": "401856715",
+        "home_team": "Kentucky",
+        "kickoff": "2026-10-10T23:00:00.000Z",
+        "line": null,
+        "market": "moneyline",
+        "price_implied_probability": 0.23255813953488372,
+        "quote_observed_at": "2026-10-10T22:27:13.190916+00:00",
+        "reference_books": 6,
+        "reference_price_gap_pp": 1.7856145535918104,
+        "reference_probability": 0.2504142850708018,
+        "reference_probability_range": [
+          0.24653704409708985,
+          0.261136712749616
+        ],
+        "sensitivity_gap_pp": -0.21438544640818846,
+        "side": "home",
+        "stake_units": 0,
+        "status": "VERIFY_REQUIRED"
+      },
+      {
+        "american_odds": 280.0,
+        "away_team": "James Madison",
+        "betting_authorized": false,
+        "blockers": [
+          "Aggregator book identity and executable price unverified",
+          "Per-side source quote-origin timestamps unverified",
+          "Source market phase and settlement rules unverified",
+          "No verified sharp benchmark",
+          "Reference probabilities are not calibrated model probabilities",
+          "Market-reference strategy lacks validated prospective economic advantage",
+          "User book access and settlement rules unverified"
+        ],
+        "book_label": "ActionNetwork book 30",
+        "game_id": "401869949",
+        "home_team": "Georgia Southern",
+        "kickoff": "2026-10-10T23:30:00.000Z",
+        "line": null,
+        "market": "moneyline",
+        "price_implied_probability": 0.2631578947368421,
+        "quote_observed_at": "2026-10-10T22:27:13.216728+00:00",
+        "reference_books": 6,
+        "reference_price_gap_pp": 1.108959690195388,
+        "reference_probability": 0.27424749163879597,
+        "reference_probability_range": [
+          0.2678159150377097,
+          0.2855593710464486
+        ],
+        "sensitivity_gap_pp": -0.8910403098046138,
+        "side": "home",
+        "stake_units": 0,
+        "status": "VERIFY_REQUIRED"
+      },
+      {
+        "american_odds": 550.0,
+        "away_team": "UAB",
+        "betting_authorized": false,
+        "blockers": [
+          "Aggregator book identity and executable price unverified",
+          "Per-side source quote-origin timestamps unverified",
+          "Source market phase and settlement rules unverified",
+          "No verified sharp benchmark",
+          "Reference probabilities are not calibrated model probabilities",
+          "Market-reference strategy lacks validated prospective economic advantage",
+          "User book access and settlement rules unverified"
+        ],
+        "book_label": "ActionNetwork book 71",
+        "game_id": "401862798",
+        "home_team": "Memphis",
+        "kickoff": "2026-10-10T23:00:00.000Z",
+        "line": null,
+        "market": "moneyline",
+        "price_implied_probability": 0.15384615384615385,
+        "quote_observed_at": "2026-10-10T22:27:13.207641+00:00",
+        "reference_books": 6,
+        "reference_price_gap_pp": 1.0825664229861753,
+        "reference_probability": 0.1646718180760156,
+        "reference_probability_range": [
+          0.16203240648129627,
+          0.17500000000000002
+        ],
+        "sensitivity_gap_pp": -0.9174335770138237,
+        "side": "away",
+        "stake_units": 0,
+        "status": "VERIFY_REQUIRED"
+      },
+      {
+        "american_odds": 105.0,
+        "away_team": "USC",
+        "betting_authorized": false,
+        "blockers": [
+          "Aggregator book identity and executable price unverified",
+          "Per-side source quote-origin timestamps unverified",
+          "Source market phase and settlement rules unverified",
+          "No verified sharp benchmark",
+          "Reference probabilities are not calibrated model probabilities",
+          "Market-reference strategy lacks validated prospective economic advantage",
+          "User book access and settlement rules unverified"
+        ],
+        "book_label": "ActionNetwork book 30",
+        "game_id": "401858485",
+        "home_team": "Penn State",
+        "kickoff": "2026-10-10T23:30:00.000Z",
+        "line": null,
+        "market": "moneyline",
+        "price_implied_probability": 0.48780487804878053,
+        "quote_observed_at": "2026-10-10T22:27:13.214587+00:00",
+        "reference_books": 6,
+        "reference_price_gap_pp": 1.9304934794185102,
+        "reference_probability": 0.5071098128429656,
+        "reference_probability_range": [
+          0.4782608695652174,
+          0.5108342361863489
+        ],
+        "sensitivity_gap_pp": -1.3268431826946425,
+        "side": "away",
+        "stake_units": 0,
+        "status": "VERIFY_REQUIRED"
+      },
+      {
+        "american_odds": 140.0,
+        "away_team": "North Dakota State",
+        "betting_authorized": false,
+        "blockers": [
+          "Aggregator book identity and executable price unverified",
+          "Per-side source quote-origin timestamps unverified",
+          "Source market phase and settlement rules unverified",
+          "No verified sharp benchmark",
+          "Reference probabilities are not calibrated model probabilities",
+          "Market-reference strategy lacks validated prospective economic advantage",
+          "User book access and settlement rules unverified"
+        ],
+        "book_label": "ActionNetwork book 30",
+        "game_id": "401864518",
+        "home_team": "UNLV",
+        "kickoff": "2026-10-10T23:00:00.000Z",
+        "line": null,
+        "market": "moneyline",
+        "price_implied_probability": 0.4166666666666667,
+        "quote_observed_at": "2026-10-10T22:27:13.209883+00:00",
+        "reference_books": 6,
+        "reference_price_gap_pp": 3.500102944204231,
+        "reference_probability": 0.451667696108709,
+        "reference_probability_range": [
+          0.4088050314465409,
+          0.4572564612326044
+        ],
+        "sensitivity_gap_pp": -1.3450400344021174,
+        "side": "home",
+        "stake_units": 0,
+        "status": "VERIFY_REQUIRED"
+      },
+      {
+        "american_odds": 350.0,
+        "away_team": "Boise State",
+        "betting_authorized": false,
+        "blockers": [
+          "Aggregator book identity and executable price unverified",
+          "Per-side source quote-origin timestamps unverified",
+          "Source market phase and settlement rules unverified",
+          "No verified sharp benchmark",
+          "Reference probabilities are not calibrated model probabilities",
+          "Market-reference strategy lacks validated prospective economic advantage",
+          "User book access and settlement rules unverified"
+        ],
+        "book_label": "ActionNetwork book 30",
+        "game_id": "401860901",
+        "home_team": "Fresno State",
+        "kickoff": "2026-10-11T02:30:00.000Z",
+        "line": null,
+        "market": "moneyline",
+        "price_implied_probability": 0.2222222222222222,
+        "quote_observed_at": "2026-10-10T22:27:13.221988+00:00",
+        "reference_books": 6,
+        "reference_price_gap_pp": 5.202526941657376,
+        "reference_probability": 0.27424749163879597,
+        "reference_probability_range": [
+          0.25,
+          0.32211538461538464
+        ],
+        "sensitivity_gap_pp": -2.0090115198810876,
+        "side": "home",
+        "stake_units": 0,
+        "status": "VERIFY_REQUIRED"
+      },
+      {
+        "american_odds": -235.0,
+        "away_team": "Boise State",
+        "betting_authorized": false,
+        "blockers": [
+          "Aggregator book identity and executable price unverified",
+          "Per-side source quote-origin timestamps unverified",
+          "Source market phase and settlement rules unverified",
+          "No verified sharp benchmark",
+          "Reference probabilities are not calibrated model probabilities",
+          "Market-reference strategy lacks validated prospective economic advantage",
+          "User book access and settlement rules unverified"
+        ],
+        "book_label": "ActionNetwork book 75",
+        "game_id": "401860901",
+        "home_team": "Fresno State",
+        "kickoff": "2026-10-11T02:30:00.000Z",
+        "line": null,
+        "market": "moneyline",
+        "price_implied_probability": 0.7014925373134329,
+        "quote_observed_at": "2026-10-10T22:27:13.221988+00:00",
+        "reference_books": 6,
+        "reference_price_gap_pp": 2.464566085398956,
+        "reference_probability": 0.7261381981674224,
+        "reference_probability_range": [
+          0.7228793511321393,
+          0.7873941674506115
+        ],
+        "sensitivity_gap_pp": -3.9869155464482664,
+        "side": "away",
+        "stake_units": 0,
+        "status": "VERIFY_REQUIRED"
+      },
+      {
+        "american_odds": 475.0,
+        "away_team": "Syracuse",
+        "betting_authorized": false,
+        "blockers": [
+          "Aggregator book identity and executable price unverified",
+          "Per-side source quote-origin timestamps unverified",
+          "Source market phase and settlement rules unverified",
+          "No verified sharp benchmark",
+          "Reference probabilities are not calibrated model probabilities",
+          "Market-reference strategy lacks validated prospective economic advantage",
+          "User book access and settlement rules unverified"
+        ],
+        "book_label": "ActionNetwork book 71",
+        "game_id": "401858258",
+        "home_team": "Virginia",
+        "kickoff": "2026-10-10T23:30:00.000Z",
+        "line": null,
+        "market": "moneyline",
+        "price_implied_probability": 0.17391304347826086,
+        "quote_observed_at": "2026-10-10T22:27:13.213511+00:00",
+        "reference_books": 5,
+        "reference_price_gap_pp": 1.4220096898005434,
+        "reference_probability": 0.1881331403762663,
+        "reference_probability_range": [
+          0.1740166865315852,
+          0.24793388429752067
+        ],
+        "sensitivity_gap_pp": -5.969710086793004,
+        "side": "away",
+        "stake_units": 0,
+        "status": "VERIFY_REQUIRED"
+      }
+    ],
+    "capture_id": "f1f6972d4f231e665af752bc",
+    "counts": {
+      "extreme_unverified_quotes_quarantined": 3,
+      "fresh_exact_line_groups": 15,
+      "stale_future_or_started": 3039
+    },
+    "decision": "NO_BET",
+    "fresh_priced_games": 15,
+    "limits": [
+      "Exact line and two same-book prices required",
+      "Exclude quoted book from reference and deduplicate aliases",
+      "Non-push reference prices imply no true EV, ROI or fair price",
+      "Sensitivity haircut is a fixed stress scenario, not a confidence interval",
+      "Unresolved and legacy aggregator labels are not certified live sportsbooks",
+      "Unverified extreme paired-price outliers are quarantined, not ranked"
+    ],
+    "observed_at": "2026-10-10T22:27:20.467561+00:00",
+    "qualified_bets": 0,
+    "quarantined_quotes": [
+      {
+        "absolute_divergence_pp": 10.497300322598013,
+        "american_odds_pair": [
+          125.0,
+          -150.0
+        ],
+        "away_team": "Georgia",
+        "betting_authorized": false,
+        "book_key": "fanduel",
+        "book_label": "ActionNetwork book 30",
+        "game_id": "401856712",
+        "home_team": "Alabama",
+        "kickoff": "2026-10-10T23:30:00.000Z",
+        "line": null,
+        "market": "moneyline",
+        "other_books_median_probability": 0.5305049181195971,
+        "paired_no_vig_home_or_over_probability": 0.42553191489361697,
+        "quote_observed_at": "2026-10-10T22:27:13.212444+00:00",
+        "reason": "Paired no-vig quote differs from peer books by over 7.5 pp without independent book identity, source update time, and executable price confirmation",
+        "reported_source_time": null,
+        "source": "action_network",
+        "source_url": null,
+        "status": "UNVERIFIED_EXTREME_SOURCE_OUTLIER"
+      },
+      {
+        "absolute_divergence_pp": 12.061471554140091,
+        "american_odds_pair": [
+          -260.0,
+          210.0
+        ],
+        "away_team": "Syracuse",
+        "betting_authorized": false,
+        "book_key": "fanduel",
+        "book_label": "ActionNetwork book 30",
+        "game_id": "401858258",
+        "home_team": "Virginia",
+        "kickoff": "2026-10-10T23:30:00.000Z",
+        "line": null,
+        "market": "moneyline",
+        "other_books_median_probability": 0.8118668596237336,
+        "paired_no_vig_home_or_over_probability": 0.6912521440823327,
+        "quote_observed_at": "2026-10-10T22:27:13.213511+00:00",
+        "reason": "Paired no-vig quote differs from peer books by over 7.5 pp without independent book identity, source update time, and executable price confirmation",
+        "reported_source_time": null,
+        "source": "action_network",
+        "source_url": null,
+        "status": "UNVERIFIED_EXTREME_SOURCE_OUTLIER"
+      },
+      {
+        "absolute_divergence_pp": 10.918330059641962,
+        "american_odds_pair": [
+          188.0,
+          -230.0
+        ],
+        "away_team": "Minnesota",
+        "betting_authorized": false,
+        "book_key": "fanduel",
+        "book_label": "ActionNetwork book 30",
+        "game_id": "401858486",
+        "home_team": "Purdue",
+        "kickoff": "2026-10-11T00:00:00.000Z",
+        "line": null,
+        "market": "moneyline",
+        "other_books_median_probability": 0.44171050736788275,
+        "paired_no_vig_home_or_over_probability": 0.33252720677146314,
+        "quote_observed_at": "2026-10-10T22:27:13.219880+00:00",
+        "reason": "Paired no-vig quote differs from peer books by over 7.5 pp without independent book identity, source update time, and executable price confirmation",
+        "reported_source_time": null,
+        "source": "action_network",
+        "source_url": null,
+        "status": "UNVERIFIED_EXTREME_SOURCE_OUTLIER"
+      }
+    ],
+    "source_errors": [],
+    "spec": "exact_line_price_scan_v1",
+    "sport": "cfb",
+    "status": "PRICE_DIAGNOSTICS_ONLY",
+    "supported_markets": [
+      "moneyline"
+    ],
+    "unsupported_market_reason": "CFB normalized feed does not retain both spread/total side lines",
+    "upcoming_games": 15
+  },
+  "source_records": [
+    {
+      "away_team": "LSU",
+      "book_identity_verified": false,
+      "book_key": "draftkings",
+      "book_label": "ActionNetwork book 15",
+      "executable_price_verified": false,
+      "game_id": "401856715",
+      "home_team": "Kentucky",
+      "kickoff": "2026-10-10T23:00:00.000Z",
+      "line": null,
+      "market": "moneyline",
+      "observed_at": "2026-10-10T22:27:13.190916+00:00",
+      "odds": [
+        280.0,
+        -360.0
+      ],
+      "original_request_url": null,
+      "reported_source_time": null,
+      "sides": [
+        "home",
+        "away"
+      ],
+      "source": "action_network",
+      "source_quote_time_verified": false,
+      "source_url": null
+    },
+    {
+      "away_team": "LSU",
+      "book_identity_verified": false,
+      "book_key": "fanduel",
+      "book_label": "ActionNetwork book 30",
+      "executable_price_verified": false,
+      "game_id": "401856715",
+      "home_team": "Kentucky",
+      "kickoff": "2026-10-10T23:00:00.000Z",
+      "line": null,
+      "market": "moneyline",
+      "observed_at": "2026-10-10T22:27:13.190916+00:00",
+      "odds": [
+        330.0,
+        -425.0
+      ],
+      "original_request_url": null,
+      "reported_source_time": null,
+      "sides": [
+        "home",
+        "away"
+      ],
+      "source": "action_network",
+      "source_quote_time_verified": false,
+      "source_url": null
+    },
+    {
+      "away_team": "LSU",
+      "book_identity_verified": false,
+      "book_key": "actionnetworkbook49",
+      "book_label": "ActionNetwork book 49",
+      "executable_price_verified": false,
+      "game_id": "401856715",
+      "home_team": "Kentucky",
+      "kickoff": "2026-10-10T23:00:00.000Z",
+      "line": null,
+      "market": "moneyline",
+      "observed_at": "2026-10-10T22:27:13.190916+00:00",
+      "odds": [
+        275.0,
+        -345.0
+      ],
+      "original_request_url": null,
+      "reported_source_time": null,
+      "sides": [
+        "home",
+        "away"
+      ],
+      "source": "action_network",
+      "source_quote_time_verified": false,
+      "source_url": null
+    },
+    {
+      "away_team": "LSU",
+      "book_identity_verified": false,
+      "book_key": "actionnetworkbook68",
+      "book_label": "ActionNetwork book 68",
+      "executable_price_verified": false,
+      "game_id": "401856715",
+      "home_team": "Kentucky",
+      "kickoff": "2026-10-10T23:00:00.000Z",
+      "line": null,
+      "market": "moneyline",
+      "observed_at": "2026-10-10T22:27:13.190916+00:00",
+      "odds": [
+        285.0,
+        -360.0
+      ],
+      "original_request_url": null,
+      "reported_source_time": null,
+      "sides": [
+        "home",
+        "away"
+      ],
+      "source": "action_network",
+      "source_quote_time_verified": false,
+      "source_url": null
+    },
+    {
+      "away_team": "LSU",
+      "book_identity_verified": false,
+      "book_key": "actionnetworkbook69",
+      "book_label": "ActionNetwork book 69",
+      "executable_price_verified": false,
+      "game_id": "401856715",
+      "home_team": "Kentucky",
+      "kickoff": "2026-10-10T23:00:00.000Z",
+      "line": null,
+      "market": "moneyline",
+      "observed_at": "2026-10-10T22:27:13.190916+00:00",
+      "odds": [
+        285.0,
+        -365.0
+      ],
+      "original_request_url": null,
+      "reported_source_time": null,
+      "sides": [
+        "home",
+        "away"
+      ],
+      "source": "action_network",
+      "source_quote_time_verified": false,
+      "source_url": null
+    },
+    {
+      "away_team": "LSU",
+      "book_identity_verified": false,
+      "book_key": "actionnetworkbook71",
+      "book_label": "ActionNetwork book 71",
+      "executable_price_verified": false,
+      "game_id": "401856715",
+      "home_team": "Kentucky",
+      "kickoff": "2026-10-10T23:00:00.000Z",
+      "line": null,
+      "market": "moneyline",
+      "observed_at": "2026-10-10T22:27:13.190916+00:00",
+      "odds": [
+        285.0,
+        -385.0
+      ],
+      "original_request_url": null,
+      "reported_source_time": null,
+      "sides": [
+        "home",
+        "away"
+      ],
+      "source": "action_network",
+      "source_quote_time_verified": false,
+      "source_url": null
+    },
+    {
+      "away_team": "LSU",
+      "book_identity_verified": false,
+      "book_key": "betmgm",
+      "book_label": "ActionNetwork book 75",
+      "executable_price_verified": false,
+      "game_id": "401856715",
+      "home_team": "Kentucky",
+      "kickoff": "2026-10-10T23:00:00.000Z",
+      "line": null,
+      "market": "moneyline",
+      "observed_at": "2026-10-10T22:27:13.190916+00:00",
+      "odds": [
+        270.0,
+        -325.0
+      ],
+      "original_request_url": null,
+      "reported_source_time": null,
+      "sides": [
+        "home",
+        "away"
+      ],
+      "source": "action_network",
+      "source_quote_time_verified": false,
+      "source_url": null
+    },
+    {
+      "away_team": "LSU",
+      "book_identity_verified": false,
+      "book_key": "draftkings",
+      "book_label": "Draft Kings",
+      "executable_price_verified": false,
+      "game_id": "401856715",
+      "home_team": "Kentucky",
+      "kickoff": "2026-10-10T23:00:00.000Z",
+      "line": null,
+      "market": "moneyline",
+      "observed_at": "2026-10-10T22:27:13.190916+00:00",
+      "odds": [
+        285.0,
+        -360.0
+      ],
+      "original_request_url": null,
+      "reported_source_time": null,
+      "sides": [
+        "home",
+        "away"
+      ],
+      "source": "espn_core",
+      "source_quote_time_verified": false,
+      "source_url": null
+    },
+    {
+      "away_team": "UAB",
+      "book_identity_verified": false,
+      "book_key": "draftkings",
+      "book_label": "ActionNetwork book 15",
+      "executable_price_verified": false,
+      "game_id": "401862798",
+      "home_team": "Memphis",
+      "kickoff": "2026-10-10T23:00:00.000Z",
+      "line": null,
+      "market": "moneyline",
+      "observed_at": "2026-10-10T22:27:13.207641+00:00",
+      "odds": [
+        -675.0,
+        490.0
+      ],
+      "original_request_url": null,
+      "reported_source_time": null,
+      "sides": [
+        "home",
+        "away"
+      ],
+      "source": "action_network",
+      "source_quote_time_verified": false,
+      "source_url": null
+    },
+    {
+      "away_team": "UAB",
+      "book_identity_verified": false,
+      "book_key": "fanduel",
+      "book_label": "ActionNetwork book 30",
+      "executable_price_verified": false,
+      "game_id": "401862798",
+      "home_team": "Memphis",
+      "kickoff": "2026-10-10T23:00:00.000Z",
+      "line": null,
+      "market": "moneyline",
+      "observed_at": "2026-10-10T22:27:13.207641+00:00",
+      "odds": [
+        -650.0,
+        470.0
+      ],
+      "original_request_url": null,
+      "reported_source_time": null,
+      "sides": [
+        "home",
+        "away"
+      ],
+      "source": "action_network",
+      "source_quote_time_verified": false,
+      "source_url": null
+    },
+    {
+      "away_team": "UAB",
+      "book_identity_verified": false,
+      "book_key": "actionnetworkbook49",
+      "book_label": "ActionNetwork book 49",
+      "executable_price_verified": false,
+      "game_id": "401862798",
+      "home_team": "Memphis",
+      "kickoff": "2026-10-10T23:00:00.000Z",
+      "line": null,
+      "market": "moneyline",
+      "observed_at": "2026-10-10T22:27:13.207641+00:00",
+      "odds": [
+        -675.0,
+        475.0
+      ],
+      "original_request_url": null,
+      "reported_source_time": null,
+      "sides": [
+        "home",
+        "away"
+      ],
+      "source": "action_network",
+      "source_quote_time_verified": false,
+      "source_url": null
+    },
+    {
+      "away_team": "UAB",
+      "book_identity_verified": false,
+      "book_key": "actionnetworkbook68",
+      "book_label": "ActionNetwork book 68",
+      "executable_price_verified": false,
+      "game_id": "401862798",
+      "home_team": "Memphis",
+      "kickoff": "2026-10-10T23:00:00.000Z",
+      "line": null,
+      "market": "moneyline",
+      "observed_at": "2026-10-10T22:27:13.207641+00:00",
+      "odds": [
+        -675.0,
+        490.0
+      ],
+      "original_request_url": null,
+      "reported_source_time": null,
+      "sides": [
+        "home",
+        "away"
+      ],
+      "source": "action_network",
+      "source_quote_time_verified": false,
+      "source_url": null
+    },
+    {
+      "away_team": "UAB",
+      "book_identity_verified": false,
+      "book_key": "actionnetworkbook69",
+      "book_label": "ActionNetwork book 69",
+      "executable_price_verified": false,
+      "game_id": "401862798",
+      "home_team": "Memphis",
+      "kickoff": "2026-10-10T23:00:00.000Z",
+      "line": null,
+      "market": "moneyline",
+      "observed_at": "2026-10-10T22:27:13.207641+00:00",
+      "odds": [
+        -710.0,
+        490.0
+      ],
+      "original_request_url": null,
+      "reported_source_time": null,
+      "sides": [
+        "home",
+        "away"
+      ],
+      "source": "action_network",
+      "source_quote_time_verified": false,
+      "source_url": null
+    },
+    {
+      "away_team": "UAB",
+      "book_identity_verified": false,
+      "book_key": "actionnetworkbook71",
+      "book_label": "ActionNetwork book 71",
+      "executable_price_verified": false,
+      "game_id": "401862798",
+      "home_team": "Memphis",
+      "kickoff": "2026-10-10T23:00:00.000Z",
+      "line": null,
+      "market": "moneyline",
+      "observed_at": "2026-10-10T22:27:13.207641+00:00",
+      "odds": [
+        -910.0,
+        550.0
+      ],
+      "original_request_url": null,
+      "reported_source_time": null,
+      "sides": [
+        "home",
+        "away"
+      ],
+      "source": "action_network",
+      "source_quote_time_verified": false,
+      "source_url": null
+    },
+    {
+      "away_team": "UAB",
+      "book_identity_verified": false,
+      "book_key": "betmgm",
+      "book_label": "ActionNetwork book 75",
+      "executable_price_verified": false,
+      "game_id": "401862798",
+      "home_team": "Memphis",
+      "kickoff": "2026-10-10T23:00:00.000Z",
+      "line": null,
+      "market": "moneyline",
+      "observed_at": "2026-10-10T22:27:13.207641+00:00",
+      "odds": [
+        -600.0,
+        450.0
+      ],
+      "original_request_url": null,
+      "reported_source_time": null,
+      "sides": [
+        "home",
+        "away"
+      ],
+      "source": "action_network",
+      "source_quote_time_verified": false,
+      "source_url": null
+    },
+    {
+      "away_team": "UAB",
+      "book_identity_verified": false,
+      "book_key": "draftkings",
+      "book_label": "Draft Kings",
+      "executable_price_verified": false,
+      "game_id": "401862798",
+      "home_team": "Memphis",
+      "kickoff": "2026-10-10T23:00:00.000Z",
+      "line": null,
+      "market": "moneyline",
+      "observed_at": "2026-10-10T22:27:13.207641+00:00",
+      "odds": [
+        -675.0,
+        490.0
+      ],
+      "original_request_url": null,
+      "reported_source_time": null,
+      "sides": [
+        "home",
+        "away"
+      ],
+      "source": "espn_core",
+      "source_quote_time_verified": false,
+      "source_url": null
+    },
+    {
+      "away_team": "Nevada",
+      "book_identity_verified": false,
+      "book_key": "draftkings",
+      "book_label": "ActionNetwork book 15",
+      "executable_price_verified": false,
+      "game_id": "401864517",
+      "home_team": "UTEP",
+      "kickoff": "2026-10-10T23:00:00.000Z",
+      "line": null,
+      "market": "moneyline",
+      "observed_at": "2026-10-10T22:27:13.208790+00:00",
+      "odds": [
+        295.0,
+        -375.0
+      ],
+      "original_request_url": null,
+      "reported_source_time": null,
+      "sides": [
+        "home",
+        "away"
+      ],
+      "source": "action_network",
+      "source_quote_time_verified": false,
+      "source_url": null
+    },
+    {
+      "away_team": "Nevada",
+      "book_identity_verified": false,
+      "book_key": "fanduel",
+      "book_label": "ActionNetwork book 30",
+      "executable_price_verified": false,
+      "game_id": "401864517",
+      "home_team": "UTEP",
+      "kickoff": "2026-10-10T23:00:00.000Z",
+      "line": null,
+      "market": "moneyline",
+      "observed_at": "2026-10-10T22:27:13.208790+00:00",
+      "odds": [
+        280.0,
+        -355.0
+      ],
+      "original_request_url": null,
+      "reported_source_time": null,
+      "sides": [
+        "home",
+        "away"
+      ],
+      "source": "action_network",
+      "source_quote_time_verified": false,
+      "source_url": null
+    },
+    {
+      "away_team": "Nevada",
+      "book_identity_verified": false,
+      "book_key": "actionnetworkbook49",
+      "book_label": "ActionNetwork book 49",
+      "executable_price_verified": false,
+      "game_id": "401864517",
+      "home_team": "UTEP",
+      "kickoff": "2026-10-10T23:00:00.000Z",
+      "line": null,
+      "market": "moneyline",
+      "observed_at": "2026-10-10T22:27:13.208790+00:00",
+      "odds": [
+        295.0,
+        -380.0
+      ],
+      "original_request_url": null,
+      "reported_source_time": null,
+      "sides": [
+        "home",
+        "away"
+      ],
+      "source": "action_network",
+      "source_quote_time_verified": false,
+      "source_url": null
+    },
+    {
+      "away_team": "Nevada",
+      "book_identity_verified": false,
+      "book_key": "actionnetworkbook68",
+      "book_label": "ActionNetwork book 68",
+      "executable_price_verified": false,
+      "game_id": "401864517",
+      "home_team": "UTEP",
+      "kickoff": "2026-10-10T23:00:00.000Z",
+      "line": null,
+      "market": "moneyline",
+      "observed_at": "2026-10-10T22:27:13.208790+00:00",
+      "odds": [
+        295.0,
+        -375.0
+      ],
+      "original_request_url": null,
+      "reported_source_time": null,
+      "sides": [
+        "home",
+        "away"
+      ],
+      "source": "action_network",
+      "source_quote_time_verified": false,
+      "source_url": null
+    },
+    {
+      "away_team": "Nevada",
+      "book_identity_verified": false,
+      "book_key": "actionnetworkbook69",
+      "book_label": "ActionNetwork book 69",
+      "executable_price_verified": false,
+      "game_id": "401864517",
+      "home_team": "UTEP",
+      "kickoff": "2026-10-10T23:00:00.000Z",
+      "line": null,
+      "market": "moneyline",
+      "observed_at": "2026-10-10T22:27:13.208790+00:00",
+      "odds": [
+        310.0,
+        -400.0
+      ],
+      "original_request_url": null,
+      "reported_source_time": null,
+      "sides": [
+        "home",
+        "away"
+      ],
+      "source": "action_network",
+      "source_quote_time_verified": false,
+      "source_url": null
+    },
+    {
+      "away_team": "Nevada",
+      "book_identity_verified": false,
+      "book_key": "actionnetworkbook71",
+      "book_label": "ActionNetwork book 71",
+      "executable_price_verified": false,
+      "game_id": "401864517",
+      "home_team": "UTEP",
+      "kickoff": "2026-10-10T23:00:00.000Z",
+      "line": null,
+      "market": "moneyline",
+      "observed_at": "2026-10-10T22:27:13.208790+00:00",
+      "odds": [
+        310.0,
+        -435.0
+      ],
+      "original_request_url": null,
+      "reported_source_time": null,
+      "sides": [
+        "home",
+        "away"
+      ],
+      "source": "action_network",
+      "source_quote_time_verified": false,
+      "source_url": null
+    },
+    {
+      "away_team": "Nevada",
+      "book_identity_verified": false,
+      "book_key": "betmgm",
+      "book_label": "ActionNetwork book 75",
+      "executable_price_verified": false,
+      "game_id": "401864517",
+      "home_team": "UTEP",
+      "kickoff": "2026-10-10T23:00:00.000Z",
+      "line": null,
+      "market": "moneyline",
+      "observed_at": "2026-10-10T22:27:13.208790+00:00",
+      "odds": [
+        290.0,
+        -350.0
+      ],
+      "original_request_url": null,
+      "reported_source_time": null,
+      "sides": [
+        "home",
+        "away"
+      ],
+      "source": "action_network",
+      "source_quote_time_verified": false,
+      "source_url": null
+    },
+    {
+      "away_team": "Nevada",
+      "book_identity_verified": false,
+      "book_key": "draftkings",
+      "book_label": "Draft Kings",
+      "executable_price_verified": false,
+      "game_id": "401864517",
+      "home_team": "UTEP",
+      "kickoff": "2026-10-10T23:00:00.000Z",
+      "line": null,
+      "market": "moneyline",
+      "observed_at": "2026-10-10T22:27:13.208790+00:00",
+      "odds": [
+        295.0,
+        -375.0
+      ],
+      "original_request_url": null,
+      "reported_source_time": null,
+      "sides": [
+        "home",
+        "away"
+      ],
+      "source": "espn_core",
+      "source_quote_time_verified": false,
+      "source_url": null
+    },
+    {
+      "away_team": "North Dakota State",
+      "book_identity_verified": false,
+      "book_key": "draftkings",
+      "book_label": "ActionNetwork book 15",
+      "executable_price_verified": false,
+      "game_id": "401864518",
+      "home_team": "UNLV",
+      "kickoff": "2026-10-10T23:00:00.000Z",
+      "line": null,
+      "market": "moneyline",
+      "observed_at": "2026-10-10T22:27:13.209883+00:00",
+      "odds": [
+        112.0,
+        -134.0
+      ],
+      "original_request_url": null,
+      "reported_source_time": null,
+      "sides": [
+        "home",
+        "away"
+      ],
+      "source": "action_network",
+      "source_quote_time_verified": false,
+      "source_url": null
+    },
+    {
+      "away_team": "North Dakota State",
+      "book_identity_verified": false,
+      "book_key": "fanduel",
+      "book_label": "ActionNetwork book 30",
+      "executable_price_verified": false,
+      "game_id": "401864518",
+      "home_team": "UNLV",
+      "kickoff": "2026-10-10T23:00:00.000Z",
+      "line": null,
+      "market": "moneyline",
+      "observed_at": "2026-10-10T22:27:13.209883+00:00",
+      "odds": [
+        140.0,
+        -170.0
+      ],
+      "original_request_url": null,
+      "reported_source_time": null,
+      "sides": [
+        "home",
+        "away"
+      ],
+      "source": "action_network",
+      "source_quote_time_verified": false,
+      "source_url": null
+    },
+    {
+      "away_team": "North Dakota State",
+      "book_identity_verified": false,
+      "book_key": "actionnetworkbook49",
+      "book_label": "ActionNetwork book 49",
+      "executable_price_verified": false,
+      "game_id": "401864518",
+      "home_team": "UNLV",
+      "kickoff": "2026-10-10T23:00:00.000Z",
+      "line": null,
+      "market": "moneyline",
+      "observed_at": "2026-10-10T22:27:13.209883+00:00",
+      "odds": [
+        113.0,
+        -134.0
+      ],
+      "original_request_url": null,
+      "reported_source_time": null,
+      "sides": [
+        "home",
+        "away"
+      ],
+      "source": "action_network",
+      "source_quote_time_verified": false,
+      "source_url": null
+    },
+    {
+      "away_team": "North Dakota State",
+      "book_identity_verified": false,
+      "book_key": "actionnetworkbook68",
+      "book_label": "ActionNetwork book 68",
+      "executable_price_verified": false,
+      "game_id": "401864518",
+      "home_team": "UNLV",
+      "kickoff": "2026-10-10T23:00:00.000Z",
+      "line": null,
+      "market": "moneyline",
+      "observed_at": "2026-10-10T22:27:13.209883+00:00",
+      "odds": [
+        110.0,
+        -130.0
+      ],
+      "original_request_url": null,
+      "reported_source_time": null,
+      "sides": [
+        "home",
+        "away"
+      ],
+      "source": "action_network",
+      "source_quote_time_verified": false,
+      "source_url": null
+    },
+    {
+      "away_team": "North Dakota State",
+      "book_identity_verified": false,
+      "book_key": "actionnetworkbook69",
+      "book_label": "ActionNetwork book 69",
+      "executable_price_verified": false,
+      "game_id": "401864518",
+      "home_team": "UNLV",
+      "kickoff": "2026-10-10T23:00:00.000Z",
+      "line": null,
+      "market": "moneyline",
+      "observed_at": "2026-10-10T22:27:13.209883+00:00",
+      "odds": [
+        112.0,
+        -134.0
+      ],
+      "original_request_url": null,
+      "reported_source_time": null,
+      "sides": [
+        "home",
+        "away"
+      ],
+      "source": "action_network",
+      "source_quote_time_verified": false,
+      "source_url": null
+    },
+    {
+      "away_team": "North Dakota State",
+      "book_identity_verified": false,
+      "book_key": "actionnetworkbook71",
+      "book_label": "ActionNetwork book 71",
+      "executable_price_verified": false,
+      "game_id": "401864518",
+      "home_team": "UNLV",
+      "kickoff": "2026-10-10T23:00:00.000Z",
+      "line": null,
+      "market": "moneyline",
+      "observed_at": "2026-10-10T22:27:13.209883+00:00",
+      "odds": [
+        108.0,
+        -134.0
+      ],
+      "original_request_url": null,
+      "reported_source_time": null,
+      "sides": [
+        "home",
+        "away"
+      ],
+      "source": "action_network",
+      "source_quote_time_verified": false,
+      "source_url": null
+    },
+    {
+      "away_team": "North Dakota State",
+      "book_identity_verified": false,
+      "book_key": "betmgm",
+      "book_label": "ActionNetwork book 75",
+      "executable_price_verified": false,
+      "game_id": "401864518",
+      "home_team": "UNLV",
+      "kickoff": "2026-10-10T23:00:00.000Z",
+      "line": null,
+      "market": "moneyline",
+      "observed_at": "2026-10-10T22:27:13.209883+00:00",
+      "odds": [
+        135.0,
+        -160.0
+      ],
+      "original_request_url": null,
+      "reported_source_time": null,
+      "sides": [
+        "home",
+        "away"
+      ],
+      "source": "action_network",
+      "source_quote_time_verified": false,
+      "source_url": null
+    },
+    {
+      "away_team": "North Dakota State",
+      "book_identity_verified": false,
+      "book_key": "draftkings",
+      "book_label": "Draft Kings",
+      "executable_price_verified": false,
+      "game_id": "401864518",
+      "home_team": "UNLV",
+      "kickoff": "2026-10-10T23:00:00.000Z",
+      "line": null,
+      "market": "moneyline",
+      "observed_at": "2026-10-10T22:27:13.209883+00:00",
+      "odds": [
+        110.0,
+        -130.0
+      ],
+      "original_request_url": null,
+      "reported_source_time": null,
+      "sides": [
+        "home",
+        "away"
+      ],
+      "source": "espn_core",
+      "source_quote_time_verified": false,
+      "source_url": null
+    },
+    {
+      "away_team": "Coastal Carolina",
+      "book_identity_verified": false,
+      "book_key": "draftkings",
+      "book_label": "ActionNetwork book 15",
+      "executable_price_verified": false,
+      "game_id": "401869943",
+      "home_team": "Marshall",
+      "kickoff": "2026-10-10T23:00:00.000Z",
+      "line": null,
+      "market": "moneyline",
+      "observed_at": "2026-10-10T22:27:13.210967+00:00",
+      "odds": [
+        -185.0,
+        154.0
+      ],
+      "original_request_url": null,
+      "reported_source_time": null,
+      "sides": [
+        "home",
+        "away"
+      ],
+      "source": "action_network",
+      "source_quote_time_verified": false,
+      "source_url": null
+    },
+    {
+      "away_team": "Coastal Carolina",
+      "book_identity_verified": false,
+      "book_key": "fanduel",
+      "book_label": "ActionNetwork book 30",
+      "executable_price_verified": false,
+      "game_id": "401869943",
+      "home_team": "Marshall",
+      "kickoff": "2026-10-10T23:00:00.000Z",
+      "line": null,
+      "market": "moneyline",
+      "observed_at": "2026-10-10T22:27:13.210967+00:00",
+      "odds": [
+        -142.0,
+        120.0
+      ],
+      "original_request_url": null,
+      "reported_source_time": null,
+      "sides": [
+        "home",
+        "away"
+      ],
+      "source": "action_network",
+      "source_quote_time_verified": false,
+      "source_url": null
+    },
+    {
+      "away_team": "Coastal Carolina",
+      "book_identity_verified": false,
+      "book_key": "actionnetworkbook49",
+      "book_label": "ActionNetwork book 49",
+      "executable_price_verified": false,
+      "game_id": "401869943",
+      "home_team": "Marshall",
+      "kickoff": "2026-10-10T23:00:00.000Z",
+      "line": null,
+      "market": "moneyline",
+      "observed_at": "2026-10-10T22:27:13.210967+00:00",
+      "odds": [
+        -190.0,
+        158.0
+      ],
+      "original_request_url": null,
+      "reported_source_time": null,
+      "sides": [
+        "home",
+        "away"
+      ],
+      "source": "action_network",
+      "source_quote_time_verified": false,
+      "source_url": null
+    },
+    {
+      "away_team": "Coastal Carolina",
+      "book_identity_verified": false,
+      "book_key": "actionnetworkbook68",
+      "book_label": "ActionNetwork book 68",
+      "executable_price_verified": false,
+      "game_id": "401869943",
+      "home_team": "Marshall",
+      "kickoff": "2026-10-10T23:00:00.000Z",
+      "line": null,
+      "market": "moneyline",
+      "observed_at": "2026-10-10T22:27:13.210967+00:00",
+      "odds": [
+        -185.0,
+        154.0
+      ],
+      "original_request_url": null,
+      "reported_source_time": null,
+      "sides": [
+        "home",
+        "away"
+      ],
+      "source": "action_network",
+      "source_quote_time_verified": false,
+      "source_url": null
+    },
+    {
+      "away_team": "Coastal Carolina",
+      "book_identity_verified": false,
+      "book_key": "actionnetworkbook69",
+      "book_label": "ActionNetwork book 69",
+      "executable_price_verified": false,
+      "game_id": "401869943",
+      "home_team": "Marshall",
+      "kickoff": "2026-10-10T23:00:00.000Z",
+      "line": null,
+      "market": "moneyline",
+      "observed_at": "2026-10-10T22:27:13.210967+00:00",
+      "odds": [
+        -192.0,
+        158.0
+      ],
+      "original_request_url": null,
+      "reported_source_time": null,
+      "sides": [
+        "home",
+        "away"
+      ],
+      "source": "action_network",
+      "source_quote_time_verified": false,
+      "source_url": null
+    },
+    {
+      "away_team": "Coastal Carolina",
+      "book_identity_verified": false,
+      "book_key": "actionnetworkbook71",
+      "book_label": "ActionNetwork book 71",
+      "executable_price_verified": false,
+      "game_id": "401869943",
+      "home_team": "Marshall",
+      "kickoff": "2026-10-10T23:00:00.000Z",
+      "line": null,
+      "market": "moneyline",
+      "observed_at": "2026-10-10T22:27:13.210967+00:00",
+      "odds": [
+        -200.0,
+        160.0
+      ],
+      "original_request_url": null,
+      "reported_source_time": null,
+      "sides": [
+        "home",
+        "away"
+      ],
+      "source": "action_network",
+      "source_quote_time_verified": false,
+      "source_url": null
+    },
+    {
+      "away_team": "Coastal Carolina",
+      "book_identity_verified": false,
+      "book_key": "betmgm",
+      "book_label": "ActionNetwork book 75",
+      "executable_price_verified": false,
+      "game_id": "401869943",
+      "home_team": "Marshall",
+      "kickoff": "2026-10-10T23:00:00.000Z",
+      "line": null,
+      "market": "moneyline",
+      "observed_at": "2026-10-10T22:27:13.210967+00:00",
+      "odds": [
+        -175.0,
+        145.0
+      ],
+      "original_request_url": null,
+      "reported_source_time": null,
+      "sides": [
+        "home",
+        "away"
+      ],
+      "source": "action_network",
+      "source_quote_time_verified": false,
+      "source_url": null
+    },
+    {
+      "away_team": "Coastal Carolina",
+      "book_identity_verified": false,
+      "book_key": "draftkings",
+      "book_label": "Draft Kings",
+      "executable_price_verified": false,
+      "game_id": "401869943",
+      "home_team": "Marshall",
+      "kickoff": "2026-10-10T23:00:00.000Z",
+      "line": null,
+      "market": "moneyline",
+      "observed_at": "2026-10-10T22:27:13.210967+00:00",
+      "odds": [
+        -185.0,
+        154.0
+      ],
+      "original_request_url": null,
+      "reported_source_time": null,
+      "sides": [
+        "home",
+        "away"
+      ],
+      "source": "espn_core",
+      "source_quote_time_verified": false,
+      "source_url": null
+    },
+    {
+      "away_team": "Georgia",
+      "book_identity_verified": false,
+      "book_key": "draftkings",
+      "book_label": "ActionNetwork book 15",
+      "executable_price_verified": false,
+      "game_id": "401856712",
+      "home_team": "Alabama",
+      "kickoff": "2026-10-10T23:30:00.000Z",
+      "line": null,
+      "market": "moneyline",
+      "observed_at": "2026-10-10T22:27:13.212444+00:00",
+      "odds": [
+        -125.0,
+        -105.0
+      ],
+      "original_request_url": null,
+      "reported_source_time": null,
+      "sides": [
+        "home",
+        "away"
+      ],
+      "source": "action_network",
+      "source_quote_time_verified": false,
+      "source_url": null
+    },
+    {
+      "away_team": "Georgia",
+      "book_identity_verified": false,
+      "book_key": "fanduel",
+      "book_label": "ActionNetwork book 30",
+      "executable_price_verified": false,
+      "game_id": "401856712",
+      "home_team": "Alabama",
+      "kickoff": "2026-10-10T23:30:00.000Z",
+      "line": null,
+      "market": "moneyline",
+      "observed_at": "2026-10-10T22:27:13.212444+00:00",
+      "odds": [
+        125.0,
+        -150.0
+      ],
+      "original_request_url": null,
+      "reported_source_time": null,
+      "sides": [
+        "home",
+        "away"
+      ],
+      "source": "action_network",
+      "source_quote_time_verified": false,
+      "source_url": null
+    },
+    {
+      "away_team": "Georgia",
+      "book_identity_verified": false,
+      "book_key": "actionnetworkbook49",
+      "book_label": "ActionNetwork book 49",
+      "executable_price_verified": false,
+      "game_id": "401856712",
+      "home_team": "Alabama",
+      "kickoff": "2026-10-10T23:30:00.000Z",
+      "line": null,
+      "market": "moneyline",
+      "observed_at": "2026-10-10T22:27:13.212444+00:00",
+      "odds": [
+        -122.0,
+        104.0
+      ],
+      "original_request_url": null,
+      "reported_source_time": null,
+      "sides": [
+        "home",
+        "away"
+      ],
+      "source": "action_network",
+      "source_quote_time_verified": false,
+      "source_url": null
+    },
+    {
+      "away_team": "Georgia",
+      "book_identity_verified": false,
+      "book_key": "actionnetworkbook68",
+      "book_label": "ActionNetwork book 68",
+      "executable_price_verified": false,
+      "game_id": "401856712",
+      "home_team": "Alabama",
+      "kickoff": "2026-10-10T23:30:00.000Z",
+      "line": null,
+      "market": "moneyline",
+      "observed_at": "2026-10-10T22:27:13.212444+00:00",
+      "odds": [
+        -125.0,
+        105.0
+      ],
+      "original_request_url": null,
+      "reported_source_time": null,
+      "sides": [
+        "home",
+        "away"
+      ],
+      "source": "action_network",
+      "source_quote_time_verified": false,
+      "source_url": null
+    },
+    {
+      "away_team": "Georgia",
+      "book_identity_verified": false,
+      "book_key": "actionnetworkbook69",
+      "book_label": "ActionNetwork book 69",
+      "executable_price_verified": false,
+      "game_id": "401856712",
+      "home_team": "Alabama",
+      "kickoff": "2026-10-10T23:30:00.000Z",
+      "line": null,
+      "market": "moneyline",
+      "observed_at": "2026-10-10T22:27:13.212444+00:00",
+      "odds": [
+        -130.0,
+        108.0
+      ],
+      "original_request_url": null,
+      "reported_source_time": null,
+      "sides": [
+        "home",
+        "away"
+      ],
+      "source": "action_network",
+      "source_quote_time_verified": false,
+      "source_url": null
+    },
+    {
+      "away_team": "Georgia",
+      "book_identity_verified": false,
+      "book_key": "actionnetworkbook71",
+      "book_label": "ActionNetwork book 71",
+      "executable_price_verified": false,
+      "game_id": "401856712",
+      "home_team": "Alabama",
+      "kickoff": "2026-10-10T23:30:00.000Z",
+      "line": null,
+      "market": "moneyline",
+      "observed_at": "2026-10-10T22:27:13.212444+00:00",
+      "odds": [
+        -132.0,
+        107.0
+      ],
+      "original_request_url": null,
+      "reported_source_time": null,
+      "sides": [
+        "home",
+        "away"
+      ],
+      "source": "action_network",
+      "source_quote_time_verified": false,
+      "source_url": null
+    },
+    {
+      "away_team": "Georgia",
+      "book_identity_verified": false,
+      "book_key": "betmgm",
+      "book_label": "ActionNetwork book 75",
+      "executable_price_verified": false,
+      "game_id": "401856712",
+      "home_team": "Alabama",
+      "kickoff": "2026-10-10T23:30:00.000Z",
+      "line": null,
+      "market": "moneyline",
+      "observed_at": "2026-10-10T22:27:13.212444+00:00",
+      "odds": [
+        -120.0,
+        100.0
+      ],
+      "original_request_url": null,
+      "reported_source_time": null,
+      "sides": [
+        "home",
+        "away"
+      ],
+      "source": "action_network",
+      "source_quote_time_verified": false,
+      "source_url": null
+    },
+    {
+      "away_team": "Georgia",
+      "book_identity_verified": false,
+      "book_key": "draftkings",
+      "book_label": "Draft Kings",
+      "executable_price_verified": false,
+      "game_id": "401856712",
+      "home_team": "Alabama",
+      "kickoff": "2026-10-10T23:30:00.000Z",
+      "line": null,
+      "market": "moneyline",
+      "observed_at": "2026-10-10T22:27:13.212444+00:00",
+      "odds": [
+        -125.0,
+        105.0
+      ],
+      "original_request_url": null,
+      "reported_source_time": null,
+      "sides": [
+        "home",
+        "away"
+      ],
+      "source": "espn_core",
+      "source_quote_time_verified": false,
+      "source_url": null
+    },
+    {
+      "away_team": "Syracuse",
+      "book_identity_verified": false,
+      "book_key": "draftkings",
+      "book_label": "ActionNetwork book 15",
+      "executable_price_verified": false,
+      "game_id": "401858258",
+      "home_team": "Virginia",
+      "kickoff": "2026-10-10T23:30:00.000Z",
+      "line": null,
+      "market": "moneyline",
+      "observed_at": "2026-10-10T22:27:13.213511+00:00",
+      "odds": [
+        -550.0,
+        410.0
+      ],
+      "original_request_url": null,
+      "reported_source_time": null,
+      "sides": [
+        "home",
+        "away"
+      ],
+      "source": "action_network",
+      "source_quote_time_verified": false,
+      "source_url": null
+    },
+    {
+      "away_team": "Syracuse",
+      "book_identity_verified": false,
+      "book_key": "fanduel",
+      "book_label": "ActionNetwork book 30",
+      "executable_price_verified": false,
+      "game_id": "401858258",
+      "home_team": "Virginia",
+      "kickoff": "2026-10-10T23:30:00.000Z",
+      "line": null,
+      "market": "moneyline",
+      "observed_at": "2026-10-10T22:27:13.213511+00:00",
+      "odds": [
+        -260.0,
+        210.0
+      ],
+      "original_request_url": null,
+      "reported_source_time": null,
+      "sides": [
+        "home",
+        "away"
+      ],
+      "source": "action_network",
+      "source_quote_time_verified": false,
+      "source_url": null
+    },
+    {
+      "away_team": "Syracuse",
+      "book_identity_verified": false,
+      "book_key": "actionnetworkbook49",
+      "book_label": "ActionNetwork book 49",
+      "executable_price_verified": false,
+      "game_id": "401858258",
+      "home_team": "Virginia",
+      "kickoff": "2026-10-10T23:30:00.000Z",
+      "line": null,
+      "market": "moneyline",
+      "observed_at": "2026-10-10T22:27:13.213511+00:00",
+      "odds": [
+        -560.0,
+        400.0
+      ],
+      "original_request_url": null,
+      "reported_source_time": null,
+      "sides": [
+        "home",
+        "away"
+      ],
+      "source": "action_network",
+      "source_quote_time_verified": false,
+      "source_url": null
+    },
+    {
+      "away_team": "Syracuse",
+      "book_identity_verified": false,
+      "book_key": "actionnetworkbook68",
+      "book_label": "ActionNetwork book 68",
+      "executable_price_verified": false,
+      "game_id": "401858258",
+      "home_team": "Virginia",
+      "kickoff": "2026-10-10T23:30:00.000Z",
+      "line": null,
+      "market": "moneyline",
+      "observed_at": "2026-10-10T22:27:13.213511+00:00",
+      "odds": [
+        -550.0,
+        410.0
+      ],
+      "original_request_url": null,
+      "reported_source_time": null,
+      "sides": [
+        "home",
+        "away"
+      ],
+      "source": "action_network",
+      "source_quote_time_verified": false,
+      "source_url": null
+    },
+    {
+      "away_team": "Syracuse",
+      "book_identity_verified": false,
+      "book_key": "actionnetworkbook69",
+      "book_label": "ActionNetwork book 69",
+      "executable_price_verified": false,
+      "game_id": "401858258",
+      "home_team": "Virginia",
+      "kickoff": "2026-10-10T23:30:00.000Z",
+      "line": null,
+      "market": "moneyline",
+      "observed_at": "2026-10-10T22:27:13.213511+00:00",
+      "odds": [
+        -630.0,
+        450.0
+      ],
+      "original_request_url": null,
+      "reported_source_time": null,
+      "sides": [
+        "home",
+        "away"
+      ],
+      "source": "action_network",
+      "source_quote_time_verified": false,
+      "source_url": null
+    },
+    {
+      "away_team": "Syracuse",
+      "book_identity_verified": false,
+      "book_key": "actionnetworkbook71",
+      "book_label": "ActionNetwork book 71",
+      "executable_price_verified": false,
+      "game_id": "401858258",
+      "home_team": "Virginia",
+      "kickoff": "2026-10-10T23:30:00.000Z",
+      "line": null,
+      "market": "moneyline",
+      "observed_at": "2026-10-10T22:27:13.213511+00:00",
+      "odds": [
+        -715.0,
+        475.0
+      ],
+      "original_request_url": null,
+      "reported_source_time": null,
+      "sides": [
+        "home",
+        "away"
+      ],
+      "source": "action_network",
+      "source_quote_time_verified": false,
+      "source_url": null
+    },
+    {
+      "away_team": "Syracuse",
+      "book_identity_verified": false,
+      "book_key": "betmgm",
+      "book_label": "ActionNetwork book 75",
+      "executable_price_verified": false,
+      "game_id": "401858258",
+      "home_team": "Virginia",
+      "kickoff": "2026-10-10T23:30:00.000Z",
+      "line": null,
+      "market": "moneyline",
+      "observed_at": "2026-10-10T22:27:13.213511+00:00",
+      "odds": [
+        -350.0,
+        290.0
+      ],
+      "original_request_url": null,
+      "reported_source_time": null,
+      "sides": [
+        "home",
+        "away"
+      ],
+      "source": "action_network",
+      "source_quote_time_verified": false,
+      "source_url": null
+    },
+    {
+      "away_team": "Syracuse",
+      "book_identity_verified": false,
+      "book_key": "draftkings",
+      "book_label": "Draft Kings",
+      "executable_price_verified": false,
+      "game_id": "401858258",
+      "home_team": "Virginia",
+      "kickoff": "2026-10-10T23:30:00.000Z",
+      "line": null,
+      "market": "moneyline",
+      "observed_at": "2026-10-10T22:27:13.213511+00:00",
+      "odds": [
+        -550.0,
+        410.0
+      ],
+      "original_request_url": null,
+      "reported_source_time": null,
+      "sides": [
+        "home",
+        "away"
+      ],
+      "source": "espn_core",
+      "source_quote_time_verified": false,
+      "source_url": null
+    },
+    {
+      "away_team": "USC",
+      "book_identity_verified": false,
+      "book_key": "draftkings",
+      "book_label": "ActionNetwork book 15",
+      "executable_price_verified": false,
+      "game_id": "401858485",
+      "home_team": "Penn State",
+      "kickoff": "2026-10-10T23:30:00.000Z",
+      "line": null,
+      "market": "moneyline",
+      "observed_at": "2026-10-10T22:27:13.214587+00:00",
+      "odds": [
+        -105.0,
+        -114.0
+      ],
+      "original_request_url": null,
+      "reported_source_time": null,
+      "sides": [
+        "home",
+        "away"
+      ],
+      "source": "action_network",
+      "source_quote_time_verified": false,
+      "source_url": null
+    },
+    {
+      "away_team": "USC",
+      "book_identity_verified": false,
+      "book_key": "fanduel",
+      "book_label": "ActionNetwork book 30",
+      "executable_price_verified": false,
+      "game_id": "401858485",
+      "home_team": "Penn State",
+      "kickoff": "2026-10-10T23:30:00.000Z",
+      "line": null,
+      "market": "moneyline",
+      "observed_at": "2026-10-10T22:27:13.214587+00:00",
+      "odds": [
+        -125.0,
+        105.0
+      ],
+      "original_request_url": null,
+      "reported_source_time": null,
+      "sides": [
+        "home",
+        "away"
+      ],
+      "source": "action_network",
+      "source_quote_time_verified": false,
+      "source_url": null
+    },
+    {
+      "away_team": "USC",
+      "book_identity_verified": false,
+      "book_key": "actionnetworkbook49",
+      "book_label": "ActionNetwork book 49",
+      "executable_price_verified": false,
+      "game_id": "401858485",
+      "home_team": "Penn State",
+      "kickoff": "2026-10-10T23:30:00.000Z",
+      "line": null,
+      "market": "moneyline",
+      "observed_at": "2026-10-10T22:27:13.214587+00:00",
+      "odds": [
+        -106.0,
+        -112.0
+      ],
+      "original_request_url": null,
+      "reported_source_time": null,
+      "sides": [
+        "home",
+        "away"
+      ],
+      "source": "action_network",
+      "source_quote_time_verified": false,
+      "source_url": null
+    },
+    {
+      "away_team": "USC",
+      "book_identity_verified": false,
+      "book_key": "actionnetworkbook68",
+      "book_label": "ActionNetwork book 68",
+      "executable_price_verified": false,
+      "game_id": "401858485",
+      "home_team": "Penn State",
+      "kickoff": "2026-10-10T23:30:00.000Z",
+      "line": null,
+      "market": "moneyline",
+      "observed_at": "2026-10-10T22:27:13.214587+00:00",
+      "odds": [
+        -105.0,
+        -115.0
+      ],
+      "original_request_url": null,
+      "reported_source_time": null,
+      "sides": [
+        "home",
+        "away"
+      ],
+      "source": "action_network",
+      "source_quote_time_verified": false,
+      "source_url": null
+    },
+    {
+      "away_team": "USC",
+      "book_identity_verified": false,
+      "book_key": "actionnetworkbook69",
+      "book_label": "ActionNetwork book 69",
+      "executable_price_verified": false,
+      "game_id": "401858485",
+      "home_team": "Penn State",
+      "kickoff": "2026-10-10T23:30:00.000Z",
+      "line": null,
+      "market": "moneyline",
+      "observed_at": "2026-10-10T22:27:13.214587+00:00",
+      "odds": [
+        -106.0,
+        -113.0
+      ],
+      "original_request_url": null,
+      "reported_source_time": null,
+      "sides": [
+        "home",
+        "away"
+      ],
+      "source": "action_network",
+      "source_quote_time_verified": false,
+      "source_url": null
+    },
+    {
+      "away_team": "USC",
+      "book_identity_verified": false,
+      "book_key": "actionnetworkbook71",
+      "book_label": "ActionNetwork book 71",
+      "executable_price_verified": false,
+      "game_id": "401858485",
+      "home_team": "Penn State",
+      "kickoff": "2026-10-10T23:30:00.000Z",
+      "line": null,
+      "market": "moneyline",
+      "observed_at": "2026-10-10T22:27:13.214587+00:00",
+      "odds": [
+        -113.0,
+        -110.0
+      ],
+      "original_request_url": null,
+      "reported_source_time": null,
+      "sides": [
+        "home",
+        "away"
+      ],
+      "source": "action_network",
+      "source_quote_time_verified": false,
+      "source_url": null
+    },
+    {
+      "away_team": "USC",
+      "book_identity_verified": false,
+      "book_key": "betmgm",
+      "book_label": "ActionNetwork book 75",
+      "executable_price_verified": false,
+      "game_id": "401858485",
+      "home_team": "Penn State",
+      "kickoff": "2026-10-10T23:30:00.000Z",
+      "line": null,
+      "market": "moneyline",
+      "observed_at": "2026-10-10T22:27:13.214587+00:00",
+      "odds": [
+        -120.0,
+        100.0
+      ],
+      "original_request_url": null,
+      "reported_source_time": null,
+      "sides": [
+        "home",
+        "away"
+      ],
+      "source": "action_network",
+      "source_quote_time_verified": false,
+      "source_url": null
+    },
+    {
+      "away_team": "USC",
+      "book_identity_verified": false,
+      "book_key": "draftkings",
+      "book_label": "Draft Kings",
+      "executable_price_verified": false,
+      "game_id": "401858485",
+      "home_team": "Penn State",
+      "kickoff": "2026-10-10T23:30:00.000Z",
+      "line": null,
+      "market": "moneyline",
+      "observed_at": "2026-10-10T22:27:13.214587+00:00",
+      "odds": [
+        -105.0,
+        -115.0
+      ],
+      "original_request_url": null,
+      "reported_source_time": null,
+      "sides": [
+        "home",
+        "away"
+      ],
+      "source": "espn_core",
+      "source_quote_time_verified": false,
+      "source_url": null
+    },
+    {
+      "away_team": "Air Force",
+      "book_identity_verified": false,
+      "book_key": "draftkings",
+      "book_label": "ActionNetwork book 15",
+      "executable_price_verified": false,
+      "game_id": "401864516",
+      "home_team": "Northern Illinois",
+      "kickoff": "2026-10-10T23:30:00.000Z",
+      "line": null,
+      "market": "moneyline",
+      "observed_at": "2026-10-10T22:27:13.215665+00:00",
+      "odds": [
+        240.0,
+        -300.0
+      ],
+      "original_request_url": null,
+      "reported_source_time": null,
+      "sides": [
+        "home",
+        "away"
+      ],
+      "source": "action_network",
+      "source_quote_time_verified": false,
+      "source_url": null
+    },
+    {
+      "away_team": "Air Force",
+      "book_identity_verified": false,
+      "book_key": "fanduel",
+      "book_label": "ActionNetwork book 30",
+      "executable_price_verified": false,
+      "game_id": "401864516",
+      "home_team": "Northern Illinois",
+      "kickoff": "2026-10-10T23:30:00.000Z",
+      "line": null,
+      "market": "moneyline",
+      "observed_at": "2026-10-10T22:27:13.215665+00:00",
+      "odds": [
+        360.0,
+        -470.0
+      ],
+      "original_request_url": null,
+      "reported_source_time": null,
+      "sides": [
+        "home",
+        "away"
+      ],
+      "source": "action_network",
+      "source_quote_time_verified": false,
+      "source_url": null
+    },
+    {
+      "away_team": "Air Force",
+      "book_identity_verified": false,
+      "book_key": "actionnetworkbook49",
+      "book_label": "ActionNetwork book 49",
+      "executable_price_verified": false,
+      "game_id": "401864516",
+      "home_team": "Northern Illinois",
+      "kickoff": "2026-10-10T23:30:00.000Z",
+      "line": null,
+      "market": "moneyline",
+      "observed_at": "2026-10-10T22:27:13.215665+00:00",
+      "odds": [
+        240.0,
+        -295.0
+      ],
+      "original_request_url": null,
+      "reported_source_time": null,
+      "sides": [
+        "home",
+        "away"
+      ],
+      "source": "action_network",
+      "source_quote_time_verified": false,
+      "source_url": null
+    },
+    {
+      "away_team": "Air Force",
+      "book_identity_verified": false,
+      "book_key": "actionnetworkbook68",
+      "book_label": "ActionNetwork book 68",
+      "executable_price_verified": false,
+      "game_id": "401864516",
+      "home_team": "Northern Illinois",
+      "kickoff": "2026-10-10T23:30:00.000Z",
+      "line": null,
+      "market": "moneyline",
+      "observed_at": "2026-10-10T22:27:13.215665+00:00",
+      "odds": [
+        240.0,
+        -298.0
+      ],
+      "original_request_url": null,
+      "reported_source_time": null,
+      "sides": [
+        "home",
+        "away"
+      ],
+      "source": "action_network",
+      "source_quote_time_verified": false,
+      "source_url": null
+    },
+    {
+      "away_team": "Air Force",
+      "book_identity_verified": false,
+      "book_key": "actionnetworkbook69",
+      "book_label": "ActionNetwork book 69",
+      "executable_price_verified": false,
+      "game_id": "401864516",
+      "home_team": "Northern Illinois",
+      "kickoff": "2026-10-10T23:30:00.000Z",
+      "line": null,
+      "market": "moneyline",
+      "observed_at": "2026-10-10T22:27:13.215665+00:00",
+      "odds": [
+        235.0,
+        -295.0
+      ],
+      "original_request_url": null,
+      "reported_source_time": null,
+      "sides": [
+        "home",
+        "away"
+      ],
+      "source": "action_network",
+      "source_quote_time_verified": false,
+      "source_url": null
+    },
+    {
+      "away_team": "Air Force",
+      "book_identity_verified": false,
+      "book_key": "actionnetworkbook71",
+      "book_label": "ActionNetwork book 71",
+      "executable_price_verified": false,
+      "game_id": "401864516",
+      "home_team": "Northern Illinois",
+      "kickoff": "2026-10-10T23:30:00.000Z",
+      "line": null,
+      "market": "moneyline",
+      "observed_at": "2026-10-10T22:27:13.215665+00:00",
+      "odds": [
+        280.0,
+        -375.0
+      ],
+      "original_request_url": null,
+      "reported_source_time": null,
+      "sides": [
+        "home",
+        "away"
+      ],
+      "source": "action_network",
+      "source_quote_time_verified": false,
+      "source_url": null
+    },
+    {
+      "away_team": "Air Force",
+      "book_identity_verified": false,
+      "book_key": "betmgm",
+      "book_label": "ActionNetwork book 75",
+      "executable_price_verified": false,
+      "game_id": "401864516",
+      "home_team": "Northern Illinois",
+      "kickoff": "2026-10-10T23:30:00.000Z",
+      "line": null,
+      "market": "moneyline",
+      "observed_at": "2026-10-10T22:27:13.215665+00:00",
+      "odds": [
+        260.0,
+        -325.0
+      ],
+      "original_request_url": null,
+      "reported_source_time": null,
+      "sides": [
+        "home",
+        "away"
+      ],
+      "source": "action_network",
+      "source_quote_time_verified": false,
+      "source_url": null
+    },
+    {
+      "away_team": "Air Force",
+      "book_identity_verified": false,
+      "book_key": "draftkings",
+      "book_label": "Draft Kings",
+      "executable_price_verified": false,
+      "game_id": "401864516",
+      "home_team": "Northern Illinois",
+      "kickoff": "2026-10-10T23:30:00.000Z",
+      "line": null,
+      "market": "moneyline",
+      "observed_at": "2026-10-10T22:27:13.215665+00:00",
+      "odds": [
+        240.0,
+        -298.0
+      ],
+      "original_request_url": null,
+      "reported_source_time": null,
+      "sides": [
+        "home",
+        "away"
+      ],
+      "source": "espn_core",
+      "source_quote_time_verified": false,
+      "source_url": null
+    },
+    {
+      "away_team": "James Madison",
+      "book_identity_verified": false,
+      "book_key": "draftkings",
+      "book_label": "ActionNetwork book 15",
+      "executable_price_verified": false,
+      "game_id": "401869949",
+      "home_team": "Georgia Southern",
+      "kickoff": "2026-10-10T23:30:00.000Z",
+      "line": null,
+      "market": "moneyline",
+      "observed_at": "2026-10-10T22:27:13.216728+00:00",
+      "odds": [
+        250.0,
+        -310.0
+      ],
+      "original_request_url": null,
+      "reported_source_time": null,
+      "sides": [
+        "home",
+        "away"
+      ],
+      "source": "action_network",
+      "source_quote_time_verified": false,
+      "source_url": null
+    },
+    {
+      "away_team": "James Madison",
+      "book_identity_verified": false,
+      "book_key": "fanduel",
+      "book_label": "ActionNetwork book 30",
+      "executable_price_verified": false,
+      "game_id": "401869949",
+      "home_team": "Georgia Southern",
+      "kickoff": "2026-10-10T23:30:00.000Z",
+      "line": null,
+      "market": "moneyline",
+      "observed_at": "2026-10-10T22:27:13.216728+00:00",
+      "odds": [
+        280.0,
+        -355.0
+      ],
+      "original_request_url": null,
+      "reported_source_time": null,
+      "sides": [
+        "home",
+        "away"
+      ],
+      "source": "action_network",
+      "source_quote_time_verified": false,
+      "source_url": null
+    },
+    {
+      "away_team": "James Madison",
+      "book_identity_verified": false,
+      "book_key": "actionnetworkbook49",
+      "book_label": "ActionNetwork book 49",
+      "executable_price_verified": false,
+      "game_id": "401869949",
+      "home_team": "Georgia Southern",
+      "kickoff": "2026-10-10T23:30:00.000Z",
+      "line": null,
+      "market": "moneyline",
+      "observed_at": "2026-10-10T22:27:13.216728+00:00",
+      "odds": [
+        250.0,
+        -320.0
+      ],
+      "original_request_url": null,
+      "reported_source_time": null,
+      "sides": [
+        "home",
+        "away"
+      ],
+      "source": "action_network",
+      "source_quote_time_verified": false,
+      "source_url": null
+    },
+    {
+      "away_team": "James Madison",
+      "book_identity_verified": false,
+      "book_key": "actionnetworkbook68",
+      "book_label": "ActionNetwork book 68",
+      "executable_price_verified": false,
+      "game_id": "401869949",
+      "home_team": "Georgia Southern",
+      "kickoff": "2026-10-10T23:30:00.000Z",
+      "line": null,
+      "market": "moneyline",
+      "observed_at": "2026-10-10T22:27:13.216728+00:00",
+      "odds": [
+        250.0,
+        -310.0
+      ],
+      "original_request_url": null,
+      "reported_source_time": null,
+      "sides": [
+        "home",
+        "away"
+      ],
+      "source": "action_network",
+      "source_quote_time_verified": false,
+      "source_url": null
+    },
+    {
+      "away_team": "James Madison",
+      "book_identity_verified": false,
+      "book_key": "actionnetworkbook69",
+      "book_label": "ActionNetwork book 69",
+      "executable_price_verified": false,
+      "game_id": "401869949",
+      "home_team": "Georgia Southern",
+      "kickoff": "2026-10-10T23:30:00.000Z",
+      "line": null,
+      "market": "moneyline",
+      "observed_at": "2026-10-10T22:27:13.216728+00:00",
+      "odds": [
+        235.0,
+        -295.0
+      ],
+      "original_request_url": null,
+      "reported_source_time": null,
+      "sides": [
+        "home",
+        "away"
+      ],
+      "source": "action_network",
+      "source_quote_time_verified": false,
+      "source_url": null
+    },
+    {
+      "away_team": "James Madison",
+      "book_identity_verified": false,
+      "book_key": "actionnetworkbook71",
+      "book_label": "ActionNetwork book 71",
+      "executable_price_verified": false,
+      "game_id": "401869949",
+      "home_team": "Georgia Southern",
+      "kickoff": "2026-10-10T23:30:00.000Z",
+      "line": null,
+      "market": "moneyline",
+      "observed_at": "2026-10-10T22:27:13.216728+00:00",
+      "odds": [
+        255.0,
+        -335.0
+      ],
+      "original_request_url": null,
+      "reported_source_time": null,
+      "sides": [
+        "home",
+        "away"
+      ],
+      "source": "action_network",
+      "source_quote_time_verified": false,
+      "source_url": null
+    },
+    {
+      "away_team": "James Madison",
+      "book_identity_verified": false,
+      "book_key": "betmgm",
+      "book_label": "ActionNetwork book 75",
+      "executable_price_verified": false,
+      "game_id": "401869949",
+      "home_team": "Georgia Southern",
+      "kickoff": "2026-10-10T23:30:00.000Z",
+      "line": null,
+      "market": "moneyline",
+      "observed_at": "2026-10-10T22:27:13.216728+00:00",
+      "odds": [
+        250.0,
+        -300.0
+      ],
+      "original_request_url": null,
+      "reported_source_time": null,
+      "sides": [
+        "home",
+        "away"
+      ],
+      "source": "action_network",
+      "source_quote_time_verified": false,
+      "source_url": null
+    },
+    {
+      "away_team": "James Madison",
+      "book_identity_verified": false,
+      "book_key": "draftkings",
+      "book_label": "Draft Kings",
+      "executable_price_verified": false,
+      "game_id": "401869949",
+      "home_team": "Georgia Southern",
+      "kickoff": "2026-10-10T23:30:00.000Z",
+      "line": null,
+      "market": "moneyline",
+      "observed_at": "2026-10-10T22:27:13.216728+00:00",
+      "odds": [
+        250.0,
+        -310.0
+      ],
+      "original_request_url": null,
+      "reported_source_time": null,
+      "sides": [
+        "home",
+        "away"
+      ],
+      "source": "espn_core",
+      "source_quote_time_verified": false,
+      "source_url": null
+    },
+    {
+      "away_team": "Louisiana",
+      "book_identity_verified": false,
+      "book_key": "draftkings",
+      "book_label": "ActionNetwork book 15",
+      "executable_price_verified": false,
+      "game_id": "401869965",
+      "home_team": "Louisiana Tech",
+      "kickoff": "2026-10-10T23:30:00.000Z",
+      "line": null,
+      "market": "moneyline",
+      "observed_at": "2026-10-10T22:27:13.217789+00:00",
+      "odds": [
+        -155.0,
+        128.0
+      ],
+      "original_request_url": null,
+      "reported_source_time": null,
+      "sides": [
+        "home",
+        "away"
+      ],
+      "source": "action_network",
+      "source_quote_time_verified": false,
+      "source_url": null
+    },
+    {
+      "away_team": "Louisiana",
+      "book_identity_verified": false,
+      "book_key": "fanduel",
+      "book_label": "ActionNetwork book 30",
+      "executable_price_verified": false,
+      "game_id": "401869965",
+      "home_team": "Louisiana Tech",
+      "kickoff": "2026-10-10T23:30:00.000Z",
+      "line": null,
+      "market": "moneyline",
+      "observed_at": "2026-10-10T22:27:13.217789+00:00",
+      "odds": [
+        -125.0,
+        105.0
+      ],
+      "original_request_url": null,
+      "reported_source_time": null,
+      "sides": [
+        "home",
+        "away"
+      ],
+      "source": "action_network",
+      "source_quote_time_verified": false,
+      "source_url": null
+    },
+    {
+      "away_team": "Louisiana",
+      "book_identity_verified": false,
+      "book_key": "actionnetworkbook49",
+      "book_label": "ActionNetwork book 49",
+      "executable_price_verified": false,
+      "game_id": "401869965",
+      "home_team": "Louisiana Tech",
+      "kickoff": "2026-10-10T23:30:00.000Z",
+      "line": null,
+      "market": "moneyline",
+      "observed_at": "2026-10-10T22:27:13.217789+00:00",
+      "odds": [
+        -152.0,
+        128.0
+      ],
+      "original_request_url": null,
+      "reported_source_time": null,
+      "sides": [
+        "home",
+        "away"
+      ],
+      "source": "action_network",
+      "source_quote_time_verified": false,
+      "source_url": null
+    },
+    {
+      "away_team": "Louisiana",
+      "book_identity_verified": false,
+      "book_key": "actionnetworkbook68",
+      "book_label": "ActionNetwork book 68",
+      "executable_price_verified": false,
+      "game_id": "401869965",
+      "home_team": "Louisiana Tech",
+      "kickoff": "2026-10-10T23:30:00.000Z",
+      "line": null,
+      "market": "moneyline",
+      "observed_at": "2026-10-10T22:27:13.217789+00:00",
+      "odds": [
+        -155.0,
+        130.0
+      ],
+      "original_request_url": null,
+      "reported_source_time": null,
+      "sides": [
+        "home",
+        "away"
+      ],
+      "source": "action_network",
+      "source_quote_time_verified": false,
+      "source_url": null
+    },
+    {
+      "away_team": "Louisiana",
+      "book_identity_verified": false,
+      "book_key": "actionnetworkbook69",
+      "book_label": "ActionNetwork book 69",
+      "executable_price_verified": false,
+      "game_id": "401869965",
+      "home_team": "Louisiana Tech",
+      "kickoff": "2026-10-10T23:30:00.000Z",
+      "line": null,
+      "market": "moneyline",
+      "observed_at": "2026-10-10T22:27:13.217789+00:00",
+      "odds": [
+        -152.0,
+        126.0
+      ],
+      "original_request_url": null,
+      "reported_source_time": null,
+      "sides": [
+        "home",
+        "away"
+      ],
+      "source": "action_network",
+      "source_quote_time_verified": false,
+      "source_url": null
+    },
+    {
+      "away_team": "Louisiana",
+      "book_identity_verified": false,
+      "book_key": "actionnetworkbook71",
+      "book_label": "ActionNetwork book 71",
+      "executable_price_verified": false,
+      "game_id": "401869965",
+      "home_team": "Louisiana Tech",
+      "kickoff": "2026-10-10T23:30:00.000Z",
+      "line": null,
+      "market": "moneyline",
+      "observed_at": "2026-10-10T22:27:13.217789+00:00",
+      "odds": [
+        -152.0,
+        123.0
+      ],
+      "original_request_url": null,
+      "reported_source_time": null,
+      "sides": [
+        "home",
+        "away"
+      ],
+      "source": "action_network",
+      "source_quote_time_verified": false,
+      "source_url": null
+    },
+    {
+      "away_team": "Louisiana",
+      "book_identity_verified": false,
+      "book_key": "betmgm",
+      "book_label": "ActionNetwork book 75",
+      "executable_price_verified": false,
+      "game_id": "401869965",
+      "home_team": "Louisiana Tech",
+      "kickoff": "2026-10-10T23:30:00.000Z",
+      "line": null,
+      "market": "moneyline",
+      "observed_at": "2026-10-10T22:27:13.217789+00:00",
+      "odds": [
+        -155.0,
+        130.0
+      ],
+      "original_request_url": null,
+      "reported_source_time": null,
+      "sides": [
+        "home",
+        "away"
+      ],
+      "source": "action_network",
+      "source_quote_time_verified": false,
+      "source_url": null
+    },
+    {
+      "away_team": "Louisiana",
+      "book_identity_verified": false,
+      "book_key": "draftkings",
+      "book_label": "Draft Kings",
+      "executable_price_verified": false,
+      "game_id": "401869965",
+      "home_team": "Louisiana Tech",
+      "kickoff": "2026-10-10T23:30:00.000Z",
+      "line": null,
+      "market": "moneyline",
+      "observed_at": "2026-10-10T22:27:13.217789+00:00",
+      "odds": [
+        -155.0,
+        130.0
+      ],
+      "original_request_url": null,
+      "reported_source_time": null,
+      "sides": [
+        "home",
+        "away"
+      ],
+      "source": "espn_core",
+      "source_quote_time_verified": false,
+      "source_url": null
+    },
+    {
+      "away_team": "Kansas",
+      "book_identity_verified": false,
+      "book_key": "draftkings",
+      "book_label": "ActionNetwork book 15",
+      "executable_price_verified": false,
+      "game_id": "401856827",
+      "home_team": "Utah",
+      "kickoff": "2026-10-11T00:00:00.000Z",
+      "line": null,
+      "market": "moneyline",
+      "observed_at": "2026-10-10T22:27:13.218836+00:00",
+      "odds": [
+        -750.0,
+        525.0
+      ],
+      "original_request_url": null,
+      "reported_source_time": null,
+      "sides": [
+        "home",
+        "away"
+      ],
+      "source": "action_network",
+      "source_quote_time_verified": false,
+      "source_url": null
+    },
+    {
+      "away_team": "Kansas",
+      "book_identity_verified": false,
+      "book_key": "fanduel",
+      "book_label": "ActionNetwork book 30",
+      "executable_price_verified": false,
+      "game_id": "401856827",
+      "home_team": "Utah",
+      "kickoff": "2026-10-11T00:00:00.000Z",
+      "line": null,
+      "market": "moneyline",
+      "observed_at": "2026-10-10T22:27:13.218836+00:00",
+      "odds": [
+        -650.0,
+        460.0
+      ],
+      "original_request_url": null,
+      "reported_source_time": null,
+      "sides": [
+        "home",
+        "away"
+      ],
+      "source": "action_network",
+      "source_quote_time_verified": false,
+      "source_url": null
+    },
+    {
+      "away_team": "Kansas",
+      "book_identity_verified": false,
+      "book_key": "actionnetworkbook49",
+      "book_label": "ActionNetwork book 49",
+      "executable_price_verified": false,
+      "game_id": "401856827",
+      "home_team": "Utah",
+      "kickoff": "2026-10-11T00:00:00.000Z",
+      "line": null,
+      "market": "moneyline",
+      "observed_at": "2026-10-10T22:27:13.218836+00:00",
+      "odds": [
+        -750.0,
+        500.0
+      ],
+      "original_request_url": null,
+      "reported_source_time": null,
+      "sides": [
+        "home",
+        "away"
+      ],
+      "source": "action_network",
+      "source_quote_time_verified": false,
+      "source_url": null
+    },
+    {
+      "away_team": "Kansas",
+      "book_identity_verified": false,
+      "book_key": "actionnetworkbook68",
+      "book_label": "ActionNetwork book 68",
+      "executable_price_verified": false,
+      "game_id": "401856827",
+      "home_team": "Utah",
+      "kickoff": "2026-10-11T00:00:00.000Z",
+      "line": null,
+      "market": "moneyline",
+      "observed_at": "2026-10-10T22:27:13.218836+00:00",
+      "odds": [
+        -700.0,
+        500.0
+      ],
+      "original_request_url": null,
+      "reported_source_time": null,
+      "sides": [
+        "home",
+        "away"
+      ],
+      "source": "action_network",
+      "source_quote_time_verified": false,
+      "source_url": null
+    },
+    {
+      "away_team": "Kansas",
+      "book_identity_verified": false,
+      "book_key": "actionnetworkbook69",
+      "book_label": "ActionNetwork book 69",
+      "executable_price_verified": false,
+      "game_id": "401856827",
+      "home_team": "Utah",
+      "kickoff": "2026-10-11T00:00:00.000Z",
+      "line": null,
+      "market": "moneyline",
+      "observed_at": "2026-10-10T22:27:13.218836+00:00",
+      "odds": [
+        -850.0,
+        570.0
+      ],
+      "original_request_url": null,
+      "reported_source_time": null,
+      "sides": [
+        "home",
+        "away"
+      ],
+      "source": "action_network",
+      "source_quote_time_verified": false,
+      "source_url": null
+    },
+    {
+      "away_team": "Kansas",
+      "book_identity_verified": false,
+      "book_key": "actionnetworkbook71",
+      "book_label": "ActionNetwork book 71",
+      "executable_price_verified": false,
+      "game_id": "401856827",
+      "home_team": "Utah",
+      "kickoff": "2026-10-11T00:00:00.000Z",
+      "line": null,
+      "market": "moneyline",
+      "observed_at": "2026-10-10T22:27:13.218836+00:00",
+      "odds": [
+        -770.0,
+        500.0
+      ],
+      "original_request_url": null,
+      "reported_source_time": null,
+      "sides": [
+        "home",
+        "away"
+      ],
+      "source": "action_network",
+      "source_quote_time_verified": false,
+      "source_url": null
+    },
+    {
+      "away_team": "Kansas",
+      "book_identity_verified": false,
+      "book_key": "betmgm",
+      "book_label": "ActionNetwork book 75",
+      "executable_price_verified": false,
+      "game_id": "401856827",
+      "home_team": "Utah",
+      "kickoff": "2026-10-11T00:00:00.000Z",
+      "line": null,
+      "market": "moneyline",
+      "observed_at": "2026-10-10T22:27:13.218836+00:00",
+      "odds": [
+        -700.0,
+        525.0
+      ],
+      "original_request_url": null,
+      "reported_source_time": null,
+      "sides": [
+        "home",
+        "away"
+      ],
+      "source": "action_network",
+      "source_quote_time_verified": false,
+      "source_url": null
+    },
+    {
+      "away_team": "Kansas",
+      "book_identity_verified": false,
+      "book_key": "draftkings",
+      "book_label": "Draft Kings",
+      "executable_price_verified": false,
+      "game_id": "401856827",
+      "home_team": "Utah",
+      "kickoff": "2026-10-11T00:00:00.000Z",
+      "line": null,
+      "market": "moneyline",
+      "observed_at": "2026-10-10T22:27:13.218836+00:00",
+      "odds": [
+        -700.0,
+        500.0
+      ],
+      "original_request_url": null,
+      "reported_source_time": null,
+      "sides": [
+        "home",
+        "away"
+      ],
+      "source": "espn_core",
+      "source_quote_time_verified": false,
+      "source_url": null
+    },
+    {
+      "away_team": "Minnesota",
+      "book_identity_verified": false,
+      "book_key": "draftkings",
+      "book_label": "ActionNetwork book 15",
+      "executable_price_verified": false,
+      "game_id": "401858486",
+      "home_team": "Purdue",
+      "kickoff": "2026-10-11T00:00:00.000Z",
+      "line": null,
+      "market": "moneyline",
+      "observed_at": "2026-10-10T22:27:13.219880+00:00",
+      "odds": [
+        116.0,
+        -140.0
+      ],
+      "original_request_url": null,
+      "reported_source_time": null,
+      "sides": [
+        "home",
+        "away"
+      ],
+      "source": "action_network",
+      "source_quote_time_verified": false,
+      "source_url": null
+    },
+    {
+      "away_team": "Minnesota",
+      "book_identity_verified": false,
+      "book_key": "fanduel",
+      "book_label": "ActionNetwork book 30",
+      "executable_price_verified": false,
+      "game_id": "401858486",
+      "home_team": "Purdue",
+      "kickoff": "2026-10-11T00:00:00.000Z",
+      "line": null,
+      "market": "moneyline",
+      "observed_at": "2026-10-10T22:27:13.219880+00:00",
+      "odds": [
+        188.0,
+        -230.0
+      ],
+      "original_request_url": null,
+      "reported_source_time": null,
+      "sides": [
+        "home",
+        "away"
+      ],
+      "source": "action_network",
+      "source_quote_time_verified": false,
+      "source_url": null
+    },
+    {
+      "away_team": "Minnesota",
+      "book_identity_verified": false,
+      "book_key": "actionnetworkbook49",
+      "book_label": "ActionNetwork book 49",
+      "executable_price_verified": false,
+      "game_id": "401858486",
+      "home_team": "Purdue",
+      "kickoff": "2026-10-11T00:00:00.000Z",
+      "line": null,
+      "market": "moneyline",
+      "observed_at": "2026-10-10T22:27:13.219880+00:00",
+      "odds": [
+        118.0,
+        -139.0
+      ],
+      "original_request_url": null,
+      "reported_source_time": null,
+      "sides": [
+        "home",
+        "away"
+      ],
+      "source": "action_network",
+      "source_quote_time_verified": false,
+      "source_url": null
+    },
+    {
+      "away_team": "Minnesota",
+      "book_identity_verified": false,
+      "book_key": "actionnetworkbook68",
+      "book_label": "ActionNetwork book 68",
+      "executable_price_verified": false,
+      "game_id": "401858486",
+      "home_team": "Purdue",
+      "kickoff": "2026-10-11T00:00:00.000Z",
+      "line": null,
+      "market": "moneyline",
+      "observed_at": "2026-10-10T22:27:13.219880+00:00",
+      "odds": [
+        120.0,
+        -142.0
+      ],
+      "original_request_url": null,
+      "reported_source_time": null,
+      "sides": [
+        "home",
+        "away"
+      ],
+      "source": "action_network",
+      "source_quote_time_verified": false,
+      "source_url": null
+    },
+    {
+      "away_team": "Minnesota",
+      "book_identity_verified": false,
+      "book_key": "actionnetworkbook69",
+      "book_label": "ActionNetwork book 69",
+      "executable_price_verified": false,
+      "game_id": "401858486",
+      "home_team": "Purdue",
+      "kickoff": "2026-10-11T00:00:00.000Z",
+      "line": null,
+      "market": "moneyline",
+      "observed_at": "2026-10-10T22:27:13.219880+00:00",
+      "odds": [
+        116.0,
+        -140.0
+      ],
+      "original_request_url": null,
+      "reported_source_time": null,
+      "sides": [
+        "home",
+        "away"
+      ],
+      "source": "action_network",
+      "source_quote_time_verified": false,
+      "source_url": null
+    },
+    {
+      "away_team": "Minnesota",
+      "book_identity_verified": false,
+      "book_key": "actionnetworkbook71",
+      "book_label": "ActionNetwork book 71",
+      "executable_price_verified": false,
+      "game_id": "401858486",
+      "home_team": "Purdue",
+      "kickoff": "2026-10-11T00:00:00.000Z",
+      "line": null,
+      "market": "moneyline",
+      "observed_at": "2026-10-10T22:27:13.219880+00:00",
+      "odds": [
+        123.0,
+        -155.0
+      ],
+      "original_request_url": null,
+      "reported_source_time": null,
+      "sides": [
+        "home",
+        "away"
+      ],
+      "source": "action_network",
+      "source_quote_time_verified": false,
+      "source_url": null
+    },
+    {
+      "away_team": "Minnesota",
+      "book_identity_verified": false,
+      "book_key": "betmgm",
+      "book_label": "ActionNetwork book 75",
+      "executable_price_verified": false,
+      "game_id": "401858486",
+      "home_team": "Purdue",
+      "kickoff": "2026-10-11T00:00:00.000Z",
+      "line": null,
+      "market": "moneyline",
+      "observed_at": "2026-10-10T22:27:13.219880+00:00",
+      "odds": [
+        110.0,
+        -135.0
+      ],
+      "original_request_url": null,
+      "reported_source_time": null,
+      "sides": [
+        "home",
+        "away"
+      ],
+      "source": "action_network",
+      "source_quote_time_verified": false,
+      "source_url": null
+    },
+    {
+      "away_team": "Minnesota",
+      "book_identity_verified": false,
+      "book_key": "draftkings",
+      "book_label": "Draft Kings",
+      "executable_price_verified": false,
+      "game_id": "401858486",
+      "home_team": "Purdue",
+      "kickoff": "2026-10-11T00:00:00.000Z",
+      "line": null,
+      "market": "moneyline",
+      "observed_at": "2026-10-10T22:27:13.219880+00:00",
+      "odds": [
+        120.0,
+        -142.0
+      ],
+      "original_request_url": null,
+      "reported_source_time": null,
+      "sides": [
+        "home",
+        "away"
+      ],
+      "source": "espn_core",
+      "source_quote_time_verified": false,
+      "source_url": null
+    },
+    {
+      "away_team": "Hawai'i",
+      "book_identity_verified": false,
+      "book_key": "draftkings",
+      "book_label": "ActionNetwork book 15",
+      "executable_price_verified": false,
+      "game_id": "401856808",
+      "home_team": "Arizona State",
+      "kickoff": "2026-10-11T02:30:00.000Z",
+      "line": null,
+      "market": "moneyline",
+      "observed_at": "2026-10-10T22:27:13.220943+00:00",
+      "odds": [
+        -1700.0,
+        950.0
+      ],
+      "original_request_url": null,
+      "reported_source_time": null,
+      "sides": [
+        "home",
+        "away"
+      ],
+      "source": "action_network",
+      "source_quote_time_verified": false,
+      "source_url": null
+    },
+    {
+      "away_team": "Hawai'i",
+      "book_identity_verified": false,
+      "book_key": "fanduel",
+      "book_label": "ActionNetwork book 30",
+      "executable_price_verified": false,
+      "game_id": "401856808",
+      "home_team": "Arizona State",
+      "kickoff": "2026-10-11T02:30:00.000Z",
+      "line": null,
+      "market": "moneyline",
+      "observed_at": "2026-10-10T22:27:13.220943+00:00",
+      "odds": [
+        -1050.0,
+        660.0
+      ],
+      "original_request_url": null,
+      "reported_source_time": null,
+      "sides": [
+        "home",
+        "away"
+      ],
+      "source": "action_network",
+      "source_quote_time_verified": false,
+      "source_url": null
+    },
+    {
+      "away_team": "Hawai'i",
+      "book_identity_verified": false,
+      "book_key": "actionnetworkbook49",
+      "book_label": "ActionNetwork book 49",
+      "executable_price_verified": false,
+      "game_id": "401856808",
+      "home_team": "Arizona State",
+      "kickoff": "2026-10-11T02:30:00.000Z",
+      "line": null,
+      "market": "moneyline",
+      "observed_at": "2026-10-10T22:27:13.220943+00:00",
+      "odds": [
+        -1700.0,
+        950.0
+      ],
+      "original_request_url": null,
+      "reported_source_time": null,
+      "sides": [
+        "home",
+        "away"
+      ],
+      "source": "action_network",
+      "source_quote_time_verified": false,
+      "source_url": null
+    },
+    {
+      "away_team": "Hawai'i",
+      "book_identity_verified": false,
+      "book_key": "actionnetworkbook68",
+      "book_label": "ActionNetwork book 68",
+      "executable_price_verified": false,
+      "game_id": "401856808",
+      "home_team": "Arizona State",
+      "kickoff": "2026-10-11T02:30:00.000Z",
+      "line": null,
+      "market": "moneyline",
+      "observed_at": "2026-10-10T22:27:13.220943+00:00",
+      "odds": [
+        -1650.0,
+        950.0
+      ],
+      "original_request_url": null,
+      "reported_source_time": null,
+      "sides": [
+        "home",
+        "away"
+      ],
+      "source": "action_network",
+      "source_quote_time_verified": false,
+      "source_url": null
+    },
+    {
+      "away_team": "Hawai'i",
+      "book_identity_verified": false,
+      "book_key": "actionnetworkbook69",
+      "book_label": "ActionNetwork book 69",
+      "executable_price_verified": false,
+      "game_id": "401856808",
+      "home_team": "Arizona State",
+      "kickoff": "2026-10-11T02:30:00.000Z",
+      "line": null,
+      "market": "moneyline",
+      "observed_at": "2026-10-10T22:27:13.220943+00:00",
+      "odds": [
+        -1800.0,
+        920.0
+      ],
+      "original_request_url": null,
+      "reported_source_time": null,
+      "sides": [
+        "home",
+        "away"
+      ],
+      "source": "action_network",
+      "source_quote_time_verified": false,
+      "source_url": null
+    },
+    {
+      "away_team": "Hawai'i",
+      "book_identity_verified": false,
+      "book_key": "actionnetworkbook71",
+      "book_label": "ActionNetwork book 71",
+      "executable_price_verified": false,
+      "game_id": "401856808",
+      "home_team": "Arizona State",
+      "kickoff": "2026-10-11T02:30:00.000Z",
+      "line": null,
+      "market": "moneyline",
+      "observed_at": "2026-10-10T22:27:13.220943+00:00",
+      "odds": [
+        -1667.0,
+        800.0
+      ],
+      "original_request_url": null,
+      "reported_source_time": null,
+      "sides": [
+        "home",
+        "away"
+      ],
+      "source": "action_network",
+      "source_quote_time_verified": false,
+      "source_url": null
+    },
+    {
+      "away_team": "Hawai'i",
+      "book_identity_verified": false,
+      "book_key": "betmgm",
+      "book_label": "ActionNetwork book 75",
+      "executable_price_verified": false,
+      "game_id": "401856808",
+      "home_team": "Arizona State",
+      "kickoff": "2026-10-11T02:30:00.000Z",
+      "line": null,
+      "market": "moneyline",
+      "observed_at": "2026-10-10T22:27:13.220943+00:00",
+      "odds": [
+        -1600.0,
+        1000.0
+      ],
+      "original_request_url": null,
+      "reported_source_time": null,
+      "sides": [
+        "home",
+        "away"
+      ],
+      "source": "action_network",
+      "source_quote_time_verified": false,
+      "source_url": null
+    },
+    {
+      "away_team": "Hawai'i",
+      "book_identity_verified": false,
+      "book_key": "draftkings",
+      "book_label": "Draft Kings",
+      "executable_price_verified": false,
+      "game_id": "401856808",
+      "home_team": "Arizona State",
+      "kickoff": "2026-10-11T02:30:00.000Z",
+      "line": null,
+      "market": "moneyline",
+      "observed_at": "2026-10-10T22:27:13.220943+00:00",
+      "odds": [
+        -1650.0,
+        950.0
+      ],
+      "original_request_url": null,
+      "reported_source_time": null,
+      "sides": [
+        "home",
+        "away"
+      ],
+      "source": "espn_core",
+      "source_quote_time_verified": false,
+      "source_url": null
+    },
+    {
+      "away_team": "Boise State",
+      "book_identity_verified": false,
+      "book_key": "draftkings",
+      "book_label": "ActionNetwork book 15",
+      "executable_price_verified": false,
+      "game_id": "401860901",
+      "home_team": "Fresno State",
+      "kickoff": "2026-10-11T02:30:00.000Z",
+      "line": null,
+      "market": "moneyline",
+      "observed_at": "2026-10-10T22:27:13.221988+00:00",
+      "odds": [
+        250.0,
+        -310.0
+      ],
+      "original_request_url": null,
+      "reported_source_time": null,
+      "sides": [
+        "home",
+        "away"
+      ],
+      "source": "action_network",
+      "source_quote_time_verified": false,
+      "source_url": null
+    },
+    {
+      "away_team": "Boise State",
+      "book_identity_verified": false,
+      "book_key": "fanduel",
+      "book_label": "ActionNetwork book 30",
+      "executable_price_verified": false,
+      "game_id": "401860901",
+      "home_team": "Fresno State",
+      "kickoff": "2026-10-11T02:30:00.000Z",
+      "line": null,
+      "market": "moneyline",
+      "observed_at": "2026-10-10T22:27:13.221988+00:00",
+      "odds": [
+        350.0,
+        -465.0
+      ],
+      "original_request_url": null,
+      "reported_source_time": null,
+      "sides": [
+        "home",
+        "away"
+      ],
+      "source": "action_network",
+      "source_quote_time_verified": false,
+      "source_url": null
+    },
+    {
+      "away_team": "Boise State",
+      "book_identity_verified": false,
+      "book_key": "actionnetworkbook49",
+      "book_label": "ActionNetwork book 49",
+      "executable_price_verified": false,
+      "game_id": "401860901",
+      "home_team": "Fresno State",
+      "kickoff": "2026-10-11T02:30:00.000Z",
+      "line": null,
+      "market": "moneyline",
+      "observed_at": "2026-10-10T22:27:13.221988+00:00",
+      "odds": [
+        245.0,
+        -310.0
+      ],
+      "original_request_url": null,
+      "reported_source_time": null,
+      "sides": [
+        "home",
+        "away"
+      ],
+      "source": "action_network",
+      "source_quote_time_verified": false,
+      "source_url": null
+    },
+    {
+      "away_team": "Boise State",
+      "book_identity_verified": false,
+      "book_key": "actionnetworkbook68",
+      "book_label": "ActionNetwork book 68",
+      "executable_price_verified": false,
+      "game_id": "401860901",
+      "home_team": "Fresno State",
+      "kickoff": "2026-10-11T02:30:00.000Z",
+      "line": null,
+      "market": "moneyline",
+      "observed_at": "2026-10-10T22:27:13.221988+00:00",
+      "odds": [
+        250.0,
+        -310.0
+      ],
+      "original_request_url": null,
+      "reported_source_time": null,
+      "sides": [
+        "home",
+        "away"
+      ],
+      "source": "action_network",
+      "source_quote_time_verified": false,
+      "source_url": null
+    },
+    {
+      "away_team": "Boise State",
+      "book_identity_verified": false,
+      "book_key": "actionnetworkbook69",
+      "book_label": "ActionNetwork book 69",
+      "executable_price_verified": false,
+      "game_id": "401860901",
+      "home_team": "Fresno State",
+      "kickoff": "2026-10-11T02:30:00.000Z",
+      "line": null,
+      "market": "moneyline",
+      "observed_at": "2026-10-10T22:27:13.221988+00:00",
+      "odds": [
+        250.0,
+        -315.0
+      ],
+      "original_request_url": null,
+      "reported_source_time": null,
+      "sides": [
+        "home",
+        "away"
+      ],
+      "source": "action_network",
+      "source_quote_time_verified": false,
+      "source_url": null
+    },
+    {
+      "away_team": "Boise State",
+      "book_identity_verified": false,
+      "book_key": "actionnetworkbook71",
+      "book_label": "ActionNetwork book 71",
+      "executable_price_verified": false,
+      "game_id": "401860901",
+      "home_team": "Fresno State",
+      "kickoff": "2026-10-11T02:30:00.000Z",
+      "line": null,
+      "market": "moneyline",
+      "observed_at": "2026-10-10T22:27:13.221988+00:00",
+      "odds": [
+        280.0,
+        -375.0
+      ],
+      "original_request_url": null,
+      "reported_source_time": null,
+      "sides": [
+        "home",
+        "away"
+      ],
+      "source": "action_network",
+      "source_quote_time_verified": false,
+      "source_url": null
+    },
+    {
+      "away_team": "Boise State",
+      "book_identity_verified": false,
+      "book_key": "betmgm",
+      "book_label": "ActionNetwork book 75",
+      "executable_price_verified": false,
+      "game_id": "401860901",
+      "home_team": "Fresno State",
+      "kickoff": "2026-10-11T02:30:00.000Z",
+      "line": null,
+      "market": "moneyline",
+      "observed_at": "2026-10-10T22:27:13.221988+00:00",
+      "odds": [
+        200.0,
+        -235.0
+      ],
+      "original_request_url": null,
+      "reported_source_time": null,
+      "sides": [
+        "home",
+        "away"
+      ],
+      "source": "action_network",
+      "source_quote_time_verified": false,
+      "source_url": null
+    },
+    {
+      "away_team": "Boise State",
+      "book_identity_verified": false,
+      "book_key": "draftkings",
+      "book_label": "Draft Kings",
+      "executable_price_verified": false,
+      "game_id": "401860901",
+      "home_team": "Fresno State",
+      "kickoff": "2026-10-11T02:30:00.000Z",
+      "line": null,
+      "market": "moneyline",
+      "observed_at": "2026-10-10T22:27:13.221988+00:00",
+      "odds": [
+        250.0,
+        -310.0
+      ],
+      "original_request_url": null,
+      "reported_source_time": null,
+      "sides": [
+        "home",
+        "away"
+      ],
+      "source": "espn_core",
+      "source_quote_time_verified": false,
+      "source_url": null
+    }
+  ]
+}

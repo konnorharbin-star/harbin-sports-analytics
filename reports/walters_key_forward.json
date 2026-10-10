@@ -1,6 +1,6 @@
 {
   "spec": "walters_key_number_forward_v1",
-  "evaluated_at": "2026-10-10T21:52:25.900286+00:00",
+  "evaluated_at": "2026-10-10T22:27:21.311033+00:00",
   "status": "FORWARD_SHADOW_RESEARCH_ONLY",
   "graded_games": 0,
   "ungraded": {
@@ -12,7 +12,7 @@
     "401858485.json": "PENDING_KICKOFF",
     "401858486.json": "PENDING_KICKOFF",
     "401860901.json": "PENDING_KICKOFF",
-    "401860902.json": "PENDING_KICKOFF",
+    "401860902.json": "NOT_CONFIRMED_FINAL",
     "401862798.json": "PENDING_KICKOFF",
     "401864516.json": "PENDING_KICKOFF",
     "401864517.json": "PENDING_KICKOFF",
@@ -34,6 +34,6 @@
   "graded_rows": [],
   "capture_summary": {
     "newly_frozen": 0,
-    "already_frozen": 16
+    "already_frozen": 15
   }
 }

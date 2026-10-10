@@ -1,15 +1,15 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-10-10T21:52:24.650416+00:00",
+  "generated_at": "2026-10-10T22:27:20.141089+00:00",
   "status": "WARN",
   "identity": {
     "platform_version": "7.4.0",
     "model_version": "7.1.0",
     "season": 2026,
     "week": 6,
-    "model_generated_at": "2026-10-10T21:52:23.261409+00:00",
-    "updated_at_ct": "Oct 10, 2026 \u00b7 4:52 PM CT",
-    "prediction_rows": 16
+    "model_generated_at": "2026-10-10T22:27:18.790410+00:00",
+    "updated_at_ct": "Oct 10, 2026 \u00b7 5:27 PM CT",
+    "prediction_rows": 15
   },
   "release": {
     "state": "RESEARCH",
@@ -171,10 +171,10 @@
     "selection_uses_evaluation": false
   },
   "coverage": {
-    "games": 16,
-    "moneyline": 16,
-    "spread": 16,
-    "total": 16,
+    "games": 15,
+    "moneyline": 15,
+    "spread": 15,
+    "total": 15,
     "dynamic_advanced": 1.0,
     "context": 1.0,
     "weather": 1.0,
@@ -190,51 +190,51 @@
       "context": 100.0,
       "calibration": 84.45441996626026,
       "freshness": 100.0,
-      "drift_margin": 91.6,
-      "drift_total": 83.4,
-      "drift_probability": 91.6,
-      "distribution_stability": 88.9,
-      "output_completeness": 91.75204918032787
+      "drift_margin": 92.0,
+      "drift_total": 83.6,
+      "drift_probability": 90.3,
+      "distribution_stability": 88.6,
+      "output_completeness": 91.74863387978142
     },
     "drift": {
       "margin": {
-        "stability_score": 91.6,
-        "mean_z": 0.2405,
-        "std_ratio": 0.9081,
-        "live_mean": 1.1225710795926687,
+        "stability_score": 92.0,
+        "mean_z": 0.256,
+        "std_ratio": 0.9378,
+        "live_mean": 0.9375028950852315,
         "reference_mean": 4.007587882019203,
-        "live_std": 10.89174528287304,
+        "live_std": 11.247957508888815,
         "reference_std": 11.99409006138559,
-        "live_n": 16,
+        "live_n": 15,
         "reference_n": 2398
       },
       "total": {
-        "stability_score": 83.4,
-        "mean_z": 0.1011,
-        "std_ratio": 0.5696,
-        "live_mean": 53.06943033452798,
+        "stability_score": 83.6,
+        "mean_z": 0.0451,
+        "std_ratio": 0.5422,
+        "live_mean": 53.41773263017998,
         "reference_mean": 53.69890163853031,
-        "live_std": 3.5471254374584373,
+        "live_std": 3.3765579011601914,
         "reference_std": 6.227517524699614,
-        "live_n": 16,
+        "live_n": 15,
         "reference_n": 2398
       },
       "probability": {
-        "stability_score": 91.6,
-        "mean_z": 0.216,
-        "std_ratio": 1.1263,
-        "live_mean": 0.5309945555951714,
+        "stability_score": 90.3,
+        "mean_z": 0.2375,
+        "std_ratio": 1.1625,
+        "live_mean": 0.5258499749477746,
         "reference_mean": 0.582714657203369,
-        "live_std": 0.2697300248899971,
+        "live_std": 0.2783833795965505,
         "reference_std": 0.2394736173752905,
-        "live_n": 16,
+        "live_n": 15,
         "reference_n": 2398
       }
     },
     "drift_scores": {
-      "margin": 91.6,
-      "total": 83.4,
-      "probability": 91.6
+      "margin": 92.0,
+      "total": 83.6,
+      "probability": 90.3
     },
     "alerts": [],
     "recent_readiness_delta": 0.0
@@ -251,7 +251,7 @@
       "sanity_ranges": true,
       "complete_market_rate": 1.0
     },
-    "rows": 16
+    "rows": 15
   },
   "portfolio": {
     "mode": "paper",
@@ -433,13 +433,13 @@
       "reason": "CLV-first segment de-risking; multipliers never exceed 1.0"
     },
     "production_block_reason": "",
-    "proposed_units": 1.63,
-    "risk_adjusted_proposed_units": 1.63,
-    "performance_adjusted_proposed_units": 1.63,
+    "proposed_units": 1.36,
+    "risk_adjusted_proposed_units": 1.36,
+    "performance_adjusted_proposed_units": 1.36,
     "approved_units": 0.0,
-    "paper_allocated_units": 1.63,
-    "paper_or_shadow_allocated_units": 1.63,
-    "bets": 11,
+    "paper_allocated_units": 1.36,
+    "paper_or_shadow_allocated_units": 1.36,
+    "bets": 10,
     "approved_bets": 0,
     "execution_blocked_bets": 0,
     "limits": {
@@ -484,24 +484,23 @@
       "max_book_units": 2.0
     },
     "allocated_by_market": {
-      "spread": 1.09,
       "total": 0.46,
+      "spread": 0.82,
       "moneyline": 0.08
     },
     "allocated_by_book": {
-      "ActionNetwork book 15": 0.36,
       "ActionNetwork book 30": 0.36,
       "ActionNetwork book 68": 0.32,
       "ActionNetwork book 71": 0.42,
       "ActionNetwork book 49": 0.09,
-      "DraftKings": 0.08
+      "ActionNetwork book 15": 0.09,
+      "Draft Kings": 0.08
     },
     "allocated_by_kickoff_window": {
-      "2026-10-10 21:00:00+00:00": 1.26,
+      "2026-10-10 21:00:00+00:00": 0.99,
       "2026-10-11 00:00:00+00:00": 0.37
     },
     "allocated_by_team_exposure": {
-      "San Diego State": 0.27,
       "Alabama": 0.16,
       "Georgia": 0.16,
       "Fresno State": 0.2,
@@ -568,7 +567,7 @@
         "name": "row_count",
         "passed": true,
         "severity": "ERROR",
-        "detail": "predictions=16 metadata=16"
+        "detail": "predictions=15 metadata=15"
       },
       {
         "name": "identity_season",
@@ -610,25 +609,12 @@
         "name": "approved_not_above_allocation",
         "passed": true,
         "severity": "ERROR",
-        "detail": "approved=0.00 allocated=1.63"
+        "detail": "approved=0.00 allocated=1.36"
       }
     ],
     "errors": []
   },
   "trend": [
-    {
-      "generated_at": "2026-10-10T18:46:38.193208+00:00",
-      "model_generated_at": "2026-10-10T18:46:35.574522+00:00",
-      "season": 2026,
-      "week": 6,
-      "platform_version": "7.4.0",
-      "release_state": "RESEARCH",
-      "publication_status": "WARN",
-      "live_readiness_score": 94.7,
-      "distribution_stability": 94.5,
-      "approved_units": 0.0,
-      "data_quality_status": "PASS"
-    },
     {
       "generated_at": "2026-10-10T18:54:33.322217+00:00",
       "model_generated_at": "2026-10-10T18:54:31.957670+00:00",
@@ -762,6 +748,19 @@
     {
       "generated_at": "2026-10-10T21:38:54.691194+00:00",
       "model_generated_at": "2026-10-10T21:38:52.381355+00:00",
+      "season": 2026,
+      "week": 6,
+      "platform_version": "7.4.0",
+      "release_state": "RESEARCH",
+      "publication_status": "WARN",
+      "live_readiness_score": 94.8,
+      "distribution_stability": 88.9,
+      "approved_units": 0.0,
+      "data_quality_status": "PASS"
+    },
+    {
+      "generated_at": "2026-10-10T21:52:24.650416+00:00",
+      "model_generated_at": "2026-10-10T21:52:23.261409+00:00",
       "season": 2026,
       "week": 6,
       "platform_version": "7.4.0",

@@ -1,0 +1,93 @@
+{
+  "accepted_paired_web_spreads": 1,
+  "actual_wagers": 0,
+  "bad_forecasts": {},
+  "betting_authorized": false,
+  "blocked_observations": {},
+  "closing_line_value_verified": false,
+  "coverage_by_book": {
+    "FanDuel": 1
+  },
+  "frozen_original_forecasts": 16,
+  "historical_profitable_edge_proven": false,
+  "method": "human_or_assistant_reads_public_web_search_results_then_git_freezes_price",
+  "no_paid_api_required": true,
+  "research_comparisons": [
+    {
+      "away_team": "Georgia",
+      "betting_authorized": false,
+      "book": "FanDuel",
+      "book_access_verified": false,
+      "book_execution_independently_verified": false,
+      "game_id": "401856712",
+      "home_spread": -1.5,
+      "home_team": "Alabama",
+      "injury_and_personnel_context_verified": false,
+      "model_git_commit_precedes_web_capture": true,
+      "models": {
+        "discrete_gaussian": {
+          "away": {
+            "exact_american_odds": -110,
+            "loss": 0.5332658969451423,
+            "market_break_even_probability": 0.5238095238095238,
+            "market_conditional_no_vig_probability": 0.5,
+            "model_conditional_win_given_no_push": 0.4667341030548577,
+            "push": 0.0,
+            "unshrunk_model_ev_per_unit": -0.1089621668952716,
+            "win": 0.4667341030548577
+          },
+          "home": {
+            "exact_american_odds": -110,
+            "loss": 0.4667341030548577,
+            "market_break_even_probability": 0.5238095238095238,
+            "market_conditional_no_vig_probability": 0.5,
+            "model_conditional_win_given_no_push": 0.5332658969451423,
+            "push": 0.0,
+            "unshrunk_model_ev_per_unit": 0.018053075986180778,
+            "win": 0.5332658969451423
+          }
+        },
+        "key_number": {
+          "away": {
+            "exact_american_odds": -110,
+            "loss": 0.5326595102842246,
+            "market_break_even_probability": 0.5238095238095238,
+            "market_conditional_no_vig_probability": 0.5,
+            "model_conditional_win_given_no_push": 0.4673404897157753,
+            "push": 0.0,
+            "unshrunk_model_ev_per_unit": -0.10780451963351989,
+            "win": 0.4673404897157752
+          },
+          "home": {
+            "exact_american_odds": -110,
+            "loss": 0.4673404897157752,
+            "market_break_even_probability": 0.5238095238095238,
+            "market_conditional_no_vig_probability": 0.5,
+            "model_conditional_win_given_no_push": 0.5326595102842248,
+            "push": 0.0,
+            "unshrunk_model_ev_per_unit": 0.016895428724429062,
+            "win": 0.5326595102842246
+          }
+        }
+      },
+      "observation_id": "cfb_20261010_2224_fanduel_alabama_georgia",
+      "original_capture_git_commit_verified": true,
+      "publisher": "FanDuel Research",
+      "quote_context": "FanDuel Research Alabama vs Georgia October 10 article lists Alabama -1.5 (-110) and Georgia +1.5 (-110), published two days ago and potentially stale.",
+      "quote_id": "401856712_web_fanduel",
+      "source_kind": "public_webpage_read",
+      "source_price_timestamp_verified": false,
+      "source_url": "https://www.fanduel.com/research/alabama-vs-georgia-college-football-odds-picks-best-bets-for-10-10-2026",
+      "status": "PUBLIC_WEB_RESEARCH_ONLY_NO_EXECUTABLE_EDGE",
+      "wager_authorized": false,
+      "weather_context_verified": false,
+      "web_observed_at": "2026-10-10T22:24:26+00:00"
+    }
+  ],
+  "spec": "walters_web_research_audit_v1",
+  "status": "RESEARCH_ONLY_NO_VERIFIED_ECONOMIC_EDGE",
+  "web_evidence_documents": 1,
+  "webpage_read_does_not_automatically_refresh": true,
+  "webpage_read_does_not_prove_executable_sportsbook_odds": true,
+  "webpage_read_does_not_prove_original_book_quote_update_time": true
+}
