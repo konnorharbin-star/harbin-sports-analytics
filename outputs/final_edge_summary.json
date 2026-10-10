@@ -1,12 +1,12 @@
 {
   "approved_bets": 0,
   "decision_counts": {
-    "NO_BET": 2,
-    "RECHECK_PRICE": 2
+    "NO_BET": 3,
+    "RECHECK_PRICE": 1
   },
   "disclaimer": "A research edge is not a proved profitable bet. Do not wager at an unverified or stale quote.",
   "distinct_games": 4,
-  "evaluated_at": "2026-10-10T18:54:34.484919+00:00",
+  "evaluated_at": "2026-10-10T19:15:29.317007+00:00",
   "method": "ONE_PER_GAME_CONSERVATIVE_EV_PRIORITY",
   "no_model_or_stake_change": true,
   "production_eligible": false,

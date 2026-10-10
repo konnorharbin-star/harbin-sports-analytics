@@ -25,12 +25,12 @@
     "reason": "graded history has no usable profit rows"
   },
   "production_block_reason": "",
-  "proposed_units": 3.09,
-  "risk_adjusted_proposed_units": 3.09,
-  "performance_adjusted_proposed_units": 3.09,
+  "proposed_units": 3.16,
+  "risk_adjusted_proposed_units": 3.16,
+  "performance_adjusted_proposed_units": 3.16,
   "approved_units": 0.0,
-  "paper_allocated_units": 2.93,
-  "paper_or_shadow_allocated_units": 2.93,
+  "paper_allocated_units": 2.92,
+  "paper_or_shadow_allocated_units": 2.92,
   "bets": 20,
   "approved_bets": 0,
   "execution_blocked_bets": 0,
@@ -77,20 +77,20 @@
   },
   "allocated_by_market": {
     "total": 0.73,
-    "spread": 2.06,
+    "spread": 2.05,
     "moneyline": 0.14
   },
   "allocated_by_book": {
-    "ActionNetwork book 71": 0.46,
-    "ActionNetwork book 68": 0.58,
-    "ActionNetwork book 30": 0.84,
-    "DraftKings": 0.14,
-    "ActionNetwork book 15": 0.45,
-    "ActionNetwork book 49": 0.38,
-    "ActionNetwork book 69": 0.08
+    "ActionNetwork book 71": 0.31,
+    "ActionNetwork book 68": 0.72,
+    "ActionNetwork book 30": 0.85,
+    "Draft Kings": 0.14,
+    "ActionNetwork book 15": 0.3,
+    "ActionNetwork book 49": 0.37,
+    "ActionNetwork book 69": 0.23
   },
   "allocated_by_kickoff_window": {
-    "2026-10-10 18:00:00+00:00": 1.37,
+    "2026-10-10 18:00:00+00:00": 1.36,
     "2026-10-10 21:00:00+00:00": 1.18,
     "2026-10-11 00:00:00+00:00": 0.38
   },
@@ -98,7 +98,7 @@
     "Georgia Tech": 0.18,
     "Duke": 0.18,
     "San Diego State": 0.27,
-    "Vanderbilt": 0.24,
+    "Vanderbilt": 0.25,
     "Alabama": 0.16,
     "Georgia": 0.16,
     "Fresno State": 0.2,
@@ -111,19 +111,19 @@
     "Temple": 0.15,
     "Louisiana Tech": 0.09,
     "Louisiana": 0.09,
-    "Ohio": 0.15,
+    "Ohio": 0.14,
     "Memphis": 0.13,
     "Air Force": 0.13,
     "North Texas": 0.08,
     "Charlotte": 0.08,
     "Marshall": 0.12,
     "Coastal Carolina": 0.12,
-    "East Carolina": 0.1,
     "Akron": 0.09,
-    "Texas": 0.09
+    "Texas": 0.09,
+    "East Carolina": 0.09
   },
   "limit_hit_counts": {
-    "max bet count": 2
+    "max bet count": 3
   },
   "release_blockers": [
     "complete_market_coverage: >= 95% games with ML + spread + total",

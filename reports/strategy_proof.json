@@ -62,16 +62,6 @@
       "decision": "RECHECK_PRICE",
       "reasons": "UNRESOLVED_BOOK;BOOK_EXECUTION_UNVERIFIED;PROVIDER_TIMESTAMP_UNVERIFIED;GLOBAL_RELEASE_BLOCKED",
       "quote_verified": false
-    },
-    {
-      "game_id": "401866438",
-      "matchup": "Central Michigan @ Ohio",
-      "side": "Ohio",
-      "line": -2.0,
-      "odds": -114.0,
-      "decision": "RECHECK_PRICE",
-      "reasons": "UNRESOLVED_BOOK;BOOK_EXECUTION_UNVERIFIED;PROVIDER_TIMESTAMP_UNVERIFIED;GLOBAL_RELEASE_BLOCKED",
-      "quote_verified": false
     }
   ],
   "next_validation": "Freeze eligible games and their sportsbook quote identity, odds, line and source timestamp before kickoff; grade one first-seen entry per game after final; require candidate-specific ROI CI lower bound > 0, positive timestamp-valid CLV and enough weeks/games.",
