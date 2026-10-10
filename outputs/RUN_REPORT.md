@@ -14,9 +14,9 @@
 
 ## Monitoring and execution
 - Live readiness: **94.8/100**; distribution stability **88.9/100**.
-- Portfolio mode: **PAPER**; proposed **1.63u**; approved **0.00u**.
+- Portfolio mode: **PAPER**; proposed **1.64u**; approved **0.00u**.
 - Historical evidence: **0 bets**, ROI **—**, CLV **—**.
-- Independent live evidence: **0 bets**, ROI **—**, CLV **—**.
+- Independent live evidence: **10 bets**, ROI **-40.27%**, CLV **30.04%**.
 
 ## Market × tier forward validation
 - Display-tier ledger: **144 posted flat-1u decisions** · clean validation-eligible **0** · excluded legacy/unverified **144** · status **EARLY_SAMPLE** · validated cells **0**.

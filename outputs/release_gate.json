@@ -114,7 +114,7 @@
       "passed": true,
       "value": {
         "source": "portfolio_decisions_v1",
-        "graded_bets": 0
+        "graded_bets": 10
       },
       "requirement": "forward evidence comes from execution-ready cap-constrained portfolio decisions",
       "detail": ""
@@ -123,9 +123,9 @@
       "name": "live_shadow_evidence",
       "passed": false,
       "value": {
-        "graded_bets": 0,
-        "roi": null,
-        "avg_clv": null,
+        "graded_bets": 10,
+        "roi": -0.402679012345679,
+        "avg_clv": 0.30043906189519054,
         "portfolio_verified": true
       },
       "requirement": ">=300 portfolio-verified graded live/shadow bets, non-negative ROI and positive pre-kickoff CLV proxy",

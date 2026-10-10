@@ -5,32 +5,185 @@
   "production_gate_open": false,
   "production_eligible": false,
   "bankroll_risk": {
-    "history_available": false,
-    "graded_bets": 0,
-    "cumulative_units": 0.0,
-    "current_drawdown_units": 0.0,
-    "max_drawdown_units": 0.0,
-    "trailing_window_bets": 0,
-    "trailing_roi": null,
-    "trailing_avg_clv": null,
+    "history_available": true,
+    "graded_bets": 10,
+    "cumulative_units": -4.0268,
+    "current_drawdown_units": 4.9527,
+    "max_drawdown_units": 4.9527,
+    "trailing_window_bets": 10,
+    "trailing_roi": -0.402679,
+    "trailing_avg_clv": 0.300439,
     "risk_multiplier": 1.0,
     "hard_stop": false,
-    "reason": "no independent graded live/shadow betting history; unit throttle is neutral outside production"
+    "reason": "no bankroll throttle active"
   },
   "performance_feedback": {
     "enabled": true,
     "history_available": true,
-    "graded_bets": 0,
-    "segments": {},
-    "reason": "graded history has no usable profit rows"
+    "graded_bets": 10,
+    "overall": {
+      "bets": 10,
+      "roi": -0.402679012345679,
+      "avg_clv": 0.30043906189519054,
+      "positive_clv_rate": 0.3,
+      "clv_samples": 10,
+      "clv_coverage": 1.0
+    },
+    "segments": {
+      "market:spread": {
+        "dimension": "market",
+        "value": "spread",
+        "bets": 3,
+        "roi": -0.35802469135802467,
+        "avg_clv": 1.0,
+        "positive_clv_rate": 0.3333333333333333,
+        "clv_samples": 3,
+        "clv_coverage": 1.0,
+        "state": "insufficient",
+        "multiplier": 1.0
+      },
+      "book:ActionNetwork book 75": {
+        "dimension": "book",
+        "value": "ActionNetwork book 75",
+        "bets": 4,
+        "roi": -0.5185185185185185,
+        "avg_clv": -0.125,
+        "positive_clv_rate": 0.0,
+        "clv_samples": 4,
+        "clv_coverage": 1.0,
+        "state": "insufficient",
+        "multiplier": 1.0
+      },
+      "signal:STRONG": {
+        "dimension": "signal",
+        "value": "STRONG",
+        "bets": 6,
+        "roi": -0.4094650205761317,
+        "avg_clv": 0.4973262136569166,
+        "positive_clv_rate": 0.16666666666666666,
+        "clv_samples": 6,
+        "clv_coverage": 1.0,
+        "state": "insufficient",
+        "multiplier": 1.0
+      },
+      "edge_bucket:>=6%": {
+        "dimension": "edge_bucket",
+        "value": ">=6%",
+        "bets": 9,
+        "roi": -0.33631001371742114,
+        "avg_clv": 0.3338211798835451,
+        "positive_clv_rate": 0.3333333333333333,
+        "clv_samples": 9,
+        "clv_coverage": 1.0,
+        "state": "insufficient",
+        "multiplier": 1.0
+      },
+      "market:moneyline": {
+        "dimension": "market",
+        "value": "moneyline",
+        "bets": 4,
+        "roi": 0.011820987654320964,
+        "avg_clv": 0.0010976547379763502,
+        "positive_clv_rate": 0.5,
+        "clv_samples": 4,
+        "clv_coverage": 1.0,
+        "state": "insufficient",
+        "multiplier": 1.0
+      },
+      "book:ActionNetwork book 69": {
+        "dimension": "book",
+        "value": "ActionNetwork book 69",
+        "bets": 2,
+        "roi": -0.19135802469135804,
+        "avg_clv": 0.00197846535936802,
+        "positive_clv_rate": 0.5,
+        "clv_samples": 2,
+        "clv_coverage": 1.0,
+        "state": "insufficient",
+        "multiplier": 1.0
+      },
+      "signal:BET": {
+        "dimension": "signal",
+        "value": "BET",
+        "bets": 4,
+        "roi": -0.3925,
+        "avg_clv": 0.005108334252601376,
+        "positive_clv_rate": 0.5,
+        "clv_samples": 4,
+        "clv_coverage": 1.0,
+        "state": "insufficient",
+        "multiplier": 1.0
+      },
+      "book:ActionNetwork book 30": {
+        "dimension": "book",
+        "value": "ActionNetwork book 30",
+        "bets": 2,
+        "roi": -1.0,
+        "avg_clv": 1.75,
+        "positive_clv_rate": 0.5,
+        "clv_samples": 2,
+        "clv_coverage": 1.0,
+        "state": "insufficient",
+        "multiplier": 1.0
+      },
+      "book:ActionNetwork book 71": {
+        "dimension": "book",
+        "value": "ActionNetwork book 71",
+        "bets": 1,
+        "roi": 1.43,
+        "avg_clv": 0.008073896042340656,
+        "positive_clv_rate": 1.0,
+        "clv_samples": 1,
+        "clv_coverage": 1.0,
+        "state": "insufficient",
+        "multiplier": 1.0
+      },
+      "book:DraftKings": {
+        "dimension": "book",
+        "value": "DraftKings",
+        "bets": 1,
+        "roi": -1.0,
+        "avg_clv": -0.0076402078091712955,
+        "positive_clv_rate": 0.0,
+        "clv_samples": 1,
+        "clv_coverage": 1.0,
+        "state": "insufficient",
+        "multiplier": 1.0
+      },
+      "market:total": {
+        "dimension": "market",
+        "value": "total",
+        "bets": 3,
+        "roi": -1.0,
+        "avg_clv": 0.0,
+        "positive_clv_rate": 0.0,
+        "clv_samples": 3,
+        "clv_coverage": 1.0,
+        "state": "insufficient",
+        "multiplier": 1.0
+      },
+      "edge_bucket:4-6%": {
+        "dimension": "edge_bucket",
+        "value": "4-6%",
+        "bets": 1,
+        "roi": -1.0,
+        "avg_clv": 0.0,
+        "positive_clv_rate": 0.0,
+        "clv_samples": 1,
+        "clv_coverage": 1.0,
+        "state": "insufficient",
+        "multiplier": 1.0
+      }
+    },
+    "reason": "CLV-first segment de-risking; multipliers never exceed 1.0"
   },
   "production_block_reason": "",
-  "proposed_units": 1.63,
-  "risk_adjusted_proposed_units": 1.63,
-  "performance_adjusted_proposed_units": 1.63,
+  "proposed_units": 1.64,
+  "risk_adjusted_proposed_units": 1.64,
+  "performance_adjusted_proposed_units": 1.64,
   "approved_units": 0.0,
-  "paper_allocated_units": 1.63,
-  "paper_or_shadow_allocated_units": 1.63,
+  "paper_allocated_units": 1.64,
+  "paper_or_shadow_allocated_units": 1.64,
   "bets": 11,
   "approved_bets": 0,
   "execution_blocked_bets": 0,
@@ -76,20 +229,20 @@
     "max_book_units": 2.0
   },
   "allocated_by_market": {
-    "spread": 1.09,
+    "spread": 1.1,
     "total": 0.46,
     "moneyline": 0.08
   },
   "allocated_by_book": {
-    "ActionNetwork book 68": 0.58,
+    "ActionNetwork book 68": 0.59,
     "ActionNetwork book 30": 0.36,
     "ActionNetwork book 15": 0.29,
     "ActionNetwork book 49": 0.19,
     "ActionNetwork book 71": 0.13,
-    "DraftKings": 0.08
+    "Draft Kings": 0.08
   },
   "allocated_by_kickoff_window": {
-    "2026-10-10 21:00:00+00:00": 1.25,
+    "2026-10-10 21:00:00+00:00": 1.26,
     "2026-10-11 00:00:00+00:00": 0.38
   },
   "allocated_by_team_exposure": {
@@ -103,8 +256,8 @@
     "Nevada": 0.1,
     "Louisiana Tech": 0.09,
     "Louisiana": 0.09,
+    "Air Force": 0.14,
     "Memphis": 0.13,
-    "Air Force": 0.13,
     "Marshall": 0.11,
     "Coastal Carolina": 0.11,
     "Penn State": 0.08
