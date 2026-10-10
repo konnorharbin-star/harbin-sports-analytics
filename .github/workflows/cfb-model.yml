@@ -78,6 +78,8 @@ jobs:
           print("- Stale quotes and unresolved sportsbook IDs are NOT executable bets.")
           PY
 
+      - name: Audit prospective profitability evidence (research only)
+        run: python -m scripts.strategy_proof
       - name: Publish run summary
         shell: bash
         run: |
