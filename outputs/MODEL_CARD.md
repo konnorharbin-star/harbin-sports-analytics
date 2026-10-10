@@ -2,9 +2,9 @@
 
 ## Identity
 - Core model version: **7.1.0**
-- Repository revision: `700d835fd5104a67316b026594099e32b77d0474`
+- Repository revision: `f35b7f4e510d2e8fa5d96642b61e9ea843fd3032`
 - Season / Week: **2026 / 6**
-- Generated: **Oct 10, 2026 · 4:38 PM CT**
+- Generated: **Oct 10, 2026 · 4:52 PM CT**
 
 ## Intended use
 Independent CFB score, margin, total and win-probability estimation; sportsbook comparison; paper/production betting research with explicit uncertainty and risk controls. The Cooper-style table is a presentation layer, not the proprietary formula of any third party.
@@ -19,17 +19,17 @@ Independent CFB score, margin, total and win-probability estimation; sportsbook 
 
 ## Validation
 - Method: nested whole-week chronology: core fit -> tune weight -> OOF calibration -> untouched evaluation; final refit keeps the tune-selected weight and uses OOF probability calibration
-- Margin MAE: **12.958502962449392** vs baseline **13.50210922129303**
-- Total MAE: **12.591604334877207** vs baseline **12.648615389536973**
-- Win-probability Brier: **0.1747649201336038**
-- Calibration ECE: **0.06218232013495966**
+- Margin MAE: **12.95850296244939** vs baseline **13.50210922129303**
+- Total MAE: **12.59160433487721** vs baseline **12.648615389536973**
+- Win-probability Brier: **0.17476492013360306**
+- Calibration ECE: **0.06218232013495895**
 
 ## Operational controls
 - Live monitoring score: **94.8/100**
 - Portfolio mode: **PAPER**
 - Approved units: **0.0**
-- Proposed units before bankroll/concentration controls: **1.64**
-- Paper/shadow allocated units after controls: **1.64**
+- Proposed units before bankroll/concentration controls: **1.63**
+- Paper/shadow allocated units after controls: **1.63**
 - Unit-risk multiplier: **1.0**
 - Current live/shadow drawdown: **4.9527 units**
 - Portfolio hard stop active: **False**
