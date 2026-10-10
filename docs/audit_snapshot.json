@@ -1,14 +1,14 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-10-10T20:33:29.853319+00:00",
+  "generated_at": "2026-10-10T20:36:25.252262+00:00",
   "status": "WARN",
   "identity": {
     "platform_version": "7.4.0",
     "model_version": "7.1.0",
     "season": 2026,
     "week": 6,
-    "model_generated_at": "2026-10-10T20:33:27.340731+00:00",
-    "updated_at_ct": "Oct 10, 2026 \u00b7 3:33 PM CT",
+    "model_generated_at": "2026-10-10T20:36:22.915007+00:00",
+    "updated_at_ct": "Oct 10, 2026 \u00b7 3:36 PM CT",
     "prediction_rows": 16
   },
   "release": {
@@ -617,19 +617,6 @@
   },
   "trend": [
     {
-      "generated_at": "2026-10-10T16:17:29.611090+00:00",
-      "model_generated_at": "2026-10-10T16:17:26.942769+00:00",
-      "season": 2026,
-      "week": 6,
-      "platform_version": "7.4.0",
-      "release_state": "RESEARCH",
-      "publication_status": "WARN",
-      "live_readiness_score": 94.3,
-      "distribution_stability": 93.9,
-      "approved_units": 0.0,
-      "data_quality_status": "PASS"
-    },
-    {
       "generated_at": "2026-10-10T16:52:02.300038+00:00",
       "model_generated_at": "2026-10-10T16:52:00.864131+00:00",
       "season": 2026,
@@ -762,6 +749,19 @@
     {
       "generated_at": "2026-10-10T20:19:27.275594+00:00",
       "model_generated_at": "2026-10-10T20:19:24.846900+00:00",
+      "season": 2026,
+      "week": 6,
+      "platform_version": "7.4.0",
+      "release_state": "RESEARCH",
+      "publication_status": "WARN",
+      "live_readiness_score": 94.8,
+      "distribution_stability": 88.9,
+      "approved_units": 0.0,
+      "data_quality_status": "PASS"
+    },
+    {
+      "generated_at": "2026-10-10T20:33:29.853319+00:00",
+      "model_generated_at": "2026-10-10T20:33:27.340731+00:00",
       "season": 2026,
       "week": 6,
       "platform_version": "7.4.0",

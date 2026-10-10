@@ -481,8 +481,8 @@
   },
   "calibrated_margin_sigma": 16.28877707158025,
   "calibrated_total_sigma": 16.102959927363244,
-  "generated_at": "2026-10-10T20:33:27.340731+00:00",
-  "updated_at_ct": "Oct 10, 2026 \u00b7 3:33 PM CT",
+  "generated_at": "2026-10-10T20:36:22.915007+00:00",
+  "updated_at_ct": "Oct 10, 2026 \u00b7 3:36 PM CT",
   "schedule_source": "sportsdataverse/cfbfastR-data",
   "odds_source": "ESPN live (site.web.api.espn.com) + ESPN Core supplement",
   "odds_errors": [],
@@ -580,13 +580,13 @@
       "401858483"
     ],
     "invalid_kickoff_game_ids": [],
-    "cutoff_utc": "2026-10-10T20:33:27.262773+00:00"
+    "cutoff_utc": "2026-10-10T20:36:22.840421+00:00"
   },
   "edge_forward_snapshot": {
     "status": "APPENDED",
     "appended": 2,
-    "total_rows": 312,
-    "snapshot_at": "2026-10-10T20:33:27.340731+00:00",
+    "total_rows": 314,
+    "snapshot_at": "2026-10-10T20:36:22.915007+00:00",
     "path": "history/edge_candidate_snapshots.csv"
   },
   "edge_timing": {
@@ -952,13 +952,13 @@
     "verified_close_clv_samples": 10,
     "portfolio_verified": true,
     "evidence_source": "portfolio_decisions_v1",
-    "eligible_decisions": 1059,
+    "eligible_decisions": 1070,
     "timing_excluded_rows": 71,
     "status": "live/shadow evidence only; not historical backtest evidence"
   },
   "edge_forward_validation": {
     "status": "PENDING_FORWARD",
-    "observed_rows": 312,
+    "observed_rows": 314,
     "clean_entries": 0,
     "graded_bets": 0,
     "roi": null,
@@ -1486,6 +1486,6 @@
     "path": "history/portfolio_decisions_v1.csv",
     "eligible_rows": 11,
     "appended_rows": 11,
-    "total_rows": 1406
+    "total_rows": 1417
   }
 }
