@@ -53,7 +53,7 @@
       "name": "monitor_copy",
       "passed": true,
       "severity": "ERROR",
-      "detail": "docs=94.9 snapshot=94.9"
+      "detail": "docs=94.8 snapshot=94.8"
     },
     {
       "name": "data_quality_present",

@@ -35,7 +35,20 @@
   "forward_subgroup_roi_ci_95": null,
   "forward_subgroup_execution_clv": null,
   "forward_subgroup_preliminary_gate": false,
-  "candidate_specific_independent_evidence": "NOT_AVAILABLE",
+  "candidate_specific_independent_evidence": {
+    "status": "PENDING_FORWARD",
+    "bets": 0,
+    "distinct_weeks": 0,
+    "roi": null,
+    "roi_ci_95": [
+      null,
+      null
+    ],
+    "avg_execution_clv": null,
+    "execution_clv_samples": 0,
+    "invalid_rows": 0,
+    "paper_validated": false
+  },
   "profitability_proven": false,
   "production_eligible": false,
   "bet_approved_by_this_report": false,

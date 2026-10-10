@@ -8,8 +8,8 @@
     "model_validation": 92.1,
     "probability_calibration": 87.6,
     "market_intelligence": 100.0,
-    "current_context": 100.0,
-    "live_monitoring": 94.7,
+    "current_context": 99.6,
+    "live_monitoring": 94.9,
     "historical_betting_proof": 25.0
   },
   "betting_proof_status": "UNPROVEN",
