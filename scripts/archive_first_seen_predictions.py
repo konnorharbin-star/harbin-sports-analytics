@@ -39,8 +39,11 @@ def archive(root=Path(".")):
                "market_spread_home", "market_total", "quant_signal"]
     current.insert(0, "first_seen_utc", cutoff.isoformat())
     keep = current[[col for col in columns if col in current.columns]].copy()
-    keep.insert(0, "season", season)
-    keep.insert(1, "week", week)
+    # Live model CSV already has season/week. Assign rather than insert, so
+    # archiving also works with the actual production schema.
+    keep["season"] = season
+    keep["week"] = week
+    keep = keep[["season", "week"] + [c for c in keep.columns if c not in {"season", "week"}]]
     path = root / "history" / "first_seen_pregame_predictions.csv"
     path.parent.mkdir(parents=True, exist_ok=True)
     if path.exists():
