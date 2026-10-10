@@ -1,0 +1,151 @@
+{
+  "actual_sportsbook_entry_verified": false,
+  "away_team": "Air Force",
+  "captured_at": "2026-10-10T21:06:54.758378+00:00",
+  "diagnostic_spreads": [
+    {
+      "baseline": [
+        0.11111396435753229,
+        0.012292892007479517,
+        0.8765931436349882
+      ],
+      "home_spread": -7.0,
+      "key_number": [
+        0.1021279891729855,
+        0.024857238854071855,
+        0.8730147719729426
+      ]
+    },
+    {
+      "baseline": [
+        0.12340685636501181,
+        0.0,
+        0.8765931436349882
+      ],
+      "home_spread": -6.5,
+      "key_number": [
+        0.12698522802705745,
+        0.0,
+        0.8730147719729426
+      ]
+    },
+    {
+      "baseline": [
+        0.16586940729934796,
+        0.016039196996574745,
+        0.8180913957040773
+      ],
+      "home_spread": -3.0,
+      "key_number": [
+        0.16601376028359066,
+        0.032432575713574184,
+        0.8015536640028352
+      ]
+    },
+    {
+      "baseline": [
+        0.1819086042959227,
+        0.0,
+        0.8180913957040773
+      ],
+      "home_spread": -2.5,
+      "key_number": [
+        0.19844633599716488,
+        0.0,
+        0.8015536640028352
+      ]
+    },
+    {
+      "baseline": [
+        0.21678079898089808,
+        0.018794070810344232,
+        0.7644251302087577
+      ],
+      "home_spread": 0.0,
+      "key_number": [
+        0.23049835701736515,
+        0.017274162355139164,
+        0.7522274806274958
+      ]
+    },
+    {
+      "baseline": [
+        0.2757193368276277,
+        0.0,
+        0.7242806631723723
+      ],
+      "home_spread": 2.5,
+      "key_number": [
+        0.2846704351165149,
+        0.0,
+        0.715329564883485
+      ]
+    },
+    {
+      "baseline": [
+        0.2757193368276277,
+        0.02126155102358329,
+        0.703019112148789
+      ],
+      "home_spread": 3.0,
+      "key_number": [
+        0.2846704351165149,
+        0.04299260514772943,
+        0.6723369597357556
+      ]
+    },
+    {
+      "baseline": [
+        0.36482247933687717,
+        0.0,
+        0.6351775206631228
+      ],
+      "home_spread": 6.5,
+      "key_number": [
+        0.39001816691990265,
+        0.0,
+        0.6099818330800973
+      ]
+    },
+    {
+      "baseline": [
+        0.36482247933687717,
+        0.023729184737913966,
+        0.6114483359252089
+      ],
+      "home_spread": 7.0,
+      "key_number": [
+        0.39001816691990265,
+        0.04798236350598696,
+        0.5619994695741104
+      ]
+    }
+  ],
+  "fixed_alpha": 1.0,
+  "game_id": "401864516",
+  "historical_source_sha256": "c7a8cbbe29ed6413ed0d6901cdc80cbae4e7c8bf489588b67e00a6a55c8c2205",
+  "home_team": "Northern Illinois",
+  "independent_home_margin": -12.590194777821456,
+  "key_multipliers": {
+    "3": 2.2,
+    "7": 2.2
+  },
+  "kickoff": "2026-10-10T23:30:00+00:00",
+  "live_board_sha256": "9e5abacd77394084cfd4052d9017456d892a8f089b758d1857e961a0ead6512a",
+  "model_mean": 0.5608024432518567,
+  "model_sigma": 15.999498446875448,
+  "production_model_changed": false,
+  "release_state": "SHADOW",
+  "season": 2026,
+  "source_limitation": "Board availability is observed at capture time; original fair-score production time requires separate evidence.",
+  "spec": "walters_key_number_forward_v1",
+  "sport": "cfb",
+  "sportsbook_odds_used": false,
+  "training_seasons": [
+    2023,
+    2024,
+    2025
+  ],
+  "wager_authorized": false,
+  "week": 6
+}

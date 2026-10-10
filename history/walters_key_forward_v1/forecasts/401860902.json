@@ -1,0 +1,151 @@
+{
+  "actual_sportsbook_entry_verified": false,
+  "away_team": "San Diego State",
+  "captured_at": "2026-10-10T21:06:54.758378+00:00",
+  "diagnostic_spreads": [
+    {
+      "baseline": [
+        0.4246374476627357,
+        0.02461837591556071,
+        0.5507441764217036
+      ],
+      "home_spread": -7.0,
+      "key_number": [
+        0.3827902207741215,
+        0.048823018149038555,
+        0.56838676107684
+      ]
+    },
+    {
+      "baseline": [
+        0.4492558235782964,
+        0.0,
+        0.5507441764217036
+      ],
+      "home_spread": -6.5,
+      "key_number": [
+        0.43161323892316006,
+        0.0,
+        0.56838676107684
+      ]
+    },
+    {
+      "baseline": [
+        0.5239079054239449,
+        0.024827151316267393,
+        0.4512649432597876
+      ],
+      "home_spread": -3.0,
+      "key_number": [
+        0.49890849761555844,
+        0.04923706029433428,
+        0.45185444209010733
+      ]
+    },
+    {
+      "baseline": [
+        0.5487350567402124,
+        0.0,
+        0.4512649432597876
+      ],
+      "home_spread": -2.5,
+      "key_number": [
+        0.5481455579098925,
+        0.0,
+        0.45185444209010733
+      ]
+    },
+    {
+      "baseline": [
+        0.5977277568585806,
+        0.023981112825323725,
+        0.3782911303160956
+      ],
+      "home_spread": 0.0,
+      "key_number": [
+        0.5923101189910096,
+        0.021617818973200174,
+        0.38607206203579014
+      ]
+    },
+    {
+      "baseline": [
+        0.6682100408967026,
+        0.0,
+        0.3317899591032974
+      ],
+      "home_spread": 2.5,
+      "key_number": [
+        0.6558465056571372,
+        0.0,
+        0.34415349434286285
+      ]
+    },
+    {
+      "baseline": [
+        0.6682100408967026,
+        0.02236390407836414,
+        0.30942605502493326
+      ],
+      "home_spread": 3.0,
+      "key_number": [
+        0.6558465056571372,
+        0.04435196287709547,
+        0.2998015314657674
+      ]
+    },
+    {
+      "baseline": [
+        0.7533229093434299,
+        0.0,
+        0.24667709065657
+      ],
+      "home_spread": 6.5,
+      "key_number": [
+        0.7567636397317353,
+        0.0,
+        0.24323636026826473
+      ]
+    },
+    {
+      "baseline": [
+        0.7533229093434299,
+        0.019291874787235708,
+        0.2273852158693343
+      ],
+      "home_spread": 7.0,
+      "key_number": [
+        0.7567636397317353,
+        0.038259532476748105,
+        0.20497682779151663
+      ]
+    }
+  ],
+  "fixed_alpha": 1.0,
+  "game_id": "401860902",
+  "historical_source_sha256": "c7a8cbbe29ed6413ed0d6901cdc80cbae4e7c8bf489588b67e00a6a55c8c2205",
+  "home_team": "Oregon State",
+  "independent_home_margin": 3.8985938472041823,
+  "key_multipliers": {
+    "3": 2.2,
+    "7": 2.2
+  },
+  "kickoff": "2026-10-10T22:00:00+00:00",
+  "live_board_sha256": "9e5abacd77394084cfd4052d9017456d892a8f089b758d1857e961a0ead6512a",
+  "model_mean": 0.5608024432518567,
+  "model_sigma": 15.999498446875448,
+  "production_model_changed": false,
+  "release_state": "SHADOW",
+  "season": 2026,
+  "source_limitation": "Board availability is observed at capture time; original fair-score production time requires separate evidence.",
+  "spec": "walters_key_number_forward_v1",
+  "sport": "cfb",
+  "sportsbook_odds_used": false,
+  "training_seasons": [
+    2023,
+    2024,
+    2025
+  ],
+  "wager_authorized": false,
+  "week": 6
+}

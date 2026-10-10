@@ -1,0 +1,151 @@
+{
+  "actual_sportsbook_entry_verified": false,
+  "away_team": "North Dakota State",
+  "captured_at": "2026-10-10T21:06:54.758378+00:00",
+  "diagnostic_spreads": [
+    {
+      "baseline": [
+        0.28255643367515204,
+        0.02150251221884536,
+        0.6959410541060026
+      ],
+      "home_spread": -7.0,
+      "key_number": [
+        0.2539614369468717,
+        0.04251815973921989,
+        0.7035204033139081
+      ]
+    },
+    {
+      "baseline": [
+        0.3040589458939974,
+        0.0,
+        0.6959410541060026
+      ],
+      "home_spread": -6.5,
+      "key_number": [
+        0.2964795966860917,
+        0.0,
+        0.7035204033139081
+      ]
+    },
+    {
+      "baseline": [
+        0.372493660152323,
+        0.02387641614600089,
+        0.6036299237016761
+      ],
+      "home_spread": -3.0,
+      "key_number": [
+        0.3579886486798397,
+        0.047212217129030336,
+        0.5947991341911296
+      ]
+    },
+    {
+      "baseline": [
+        0.3963700762983239,
+        0.0,
+        0.6036299237016761
+      ],
+      "home_spread": -2.5,
+      "key_number": [
+        0.40520086580887,
+        0.0,
+        0.5947991341911296
+      ]
+    },
+    {
+      "baseline": [
+        0.4452189481288711,
+        0.024789679617561955,
+        0.529991372253567
+      ],
+      "home_spread": 0.0,
+      "key_number": [
+        0.4491061824281401,
+        0.02228093898002172,
+        0.5286128785918378
+      ]
+    },
+    {
+      "baseline": [
+        0.5198414830448266,
+        0.0,
+        0.48015851695517336
+      ],
+      "home_spread": 2.5,
+      "key_number": [
+        0.5161768413736098,
+        0.0,
+        0.48382315862639047
+      ]
+    },
+    {
+      "baseline": [
+        0.5198414830448266,
+        0.024848978234948804,
+        0.45530953872022456
+      ],
+      "home_spread": 3.0,
+      "key_number": [
+        0.5161768413736098,
+        0.049135320338243034,
+        0.43468783828814744
+      ]
+    },
+    {
+      "baseline": [
+        0.617821251782713,
+        0.0,
+        0.38217874821728703
+      ],
+      "home_spread": 6.5,
+      "key_number": [
+        0.6310420422869273,
+        0.0,
+        0.36895795771307305
+      ]
+    },
+    {
+      "baseline": [
+        0.617821251782713,
+        0.023601944997785895,
+        0.35857680321950114
+      ],
+      "home_spread": 7.0,
+      "key_number": [
+        0.6310420422869273,
+        0.046669489469822946,
+        0.3222884682432501
+      ]
+    }
+  ],
+  "fixed_alpha": 1.0,
+  "game_id": "401864518",
+  "historical_source_sha256": "c7a8cbbe29ed6413ed0d6901cdc80cbae4e7c8bf489588b67e00a6a55c8c2205",
+  "home_team": "UNLV",
+  "independent_home_margin": -2.2647354897243757,
+  "key_multipliers": {
+    "3": 2.2,
+    "7": 2.2
+  },
+  "kickoff": "2026-10-10T23:00:00+00:00",
+  "live_board_sha256": "9e5abacd77394084cfd4052d9017456d892a8f089b758d1857e961a0ead6512a",
+  "model_mean": 0.5608024432518567,
+  "model_sigma": 15.999498446875448,
+  "production_model_changed": false,
+  "release_state": "SHADOW",
+  "season": 2026,
+  "source_limitation": "Board availability is observed at capture time; original fair-score production time requires separate evidence.",
+  "spec": "walters_key_number_forward_v1",
+  "sport": "cfb",
+  "sportsbook_odds_used": false,
+  "training_seasons": [
+    2023,
+    2024,
+    2025
+  ],
+  "wager_authorized": false,
+  "week": 6
+}

@@ -1,0 +1,151 @@
+{
+  "actual_sportsbook_entry_verified": false,
+  "away_team": "James Madison",
+  "captured_at": "2026-10-10T21:06:54.758378+00:00",
+  "diagnostic_spreads": [
+    {
+      "baseline": [
+        0.09213164207309954,
+        0.010760966832818242,
+        0.8971073910940822
+      ],
+      "home_spread": -7.0,
+      "key_number": [
+        0.08519079481166576,
+        0.021890608405147914,
+        0.8929185967831863
+      ]
+    },
+    {
+      "baseline": [
+        0.10289260890591778,
+        0.0,
+        0.8971073910940822
+      ],
+      "home_spread": -6.5,
+      "key_number": [
+        0.10708140321681368,
+        0.0,
+        0.8929185967831863
+      ]
+    },
+    {
+      "baseline": [
+        0.1405761571650641,
+        0.014421369362712766,
+        0.8450024734722231
+      ],
+      "home_spread": -3.0,
+      "key_number": [
+        0.14192601637342397,
+        0.02933682022161427,
+        0.8287371634049616
+      ]
+    },
+    {
+      "baseline": [
+        0.15499752652777687,
+        0.0,
+        0.8450024734722231
+      ],
+      "home_spread": -2.5,
+      "key_number": [
+        0.17126283659503827,
+        0.0,
+        0.8287371634049616
+      ]
+    },
+    {
+      "baseline": [
+        0.18667160354261358,
+        0.017241090299972117,
+        0.7960873061574143
+      ],
+      "home_spread": 0.0,
+      "key_number": [
+        0.20055070919888188,
+        0.015942212176235364,
+        0.7835070786248827
+      ]
+    },
+    {
+      "baseline": [
+        0.24111431494828484,
+        0.0,
+        0.7588856850517152
+      ],
+      "home_spread": 2.5,
+      "key_number": [
+        0.25089191393580995,
+        0.0,
+        0.74910808606419
+      ]
+    },
+    {
+      "baseline": [
+        0.24111431494828484,
+        0.019900262238927602,
+        0.7389854228127876
+      ],
+      "home_spread": 3.0,
+      "key_number": [
+        0.25089191393580995,
+        0.04048231488861742,
+        0.7086257711755726
+      ]
+    },
+    {
+      "baseline": [
+        0.32537706763871466,
+        0.0,
+        0.6746229323612853
+      ],
+      "home_spread": 6.5,
+      "key_number": [
+        0.3508878942084796,
+        0.0,
+        0.6491121057915203
+      ]
+    },
+    {
+      "baseline": [
+        0.32537706763871466,
+        0.022812523301582233,
+        0.6518104090597031
+      ],
+      "home_spread": 7.0,
+      "key_number": [
+        0.3508878942084796,
+        0.04640661216474204,
+        0.6027054936267783
+      ]
+    }
+  ],
+  "fixed_alpha": 1.0,
+  "game_id": "401869949",
+  "historical_source_sha256": "c7a8cbbe29ed6413ed0d6901cdc80cbae4e7c8bf489588b67e00a6a55c8c2205",
+  "home_team": "Georgia Southern",
+  "independent_home_margin": -14.304011865677111,
+  "key_multipliers": {
+    "3": 2.2,
+    "7": 2.2
+  },
+  "kickoff": "2026-10-10T23:30:00+00:00",
+  "live_board_sha256": "9e5abacd77394084cfd4052d9017456d892a8f089b758d1857e961a0ead6512a",
+  "model_mean": 0.5608024432518567,
+  "model_sigma": 15.999498446875448,
+  "production_model_changed": false,
+  "release_state": "SHADOW",
+  "season": 2026,
+  "source_limitation": "Board availability is observed at capture time; original fair-score production time requires separate evidence.",
+  "spec": "walters_key_number_forward_v1",
+  "sport": "cfb",
+  "sportsbook_odds_used": false,
+  "training_seasons": [
+    2023,
+    2024,
+    2025
+  ],
+  "wager_authorized": false,
+  "week": 6
+}

@@ -1,0 +1,151 @@
+{
+  "actual_sportsbook_entry_verified": false,
+  "away_team": "Boise State",
+  "captured_at": "2026-10-10T21:06:54.758378+00:00",
+  "diagnostic_spreads": [
+    {
+      "baseline": [
+        0.28787661117472085,
+        0.02168382106046407,
+        0.6904395677648151
+      ],
+      "home_spread": -7.0,
+      "key_number": [
+        0.25870718560753847,
+        0.04287070301798117,
+        0.6984221113744801
+      ]
+    },
+    {
+      "baseline": [
+        0.3095604322351849,
+        0.0,
+        0.6904395677648151
+      ],
+      "home_spread": -6.5,
+      "key_number": [
+        0.30157788862551965,
+        0.0,
+        0.6984221113744801
+      ]
+    },
+    {
+      "baseline": [
+        0.378436069742604,
+        0.023983658122738172,
+        0.5975802721346578
+      ],
+      "home_spread": -3.0,
+      "key_number": [
+        0.36347462370155803,
+        0.04741767061246423,
+        0.5891077056859774
+      ]
+    },
+    {
+      "baseline": [
+        0.4024197278653422,
+        0.0,
+        0.5975802721346578
+      ],
+      "home_spread": -2.5,
+      "key_number": [
+        0.4108922943140223,
+        0.0,
+        0.5891077056859774
+      ]
+    },
+    {
+      "baseline": [
+        0.451415874219671,
+        0.024828012441778124,
+        0.5237561133385509
+      ],
+      "home_spread": 0.0,
+      "key_number": [
+        0.454923850324143,
+        0.022312285797830764,
+        0.522763863878026
+      ]
+    },
+    {
+      "baseline": [
+        0.5260805728883596,
+        0.0,
+        0.47391942711164037
+      ],
+      "home_spread": 2.5,
+      "key_number": [
+        0.5220230633445714,
+        0.0,
+        0.4779769366554293
+      ]
+    },
+    {
+      "baseline": [
+        0.5260805728883596,
+        0.024814431575297613,
+        0.44910499553634275
+      ],
+      "home_spread": 3.0,
+      "key_number": [
+        0.5220230633445714,
+        0.049060178261858024,
+        0.42891675839357124
+      ]
+    },
+    {
+      "baseline": [
+        0.623781938831333,
+        0.0,
+        0.376218061168667
+      ],
+      "home_spread": 6.5,
+      "key_number": [
+        0.6365848243188169,
+        0.0,
+        0.36341517568118376
+      ]
+    },
+    {
+      "baseline": [
+        0.623781938831333,
+        0.023477035848393835,
+        0.3527410253202732
+      ],
+      "home_spread": 7.0,
+      "key_number": [
+        0.6365848243188169,
+        0.0464160365828738,
+        0.31699913909830996
+      ]
+    }
+  ],
+  "fixed_alpha": 1.0,
+  "game_id": "401860901",
+  "historical_source_sha256": "c7a8cbbe29ed6413ed0d6901cdc80cbae4e7c8bf489588b67e00a6a55c8c2205",
+  "home_team": "Fresno State",
+  "independent_home_margin": -2.0141002583435714,
+  "key_multipliers": {
+    "3": 2.2,
+    "7": 2.2
+  },
+  "kickoff": "2026-10-11T02:30:00+00:00",
+  "live_board_sha256": "9e5abacd77394084cfd4052d9017456d892a8f089b758d1857e961a0ead6512a",
+  "model_mean": 0.5608024432518567,
+  "model_sigma": 15.999498446875448,
+  "production_model_changed": false,
+  "release_state": "SHADOW",
+  "season": 2026,
+  "source_limitation": "Board availability is observed at capture time; original fair-score production time requires separate evidence.",
+  "spec": "walters_key_number_forward_v1",
+  "sport": "cfb",
+  "sportsbook_odds_used": false,
+  "training_seasons": [
+    2023,
+    2024,
+    2025
+  ],
+  "wager_authorized": false,
+  "week": 6
+}

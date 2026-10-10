@@ -1,0 +1,151 @@
+{
+  "actual_sportsbook_entry_verified": false,
+  "away_team": "Louisiana",
+  "captured_at": "2026-10-10T21:06:54.758378+00:00",
+  "diagnostic_spreads": [
+    {
+      "baseline": [
+        0.33817288402123447,
+        0.023139571049176744,
+        0.6386875449295888
+      ],
+      "home_spread": -7.0,
+      "key_number": [
+        0.3038301097165711,
+        0.04573724634436829,
+        0.6504326439390605
+      ]
+    },
+    {
+      "baseline": [
+        0.3613124550704112,
+        0.0,
+        0.6386875449295888
+      ],
+      "home_spread": -6.5,
+      "key_number": [
+        0.3495673560609394,
+        0.0,
+        0.6504326439390605
+      ]
+    },
+    {
+      "baseline": [
+        0.43350918195235155,
+        0.024700536276482943,
+        0.5417902817711655
+      ],
+      "home_spread": -3.0,
+      "key_number": [
+        0.41443222396187945,
+        0.04882262121949315,
+        0.5367451548186275
+      ]
+    },
+    {
+      "baseline": [
+        0.4582097182288345,
+        0.0,
+        0.5417902817711655
+      ],
+      "home_spread": -2.5,
+      "key_number": [
+        0.46325484518137255,
+        0.0,
+        0.5367451548186275
+      ]
+    },
+    {
+      "baseline": [
+        0.508001806648191,
+        0.024897830911293883,
+        0.46710036244051517
+      ],
+      "home_spread": 0.0,
+      "key_number": [
+        0.5079903529712887,
+        0.02236935915006142,
+        0.46964028787865003
+      ]
+    },
+    {
+      "baseline": [
+        0.5822155956297753,
+        0.0,
+        0.4177844043702247
+      ],
+      "home_spread": 2.5,
+      "key_number": [
+        0.5746674424547299,
+        0.0,
+        0.42533255754527016
+      ]
+    },
+    {
+      "baseline": [
+        0.5822155956297753,
+        0.024229948519973787,
+        0.3935544558502509
+      ],
+      "home_spread": 3.0,
+      "key_number": [
+        0.5746674424547299,
+        0.04789246620061398,
+        0.37744009134465617
+      ]
+    },
+    {
+      "baseline": [
+        0.67637023901356,
+        0.0,
+        0.32362976098644003
+      ],
+      "home_spread": 6.5,
+      "key_number": [
+        0.6853834782441917,
+        0.0,
+        0.31461652175580823
+      ]
+    },
+    {
+      "baseline": [
+        0.67637023901356,
+        0.022123961376414036,
+        0.301505799610026
+      ],
+      "home_spread": 7.0,
+      "key_number": [
+        0.6853834782441917,
+        0.04372981112898975,
+        0.27088671062681846
+      ]
+    }
+  ],
+  "fixed_alpha": 1.0,
+  "game_id": "401869965",
+  "historical_source_sha256": "c7a8cbbe29ed6413ed0d6901cdc80cbae4e7c8bf489588b67e00a6a55c8c2205",
+  "home_team": "Louisiana Tech",
+  "independent_home_margin": 0.26012989389361785,
+  "key_multipliers": {
+    "3": 2.2,
+    "7": 2.2
+  },
+  "kickoff": "2026-10-10T23:30:00+00:00",
+  "live_board_sha256": "9e5abacd77394084cfd4052d9017456d892a8f089b758d1857e961a0ead6512a",
+  "model_mean": 0.5608024432518567,
+  "model_sigma": 15.999498446875448,
+  "production_model_changed": false,
+  "release_state": "SHADOW",
+  "season": 2026,
+  "source_limitation": "Board availability is observed at capture time; original fair-score production time requires separate evidence.",
+  "spec": "walters_key_number_forward_v1",
+  "sport": "cfb",
+  "sportsbook_odds_used": false,
+  "training_seasons": [
+    2023,
+    2024,
+    2025
+  ],
+  "wager_authorized": false,
+  "week": 6
+}

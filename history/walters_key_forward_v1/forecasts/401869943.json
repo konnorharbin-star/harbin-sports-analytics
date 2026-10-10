@@ -1,0 +1,151 @@
+{
+  "actual_sportsbook_entry_verified": false,
+  "away_team": "Coastal Carolina",
+  "captured_at": "2026-10-10T21:06:54.758378+00:00",
+  "diagnostic_spreads": [
+    {
+      "baseline": [
+        0.4694282825969076,
+        0.024904881250914057,
+        0.5056668361521783
+      ],
+      "home_spread": -7.0,
+      "key_number": [
+        0.42455855998344944,
+        0.049553633659005225,
+        0.5258878063575453
+      ]
+    },
+    {
+      "baseline": [
+        0.49433316384782167,
+        0.0,
+        0.5056668361521783
+      ],
+      "home_spread": -6.5,
+      "key_number": [
+        0.47411219364245466,
+        0.0,
+        0.5258878063575453
+      ]
+    },
+    {
+      "baseline": [
+        0.5687924822392892,
+        0.024414634229803667,
+        0.4067928835309071
+      ],
+      "home_spread": -3.0,
+      "key_number": [
+        0.5414544100482258,
+        0.04857818145580987,
+        0.40996740849596386
+      ]
+    },
+    {
+      "baseline": [
+        0.5932071164690929,
+        0.0,
+        0.4067928835309071
+      ],
+      "home_spread": -2.5,
+      "key_number": [
+        0.5900325915040356,
+        0.0,
+        0.40996740849596386
+      ]
+    },
+    {
+      "baseline": [
+        0.6408779954427595,
+        0.023086938943837954,
+        0.3360350656134025
+      ],
+      "home_spread": 0.0,
+      "key_number": [
+        0.6331469083880573,
+        0.020880202398964338,
+        0.34597288921297775
+      ]
+    },
+    {
+      "baseline": [
+        0.7082613284034283,
+        0.0,
+        0.2917386715965718
+      ],
+      "home_spread": 2.5,
+      "key_number": [
+        0.6940894886910687,
+        0.0,
+        0.30591051130893065
+      ]
+    },
+    {
+      "baseline": [
+        0.7082613284034283,
+        0.021077462914387446,
+        0.27066120868218435
+      ],
+      "home_spread": 3.0,
+      "key_number": [
+        0.6940894886910687,
+        0.04193815923866291,
+        0.26397235207026776
+      ]
+    },
+    {
+      "baseline": [
+        0.7876576915140286,
+        0.0,
+        0.21234230848597135
+      ],
+      "home_spread": 6.5,
+      "key_number": [
+        0.7887722080788346,
+        0.0,
+        0.2112277919211648
+      ]
+    },
+    {
+      "baseline": [
+        0.7876576915140286,
+        0.017674348002536644,
+        0.1946679604834347
+      ],
+      "home_spread": 7.0,
+      "key_number": [
+        0.7887722080788346,
+        0.03516692801124387,
+        0.17606086390992096
+      ]
+    }
+  ],
+  "fixed_alpha": 1.0,
+  "game_id": "401869943",
+  "historical_source_sha256": "c7a8cbbe29ed6413ed0d6901cdc80cbae4e7c8bf489588b67e00a6a55c8c2205",
+  "home_team": "Marshall",
+  "independent_home_margin": 5.711922610266468,
+  "key_multipliers": {
+    "3": 2.2,
+    "7": 2.2
+  },
+  "kickoff": "2026-10-10T23:00:00+00:00",
+  "live_board_sha256": "9e5abacd77394084cfd4052d9017456d892a8f089b758d1857e961a0ead6512a",
+  "model_mean": 0.5608024432518567,
+  "model_sigma": 15.999498446875448,
+  "production_model_changed": false,
+  "release_state": "SHADOW",
+  "season": 2026,
+  "source_limitation": "Board availability is observed at capture time; original fair-score production time requires separate evidence.",
+  "spec": "walters_key_number_forward_v1",
+  "sport": "cfb",
+  "sportsbook_odds_used": false,
+  "training_seasons": [
+    2023,
+    2024,
+    2025
+  ],
+  "wager_authorized": false,
+  "week": 6
+}

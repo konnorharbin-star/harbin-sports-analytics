@@ -1,14 +1,14 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-10-10T20:49:16.216309+00:00",
+  "generated_at": "2026-10-10T21:06:52.783067+00:00",
   "status": "WARN",
   "identity": {
     "platform_version": "7.4.0",
     "model_version": "7.1.0",
     "season": 2026,
     "week": 6,
-    "model_generated_at": "2026-10-10T20:49:13.844112+00:00",
-    "updated_at_ct": "Oct 10, 2026 \u00b7 3:49 PM CT",
+    "model_generated_at": "2026-10-10T21:06:50.287420+00:00",
+    "updated_at_ct": "Oct 10, 2026 \u00b7 4:06 PM CT",
     "prediction_rows": 16
   },
   "release": {
@@ -433,12 +433,12 @@
       "reason": "CLV-first segment de-risking; multipliers never exceed 1.0"
     },
     "production_block_reason": "",
-    "proposed_units": 1.64,
-    "risk_adjusted_proposed_units": 1.64,
-    "performance_adjusted_proposed_units": 1.64,
+    "proposed_units": 1.63,
+    "risk_adjusted_proposed_units": 1.63,
+    "performance_adjusted_proposed_units": 1.63,
     "approved_units": 0.0,
-    "paper_allocated_units": 1.64,
-    "paper_or_shadow_allocated_units": 1.64,
+    "paper_allocated_units": 1.63,
+    "paper_or_shadow_allocated_units": 1.63,
     "bets": 11,
     "approved_bets": 0,
     "execution_blocked_bets": 0,
@@ -485,19 +485,19 @@
     },
     "allocated_by_market": {
       "spread": 1.1,
-      "total": 0.46,
+      "total": 0.45,
       "moneyline": 0.08
     },
     "allocated_by_book": {
       "ActionNetwork book 68": 0.59,
       "ActionNetwork book 30": 0.36,
-      "ActionNetwork book 15": 0.29,
-      "ActionNetwork book 49": 0.19,
+      "ActionNetwork book 15": 0.38,
+      "ActionNetwork book 49": 0.09,
       "ActionNetwork book 71": 0.13,
-      "Draft Kings": 0.08
+      "DraftKings": 0.08
     },
     "allocated_by_kickoff_window": {
-      "2026-10-10 21:00:00+00:00": 1.26,
+      "2026-10-10 21:00:00+00:00": 1.25,
       "2026-10-11 00:00:00+00:00": 0.38
     },
     "allocated_by_team_exposure": {
@@ -507,10 +507,10 @@
       "Fresno State": 0.2,
       "James Madison": 0.18,
       "Hawai'i": 0.18,
-      "UTEP": 0.1,
-      "Nevada": 0.1,
       "Louisiana Tech": 0.09,
       "Louisiana": 0.09,
+      "UTEP": 0.09,
+      "Nevada": 0.09,
       "Air Force": 0.14,
       "Memphis": 0.13,
       "Marshall": 0.11,
@@ -610,25 +610,12 @@
         "name": "approved_not_above_allocation",
         "passed": true,
         "severity": "ERROR",
-        "detail": "approved=0.00 allocated=1.64"
+        "detail": "approved=0.00 allocated=1.63"
       }
     ],
     "errors": []
   },
   "trend": [
-    {
-      "generated_at": "2026-10-10T17:55:18.550223+00:00",
-      "model_generated_at": "2026-10-10T17:55:16.011701+00:00",
-      "season": 2026,
-      "week": 6,
-      "platform_version": "7.4.0",
-      "release_state": "RESEARCH",
-      "publication_status": "WARN",
-      "live_readiness_score": 94.7,
-      "distribution_stability": 94.9,
-      "approved_units": 0.0,
-      "data_quality_status": "PASS"
-    },
     {
       "generated_at": "2026-10-10T18:00:00.404461+00:00",
       "model_generated_at": "2026-10-10T17:59:59.005365+00:00",
@@ -762,6 +749,19 @@
     {
       "generated_at": "2026-10-10T20:40:42.868224+00:00",
       "model_generated_at": "2026-10-10T20:40:41.458140+00:00",
+      "season": 2026,
+      "week": 6,
+      "platform_version": "7.4.0",
+      "release_state": "RESEARCH",
+      "publication_status": "WARN",
+      "live_readiness_score": 94.8,
+      "distribution_stability": 88.9,
+      "approved_units": 0.0,
+      "data_quality_status": "PASS"
+    },
+    {
+      "generated_at": "2026-10-10T20:49:16.216309+00:00",
+      "model_generated_at": "2026-10-10T20:49:13.844112+00:00",
       "season": 2026,
       "week": 6,
       "platform_version": "7.4.0",

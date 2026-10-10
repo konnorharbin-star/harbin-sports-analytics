@@ -1,0 +1,151 @@
+{
+  "actual_sportsbook_entry_verified": false,
+  "away_team": "Georgia",
+  "captured_at": "2026-10-10T21:06:54.758378+00:00",
+  "diagnostic_spreads": [
+    {
+      "baseline": [
+        0.385323135055732,
+        0.02410056160087648,
+        0.5905763033433915
+      ],
+      "home_spread": -7.0,
+      "key_number": [
+        0.34663981044056696,
+        0.04769833253844869,
+        0.605661857020984
+      ]
+    },
+    {
+      "baseline": [
+        0.4094236966566085,
+        0.0,
+        0.5905763033433915
+      ],
+      "home_spread": -6.5,
+      "key_number": [
+        0.3943381429790157,
+        0.0,
+        0.605661857020984
+      ]
+    },
+    {
+      "baseline": [
+        0.4834399514668426,
+        0.024929301613055566,
+        0.49163074692010184
+      ],
+      "home_spread": -3.0,
+      "key_number": [
+        0.46092376476689334,
+        0.04933852322543245,
+        0.4897377120076739
+      ]
+    },
+    {
+      "baseline": [
+        0.5083692530798982,
+        0.0,
+        0.49163074692010184
+      ],
+      "home_spread": -2.5,
+      "key_number": [
+        0.5102622879923259,
+        0.0,
+        0.4897377120076739
+      ]
+    },
+    {
+      "baseline": [
+        0.5580330156096427,
+        0.024542237015740542,
+        0.4174247473746167
+      ],
+      "home_spread": 0.0,
+      "key_number": [
+        0.5549402106573795,
+        0.022078395022124223,
+        0.4229813943204961
+      ]
+    },
+    {
+      "baseline": [
+        0.6306177596458195,
+        0.0,
+        0.36938224035418055
+      ],
+      "home_spread": 2.5,
+      "key_number": [
+        0.6202380337687227,
+        0.0,
+        0.3797619662312771
+      ]
+    },
+    {
+      "baseline": [
+        0.6306177596458195,
+        0.023326738848547635,
+        0.3460555015056329
+      ],
+      "home_spread": 3.0,
+      "key_number": [
+        0.6202380337687227,
+        0.04616683067647314,
+        0.33359513555480397
+      ]
+    },
+    {
+      "baseline": [
+        0.7202208740266259,
+        0.0,
+        0.27977912597337407
+      ],
+      "home_spread": 6.5,
+      "key_number": [
+        0.7260276282013018,
+        0.0,
+        0.27397237179869793
+      ]
+    },
+    {
+      "baseline": [
+        0.7202208740266259,
+        0.020639363418229695,
+        0.25913976255514437
+      ],
+      "home_spread": 7.0,
+      "key_number": [
+        0.7260276282013018,
+        0.04084814437140795,
+        0.23312422742729
+      ]
+    }
+  ],
+  "fixed_alpha": 1.0,
+  "game_id": "401856712",
+  "historical_source_sha256": "c7a8cbbe29ed6413ed0d6901cdc80cbae4e7c8bf489588b67e00a6a55c8c2205",
+  "home_team": "Alabama",
+  "independent_home_margin": 2.2748693610059365,
+  "key_multipliers": {
+    "3": 2.2,
+    "7": 2.2
+  },
+  "kickoff": "2026-10-10T23:30:00+00:00",
+  "live_board_sha256": "9e5abacd77394084cfd4052d9017456d892a8f089b758d1857e961a0ead6512a",
+  "model_mean": 0.5608024432518567,
+  "model_sigma": 15.999498446875448,
+  "production_model_changed": false,
+  "release_state": "SHADOW",
+  "season": 2026,
+  "source_limitation": "Board availability is observed at capture time; original fair-score production time requires separate evidence.",
+  "spec": "walters_key_number_forward_v1",
+  "sport": "cfb",
+  "sportsbook_odds_used": false,
+  "training_seasons": [
+    2023,
+    2024,
+    2025
+  ],
+  "wager_authorized": false,
+  "week": 6
+}

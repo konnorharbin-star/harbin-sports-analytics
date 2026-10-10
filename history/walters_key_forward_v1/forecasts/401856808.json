@@ -1,0 +1,151 @@
+{
+  "actual_sportsbook_entry_verified": false,
+  "away_team": "Hawai'i",
+  "captured_at": "2026-10-10T21:06:54.758378+00:00",
+  "diagnostic_spreads": [
+    {
+      "baseline": [
+        0.6587563186379813,
+        0.022627960357274435,
+        0.31861572100474417
+      ],
+      "home_spread": -7.0,
+      "key_number": [
+        0.6097941382566568,
+        0.046081493006727835,
+        0.3441243687366152
+      ]
+    },
+    {
+      "baseline": [
+        0.6813842789952558,
+        0.0,
+        0.31861572100474417
+      ],
+      "home_spread": -6.5,
+      "key_number": [
+        0.6558756312633847,
+        0.0,
+        0.3441243687366152
+      ]
+    },
+    {
+      "baseline": [
+        0.7450775128932393,
+        0.01964644405578425,
+        0.23527604305097644
+      ],
+      "home_spread": -3.0,
+      "key_number": [
+        0.7148348542396501,
+        0.04000968094645984,
+        0.2451554648138899
+      ]
+    },
+    {
+      "baseline": [
+        0.7647239569490236,
+        0.0,
+        0.23527604305097644
+      ],
+      "home_spread": -2.5,
+      "key_number": [
+        0.75484453518611,
+        0.0,
+        0.2451554648138899
+      ]
+    },
+    {
+      "baseline": [
+        0.8013867556961536,
+        0.016961126272165894,
+        0.18165211803168052
+      ],
+      "home_spread": 0.0,
+      "key_number": [
+        0.7887823649048554,
+        0.015700487549602717,
+        0.1955171475455418
+      ]
+    },
+    {
+      "baseline": [
+        0.8494531551713335,
+        0.0,
+        0.15054684482866654
+      ],
+      "home_spread": 2.5,
+      "key_number": [
+        0.8332762207021994,
+        0.0,
+        0.16672377929780052
+      ]
+    },
+    {
+      "baseline": [
+        0.8494531551713335,
+        0.014137130453964253,
+        0.13640971437470228
+      ],
+      "home_spread": 3.0,
+      "key_number": [
+        0.8332762207021994,
+        0.02879004858871964,
+        0.13793373070908088
+      ]
+    },
+    {
+      "baseline": [
+        0.9004462877001062,
+        0.0,
+        0.09955371229989385
+      ],
+      "home_spread": 6.5,
+      "key_number": [
+        0.8961829424656994,
+        0.0,
+        0.10381705753430069
+      ]
+    },
+    {
+      "baseline": [
+        0.9004462877001062,
+        0.010499270640366043,
+        0.0890544416595278
+      ],
+      "home_spread": 7.0,
+      "key_number": [
+        0.8961829424656994,
+        0.021381603067650398,
+        0.0824354544666503
+      ]
+    }
+  ],
+  "fixed_alpha": 1.0,
+  "game_id": "401856808",
+  "historical_source_sha256": "c7a8cbbe29ed6413ed0d6901cdc80cbae4e7c8bf489588b67e00a6a55c8c2205",
+  "home_team": "Arizona State",
+  "independent_home_margin": 13.484132634151774,
+  "key_multipliers": {
+    "3": 2.2,
+    "7": 2.2
+  },
+  "kickoff": "2026-10-11T02:30:00+00:00",
+  "live_board_sha256": "9e5abacd77394084cfd4052d9017456d892a8f089b758d1857e961a0ead6512a",
+  "model_mean": 0.5608024432518567,
+  "model_sigma": 15.999498446875448,
+  "production_model_changed": false,
+  "release_state": "SHADOW",
+  "season": 2026,
+  "source_limitation": "Board availability is observed at capture time; original fair-score production time requires separate evidence.",
+  "spec": "walters_key_number_forward_v1",
+  "sport": "cfb",
+  "sportsbook_odds_used": false,
+  "training_seasons": [
+    2023,
+    2024,
+    2025
+  ],
+  "wager_authorized": false,
+  "week": 6
+}

@@ -1,0 +1,151 @@
+{
+  "actual_sportsbook_entry_verified": false,
+  "away_team": "USC",
+  "captured_at": "2026-10-10T21:06:54.758378+00:00",
+  "diagnostic_spreads": [
+    {
+      "baseline": [
+        0.3527359164434217,
+        0.023476923938126837,
+        0.6237871596184514
+      ],
+      "home_spread": -7.0,
+      "key_number": [
+        0.316994512191257,
+        0.0464158101007137,
+        0.6365896777080291
+      ]
+    },
+    {
+      "baseline": [
+        0.37621284038154856,
+        0.0,
+        0.6237871596184514
+      ],
+      "home_spread": -6.5,
+      "key_number": [
+        0.36341032229197073,
+        0.0,
+        0.6365896777080291
+      ]
+    },
+    {
+      "baseline": [
+        0.44909955316436534,
+        0.024814398589584674,
+        0.52608604824605
+      ],
+      "home_spread": -3.0,
+      "key_number": [
+        0.42891169849650934,
+        0.04906010752230932,
+        0.5220281939811813
+      ]
+    },
+    {
+      "baseline": [
+        0.47391395175395,
+        0.0,
+        0.52608604824605
+      ],
+      "home_spread": -2.5,
+      "key_number": [
+        0.47797180601881867,
+        0.0,
+        0.5220281939811813
+      ]
+    },
+    {
+      "baseline": [
+        0.5237506359779186,
+        0.024828043447953863,
+        0.45142132057412754
+      ],
+      "home_spread": 0.0,
+      "key_number": [
+        0.5227587263985035,
+        0.022312311149947393,
+        0.4549289624515491
+      ]
+    },
+    {
+      "baseline": [
+        0.5975749500065071,
+        0.0,
+        0.40242504999349293
+      ],
+      "home_spread": 2.5,
+      "key_number": [
+        0.5891027002396255,
+        0.0,
+        0.41089729976037453
+      ]
+    },
+    {
+      "baseline": [
+        0.5975749500065071,
+        0.02398374990769453,
+        0.3784413000857984
+      ],
+      "home_spread": 3.0,
+      "key_number": [
+        0.5891027002396255,
+        0.04741784673973691,
+        0.3634794530206376
+      ]
+    },
+    {
+      "baseline": [
+        0.6904347183945196,
+        0.0,
+        0.3095652816054804
+      ],
+      "home_spread": 6.5,
+      "key_number": [
+        0.6984176174562966,
+        0.0,
+        0.30158238254370356
+      ]
+    },
+    {
+      "baseline": [
+        0.6904347183945196,
+        0.021683978582802854,
+        0.28788130302267756
+      ],
+      "home_spread": 7.0,
+      "key_number": [
+        0.6984176174562966,
+        0.0428710096254469,
+        0.2587113729182567
+      ]
+    }
+  ],
+  "fixed_alpha": 1.0,
+  "game_id": "401858485",
+  "historical_source_sha256": "c7a8cbbe29ed6413ed0d6901cdc80cbae4e7c8bf489588b67e00a6a55c8c2205",
+  "home_team": "Penn State",
+  "independent_home_margin": 0.8922753132315062,
+  "key_multipliers": {
+    "3": 2.2,
+    "7": 2.2
+  },
+  "kickoff": "2026-10-10T23:30:00+00:00",
+  "live_board_sha256": "9e5abacd77394084cfd4052d9017456d892a8f089b758d1857e961a0ead6512a",
+  "model_mean": 0.5608024432518567,
+  "model_sigma": 15.999498446875448,
+  "production_model_changed": false,
+  "release_state": "SHADOW",
+  "season": 2026,
+  "source_limitation": "Board availability is observed at capture time; original fair-score production time requires separate evidence.",
+  "spec": "walters_key_number_forward_v1",
+  "sport": "cfb",
+  "sportsbook_odds_used": false,
+  "training_seasons": [
+    2023,
+    2024,
+    2025
+  ],
+  "wager_authorized": false,
+  "week": 6
+}
