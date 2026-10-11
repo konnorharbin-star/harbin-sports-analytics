@@ -1,14 +1,16 @@
 name: CFB Model + Dashboard
 
 on:
+  # One click on Actions -> CFB Model + Dashboard -> Run workflow.
+  # Every eligible FBS-involved game in the selected week is modeled.
   workflow_dispatch:
     inputs:
       season:
-        description: "Season year (blank = auto-detect)"
+        description: "FBS season (blank = current)"
         required: false
         default: ""
       week:
-        description: "Week number (blank = auto-detect)"
+        description: "Full FBS slate week (blank = next upcoming week)"
         required: false
         default: ""
       history_start:
@@ -18,6 +20,8 @@ on:
   push:
     branches: [main]
     paths-ignore: ["outputs/**", "history/**", "reports/**", "docs/**"]
+  # Auto-run the full upcoming FBS slate each day, not a single requested game.
+  # GitHub cron uses UTC (11:17, 17:17, 23:17 UTC); extra Saturday pass.
   schedule:
     - cron: "17 11,17,23 * * *"
     - cron: "47 14 * * 6"
@@ -59,6 +63,23 @@ jobs:
         run: python -m scripts.price_comparison_scan --sport cfb --out docs/price_comparison_scan_model.json
       - name: Audit full schedule coverage and excluded games
         run: python -m scripts.audit_schedule_coverage
+      - name: Report every FBS game in this scheduled week
+        run: |
+          python - <<'PY' >> "$GITHUB_STEP_SUMMARY"
+          import json
+          d = json.load(open("outputs/schedule_coverage_audit.json"))
+          print("## Full FBS slate coverage")
+          print(f"2026/season {d['season']} | week {d['week']}")
+          print(f"**Total FBS-involved scheduled games:** {d['total_scheduled_fbs_games']}")
+          print(f"**FBS vs FBS:** {d['fbs_vs_fbs_games']}")
+          print(f"**FBS vs other division (research-only):** {d['fbs_vs_non_fbs_games']}")
+          print(f"**Remaining games projected:** {d['counts'].get('PREDICTED', 0)}")
+          print(f"**Started/completed excluded:** {d['counts'].get('COMPLETED_EXCLUDED', 0) + d['counts'].get('STARTED_EXCLUDED', 0)}")
+          print(f"**Previously archived before kickoff:** {d['previously_archived_before_kickoff']}")
+          print(f"**Unprojected future games:** {len(d['missing_upcoming'])}")
+          print("**All remaining FBS games covered:**", d['remaining_pregame_coverage_complete'])
+          print("No automatic sportsbook wagers. FBS/FCS game edges remain unvalidated.")
+          PY
       - name: Preserve first-seen pregame predictions
         run: python -m scripts.archive_first_seen_predictions
       - name: Freeze Walters key-number first-pregame research and grade committed finals

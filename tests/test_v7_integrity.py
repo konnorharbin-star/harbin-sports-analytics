@@ -88,7 +88,12 @@ def test_portfolio_caps_same_kickoff_cluster(tmp_path):
         {"date":"2026-10-03T16:00:00Z","home_team":"A","away_team":"B","quant_signal":"BET","quant_market":"spread","quant_ev":.10,"risk_multiplier":1,"stake_units":1.5},
         {"date":"2026-10-03T17:00:00Z","home_team":"C","away_team":"D","quant_signal":"BET","quant_market":"spread","quant_ev":.09,"risk_multiplier":1,"stake_units":1.5},
     ])
-    _, summary = apply_portfolio_controls(df, str(policy), str(gate))
+    # Isolate this concentration-only test from repository live-bet ledgers,
+    # which can legitimately throttle unit allocations as results change.
+    _, summary = apply_portfolio_controls(
+        df, str(policy), str(gate),
+        live_bets_path=str(tmp_path / "no_live_bets.csv"),
+    )
     assert summary["paper_allocated_units"] == 2.0
 
 

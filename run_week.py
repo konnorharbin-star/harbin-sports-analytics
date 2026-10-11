@@ -25,6 +25,17 @@ p.add_argument("--history-start",type=int)
 a=p.parse_args()
 pred,meta=pipeline.run_week(a.season,a.week,a.history_start)
 meta["platform_version"]=PLATFORM_VERSION
+# Show exactly which FBS-involved matchups received model forecasts.
+scope_counts = pred["fbs_matchup_scope"].value_counts().to_dict() if "fbs_matchup_scope" in pred else {}
+meta["fbs_slate"] = {
+    "inclusion_policy": "ALL_FBS_INVOLVED_FOOTBALL_GAMES",
+    "pregame_games_projected": len(pred),
+    "fbs_vs_fbs": int(scope_counts.get("FBS_VS_FBS", 0)),
+    "fbs_vs_non_fbs_unvalidated": int(scope_counts.get(
+        "FBS_VS_NON_FBS_UNVALIDATED", 0
+    )),
+    "non_fbs_opponent_betting_authorized": False,
+}
 
 # Transparent prediction intervals for downstream analysis.
 sm=float(meta.get("calibrated_margin_sigma",meta.get("metrics",{}).get("margin_rmse",15)) or 15)
@@ -79,3 +90,4 @@ print("Portfolio mode:",portfolio["mode"],"| proposed units:",portfolio["propose
 print("Decision ledger appended:",meta["decision_ledger"].get("appended_rows",0))
 print("Audit publication:",audit_snapshot.get("status"),"| reconciliation:",publication_validation.get("status"))
 print("Open outputs/README.md for the latest result links.")
+

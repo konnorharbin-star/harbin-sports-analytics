@@ -21,7 +21,9 @@ def _game(game_id="1", date="2026-10-10T23:00:00Z"):
     return {"season": 2026, "week": 6, "game_id": game_id, "date": date,
             "away_team": "Away", "home_team": "Home",
             "away_score": 20, "home_score": 24, "model_margin_home": 4,
-            "model_total": 44, "win_probability": 0.63}
+            "model_total": 44, "win_probability": 0.63,
+            "fbs_matchup_scope": "FBS_VS_FBS",
+            "fbs_model_validation": "STANDARD_RESEARCH_GATES"}
 
 
 def test_first_seen_preserved_after_prediction_changes(tmp_path):
@@ -45,10 +47,12 @@ def test_audit_started_game_is_not_missing(tmp_path, monkeypatch):
     source = pd.DataFrame([
         {"game_id": "1", "season_type": "regular", "week": 6,
          "start_date": "2026-10-09T20:00:00Z", "completed": False,
-         "away_team": "Florida State", "home_team": "Louisville"},
+         "away_team": "Florida State", "home_team": "Louisville",
+         "home_division": "FBS", "away_division": "FBS"},
         {"game_id": "2", "season_type": "regular", "week": 6,
          "start_date": "2026-10-10T23:00:00Z", "completed": False,
-         "away_team": "Away", "home_team": "Home"}])
+         "away_team": "Away", "home_team": "Home",
+         "home_division": "FBS", "away_division": "FBS"}])
     monkeypatch.setattr("scripts.audit_schedule_coverage.SportsDataVerseClient.season_frame",
                         lambda self, season: source)
     summary = audit(tmp_path)
@@ -60,10 +64,12 @@ def test_audit_fails_when_future_game_missing(tmp_path, monkeypatch):
     source = pd.DataFrame([
         {"game_id": "1", "season_type": "regular", "week": 6,
          "start_date": "2026-10-10T20:00:00Z", "completed": False,
-         "away_team": "Florida State", "home_team": "Louisville"},
+         "away_team": "Florida State", "home_team": "Louisville",
+         "home_division": "FBS", "away_division": "FBS"},
         {"game_id": "2", "season_type": "regular", "week": 6,
          "start_date": "2026-10-10T23:00:00Z", "completed": False,
-         "away_team": "Away", "home_team": "Home"}])
+         "away_team": "Away", "home_team": "Home",
+         "home_division": "FBS", "away_division": "FBS"}])
     monkeypatch.setattr("scripts.audit_schedule_coverage.SportsDataVerseClient.season_frame",
                         lambda self, season: source)
     with pytest.raises(SystemExit, match="Schedule coverage failure"):
