@@ -1,8 +1,8 @@
 {
   "spec": "walters_key_number_forward_v1",
-  "evaluated_at": "2026-10-11T01:11:42.111576+00:00",
-  "status": "FORWARD_SHADOW_RESEARCH_ONLY",
-  "graded_games": 0,
+  "evaluated_at": "2026-10-11T01:58:45.553587+00:00",
+  "status": "FORWARD_INSUFFICIENT_SAMPLE",
+  "graded_games": 1,
   "ungraded": {
     "401856712.json": "NOT_CONFIRMED_FINAL",
     "401856715.json": "NOT_CONFIRMED_FINAL",
@@ -12,7 +12,6 @@
     "401858485.json": "NOT_CONFIRMED_FINAL",
     "401858486.json": "NOT_CONFIRMED_FINAL",
     "401860901.json": "PENDING_KICKOFF",
-    "401860902.json": "NOT_CONFIRMED_FINAL",
     "401862798.json": "NOT_CONFIRMED_FINAL",
     "401864516.json": "NOT_CONFIRMED_FINAL",
     "401864517.json": "NOT_CONFIRMED_FINAL",
@@ -28,10 +27,47 @@
   "clv": null,
   "minimum_graded_games": 128,
   "minimum_distinct_weeks": 8,
-  "scores": {},
+  "scores": {
+    "baseline": {
+      "games": 1,
+      "mean_3way_log_loss": 0.5323010214799265,
+      "mean_3way_brier": 0.338492372768961
+    },
+    "key_number": {
+      "games": 1,
+      "mean_3way_log_loss": 0.5579812302055669,
+      "mean_3way_brier": 0.35582560425825704
+    }
+  },
   "paired": null,
   "limitation": "Football probability scoring on synthetic fixed spreads only. No independently verified executable book prices or real CLV.",
-  "graded_rows": [],
+  "graded_rows": [
+    {
+      "game_id": "401860902",
+      "season": 2026,
+      "week": 6,
+      "home_team": "Oregon State",
+      "away_team": "San Diego State",
+      "kickoff": "2026-10-10T22:00:00+00:00",
+      "captured_at": "2026-10-10T21:06:54.758378+00:00",
+      "published_at": "2026-10-10T21:06:57+00:00",
+      "final_score": {
+        "home_score": 66,
+        "away_score": 14,
+        "event_id": "401860902"
+      },
+      "final_source_url": "https://site.api.espn.com/apis/site/v2/sports/football/college-football/scoreboard?dates=20261010&limit=500&groups=80",
+      "final_scoreboard_sha256": "094be05b016f319f4ee8462cd90def86a1304d8c4cbb817a8bcd8891ecff8012",
+      "baseline": {
+        "log_loss": 0.5323010214799265,
+        "brier": 0.338492372768961
+      },
+      "key_number": {
+        "log_loss": 0.5579812302055669,
+        "brier": 0.35582560425825704
+      }
+    }
+  ],
   "capture_summary": {
     "newly_frozen": 0,
     "already_frozen": 2

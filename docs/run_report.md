@@ -14,12 +14,12 @@
 
 ## Monitoring and execution
 - Live readiness: **91.2/100**; distribution stability **65.0/100**.
-- Portfolio mode: **PAPER**; proposed **0.37u**; approved **0.00u**.
+- Portfolio mode: **PAPER**; proposed **0.36u**; approved **0.00u**.
 - Historical evidence: **0 bets**, ROI **—**, CLV **—**.
 - Independent live evidence: **23 bets**, ROI **-8.71%**, CLV **82.53%**.
 
 ## Market × tier forward validation
-- Display-tier ledger: **188 posted flat-1u decisions** · clean validation-eligible **37** · excluded legacy/unverified **151** · status **EARLY_SAMPLE** · validated cells **0**.
+- Display-tier ledger: **231 posted flat-1u decisions** · clean validation-eligible **80** · excluded legacy/unverified **151** · status **TRACKING** · validated cells **0**.
 
 ## Current blockers
 - probability_ece: ECE <= 0.05 on chronological release holdout

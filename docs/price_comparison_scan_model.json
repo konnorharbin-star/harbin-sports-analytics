@@ -1,6 +1,6 @@
 {
   "spec": "exact_line_price_scan_v1",
-  "observed_at": "2026-10-11T01:11:40.863809+00:00",
+  "observed_at": "2026-10-11T01:58:44.256558+00:00",
   "status": "PRICE_DIAGNOSTICS_ONLY",
   "betting_authorized": false,
   "qualified_bets": 0,
@@ -21,7 +21,7 @@
       "line": null,
       "book_label": "ActionNetwork book 30",
       "american_odds": 350.0,
-      "quote_observed_at": "2026-10-11T01:11:34.073262+00:00",
+      "quote_observed_at": "2026-10-11T01:58:36.971804+00:00",
       "reference_books": 6,
       "reference_probability": 0.2771206488678608,
       "price_implied_probability": 0.2222222222222222,
@@ -54,7 +54,7 @@
       "line": null,
       "book_label": "ActionNetwork book 75",
       "american_odds": -235.0,
-      "quote_observed_at": "2026-10-11T01:11:34.073262+00:00",
+      "quote_observed_at": "2026-10-11T01:58:36.971804+00:00",
       "reference_books": 6,
       "reference_probability": 0.7243159297466717,
       "price_implied_probability": 0.7014925373134329,
@@ -95,5 +95,5 @@
     "moneyline"
   ],
   "unsupported_market_reason": "CFB normalized feed does not retain both spread/total side lines",
-  "capture_id": "caa0812a0cb97214e52381de"
+  "capture_id": "97d63de1c4ae0f2f071ce13b"
 }

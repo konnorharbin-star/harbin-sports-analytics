@@ -214,12 +214,12 @@
     "reason": "CLV-first segment de-risking; multipliers never exceed 1.0"
   },
   "production_block_reason": "",
-  "proposed_units": 0.37,
-  "risk_adjusted_proposed_units": 0.37,
-  "performance_adjusted_proposed_units": 0.37,
+  "proposed_units": 0.36,
+  "risk_adjusted_proposed_units": 0.36,
+  "performance_adjusted_proposed_units": 0.36,
   "approved_units": 0.0,
-  "paper_allocated_units": 0.37,
-  "paper_or_shadow_allocated_units": 0.37,
+  "paper_allocated_units": 0.36,
+  "paper_or_shadow_allocated_units": 0.36,
   "bets": 2,
   "approved_bets": 0,
   "execution_blocked_bets": 0,
@@ -265,18 +265,18 @@
     "max_book_units": 2.0
   },
   "allocated_by_market": {
-    "spread": 0.37
+    "spread": 0.36
   },
   "allocated_by_book": {
     "ActionNetwork book 30": 0.2,
-    "ActionNetwork book 68": 0.17
+    "ActionNetwork book 68": 0.16
   },
   "allocated_by_kickoff_window": {
-    "2026-10-11 00:00:00+00:00": 0.37
+    "2026-10-11 00:00:00+00:00": 0.36
   },
   "allocated_by_team_exposure": {
     "Fresno State": 0.2,
-    "Hawai'i": 0.17
+    "Hawai'i": 0.16
   },
   "limit_hit_counts": {},
   "release_blockers": [

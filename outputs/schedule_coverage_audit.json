@@ -1,7 +1,7 @@
 {
   "season": 2026,
   "week": 6,
-  "model_cutoff_utc": "2026-10-11T01:11:38.155648+00:00",
+  "model_cutoff_utc": "2026-10-11T01:58:41.295555+00:00",
   "scope": "EVERY_FBS_INVOLVED_REGULAR_SEASON_MATCHUP",
   "total_scheduled_fbs_games": 58,
   "fbs_vs_fbs_games": 58,
