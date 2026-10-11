@@ -1,0 +1,34 @@
+{
+  "all_games_proven_positively_priced": false,
+  "automated_wagers_placed": 0,
+  "bet_recommendations": 0,
+  "classification_counts": {
+    "RAW_EDGE_HYPOTHESIS_UNVERIFIED": 2
+  },
+  "evaluated_at": "2026-10-11T01:11:44.116521+00:00",
+  "every_upcoming_fbs_game_scanned": true,
+  "full_slate_betting_eligible": false,
+  "games_shortlisted_by_independent_edge_gate": 1,
+  "games_with_raw_positive_model_hypothesis": 2,
+  "games_without_reliable_quote_timestamp": 2,
+  "games_without_verified_book_execution": 2,
+  "historical_verified_profitable_edge_proven": false,
+  "model_improves_market_probability_validated": false,
+  "pricing_limitations": "Raw per-game quant_ev estimates use the production probability engine and are not proven accurate; archived market quotes are not independently book-executable, and integer line pushes must be treated as win/push/loss when verified.",
+  "production_eligible": false,
+  "production_release_state": "RESEARCH",
+  "release_blockers": [
+    "probability_ece: ECE <= 0.05 on chronological release holdout",
+    "historical_entry_integrity: historical promotion sample uses explicit verified opening-entry fields only",
+    "historical_market_edge: ROBUST evidence: >=1000 verified opening-entry bets, ROI 95% CI lower bound >0, positive CLV, >=2 positive markets and >=2 positive seasons with minimum segment samples",
+    "live_shadow_evidence: >=300 portfolio-verified graded live/shadow bets, non-negative ROI and positive pre-kickoff CLV proxy"
+  ],
+  "remaining_pregame_game_count": 2,
+  "season": 2026,
+  "selection_notice": "This ledger includes every FBS pregame matchup, including no-price and no-shortlist games, but does not turn a raw EV discrepancy into a validated bet. Research classification is not a bet.",
+  "spec": "walters_complete_fbs_edge_scan_v1",
+  "started_or_completed_excluded": 56,
+  "status": "FULL_SLATE_RESEARCH_ONLY_NO_VALIDATED_PROFIT",
+  "total_fbs_involved_weekly_games": 58,
+  "week": 6
+}
