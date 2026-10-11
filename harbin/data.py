@@ -25,6 +25,7 @@ class Game:
     away_score: float | None; home_score: float | None; completed: bool; neutral_site: bool
     provider: str | None = None; away_ml: float | None = None; home_ml: float | None = None
     home_spread: float | None = None; market_total: float | None = None
+    home_division: str | None = None; away_division: str | None = None
 
 
 def _num(v):
@@ -66,6 +67,21 @@ def parse_espn_odds(odds:dict,home_names:set[str],away_names:set[str])->dict:
     return out
 
 
+def fbs_schedule_mask(frame: pd.DataFrame, *, both: bool = False) -> pd.Series:
+    """Select every FBS-involved fixture (or FBS/FBS-only training subset).
+
+    Never return an unfiltered nationwide schedule when division fields are
+    absent. Games with an FBS team and an FCS/other opponent are still games
+    on the FBS slate and must be present in the published coverage audit.
+    """
+    needed = {"home_division", "away_division"}
+    if not needed.issubset(frame.columns):
+        raise ValueError("CFB source missing home_division/away_division")
+    home = frame["home_division"].astype(str).str.strip().str.lower().eq("fbs")
+    away = frame["away_division"].astype(str).str.strip().str.lower().eq("fbs")
+    return home & away if both else home | away
+
+
 class SportsDataVerseClient:
     BOOK_PRIORITY=("draftkings","fanduel","espn","fanatics","circa","pinnacle","bovada")
     def __init__(self):
@@ -74,9 +90,11 @@ class SportsDataVerseClient:
     def season_frame(self,season:int)->pd.DataFrame:
         if season not in self._seasons:
             df=pd.read_csv(SCHEDULE_URL.format(season=season),low_memory=False)
-            if {"home_division","away_division"}.issubset(df.columns):
-                fbs=df["home_division"].astype(str).str.lower().eq("fbs") & df["away_division"].astype(str).str.lower().eq("fbs")
-                if fbs.any(): df=df.loc[fbs].copy()
+            # Inference/weekly schedule includes FBS-vs-FCS games too.
+            # The trained model remains calibrated to FBS/FBS results below.
+            df = df.loc[fbs_schedule_mask(df)].copy()
+            if df.empty:
+                raise ValueError("No FBS-involved fixtures in source schedule")
             self._seasons[season]=df
         return self._seasons[season].copy()
     def detect(self):
@@ -91,12 +109,17 @@ class SportsDataVerseClient:
         def sid(v,fallback):
             try:return str(int(v)) if not pd.isna(v) else str(fallback)
             except Exception:return str(fallback)
-        return Game(str(r.get("game_id","")),int(r.get("season",0)),int(r.get("week",0)),str(r.get("start_date","")),sid(r.get("away_id"),r.get("away_team","away")),str(r.get("away_team","Away")),sid(r.get("home_id"),r.get("home_team","home")),str(r.get("home_team","Home")),_num(r.get("away_points")),_num(r.get("home_points")),_bool(r.get("completed",False)),_bool(r.get("neutral_site",False)))
+        return Game(str(r.get("game_id","")),int(r.get("season",0)),int(r.get("week",0)),str(r.get("start_date","")),sid(r.get("away_id"),r.get("away_team","away")),str(r.get("away_team","Away")),sid(r.get("home_id"),r.get("home_team","home")),str(r.get("home_team","Home")),_num(r.get("away_points")),_num(r.get("home_points")),_bool(r.get("completed",False)),_bool(r.get("neutral_site",False)),
+                    home_division=str(r.get("home_division", "")).strip().upper(),
+                    away_division=str(r.get("away_division", "")).strip().upper())
     def history(self,start,target_season,target_week):
         games=[]
         for season in range(start,target_season+1):
             try: df=self.season_frame(season)
             except Exception: continue
+            # Preserve the historical model's FBS/FBS-only training population.
+            # FBS/FCS projections are included but unvalidated and never bet.
+            df=df.loc[fbs_schedule_mask(df, both=True)].copy()
             df=df[df["completed"].map(_bool)].copy()
             if season==target_season: df=df[df["week"].astype(int)<int(target_week)]
             for _,r in df.iterrows():
