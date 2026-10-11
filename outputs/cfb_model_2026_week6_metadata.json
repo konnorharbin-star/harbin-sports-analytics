@@ -481,8 +481,8 @@
   },
   "calibrated_margin_sigma": 16.28877707158025,
   "calibrated_total_sigma": 16.102959927363244,
-  "generated_at": "2026-10-11T00:58:57.159788+00:00",
-  "updated_at_ct": "Oct 10, 2026 \u00b7 7:58 PM CT",
+  "generated_at": "2026-10-11T01:02:17.320256+00:00",
+  "updated_at_ct": "Oct 10, 2026 \u00b7 8:02 PM CT",
   "schedule_source": "sportsdataverse/cfbfastR-data",
   "odds_source": "ESPN live (site.web.api.espn.com) + ESPN Core supplement",
   "odds_errors": [],
@@ -574,13 +574,13 @@
       "401858486"
     ],
     "invalid_kickoff_game_ids": [],
-    "cutoff_utc": "2026-10-11T00:58:57.093886+00:00"
+    "cutoff_utc": "2026-10-11T01:02:17.246858+00:00"
   },
   "edge_forward_snapshot": {
     "status": "APPENDED",
     "appended": 1,
-    "total_rows": 327,
-    "snapshot_at": "2026-10-11T00:58:57.159788+00:00",
+    "total_rows": 328,
+    "snapshot_at": "2026-10-11T01:02:17.320256+00:00",
     "path": "history/edge_candidate_snapshots.csv"
   },
   "edge_timing": {
@@ -1006,13 +1006,13 @@
     "verified_close_clv_samples": 23,
     "portfolio_verified": true,
     "evidence_source": "portfolio_decisions_v1",
-    "eligible_decisions": 1146,
+    "eligible_decisions": 1148,
     "timing_excluded_rows": 71,
     "status": "live/shadow evidence only; not historical backtest evidence"
   },
   "edge_forward_validation": {
     "status": "PENDING_FORWARD",
-    "observed_rows": 327,
+    "observed_rows": 328,
     "clean_entries": 0,
     "graded_bets": 0,
     "roi": null,
@@ -1029,7 +1029,7 @@
     "underperforming_cells": 0
   },
   "health": {
-    "system_health_score": 84.7,
+    "system_health_score": 84.4,
     "meaning": "engineering/model-readiness score only; not a profitability or win-rate guarantee",
     "components": {
       "pipeline_and_data": 100.0,
@@ -1039,7 +1039,7 @@
       "probability_calibration": 87.6,
       "market_intelligence": 100.0,
       "current_context": 100.0,
-      "live_monitoring": 94.8,
+      "live_monitoring": 91.2,
       "historical_betting_proof": 25.0
     },
     "betting_proof_status": "UNPROVEN",
@@ -1526,6 +1526,6 @@
     "path": "history/portfolio_decisions_v1.csv",
     "eligible_rows": 2,
     "appended_rows": 2,
-    "total_rows": 1484
+    "total_rows": 1486
   }
 }
