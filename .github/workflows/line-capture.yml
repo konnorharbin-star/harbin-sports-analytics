@@ -51,7 +51,8 @@ jobs:
           [ -f outputs/line_capture_status.json ] && git add outputs/line_capture_status.json || true
           if ! git diff --cached --quiet; then
             git commit -m "lines: capture verified pre-kickoff market snapshot"
-            bash scripts/push_generated_state.sh
+            git pull --rebase origin main
+            git push origin HEAD:main
           else
             echo "No material line changes or heartbeat snapshot due."
           fi
