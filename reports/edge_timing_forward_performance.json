@@ -46,7 +46,7 @@
     "near_kickoff_accuracy": null,
     "near_kickoff_accuracy_wilson_95": null,
     "near_kickoff_mixed": 1,
-    "near_kickoff_missing": 0
+    "near_kickoff_missing": 1
   },
   "by_action": {
     "BET_NOW_RESEARCH": {
@@ -82,7 +82,7 @@
       "near_kickoff_accuracy": null,
       "near_kickoff_accuracy_wilson_95": null,
       "near_kickoff_mixed": 1,
-      "near_kickoff_missing": 0
+      "near_kickoff_missing": 1
     }
   },
   "notes": [
