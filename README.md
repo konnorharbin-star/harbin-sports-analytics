@@ -14,16 +14,27 @@ The [free read-only line movement audit](docs/FREE_SAMEBOOK_MOVEMENT.md) compare
 
 The [free forward grading workflow](docs/FREE_FORWARD_GRADING.md) reviews historical first-seen research watchlist entries against each model's already-public postgame grade ledger. Outputs are explicitly **hypothetical**, do not represent placed wagers, and cannot verify an actual execution price. This is a read-only, free-to-operate research feature.
 
-## Run the live model
+## Run every FBS game with one click (or automatically)
 
-1. Open **Actions**.
-2. Select **CFB Model + Dashboard**.
-3. Click **Run workflow**.
-4. Enter season/week, or leave blank to auto-detect.
-5. Wait for a green check.
-6. Open **`outputs/README.md`**.
+The model already runs on GitHub Actions **three times daily** plus an
+additional Saturday run. Each run processes **the entire upcoming FBS
+week**—every game involving an FBS team, including FBS vs FCS—rather
+than requiring game-by-game prompts. All FBS/FCS score projections are
+labelled research-only and cannot produce an approved betting signal.
 
-The latest GitHub Pages dashboard is generated from `docs/`.
+1. Open [Actions → CFB Model + Dashboard](https://github.com/konnorharbin-star/harbin-sports-analytics/actions/workflows/cfb-model.yml).
+2. Click **Run workflow**, select `main`, and leave season/week blank
+   for the next upcoming week (or specify both to choose a full week).
+3. Open the run summary and `outputs/schedule_coverage_audit.json`.
+   The job fails loudly if even one future FBS game is missing.
+4. See `outputs/README.md` or the latest generated dashboard for
+   the full slate and the betting release gates.
+
+See the [full FBS slate runbook](docs/FULL_FBS_SLATE_RUNBOOK.md) for
+automation schedule, started-game exclusions, immutable original
+predictions, FBS/FCS scope and public-data caveats.
+
+The GitHub Pages dashboard is generated from `docs/`.
 
 ## Run the proof layer
 
