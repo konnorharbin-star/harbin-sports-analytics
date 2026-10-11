@@ -1,0 +1,33 @@
+{
+  "report": {
+    "betting_authorized": false,
+    "candidates": [],
+    "capture_id": "b5dbc96efb133eb41aac7b76",
+    "counts": {
+      "stale_future_or_started": 456
+    },
+    "decision": "NO_BET",
+    "fresh_priced_games": 0,
+    "limits": [
+      "Exact line and two same-book prices required",
+      "Exclude quoted book from reference and deduplicate aliases",
+      "Non-push reference prices imply no true EV, ROI or fair price",
+      "Sensitivity haircut is a fixed stress scenario, not a confidence interval",
+      "Unresolved and legacy aggregator labels are not certified live sportsbooks",
+      "Unverified extreme paired-price outliers are quarantined, not ranked"
+    ],
+    "observed_at": "2026-10-11T08:50:49.430866+00:00",
+    "qualified_bets": 0,
+    "quarantined_quotes": [],
+    "source_errors": [],
+    "spec": "exact_line_price_scan_v1",
+    "sport": "cfb",
+    "status": "PRICE_DIAGNOSTICS_ONLY",
+    "supported_markets": [
+      "moneyline"
+    ],
+    "unsupported_market_reason": "CFB normalized feed does not retain both spread/total side lines",
+    "upcoming_games": 0
+  },
+  "source_records": []
+}
