@@ -1,15 +1,15 @@
 {
   "betting_authorized": false,
   "forecast_exclusions": {
-    "NOT_PRIOR_PUBLISHED_BEFORE_FETCH": 1
+    "NOT_PRIOR_PUBLISHED_BEFORE_FETCH": 14
   },
-  "forecasts_with_immutable_pregame_publication": 15,
+  "forecasts_with_immutable_pregame_publication": 2,
   "free_plan_expected_five_minute_delay": true,
   "measured_clv": null,
   "measured_roi": null,
   "mode": "NO_KEY_NO_PRICE",
   "observations_written": 0,
-  "observed_at": "2026-10-10T22:27:21.993900+00:00",
+  "observed_at": "2026-10-11T00:59:01.952571+00:00",
   "official_booksite_execution_verified": false,
   "profitability_validated": false,
   "provider": "TheRundown_v2_free_pre_match",

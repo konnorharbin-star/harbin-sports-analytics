@@ -1,15 +1,15 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-10-10T22:27:20.141089+00:00",
+  "generated_at": "2026-10-11T00:58:59.398951+00:00",
   "status": "WARN",
   "identity": {
     "platform_version": "7.4.0",
     "model_version": "7.1.0",
     "season": 2026,
     "week": 6,
-    "model_generated_at": "2026-10-10T22:27:18.790410+00:00",
-    "updated_at_ct": "Oct 10, 2026 \u00b7 5:27 PM CT",
-    "prediction_rows": 15
+    "model_generated_at": "2026-10-11T00:58:57.159788+00:00",
+    "updated_at_ct": "Oct 10, 2026 \u00b7 7:58 PM CT",
+    "prediction_rows": 2
   },
   "release": {
     "state": "RESEARCH",
@@ -70,21 +70,21 @@
       {
         "name": "probability_brier",
         "passed": true,
-        "value": 0.17476492013360306,
+        "value": 0.1747649201336038,
         "requirement": "Brier <= 0.18 on chronological release holdout",
         "detail": ""
       },
       {
         "name": "probability_ece",
         "passed": false,
-        "value": 0.06218232013495895,
+        "value": 0.06218232013495966,
         "requirement": "ECE <= 0.05 on chronological release holdout",
         "detail": ""
       },
       {
         "name": "live_monitoring",
         "passed": true,
-        "value": 94.8,
+        "value": 91.2,
         "requirement": "live readiness >= 90/100",
         "detail": ""
       },
@@ -127,7 +127,7 @@
         "passed": true,
         "value": {
           "source": "portfolio_decisions_v1",
-          "graded_bets": 10
+          "graded_bets": 23
         },
         "requirement": "forward evidence comes from execution-ready cap-constrained portfolio decisions",
         "detail": ""
@@ -136,9 +136,9 @@
         "name": "live_shadow_evidence",
         "passed": false,
         "value": {
-          "graded_bets": 10,
-          "roi": -0.402679012345679,
-          "avg_clv": 0.30043906189519054,
+          "graded_bets": 23,
+          "roi": -0.08714751675139404,
+          "avg_clv": 0.825307799848561,
           "portfolio_verified": true
         },
         "requirement": ">=300 portfolio-verified graded live/shadow bets, non-negative ROI and positive pre-kickoff CLV proxy",
@@ -159,22 +159,22 @@
   },
   "model": {
     "validation": "nested whole-week chronology: core fit -> tune weight -> OOF calibration -> untouched evaluation; final refit keeps the tune-selected weight and uses OOF probability calibration",
-    "margin_mae": 12.95850296244939,
+    "margin_mae": 12.958502962449392,
     "margin_baseline_mae": 13.50210922129303,
     "margin_release_weight": 0.75,
-    "total_mae": 12.59160433487721,
+    "total_mae": 12.591604334877207,
     "total_baseline_mae": 12.648615389536973,
     "total_release_weight": 0.30000000000000004,
-    "win_brier": 0.17476492013360306,
-    "win_log_loss": 0.5222806383629722,
-    "win_ece": 0.06218232013495895,
+    "win_brier": 0.1747649201336038,
+    "win_log_loss": 0.522280638362974,
+    "win_ece": 0.06218232013495966,
     "selection_uses_evaluation": false
   },
   "coverage": {
-    "games": 15,
-    "moneyline": 15,
-    "spread": 15,
-    "total": 15,
+    "games": 2,
+    "moneyline": 2,
+    "spread": 2,
+    "total": 2,
     "dynamic_advanced": 1.0,
     "context": 1.0,
     "weather": 1.0,
@@ -182,62 +182,21 @@
   },
   "monitoring": {
     "status": "OK",
-    "live_readiness_score": 94.8,
+    "live_readiness_score": 91.2,
     "scores": {
       "market_coverage": 100.0,
       "advanced_coverage": 100.0,
       "multi_book": 100.0,
       "context": 100.0,
-      "calibration": 84.45441996626026,
+      "calibration": 84.45441996626009,
       "freshness": 100.0,
-      "drift_margin": 92.0,
-      "drift_total": 83.6,
-      "drift_probability": 90.3,
-      "distribution_stability": 88.6,
-      "output_completeness": 91.74863387978142
+      "distribution_stability": 65.0,
+      "output_completeness": 88.8
     },
-    "drift": {
-      "margin": {
-        "stability_score": 92.0,
-        "mean_z": 0.256,
-        "std_ratio": 0.9378,
-        "live_mean": 0.9375028950852315,
-        "reference_mean": 4.007587882019203,
-        "live_std": 11.247957508888815,
-        "reference_std": 11.99409006138559,
-        "live_n": 15,
-        "reference_n": 2398
-      },
-      "total": {
-        "stability_score": 83.6,
-        "mean_z": 0.0451,
-        "std_ratio": 0.5422,
-        "live_mean": 53.41773263017998,
-        "reference_mean": 53.69890163853031,
-        "live_std": 3.3765579011601914,
-        "reference_std": 6.227517524699614,
-        "live_n": 15,
-        "reference_n": 2398
-      },
-      "probability": {
-        "stability_score": 90.3,
-        "mean_z": 0.2375,
-        "std_ratio": 1.1625,
-        "live_mean": 0.5258499749477746,
-        "reference_mean": 0.582714657203369,
-        "live_std": 0.2783833795965505,
-        "reference_std": 0.2394736173752905,
-        "live_n": 15,
-        "reference_n": 2398
-      }
-    },
-    "drift_scores": {
-      "margin": 92.0,
-      "total": 83.6,
-      "probability": 90.3
-    },
+    "drift": {},
+    "drift_scores": {},
     "alerts": [],
-    "recent_readiness_delta": 0.0
+    "recent_readiness_delta": -3.5999999999999943
   },
   "data_quality": {
     "status": "PASS",
@@ -251,7 +210,7 @@
       "sanity_ranges": true,
       "complete_market_rate": 1.0
     },
-    "rows": 15
+    "rows": 2
   },
   "portfolio": {
     "mode": "paper",
@@ -261,13 +220,13 @@
     "production_eligible": false,
     "bankroll_risk": {
       "history_available": true,
-      "graded_bets": 10,
-      "cumulative_units": -4.0268,
-      "current_drawdown_units": 4.9527,
-      "max_drawdown_units": 4.9527,
-      "trailing_window_bets": 10,
-      "trailing_roi": -0.402679,
-      "trailing_avg_clv": 0.300439,
+      "graded_bets": 23,
+      "cumulative_units": -2.0044,
+      "current_drawdown_units": 2.9303,
+      "max_drawdown_units": 7.0436,
+      "trailing_window_bets": 23,
+      "trailing_roi": -0.087148,
+      "trailing_avg_clv": 0.825308,
       "risk_multiplier": 1.0,
       "hard_stop": false,
       "reason": "no bankroll throttle active"
@@ -275,24 +234,24 @@
     "performance_feedback": {
       "enabled": true,
       "history_available": true,
-      "graded_bets": 10,
+      "graded_bets": 23,
       "overall": {
-        "bets": 10,
-        "roi": -0.402679012345679,
-        "avg_clv": 0.30043906189519054,
-        "positive_clv_rate": 0.3,
-        "clv_samples": 10,
+        "bets": 23,
+        "roi": -0.08714751675139407,
+        "avg_clv": 0.825307799848561,
+        "positive_clv_rate": 0.43478260869565216,
+        "clv_samples": 23,
         "clv_coverage": 1.0
       },
       "segments": {
         "market:spread": {
           "dimension": "market",
           "value": "spread",
-          "bets": 3,
-          "roi": -0.35802469135802467,
-          "avg_clv": 1.0,
-          "positive_clv_rate": 0.3333333333333333,
-          "clv_samples": 3,
+          "bets": 8,
+          "roi": 0.19754513917249766,
+          "avg_clv": 1.25,
+          "positive_clv_rate": 0.625,
+          "clv_samples": 8,
           "clv_coverage": 1.0,
           "state": "insufficient",
           "multiplier": 1.0
@@ -300,11 +259,11 @@
         "book:ActionNetwork book 75": {
           "dimension": "book",
           "value": "ActionNetwork book 75",
-          "bets": 4,
-          "roi": -0.5185185185185185,
-          "avg_clv": -0.125,
-          "positive_clv_rate": 0.0,
-          "clv_samples": 4,
+          "bets": 7,
+          "roi": 0.044062605885266004,
+          "avg_clv": 0.9945235360847617,
+          "positive_clv_rate": 0.2857142857142857,
+          "clv_samples": 7,
           "clv_coverage": 1.0,
           "state": "insufficient",
           "multiplier": 1.0
@@ -312,11 +271,11 @@
         "signal:STRONG": {
           "dimension": "signal",
           "value": "STRONG",
-          "bets": 6,
-          "roi": -0.4094650205761317,
-          "avg_clv": 0.4973262136569166,
-          "positive_clv_rate": 0.16666666666666666,
-          "clv_samples": 6,
+          "bets": 17,
+          "roi": -0.1355126492719461,
+          "avg_clv": 1.1153909446768526,
+          "positive_clv_rate": 0.47058823529411764,
+          "clv_samples": 17,
           "clv_coverage": 1.0,
           "state": "insufficient",
           "multiplier": 1.0
@@ -324,23 +283,23 @@
         "edge_bucket:>=6%": {
           "dimension": "edge_bucket",
           "value": ">=6%",
-          "bets": 9,
-          "roi": -0.33631001371742114,
-          "avg_clv": 0.3338211798835451,
-          "positive_clv_rate": 0.3333333333333333,
-          "clv_samples": 9,
+          "bets": 20,
+          "roi": -0.14368575188115418,
+          "avg_clv": 0.9491039698258451,
+          "positive_clv_rate": 0.5,
+          "clv_samples": 20,
           "clv_coverage": 1.0,
-          "state": "insufficient",
+          "state": "healthy",
           "multiplier": 1.0
         },
         "market:moneyline": {
           "dimension": "market",
           "value": "moneyline",
-          "bets": 4,
-          "roi": 0.011820987654320964,
-          "avg_clv": 0.0010976547379763502,
-          "positive_clv_rate": 0.5,
-          "clv_samples": 4,
+          "bets": 7,
+          "roi": -0.1804372681384176,
+          "avg_clv": -0.0025600862118712675,
+          "positive_clv_rate": 0.42857142857142855,
+          "clv_samples": 7,
           "clv_coverage": 1.0,
           "state": "insufficient",
           "multiplier": 1.0
@@ -360,11 +319,11 @@
         "signal:BET": {
           "dimension": "signal",
           "value": "BET",
-          "bets": 4,
-          "roi": -0.3925,
-          "avg_clv": 0.005108334252601376,
-          "positive_clv_rate": 0.5,
-          "clv_samples": 4,
+          "bets": 6,
+          "roi": 0.04988702539017004,
+          "avg_clv": 0.0034055561684009175,
+          "positive_clv_rate": 0.3333333333333333,
+          "clv_samples": 6,
           "clv_coverage": 1.0,
           "state": "insufficient",
           "multiplier": 1.0
@@ -372,11 +331,11 @@
         "book:ActionNetwork book 30": {
           "dimension": "book",
           "value": "ActionNetwork book 30",
-          "bets": 2,
-          "roi": -1.0,
-          "avg_clv": 1.75,
-          "positive_clv_rate": 0.5,
-          "clv_samples": 2,
+          "bets": 7,
+          "roi": -0.45454545454545453,
+          "avg_clv": 2.4337671812896637,
+          "positive_clv_rate": 0.8571428571428571,
+          "clv_samples": 7,
           "clv_coverage": 1.0,
           "state": "insufficient",
           "multiplier": 1.0
@@ -384,11 +343,11 @@
         "book:ActionNetwork book 71": {
           "dimension": "book",
           "value": "ActionNetwork book 71",
-          "bets": 1,
-          "roi": 1.43,
-          "avg_clv": 0.008073896042340656,
-          "positive_clv_rate": 1.0,
-          "clv_samples": 1,
+          "bets": 2,
+          "roi": 1.1779629629629629,
+          "avg_clv": 0.004036948021170328,
+          "positive_clv_rate": 0.5,
+          "clv_samples": 2,
           "clv_coverage": 1.0,
           "state": "insufficient",
           "multiplier": 1.0
@@ -408,11 +367,35 @@
         "market:total": {
           "dimension": "market",
           "value": "total",
-          "bets": 3,
-          "roi": -1.0,
-          "avg_clv": 0.0,
+          "bets": 8,
+          "roi": -0.2902116402116402,
+          "avg_clv": 1.125,
+          "positive_clv_rate": 0.25,
+          "clv_samples": 8,
+          "clv_coverage": 1.0,
+          "state": "insufficient",
+          "multiplier": 1.0
+        },
+        "book:ActionNetwork book 15": {
+          "dimension": "book",
+          "value": "ActionNetwork book 15",
+          "bets": 1,
+          "roi": 0.9523809523809523,
+          "avg_clv": -3.0,
           "positive_clv_rate": 0.0,
-          "clv_samples": 3,
+          "clv_samples": 1,
+          "clv_coverage": 1.0,
+          "state": "insufficient",
+          "multiplier": 1.0
+        },
+        "book:ActionNetwork book 49": {
+          "dimension": "book",
+          "value": "ActionNetwork book 49",
+          "bets": 2,
+          "roi": -0.028301886792452824,
+          "avg_clv": -0.010173122027990755,
+          "positive_clv_rate": 0.0,
+          "clv_samples": 2,
           "clv_coverage": 1.0,
           "state": "insufficient",
           "multiplier": 1.0
@@ -420,9 +403,21 @@
         "edge_bucket:4-6%": {
           "dimension": "edge_bucket",
           "value": "4-6%",
+          "bets": 3,
+          "roi": 0.2897740507803401,
+          "avg_clv": 0.0,
+          "positive_clv_rate": 0.0,
+          "clv_samples": 3,
+          "clv_coverage": 1.0,
+          "state": "insufficient",
+          "multiplier": 1.0
+        },
+        "book:ActionNetwork book 68": {
+          "dimension": "book",
+          "value": "ActionNetwork book 68",
           "bets": 1,
           "roi": -1.0,
-          "avg_clv": 0.0,
+          "avg_clv": -2.0,
           "positive_clv_rate": 0.0,
           "clv_samples": 1,
           "clv_coverage": 1.0,
@@ -433,13 +428,13 @@
       "reason": "CLV-first segment de-risking; multipliers never exceed 1.0"
     },
     "production_block_reason": "",
-    "proposed_units": 1.36,
-    "risk_adjusted_proposed_units": 1.36,
-    "performance_adjusted_proposed_units": 1.36,
+    "proposed_units": 0.37,
+    "risk_adjusted_proposed_units": 0.37,
+    "performance_adjusted_proposed_units": 0.37,
     "approved_units": 0.0,
-    "paper_allocated_units": 1.36,
-    "paper_or_shadow_allocated_units": 1.36,
-    "bets": 10,
+    "paper_allocated_units": 0.37,
+    "paper_or_shadow_allocated_units": 0.37,
+    "bets": 2,
     "approved_bets": 0,
     "execution_blocked_bets": 0,
     "limits": {
@@ -484,37 +479,18 @@
       "max_book_units": 2.0
     },
     "allocated_by_market": {
-      "total": 0.46,
-      "spread": 0.82,
-      "moneyline": 0.08
+      "spread": 0.37
     },
     "allocated_by_book": {
-      "ActionNetwork book 30": 0.36,
-      "ActionNetwork book 68": 0.32,
-      "ActionNetwork book 71": 0.42,
-      "ActionNetwork book 49": 0.09,
-      "ActionNetwork book 15": 0.09,
-      "Draft Kings": 0.08
+      "ActionNetwork book 30": 0.2,
+      "ActionNetwork book 68": 0.17
     },
     "allocated_by_kickoff_window": {
-      "2026-10-10 21:00:00+00:00": 0.99,
       "2026-10-11 00:00:00+00:00": 0.37
     },
     "allocated_by_team_exposure": {
-      "Alabama": 0.16,
-      "Georgia": 0.16,
       "Fresno State": 0.2,
-      "James Madison": 0.18,
-      "Hawai'i": 0.17,
-      "Louisiana Tech": 0.09,
-      "Louisiana": 0.09,
-      "UTEP": 0.09,
-      "Nevada": 0.09,
-      "Air Force": 0.14,
-      "Memphis": 0.13,
-      "Marshall": 0.12,
-      "Coastal Carolina": 0.12,
-      "Penn State": 0.08
+      "Hawai'i": 0.17
     },
     "limit_hit_counts": {},
     "release_blockers": [
@@ -539,12 +515,12 @@
     "note": "Only time-valid archived opening entries qualify for promotion evidence. Archive-final fallbacks remain research diagnostics and cannot establish production readiness. Historical results do not guarantee future profit."
   },
   "live_evidence": {
-    "graded_bets": 10,
-    "roi": -0.402679012345679,
-    "units": -4.02679012345679,
-    "win_rate": 0.3,
-    "avg_clv": 0.30043906189519054,
-    "clv_samples": 10,
+    "graded_bets": 23,
+    "roi": -0.08714751675139404,
+    "units": -2.004392885282063,
+    "win_rate": 0.4782608695652174,
+    "avg_clv": 0.825307799848561,
+    "clv_samples": 23,
     "roi_ci_95": [
       null,
       null
@@ -554,9 +530,9 @@
   },
   "tier_validation": {
     "status": "EARLY_SAMPLE",
-    "graded_tier_bets": 144,
-    "validation_eligible_bets": 0,
-    "excluded_from_validation": 144,
+    "graded_tier_bets": 188,
+    "validation_eligible_bets": 37,
+    "excluded_from_validation": 151,
     "validated_cells": 0,
     "underperforming_cells": 0
   },
@@ -567,7 +543,7 @@
         "name": "row_count",
         "passed": true,
         "severity": "ERROR",
-        "detail": "predictions=15 metadata=15"
+        "detail": "predictions=2 metadata=2"
       },
       {
         "name": "identity_season",
@@ -591,7 +567,7 @@
         "name": "monitor_reconciled",
         "passed": true,
         "severity": "ERROR",
-        "detail": "metadata=94.8 output=94.8"
+        "detail": "metadata=91.2 output=91.2"
       },
       {
         "name": "data_contracts_publishable",
@@ -609,25 +585,12 @@
         "name": "approved_not_above_allocation",
         "passed": true,
         "severity": "ERROR",
-        "detail": "approved=0.00 allocated=1.36"
+        "detail": "approved=0.00 allocated=0.37"
       }
     ],
     "errors": []
   },
   "trend": [
-    {
-      "generated_at": "2026-10-10T18:54:33.322217+00:00",
-      "model_generated_at": "2026-10-10T18:54:31.957670+00:00",
-      "season": 2026,
-      "week": 6,
-      "platform_version": "7.4.0",
-      "release_state": "RESEARCH",
-      "publication_status": "WARN",
-      "live_readiness_score": 94.7,
-      "distribution_stability": 94.5,
-      "approved_units": 0.0,
-      "data_quality_status": "PASS"
-    },
     {
       "generated_at": "2026-10-10T19:15:27.056644+00:00",
       "model_generated_at": "2026-10-10T19:15:24.276539+00:00",
@@ -768,6 +731,19 @@
       "publication_status": "WARN",
       "live_readiness_score": 94.8,
       "distribution_stability": 88.9,
+      "approved_units": 0.0,
+      "data_quality_status": "PASS"
+    },
+    {
+      "generated_at": "2026-10-10T22:27:20.141089+00:00",
+      "model_generated_at": "2026-10-10T22:27:18.790410+00:00",
+      "season": 2026,
+      "week": 6,
+      "platform_version": "7.4.0",
+      "release_state": "RESEARCH",
+      "publication_status": "WARN",
+      "live_readiness_score": 94.8,
+      "distribution_stability": 88.6,
       "approved_units": 0.0,
       "data_quality_status": "PASS"
     }

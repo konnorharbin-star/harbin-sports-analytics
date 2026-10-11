@@ -1,25 +1,25 @@
 {
   "spec": "walters_key_number_forward_v1",
-  "evaluated_at": "2026-10-10T22:27:21.311033+00:00",
+  "evaluated_at": "2026-10-11T00:59:01.035035+00:00",
   "status": "FORWARD_SHADOW_RESEARCH_ONLY",
   "graded_games": 0,
   "ungraded": {
-    "401856712.json": "PENDING_KICKOFF",
-    "401856715.json": "PENDING_KICKOFF",
+    "401856712.json": "NOT_CONFIRMED_FINAL",
+    "401856715.json": "NOT_CONFIRMED_FINAL",
     "401856808.json": "PENDING_KICKOFF",
-    "401856827.json": "PENDING_KICKOFF",
-    "401858258.json": "PENDING_KICKOFF",
-    "401858485.json": "PENDING_KICKOFF",
-    "401858486.json": "PENDING_KICKOFF",
+    "401856827.json": "NOT_CONFIRMED_FINAL",
+    "401858258.json": "NOT_CONFIRMED_FINAL",
+    "401858485.json": "NOT_CONFIRMED_FINAL",
+    "401858486.json": "NOT_CONFIRMED_FINAL",
     "401860901.json": "PENDING_KICKOFF",
     "401860902.json": "NOT_CONFIRMED_FINAL",
-    "401862798.json": "PENDING_KICKOFF",
-    "401864516.json": "PENDING_KICKOFF",
-    "401864517.json": "PENDING_KICKOFF",
-    "401864518.json": "PENDING_KICKOFF",
-    "401869943.json": "PENDING_KICKOFF",
-    "401869949.json": "PENDING_KICKOFF",
-    "401869965.json": "PENDING_KICKOFF"
+    "401862798.json": "NOT_CONFIRMED_FINAL",
+    "401864516.json": "NOT_CONFIRMED_FINAL",
+    "401864517.json": "NOT_CONFIRMED_FINAL",
+    "401864518.json": "NOT_CONFIRMED_FINAL",
+    "401869943.json": "NOT_CONFIRMED_FINAL",
+    "401869949.json": "NOT_CONFIRMED_FINAL",
+    "401869965.json": "NOT_CONFIRMED_FINAL"
   },
   "betting_authorized": false,
   "production_promotion_authorized": false,
@@ -34,6 +34,6 @@
   "graded_rows": [],
   "capture_summary": {
     "newly_frozen": 0,
-    "already_frozen": 15
+    "already_frozen": 2
   }
 }

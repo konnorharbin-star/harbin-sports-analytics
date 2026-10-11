@@ -57,21 +57,21 @@
     {
       "name": "probability_brier",
       "passed": true,
-      "value": 0.17476492013360306,
+      "value": 0.1747649201336038,
       "requirement": "Brier <= 0.18 on chronological release holdout",
       "detail": ""
     },
     {
       "name": "probability_ece",
       "passed": false,
-      "value": 0.06218232013495895,
+      "value": 0.06218232013495966,
       "requirement": "ECE <= 0.05 on chronological release holdout",
       "detail": ""
     },
     {
       "name": "live_monitoring",
       "passed": true,
-      "value": 94.8,
+      "value": 91.2,
       "requirement": "live readiness >= 90/100",
       "detail": ""
     },
@@ -114,7 +114,7 @@
       "passed": true,
       "value": {
         "source": "portfolio_decisions_v1",
-        "graded_bets": 10
+        "graded_bets": 23
       },
       "requirement": "forward evidence comes from execution-ready cap-constrained portfolio decisions",
       "detail": ""
@@ -123,9 +123,9 @@
       "name": "live_shadow_evidence",
       "passed": false,
       "value": {
-        "graded_bets": 10,
-        "roi": -0.402679012345679,
-        "avg_clv": 0.30043906189519054,
+        "graded_bets": 23,
+        "roi": -0.08714751675139404,
+        "avg_clv": 0.825307799848561,
         "portfolio_verified": true
       },
       "requirement": ">=300 portfolio-verified graded live/shadow bets, non-negative ROI and positive pre-kickoff CLV proxy",

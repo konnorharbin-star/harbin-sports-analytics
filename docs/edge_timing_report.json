@@ -1,8 +1,8 @@
 {
   "schema_version": 1,
   "status": "DESCRIPTIVE_ONLY",
-  "comparable_series": 19,
-  "survived_bet_to": 19,
+  "comparable_series": 22,
+  "survived_bet_to": 22,
   "survival_rate": 1.0,
   "closing_line_claim": false,
   "line_stage": "last_captured_pre_kickoff_not_official_close",

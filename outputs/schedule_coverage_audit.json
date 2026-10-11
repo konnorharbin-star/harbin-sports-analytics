@@ -1,11 +1,19 @@
 {
   "season": 2026,
   "week": 6,
-  "model_cutoff_utc": "2026-10-10T22:27:18.758622+00:00",
+  "model_cutoff_utc": "2026-10-11T00:58:57.093886+00:00",
+  "scope": "EVERY_FBS_INVOLVED_REGULAR_SEASON_MATCHUP",
+  "total_scheduled_fbs_games": 58,
+  "fbs_vs_fbs_games": 58,
+  "fbs_vs_non_fbs_games": 0,
+  "remaining_pregame_games": 2,
+  "remaining_pregame_coverage_complete": true,
+  "previously_archived_before_kickoff": 50,
+  "started_or_completed_without_archived_pregame": 8,
   "counts": {
-    "COMPLETED_EXCLUDED": 22,
-    "STARTED_EXCLUDED": 21,
-    "PREDICTED": 15
+    "COMPLETED_EXCLUDED": 42,
+    "STARTED_EXCLUDED": 14,
+    "PREDICTED": 2
   },
   "missing_upcoming": [],
   "predicted_not_in_source": []
