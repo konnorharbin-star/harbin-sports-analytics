@@ -216,14 +216,28 @@ def build(model, final, coverage, gate, *, evaluated_at):
 
 def main():
     p = argparse.ArgumentParser()
-    p.add_argument("--model", type=Path, required=True)
+    p.add_argument("--model", type=Path)
+    p.add_argument("--model-dir", type=Path, default=Path("outputs"))
     p.add_argument("--shortlist", type=Path, required=True)
     p.add_argument("--coverage", type=Path, required=True)
     p.add_argument("--gate", type=Path, required=True)
     p.add_argument("--out-csv", type=Path, required=True)
     p.add_argument("--out-json", type=Path, required=True)
     args = p.parse_args()
-    source = _table(args.model)
+    if args.model:
+        model_path = args.model
+    else:
+        metadata = sorted(
+            args.model_dir.glob("cfb_model_*_metadata.json"),
+            key=lambda p: p.stat().st_mtime,
+        )
+        if not metadata:
+            raise ValueError("No CFB model metadata to identify latest full slate")
+        identity = json.loads(metadata[-1].read_text(encoding="utf-8"))
+        model_path = args.model_dir / (
+            f"cfb_model_{int(identity['season'])}_week{int(identity['week'])}.csv"
+        )
+    source = _table(model_path)
     shortlist = _table(args.shortlist)
     coverage = json.loads(args.coverage.read_text(encoding="utf-8"))
     gate = json.loads(args.gate.read_text(encoding="utf-8"))
