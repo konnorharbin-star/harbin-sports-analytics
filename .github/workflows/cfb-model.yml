@@ -118,6 +118,37 @@ jobs:
           print("- Stale quotes and unresolved sportsbook IDs are NOT executable bets.")
           PY
 
+
+      - name: Scan and publish market-edge evidence for every upcoming FBS game
+        run: |
+          python -m scripts.walters_full_fbs_edge_scan \
+            --model "outputs/cfb_model_$(python - <<'PY'
+          import json
+          import glob
+          from pathlib import Path
+          paths = sorted(glob.glob("outputs/cfb_model_*_metadata.json"),
+                         key=lambda f: Path(f).stat().st_mtime)
+          d = json.load(open(paths[-1]))
+          print(f"{d['season']}_week{d['week']}")
+          PY
+          ).csv" \
+            --shortlist outputs/final_edge_board.csv \
+            --coverage outputs/schedule_coverage_audit.json \
+            --gate outputs/release_gate.json \
+            --out-csv outputs/full_fbs_edge_scan.csv \
+            --out-json outputs/full_fbs_edge_scan.json
+          python - <<'PY' >> "$GITHUB_STEP_SUMMARY"
+          import json
+          d = json.load(open("outputs/full_fbs_edge_scan.json"))
+          print("## Every-FBS-game edge scan")
+          print(f"**All upcoming FBS games scanned:** {d['remaining_pregame_game_count']}")
+          print(f"**Raw market-disagreement hypotheses (unverified):** {d['games_with_raw_positive_model_hypothesis']}")
+          print(f"**Final evidence shortlist:** {d['games_shortlisted_by_independent_edge_gate']}")
+          print(f"**Verified profitable edges:** 0")
+          print(f"**Recommended wagers:** {d['bet_recommendations']}")
+          print("See outputs/full_fbs_edge_scan.csv for every game's reason, including those not shortlisted.")
+          PY
+
       - name: Audit prospective profitability evidence (research only)
         run: python -m scripts.strategy_proof
       - name: Publish run summary
