@@ -1,0 +1,519 @@
+{
+  "report": {
+    "betting_authorized": false,
+    "candidates": [
+      {
+        "american_odds": 350.0,
+        "away_team": "Boise State",
+        "betting_authorized": false,
+        "blockers": [
+          "Aggregator book identity and executable price unverified",
+          "Per-side source quote-origin timestamps unverified",
+          "Source market phase and settlement rules unverified",
+          "No verified sharp benchmark",
+          "Reference probabilities are not calibrated model probabilities",
+          "Market-reference strategy lacks validated prospective economic advantage",
+          "User book access and settlement rules unverified"
+        ],
+        "book_label": "ActionNetwork book 30",
+        "game_id": "401860901",
+        "home_team": "Fresno State",
+        "kickoff": "2026-10-11T02:30:00.000Z",
+        "line": null,
+        "market": "moneyline",
+        "price_implied_probability": 0.2222222222222222,
+        "quote_observed_at": "2026-10-11T01:53:55.178497+00:00",
+        "reference_books": 6,
+        "reference_price_gap_pp": 5.489842664563859,
+        "reference_probability": 0.2771206488678608,
+        "reference_probability_range": [
+          0.25,
+          0.32211538461538464
+        ],
+        "sensitivity_gap_pp": -1.7216957969746038,
+        "side": "home",
+        "stake_units": 0,
+        "status": "VERIFY_REQUIRED"
+      },
+      {
+        "american_odds": -235.0,
+        "away_team": "Boise State",
+        "betting_authorized": false,
+        "blockers": [
+          "Aggregator book identity and executable price unverified",
+          "Per-side source quote-origin timestamps unverified",
+          "Source market phase and settlement rules unverified",
+          "No verified sharp benchmark",
+          "Reference probabilities are not calibrated model probabilities",
+          "Market-reference strategy lacks validated prospective economic advantage",
+          "User book access and settlement rules unverified"
+        ],
+        "book_label": "ActionNetwork book 75",
+        "game_id": "401860901",
+        "home_team": "Fresno State",
+        "kickoff": "2026-10-11T02:30:00.000Z",
+        "line": null,
+        "market": "moneyline",
+        "price_implied_probability": 0.7014925373134329,
+        "quote_observed_at": "2026-10-11T01:53:55.178497+00:00",
+        "reference_books": 6,
+        "reference_price_gap_pp": 2.282339243323883,
+        "reference_probability": 0.7243159297466717,
+        "reference_probability_range": [
+          0.7228793511321393,
+          0.7873941674506115
+        ],
+        "sensitivity_gap_pp": -4.169142388523339,
+        "side": "away",
+        "stake_units": 0,
+        "status": "VERIFY_REQUIRED"
+      }
+    ],
+    "capture_id": "031dc73d11493332c5035557",
+    "counts": {
+      "extreme_unverified_quotes_quarantined": 0,
+      "fresh_exact_line_groups": 2,
+      "stale_future_or_started": 426
+    },
+    "decision": "NO_BET",
+    "fresh_priced_games": 2,
+    "limits": [
+      "Exact line and two same-book prices required",
+      "Exclude quoted book from reference and deduplicate aliases",
+      "Non-push reference prices imply no true EV, ROI or fair price",
+      "Sensitivity haircut is a fixed stress scenario, not a confidence interval",
+      "Unresolved and legacy aggregator labels are not certified live sportsbooks",
+      "Unverified extreme paired-price outliers are quarantined, not ranked"
+    ],
+    "observed_at": "2026-10-11T01:53:56.137177+00:00",
+    "qualified_bets": 0,
+    "quarantined_quotes": [],
+    "source_errors": [],
+    "spec": "exact_line_price_scan_v1",
+    "sport": "cfb",
+    "status": "PRICE_DIAGNOSTICS_ONLY",
+    "supported_markets": [
+      "moneyline"
+    ],
+    "unsupported_market_reason": "CFB normalized feed does not retain both spread/total side lines",
+    "upcoming_games": 2
+  },
+  "source_records": [
+    {
+      "away_team": "Boise State",
+      "book_identity_verified": false,
+      "book_key": "draftkings",
+      "book_label": "ActionNetwork book 15",
+      "executable_price_verified": false,
+      "game_id": "401860901",
+      "home_team": "Fresno State",
+      "kickoff": "2026-10-11T02:30:00.000Z",
+      "line": null,
+      "market": "moneyline",
+      "observed_at": "2026-10-11T01:53:55.178497+00:00",
+      "odds": [
+        245.0,
+        -310.0
+      ],
+      "original_request_url": null,
+      "reported_source_time": null,
+      "sides": [
+        "home",
+        "away"
+      ],
+      "source": "action_network",
+      "source_quote_time_verified": false,
+      "source_url": null
+    },
+    {
+      "away_team": "Boise State",
+      "book_identity_verified": false,
+      "book_key": "fanduel",
+      "book_label": "ActionNetwork book 30",
+      "executable_price_verified": false,
+      "game_id": "401860901",
+      "home_team": "Fresno State",
+      "kickoff": "2026-10-11T02:30:00.000Z",
+      "line": null,
+      "market": "moneyline",
+      "observed_at": "2026-10-11T01:53:55.178497+00:00",
+      "odds": [
+        350.0,
+        -465.0
+      ],
+      "original_request_url": null,
+      "reported_source_time": null,
+      "sides": [
+        "home",
+        "away"
+      ],
+      "source": "action_network",
+      "source_quote_time_verified": false,
+      "source_url": null
+    },
+    {
+      "away_team": "Boise State",
+      "book_identity_verified": false,
+      "book_key": "actionnetworkbook49",
+      "book_label": "ActionNetwork book 49",
+      "executable_price_verified": false,
+      "game_id": "401860901",
+      "home_team": "Fresno State",
+      "kickoff": "2026-10-11T02:30:00.000Z",
+      "line": null,
+      "market": "moneyline",
+      "observed_at": "2026-10-11T01:53:55.178497+00:00",
+      "odds": [
+        245.0,
+        -310.0
+      ],
+      "original_request_url": null,
+      "reported_source_time": null,
+      "sides": [
+        "home",
+        "away"
+      ],
+      "source": "action_network",
+      "source_quote_time_verified": false,
+      "source_url": null
+    },
+    {
+      "away_team": "Boise State",
+      "book_identity_verified": false,
+      "book_key": "actionnetworkbook68",
+      "book_label": "ActionNetwork book 68",
+      "executable_price_verified": false,
+      "game_id": "401860901",
+      "home_team": "Fresno State",
+      "kickoff": "2026-10-11T02:30:00.000Z",
+      "line": null,
+      "market": "moneyline",
+      "observed_at": "2026-10-11T01:53:55.178497+00:00",
+      "odds": [
+        250.0,
+        -310.0
+      ],
+      "original_request_url": null,
+      "reported_source_time": null,
+      "sides": [
+        "home",
+        "away"
+      ],
+      "source": "action_network",
+      "source_quote_time_verified": false,
+      "source_url": null
+    },
+    {
+      "away_team": "Boise State",
+      "book_identity_verified": false,
+      "book_key": "actionnetworkbook69",
+      "book_label": "ActionNetwork book 69",
+      "executable_price_verified": false,
+      "game_id": "401860901",
+      "home_team": "Fresno State",
+      "kickoff": "2026-10-11T02:30:00.000Z",
+      "line": null,
+      "market": "moneyline",
+      "observed_at": "2026-10-11T01:53:55.178497+00:00",
+      "odds": [
+        245.0,
+        -310.0
+      ],
+      "original_request_url": null,
+      "reported_source_time": null,
+      "sides": [
+        "home",
+        "away"
+      ],
+      "source": "action_network",
+      "source_quote_time_verified": false,
+      "source_url": null
+    },
+    {
+      "away_team": "Boise State",
+      "book_identity_verified": false,
+      "book_key": "actionnetworkbook71",
+      "book_label": "ActionNetwork book 71",
+      "executable_price_verified": false,
+      "game_id": "401860901",
+      "home_team": "Fresno State",
+      "kickoff": "2026-10-11T02:30:00.000Z",
+      "line": null,
+      "market": "moneyline",
+      "observed_at": "2026-10-11T01:53:55.178497+00:00",
+      "odds": [
+        280.0,
+        -375.0
+      ],
+      "original_request_url": null,
+      "reported_source_time": null,
+      "sides": [
+        "home",
+        "away"
+      ],
+      "source": "action_network",
+      "source_quote_time_verified": false,
+      "source_url": null
+    },
+    {
+      "away_team": "Boise State",
+      "book_identity_verified": false,
+      "book_key": "betmgm",
+      "book_label": "ActionNetwork book 75",
+      "executable_price_verified": false,
+      "game_id": "401860901",
+      "home_team": "Fresno State",
+      "kickoff": "2026-10-11T02:30:00.000Z",
+      "line": null,
+      "market": "moneyline",
+      "observed_at": "2026-10-11T01:53:55.178497+00:00",
+      "odds": [
+        200.0,
+        -235.0
+      ],
+      "original_request_url": null,
+      "reported_source_time": null,
+      "sides": [
+        "home",
+        "away"
+      ],
+      "source": "action_network",
+      "source_quote_time_verified": false,
+      "source_url": null
+    },
+    {
+      "away_team": "Boise State",
+      "book_identity_verified": false,
+      "book_key": "draftkings",
+      "book_label": "DraftKings",
+      "executable_price_verified": false,
+      "game_id": "401860901",
+      "home_team": "Fresno State",
+      "kickoff": "2026-10-11T02:30:00.000Z",
+      "line": null,
+      "market": "moneyline",
+      "observed_at": "2026-10-11T01:53:55.178497+00:00",
+      "odds": [
+        250.0,
+        -310.0
+      ],
+      "original_request_url": null,
+      "reported_source_time": null,
+      "sides": [
+        "home",
+        "away"
+      ],
+      "source": "espn_core",
+      "source_quote_time_verified": false,
+      "source_url": null
+    },
+    {
+      "away_team": "Hawai'i",
+      "book_identity_verified": false,
+      "book_key": "draftkings",
+      "book_label": "ActionNetwork book 15",
+      "executable_price_verified": false,
+      "game_id": "401856808",
+      "home_team": "Arizona State",
+      "kickoff": "2026-10-11T02:30:00.000Z",
+      "line": null,
+      "market": "moneyline",
+      "observed_at": "2026-10-11T01:53:55.181924+00:00",
+      "odds": [
+        -1650.0,
+        950.0
+      ],
+      "original_request_url": null,
+      "reported_source_time": null,
+      "sides": [
+        "home",
+        "away"
+      ],
+      "source": "action_network",
+      "source_quote_time_verified": false,
+      "source_url": null
+    },
+    {
+      "away_team": "Hawai'i",
+      "book_identity_verified": false,
+      "book_key": "fanduel",
+      "book_label": "ActionNetwork book 30",
+      "executable_price_verified": false,
+      "game_id": "401856808",
+      "home_team": "Arizona State",
+      "kickoff": "2026-10-11T02:30:00.000Z",
+      "line": null,
+      "market": "moneyline",
+      "observed_at": "2026-10-11T01:53:55.181924+00:00",
+      "odds": [
+        -1050.0,
+        660.0
+      ],
+      "original_request_url": null,
+      "reported_source_time": null,
+      "sides": [
+        "home",
+        "away"
+      ],
+      "source": "action_network",
+      "source_quote_time_verified": false,
+      "source_url": null
+    },
+    {
+      "away_team": "Hawai'i",
+      "book_identity_verified": false,
+      "book_key": "actionnetworkbook49",
+      "book_label": "ActionNetwork book 49",
+      "executable_price_verified": false,
+      "game_id": "401856808",
+      "home_team": "Arizona State",
+      "kickoff": "2026-10-11T02:30:00.000Z",
+      "line": null,
+      "market": "moneyline",
+      "observed_at": "2026-10-11T01:53:55.181924+00:00",
+      "odds": [
+        -1700.0,
+        950.0
+      ],
+      "original_request_url": null,
+      "reported_source_time": null,
+      "sides": [
+        "home",
+        "away"
+      ],
+      "source": "action_network",
+      "source_quote_time_verified": false,
+      "source_url": null
+    },
+    {
+      "away_team": "Hawai'i",
+      "book_identity_verified": false,
+      "book_key": "actionnetworkbook68",
+      "book_label": "ActionNetwork book 68",
+      "executable_price_verified": false,
+      "game_id": "401856808",
+      "home_team": "Arizona State",
+      "kickoff": "2026-10-11T02:30:00.000Z",
+      "line": null,
+      "market": "moneyline",
+      "observed_at": "2026-10-11T01:53:55.181924+00:00",
+      "odds": [
+        -1650.0,
+        950.0
+      ],
+      "original_request_url": null,
+      "reported_source_time": null,
+      "sides": [
+        "home",
+        "away"
+      ],
+      "source": "action_network",
+      "source_quote_time_verified": false,
+      "source_url": null
+    },
+    {
+      "away_team": "Hawai'i",
+      "book_identity_verified": false,
+      "book_key": "actionnetworkbook69",
+      "book_label": "ActionNetwork book 69",
+      "executable_price_verified": false,
+      "game_id": "401856808",
+      "home_team": "Arizona State",
+      "kickoff": "2026-10-11T02:30:00.000Z",
+      "line": null,
+      "market": "moneyline",
+      "observed_at": "2026-10-11T01:53:55.181924+00:00",
+      "odds": [
+        -1800.0,
+        920.0
+      ],
+      "original_request_url": null,
+      "reported_source_time": null,
+      "sides": [
+        "home",
+        "away"
+      ],
+      "source": "action_network",
+      "source_quote_time_verified": false,
+      "source_url": null
+    },
+    {
+      "away_team": "Hawai'i",
+      "book_identity_verified": false,
+      "book_key": "actionnetworkbook71",
+      "book_label": "ActionNetwork book 71",
+      "executable_price_verified": false,
+      "game_id": "401856808",
+      "home_team": "Arizona State",
+      "kickoff": "2026-10-11T02:30:00.000Z",
+      "line": null,
+      "market": "moneyline",
+      "observed_at": "2026-10-11T01:53:55.181924+00:00",
+      "odds": [
+        -1667.0,
+        800.0
+      ],
+      "original_request_url": null,
+      "reported_source_time": null,
+      "sides": [
+        "home",
+        "away"
+      ],
+      "source": "action_network",
+      "source_quote_time_verified": false,
+      "source_url": null
+    },
+    {
+      "away_team": "Hawai'i",
+      "book_identity_verified": false,
+      "book_key": "betmgm",
+      "book_label": "ActionNetwork book 75",
+      "executable_price_verified": false,
+      "game_id": "401856808",
+      "home_team": "Arizona State",
+      "kickoff": "2026-10-11T02:30:00.000Z",
+      "line": null,
+      "market": "moneyline",
+      "observed_at": "2026-10-11T01:53:55.181924+00:00",
+      "odds": [
+        -1600.0,
+        1000.0
+      ],
+      "original_request_url": null,
+      "reported_source_time": null,
+      "sides": [
+        "home",
+        "away"
+      ],
+      "source": "action_network",
+      "source_quote_time_verified": false,
+      "source_url": null
+    },
+    {
+      "away_team": "Hawai'i",
+      "book_identity_verified": false,
+      "book_key": "draftkings",
+      "book_label": "DraftKings",
+      "executable_price_verified": false,
+      "game_id": "401856808",
+      "home_team": "Arizona State",
+      "kickoff": "2026-10-11T02:30:00.000Z",
+      "line": null,
+      "market": "moneyline",
+      "observed_at": "2026-10-11T01:53:55.181924+00:00",
+      "odds": [
+        -1650.0,
+        950.0
+      ],
+      "original_request_url": null,
+      "reported_source_time": null,
+      "sides": [
+        "home",
+        "away"
+      ],
+      "source": "espn_core",
+      "source_quote_time_verified": false,
+      "source_url": null
+    }
+  ]
+}

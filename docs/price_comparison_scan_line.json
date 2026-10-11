@@ -1,0 +1,99 @@
+{
+  "spec": "exact_line_price_scan_v1",
+  "observed_at": "2026-10-11T01:53:56.137177+00:00",
+  "status": "PRICE_DIAGNOSTICS_ONLY",
+  "betting_authorized": false,
+  "qualified_bets": 0,
+  "counts": {
+    "stale_future_or_started": 426,
+    "fresh_exact_line_groups": 2,
+    "extreme_unverified_quotes_quarantined": 0
+  },
+  "quarantined_quotes": [],
+  "candidates": [
+    {
+      "game_id": "401860901",
+      "home_team": "Fresno State",
+      "away_team": "Boise State",
+      "kickoff": "2026-10-11T02:30:00.000Z",
+      "market": "moneyline",
+      "side": "home",
+      "line": null,
+      "book_label": "ActionNetwork book 30",
+      "american_odds": 350.0,
+      "quote_observed_at": "2026-10-11T01:53:55.178497+00:00",
+      "reference_books": 6,
+      "reference_probability": 0.2771206488678608,
+      "price_implied_probability": 0.2222222222222222,
+      "reference_price_gap_pp": 5.489842664563859,
+      "sensitivity_gap_pp": -1.7216957969746038,
+      "reference_probability_range": [
+        0.25,
+        0.32211538461538464
+      ],
+      "status": "VERIFY_REQUIRED",
+      "betting_authorized": false,
+      "stake_units": 0,
+      "blockers": [
+        "Aggregator book identity and executable price unverified",
+        "Per-side source quote-origin timestamps unverified",
+        "Source market phase and settlement rules unverified",
+        "No verified sharp benchmark",
+        "Reference probabilities are not calibrated model probabilities",
+        "Market-reference strategy lacks validated prospective economic advantage",
+        "User book access and settlement rules unverified"
+      ]
+    },
+    {
+      "game_id": "401860901",
+      "home_team": "Fresno State",
+      "away_team": "Boise State",
+      "kickoff": "2026-10-11T02:30:00.000Z",
+      "market": "moneyline",
+      "side": "away",
+      "line": null,
+      "book_label": "ActionNetwork book 75",
+      "american_odds": -235.0,
+      "quote_observed_at": "2026-10-11T01:53:55.178497+00:00",
+      "reference_books": 6,
+      "reference_probability": 0.7243159297466717,
+      "price_implied_probability": 0.7014925373134329,
+      "reference_price_gap_pp": 2.282339243323883,
+      "sensitivity_gap_pp": -4.169142388523339,
+      "reference_probability_range": [
+        0.7228793511321393,
+        0.7873941674506115
+      ],
+      "status": "VERIFY_REQUIRED",
+      "betting_authorized": false,
+      "stake_units": 0,
+      "blockers": [
+        "Aggregator book identity and executable price unverified",
+        "Per-side source quote-origin timestamps unverified",
+        "Source market phase and settlement rules unverified",
+        "No verified sharp benchmark",
+        "Reference probabilities are not calibrated model probabilities",
+        "Market-reference strategy lacks validated prospective economic advantage",
+        "User book access and settlement rules unverified"
+      ]
+    }
+  ],
+  "limits": [
+    "Exact line and two same-book prices required",
+    "Exclude quoted book from reference and deduplicate aliases",
+    "Non-push reference prices imply no true EV, ROI or fair price",
+    "Sensitivity haircut is a fixed stress scenario, not a confidence interval",
+    "Unresolved and legacy aggregator labels are not certified live sportsbooks",
+    "Unverified extreme paired-price outliers are quarantined, not ranked"
+  ],
+  "upcoming_games": 2,
+  "fresh_priced_games": 2,
+  "sport": "cfb",
+  "source_errors": [],
+  "decision": "NO_BET",
+  "supported_markets": [
+    "moneyline"
+  ],
+  "unsupported_market_reason": "CFB normalized feed does not retain both spread/total side lines",
+  "capture_id": "031dc73d11493332c5035557"
+}
