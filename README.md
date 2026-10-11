@@ -30,6 +30,11 @@ labelled research-only and cannot produce an approved betting signal.
 4. See `outputs/README.md` or the latest generated dashboard for
    the full slate and the betting release gates.
 
+Each run also creates an [every-FBS-game edge report](docs/FULL_FBS_EDGE_SCAN.md)
+at `outputs/full_fbs_edge_scan.csv`, with raw research hypotheses,
+conservative shortlist status, and explicit **NO VERIFIED EDGE** explanations
+for every matchup; an apparent raw edge is never automatically a bet.
+
 See the [full FBS slate runbook](docs/FULL_FBS_SLATE_RUNBOOK.md) for
 automation schedule, started-game exclusions, immutable original
 predictions, FBS/FCS scope and public-data caveats.
