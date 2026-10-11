@@ -1,0 +1,13 @@
+{
+  "final_score": {
+    "away_score": 10,
+    "event_id": "401862796",
+    "home_score": 50
+  },
+  "forecast_sha256": "09f8692a898302ebc7a175b112c18c0288445036fdb1a2203e04f47db531c069",
+  "graded_at": "2026-10-11T02:13:31.103852+00:00",
+  "id": "5bc72e865933aedb0ef1e642",
+  "outcome": 1,
+  "pregame_publication_commit": "6ed0afdbb8cd7c5b22b2d6df39f9acd597e90f31",
+  "result_source": "https://site.api.espn.com/apis/site/v2/sports/football/college-football/scoreboard?dates=20261010&limit=500&groups=80"
+}

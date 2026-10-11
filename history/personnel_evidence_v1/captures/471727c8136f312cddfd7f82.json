@@ -1,0 +1,83 @@
+{
+  "betting_authorized": false,
+  "error": null,
+  "game_evidence": [
+    {
+      "fresh_qb_status_records": [],
+      "fresh_source_item_ids": [],
+      "fresh_source_record_count": 0,
+      "game_id": "401856808",
+      "healthy_roster_inferred": false,
+      "kickoff": "2026-10-11T02:30:00+00:00",
+      "official_team_report_verified": false,
+      "record_states": {},
+      "score_adjustment_enabled": false,
+      "side": "home",
+      "source_record_count": 0,
+      "starter_verified": false,
+      "status": "NO_FRESH_PERSONNEL_EVIDENCE",
+      "team": "Arizona State"
+    },
+    {
+      "fresh_qb_status_records": [],
+      "fresh_source_item_ids": [],
+      "fresh_source_record_count": 0,
+      "game_id": "401856808",
+      "healthy_roster_inferred": false,
+      "kickoff": "2026-10-11T02:30:00+00:00",
+      "official_team_report_verified": false,
+      "record_states": {},
+      "score_adjustment_enabled": false,
+      "side": "away",
+      "source_record_count": 0,
+      "starter_verified": false,
+      "status": "NO_FRESH_PERSONNEL_EVIDENCE",
+      "team": "Hawai'i"
+    },
+    {
+      "fresh_qb_status_records": [],
+      "fresh_source_item_ids": [],
+      "fresh_source_record_count": 0,
+      "game_id": "401860901",
+      "healthy_roster_inferred": false,
+      "kickoff": "2026-10-11T02:30:00+00:00",
+      "official_team_report_verified": false,
+      "record_states": {},
+      "score_adjustment_enabled": false,
+      "side": "home",
+      "source_record_count": 0,
+      "starter_verified": false,
+      "status": "NO_FRESH_PERSONNEL_EVIDENCE",
+      "team": "Fresno State"
+    },
+    {
+      "fresh_qb_status_records": [],
+      "fresh_source_item_ids": [],
+      "fresh_source_record_count": 0,
+      "game_id": "401860901",
+      "healthy_roster_inferred": false,
+      "kickoff": "2026-10-11T02:30:00+00:00",
+      "official_team_report_verified": false,
+      "record_states": {},
+      "score_adjustment_enabled": false,
+      "side": "away",
+      "source_record_count": 0,
+      "starter_verified": false,
+      "status": "NO_FRESH_PERSONNEL_EVIDENCE",
+      "team": "Boise State"
+    }
+  ],
+  "model_score_change_enabled": false,
+  "payload_sha256": "59324565eaa5f15746bf54bb6be1e3e7bbc94a6a3629251f217190ae9fc8ec50",
+  "record_states": {},
+  "schema": 1,
+  "source": {
+    "observed_at": "2026-10-11T02:13:29.891164+00:00",
+    "raw_response_sha256": "4d9f390b3992e235af2d37bbf07cbef52d4cb096f6544af408fb0be8e525bb21",
+    "request_started_at": "2026-10-11T02:13:29.571512+00:00",
+    "response_generated_at": "2026-10-11T02:13:29Z",
+    "url": "https://site.api.espn.com/apis/site/v2/sports/football/college-football/injuries"
+  },
+  "source_season": 2026,
+  "sport": "cfb"
+}

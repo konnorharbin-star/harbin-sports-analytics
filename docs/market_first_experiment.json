@@ -1,9 +1,93 @@
 {
   "betting_authorized": false,
-  "by_model_version": {},
-  "by_season": {},
+  "by_model_version": {
+    "7.1.0": {
+      "games": 18,
+      "variants": {
+        "independent_model": {
+          "brier": 0.2825819958055648,
+          "ece_10": null,
+          "interval_supported": false,
+          "log_loss": 0.7848593797397435,
+          "market_minus_candidate_brier": -0.024263940923647812,
+          "market_minus_candidate_log_loss": -0.060979817081932994,
+          "paired_familywise_95_brier_ci": null,
+          "paired_familywise_95_log_loss_ci": null
+        },
+        "market": {
+          "brier": 0.25831805488191706,
+          "ece_10": null,
+          "log_loss": 0.7238795626578104
+        },
+        "market_model_25pct": {
+          "brier": 0.2612129910940705,
+          "ece_10": null,
+          "interval_supported": false,
+          "log_loss": 0.7317076402331443,
+          "market_minus_candidate_brier": -0.002894936212153438,
+          "market_minus_candidate_log_loss": -0.007828077575333766,
+          "paired_familywise_95_brier_ci": null,
+          "paired_familywise_95_log_loss_ci": null
+        },
+        "market_power_1_1": {
+          "brier": 0.2632185999170607,
+          "ece_10": null,
+          "interval_supported": false,
+          "log_loss": 0.7411402091159494,
+          "market_minus_candidate_brier": -0.0049005450351436546,
+          "market_minus_candidate_log_loss": -0.017260646458138882,
+          "paired_familywise_95_brier_ci": null,
+          "paired_familywise_95_log_loss_ci": null
+        }
+      },
+      "week_clusters": 1
+    }
+  },
+  "by_season": {
+    "2026": {
+      "games": 18,
+      "variants": {
+        "independent_model": {
+          "brier": 0.2825819958055648,
+          "ece_10": null,
+          "interval_supported": false,
+          "log_loss": 0.7848593797397435,
+          "market_minus_candidate_brier": -0.024263940923647812,
+          "market_minus_candidate_log_loss": -0.060979817081932994,
+          "paired_familywise_95_brier_ci": null,
+          "paired_familywise_95_log_loss_ci": null
+        },
+        "market": {
+          "brier": 0.25831805488191706,
+          "ece_10": null,
+          "log_loss": 0.7238795626578104
+        },
+        "market_model_25pct": {
+          "brier": 0.2612129910940705,
+          "ece_10": null,
+          "interval_supported": false,
+          "log_loss": 0.7317076402331443,
+          "market_minus_candidate_brier": -0.002894936212153438,
+          "market_minus_candidate_log_loss": -0.007828077575333766,
+          "paired_familywise_95_brier_ci": null,
+          "paired_familywise_95_log_loss_ci": null
+        },
+        "market_power_1_1": {
+          "brier": 0.2632185999170607,
+          "ece_10": null,
+          "interval_supported": false,
+          "log_loss": 0.7411402091159494,
+          "market_minus_candidate_brier": -0.0049005450351436546,
+          "market_minus_candidate_log_loss": -0.017260646458138882,
+          "paired_familywise_95_brier_ci": null,
+          "paired_familywise_95_log_loss_ci": null
+        }
+      },
+      "week_clusters": 1
+    }
+  },
   "capture": {
-    "already_frozen": 16,
+    "already_frozen": 2,
     "source_errors": []
   },
   "evaluation_end_exclusive": "2027-03-01T00:00:00+00:00",
@@ -18,12 +102,48 @@
     "No threshold/weight fitting; six paired tests use Bonferroni week-block intervals",
     "Prospective probability improvement alone cannot authorize bets"
   ],
-  "observed_at": "2026-10-10T20:42:53.955980+00:00",
+  "observed_at": "2026-10-11T02:13:31.103852+00:00",
   "promotion_eligible": false,
   "scores": {
-    "games": 0,
-    "variants": {},
-    "week_clusters": 0
+    "games": 18,
+    "variants": {
+      "independent_model": {
+        "brier": 0.2825819958055648,
+        "ece_10": null,
+        "interval_supported": false,
+        "log_loss": 0.7848593797397435,
+        "market_minus_candidate_brier": -0.024263940923647812,
+        "market_minus_candidate_log_loss": -0.060979817081932994,
+        "paired_familywise_95_brier_ci": null,
+        "paired_familywise_95_log_loss_ci": null
+      },
+      "market": {
+        "brier": 0.25831805488191706,
+        "ece_10": null,
+        "log_loss": 0.7238795626578104
+      },
+      "market_model_25pct": {
+        "brier": 0.2612129910940705,
+        "ece_10": null,
+        "interval_supported": false,
+        "log_loss": 0.7317076402331443,
+        "market_minus_candidate_brier": -0.002894936212153438,
+        "market_minus_candidate_log_loss": -0.007828077575333766,
+        "paired_familywise_95_brier_ci": null,
+        "paired_familywise_95_log_loss_ci": null
+      },
+      "market_power_1_1": {
+        "brier": 0.2632185999170607,
+        "ece_10": null,
+        "interval_supported": false,
+        "log_loss": 0.7411402091159494,
+        "market_minus_candidate_brier": -0.0049005450351436546,
+        "market_minus_candidate_log_loss": -0.017260646458138882,
+        "paired_familywise_95_brier_ci": null,
+        "paired_familywise_95_log_loss_ci": null
+      }
+    },
+    "week_clusters": 1
   },
   "spec": "market_first_moneyline_v1",
   "sport": "cfb",

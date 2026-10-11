@@ -1,6 +1,6 @@
 {
   "betting_authorized": false,
-  "capture_id": "77315418a3ef071f7268d62f",
+  "capture_id": "471727c8136f312cddfd7f82",
   "error": null,
   "limitations": [
     "Source response timestamp does not establish item freshness",
@@ -9,10 +9,10 @@
     "Current-only evidence is never backfilled into historical models"
   ],
   "model_score_change_enabled": false,
-  "observed_at": "2026-10-10T20:42:52.849939+00:00",
+  "observed_at": "2026-10-11T02:13:29.891164+00:00",
   "official_report_verified": false,
   "record_states": {},
-  "response_generated_at": "2026-10-10T20:42:36Z",
+  "response_generated_at": "2026-10-11T02:13:29Z",
   "source_record_date_states": {
     "STALE_ITEM_DATE": 3
   },
@@ -24,5 +24,5 @@
   "status": "NO_FRESH_PERSONNEL_EVIDENCE",
   "team_games_with_fresh_qb_status": 0,
   "team_games_with_fresh_records": 0,
-  "upcoming_team_games": 32
+  "upcoming_team_games": 4
 }

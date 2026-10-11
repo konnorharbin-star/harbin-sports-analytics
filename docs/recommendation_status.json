@@ -3,15 +3,15 @@
   "board": {
     "approved_bets": 0,
     "decision_counts": {
-      "NO_BET": 16
+      "NO_BET": 2
     },
     "disclaimer": "A research edge is not a proved profitable bet. Do not wager at an unverified or stale quote.",
-    "distinct_games": 16,
-    "evaluated_at": "2026-10-10T20:42:52.480371+00:00",
+    "distinct_games": 2,
+    "evaluated_at": "2026-10-11T02:13:29.312040+00:00",
     "method": "ONE_PER_GAME_CONSERVATIVE_EV_PRIORITY",
     "no_model_or_stake_change": true,
     "production_eligible": false,
-    "raw_market_candidates": 16,
+    "raw_market_candidates": 2,
     "release_blockers": [
       "probability_ece: ECE <= 0.05 on chronological release holdout",
       "historical_entry_integrity: historical promotion sample uses explicit verified opening-entry fields only",
@@ -23,28 +23,14 @@
     "version": 1
   },
   "decision_counts": {
-    "NO_BET": 16
+    "NO_BET": 2
   },
   "grading_status": "Scheduled immutable receipt grading; research ledger remains separate",
-  "observed_at": "2026-10-10T20:42:52.480371+00:00",
+  "observed_at": "2026-10-11T02:13:29.312040+00:00",
   "publication_requirement": "Verify receipt bytes in GitHub commit before communicating BET",
   "receipt_ids": [
-    "f7ab2eeb03e884d5716fdfe9265a9374c4543637656db03dbc2f421762fc95cc",
-    "8d25e77f95595a392a4cb6929ce6dab4b78299a4d4701f34e2adb1504aadbc64",
-    "260c8fdd6f91e388173913084ab4dfd3f09ba72b0fea27e8ecbc41b2a5050802",
-    "bc03d6783a65cff0e37fd640989c47df34a0efd358abfc8a3e80682ef1eecd7b",
-    "28649f780da9829beaa9c399c5565e3b45364ebb5cc93832757d528b913a99dc",
-    "cd8943b9810c31995933beb77574fa3a5206b16158e364b7197e7d283d2336b3",
-    "ff1b6b53064f28b73c1705c94d296078d52911fee3b15aac0282b04e27fd5105",
-    "875777d9713284ad08d445c698ca27823ce19dc219f6520619f27fef1d508f68",
-    "221a7259b565f5ec8071128957260bb34e75037b9ddde6a4d105acb7b1498466",
-    "048f06fd7a38561264f576a4b634e8f82d373232c8cc5c559fa6c9343ebd9c56",
-    "d9f5d45c4cb8a0085963f95cbef2b5ea59f39aa42116917de1bc577c715b0a1b",
-    "5fd74984abfcf0d71bc750814f614fdd12b9cd3ad1f274b9cb758e32b038e03a",
-    "a2ec39fff725f1493ebedcf0d9b0a427dd54f3746742c72a20d6f4fb51d98497",
-    "47f80d2b309162d5726d9d00811f14f3761e67588ba9e14a195830757ff4c7f7",
-    "289f808309b500c71ece97f60e8973faf23e1c054db54abe4ccb4d97919fdb2e",
-    "1ee849b96889b59263105dd39b2c35cfd3b19ebb895e0dbf203be498918039e5"
+    "725c424e62e8ec72e4d1eebc8cb6e017f287d054bded16a6068186fa22c204d5",
+    "9a21b003158ac766d5e4a8c4a9c3fbada7a879721e14d2497aaeeae301a84608"
   ],
   "release_blockers": [
     "probability_ece: ECE <= 0.05 on chronological release holdout",
