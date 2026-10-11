@@ -34,6 +34,7 @@ def archive(root=Path(".")):
     if current.game_id.duplicated().any():
         raise ValueError("Duplicate game ids in predictions")
     columns = ["season", "week", "first_seen_utc", "game_id", "date",
+               "fbs_matchup_scope", "fbs_model_validation",
                "away_team", "home_team", "away_score", "home_score",
                "model_margin_home", "model_total", "win_probability",
                "market_spread_home", "market_total", "quant_signal",
