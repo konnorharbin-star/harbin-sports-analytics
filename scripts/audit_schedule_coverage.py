@@ -24,6 +24,8 @@ def audit(root=Path(".")):
     prediction_path = out / f"cfb_model_{season}_week{week}.csv"
     predictions = pd.read_csv(prediction_path, dtype={"game_id": str})
     predicted_ids = set(predictions["game_id"].astype(str))
+    if "fbs_matchup_scope" not in predictions:
+        raise RuntimeError("Missing per-game FBS opponent classification")
     client = SportsDataVerseClient()
     frame = client.season_frame(season)
     regular = frame["season_type"].astype(str).str.lower().isin({"regular", "2"})
