@@ -3,7 +3,8 @@ from pathlib import Path
 
 
 def test_free_workflow_never_calls_bookmakers() -> None:
-    flow = Path(".github/workflows/free-research-observer.yml").read_text()
+    assert not Path(".github/workflows/free-research-observer.yml").exists()
+    flow = Path(".github/disabled-workflows/free-research-observer.yml").read_text()
     assert "workflow_dispatch:" in flow
     assert "branches: [main]" in flow
     assert "paths:" in flow
