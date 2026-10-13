@@ -3,7 +3,8 @@ from pathlib import Path
 
 
 def test_research_clv_workflow_is_free_and_read_only():
-    flow=Path(".github/workflows/free-samebook-movement.yml").read_text()
+    assert not Path(".github/workflows/free-samebook-movement.yml").exists()
+    flow=Path(".github/disabled-workflows/free-samebook-movement.yml").read_text()
     assert "workflow_dispatch:" in flow
     assert "schedule:" in flow
     assert "branches: [main]" in flow

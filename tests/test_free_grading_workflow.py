@@ -3,7 +3,8 @@ from pathlib import Path
 
 
 def test_grade_workflow_read_only_and_free():
-    flow = Path(".github/workflows/free-forward-grading.yml").read_text()
+    assert not Path(".github/workflows/free-forward-grading.yml").exists()
+    flow = Path(".github/disabled-workflows/free-forward-grading.yml").read_text()
     assert "contents: read" in flow
     assert "contents: write" not in flow
     assert "workflow_dispatch:" in flow
