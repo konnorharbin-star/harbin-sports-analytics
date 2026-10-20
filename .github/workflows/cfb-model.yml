@@ -1,0 +1,273 @@
+name: CFB Model + Dashboard
+
+on:
+  # One click on Actions -> CFB Model + Dashboard -> Run workflow.
+  # Every eligible FBS-involved game in the selected week is modeled.
+  workflow_dispatch:
+    inputs:
+      season:
+        description: "FBS season (blank = current)"
+        required: false
+        default: ""
+      week:
+        description: "Full FBS slate week (blank = next upcoming week)"
+        required: false
+        default: ""
+      history_start:
+        description: "First training season (blank = season-5)"
+        required: false
+        default: ""
+  push:
+    branches: [main]
+    paths-ignore: ["outputs/**", "history/**", "reports/**", "docs/**"]
+  # Auto-run the full upcoming FBS slate each day, not a single requested game.
+  # GitHub cron uses UTC (11:17, 17:17, 23:17 UTC); extra Saturday pass.
+  schedule:
+    - cron: "17 11,17,23 * * *"
+    - cron: "47 14 * * 6"
+permissions:
+  contents: write
+concurrency:
+  group: cfb-model-${{ github.ref }}
+  cancel-in-progress: true
+jobs:
+  model:
+    runs-on: ubuntu-latest
+    timeout-minutes: 75
+    env:
+      PYTHONUNBUFFERED: "1"
+      TZ: "America/Chicago"
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+      - name: Install dependencies
+        run: python -m pip install -r requirements.txt
+      - name: Test
+        run: python -m pytest -q
+      - name: Run model + monitoring + release + portfolio + reporting
+        env:
+          MODEL_SEASON: ${{ inputs.season }}
+          MODEL_WEEK: ${{ inputs.week }}
+          MODEL_HISTORY_START: ${{ inputs.history_start }}
+        shell: bash
+        run: |
+          ARGS=()
+          [ -n "$MODEL_SEASON" ] && ARGS+=(--season "$MODEL_SEASON")
+          [ -n "$MODEL_WEEK" ] && ARGS+=(--week "$MODEL_WEEK")
+          [ -n "$MODEL_HISTORY_START" ] && ARGS+=(--history-start "$MODEL_HISTORY_START")
+          python run_week.py "${ARGS[@]}"
+      - name: Archive source verification evidence
+        uses: actions/upload-artifact@v4
+        with:
+          name: cfb-source-verification
+          path: |
+            outputs/public_input_quality.json
+            outputs/public_input_quality.html
+          if-no-files-found: error
+      - name: Compare current identical-line prices
+        run: python -m scripts.price_comparison_scan --sport cfb --out docs/price_comparison_scan_model.json
+      - name: Audit full schedule coverage and excluded games
+        run: python -m scripts.audit_schedule_coverage
+      - name: Report every FBS game in this scheduled week
+        run: |
+          python - <<'PY' >> "$GITHUB_STEP_SUMMARY"
+          import json
+          d = json.load(open("outputs/schedule_coverage_audit.json"))
+          print("## Full FBS slate coverage")
+          print(f"2026/season {d['season']} | week {d['week']}")
+          print(f"**Total FBS-involved scheduled games:** {d['total_scheduled_fbs_games']}")
+          print(f"**FBS vs FBS:** {d['fbs_vs_fbs_games']}")
+          print(f"**FBS vs other division (research-only):** {d['fbs_vs_non_fbs_games']}")
+          print(f"**Remaining games projected:** {d['counts'].get('PREDICTED', 0)}")
+          print(f"**Started/completed excluded:** {d['counts'].get('COMPLETED_EXCLUDED', 0) + d['counts'].get('STARTED_EXCLUDED', 0)}")
+          print(f"**Previously archived before kickoff:** {d['previously_archived_before_kickoff']}")
+          print(f"**Unprojected future games:** {len(d['missing_upcoming'])}")
+          print("**All remaining FBS games covered:**", d['remaining_pregame_coverage_complete'])
+          print("No automatic sportsbook wagers. FBS/FCS game edges remain unvalidated.")
+          PY
+      - name: Preserve first-seen pregame predictions
+        run: python -m scripts.archive_first_seen_predictions
+      - name: Freeze Walters key-number first-pregame research and grade committed finals
+        run: |
+          python -m scripts.walters_key_forward --sport cfb \
+            --historical reports/backtest_predictions.csv
+
+      - name: Compare immutable independent key numbers with source-attested book spreads
+        run: python -m scripts.walters_key_market_gate
+
+      - name: Watch free DraftKings FanDuel BetMGM main spreads after model publication
+        run: python -m scripts.therundown_free_watch --sport cfb
+
+      - name: Audit no-key public web research against originally frozen game spreads
+        run: python -m scripts.walters_web_research
+
+      - name: Validate published dashboard bundle
+        run: python validate_publication.py
+      - name: Build release-gated final edge decision board
+        shell: bash
+        run: |
+          python scripts/final_edge_board.py \
+            --sport cfb \
+            --source outputs/edge_priority.csv \
+            --gate reports/release_gate.json \
+            --out-csv outputs/final_edge_board.csv \
+            --out-json outputs/final_edge_summary.json
+          python - <<'PY' >> "$GITHUB_STEP_SUMMARY"
+          import json
+          s = json.load(open("outputs/final_edge_summary.json"))
+          print("## Final edge decision board")
+          print(f"- Ranked games: {s['distinct_games']}")
+          print(f"- Decision counts: {s['decision_counts']}")
+          print(f"- **Bet-ready:** {s['approved_bets']} (release-gated)")
+          print(f"- Global production release: {s['production_eligible']}")
+          print("- Stale quotes and unresolved sportsbook IDs are NOT executable bets.")
+          PY
+
+
+      - name: Scan and publish market-edge evidence for every upcoming FBS game
+        run: |
+          python -m scripts.walters_full_fbs_edge_scan \
+            --shortlist outputs/final_edge_board.csv \
+            --coverage outputs/schedule_coverage_audit.json \
+            --gate outputs/release_gate.json \
+            --out-csv outputs/full_fbs_edge_scan.csv \
+            --out-json outputs/full_fbs_edge_scan.json
+          python - <<'PY' >> "$GITHUB_STEP_SUMMARY"
+          import json
+          d = json.load(open("outputs/full_fbs_edge_scan.json"))
+          print("## Every-FBS-game edge scan")
+          print(f"**All upcoming FBS games scanned:** {d['remaining_pregame_game_count']}")
+          print(f"**Raw market-disagreement hypotheses (unverified):** {d['games_with_raw_positive_model_hypothesis']}")
+          print(f"**Final evidence shortlist:** {d['games_shortlisted_by_independent_edge_gate']}")
+          print(f"**Verified profitable edges:** 0")
+          print(f"**Recommended wagers:** {d['bet_recommendations']}")
+          print("See outputs/full_fbs_edge_scan.csv for every game's reason, including those not shortlisted.")
+          PY
+
+      - name: Audit prospective profitability evidence (research only)
+        run: python -m scripts.strategy_proof
+      - name: Publish run summary
+        shell: bash
+        run: |
+          python - <<'PY' >> "$GITHUB_STEP_SUMMARY"
+          import glob,json,os
+          files=glob.glob("outputs/cfb_model_*_metadata.json")
+          if not files: print("## CFB model\nNo metadata file was produced."); raise SystemExit(0)
+          m=json.load(open(max(files,key=os.path.getmtime))); mon=m.get("live_monitoring",{}); port=m.get("portfolio",{}); gate=m.get("release_gate",{}); dq=m.get("data_quality",{}); c=m["market_coverage"]; a=m.get("advanced_features",{}); x=m.get("current_context",{}); mi=m.get("market_intelligence",{}); mm=m.get("metrics",{}); tv=m.get("tier_validation",{}); ef=m.get("edge_forward_validation",{})
+          audit=json.load(open("outputs/audit_snapshot.json")) if os.path.exists("outputs/audit_snapshot.json") else {}; pub=json.load(open("outputs/publication_validation.json")) if os.path.exists("outputs/publication_validation.json") else {}
+          print(f"## Harbin CFB Platform v7.3 — {m['season']} Week {m['week']}")
+          print(f"- Publication: **{audit.get('status','UNKNOWN')}** · Reconciliation: **{pub.get('status','UNKNOWN')}** · Release state: **{gate.get('release_state','UNKNOWN')}**")
+          print(f"- Data contracts: **{dq.get('status','UNKNOWN')}** · Approved stake: **{port.get('approved_units',0)}u** · Portfolio: **{str(port.get('mode','paper')).upper()}**")
+          print(f"- Games: **{m['upcoming_games']}** · ML/Spread/Total: **{c['moneyline']}/{c['spread']}/{c['total']}**")
+          print(f"- Margin / Total MAE: **{mm.get('margin_mae')} / {mm.get('total_mae')}** · release weights **{mm.get('margin_release_weight')} / {mm.get('total_release_weight')}**")
+          print(f"- Brier/ECE: **{mm.get('win_brier')} / {mm.get('win_ece')}** · Advanced features: **{a.get('feature_count',0)}**")
+          print(f"- Weather: **{x.get('weather_coverage',0):.1%}** · Multi-book: **{mi.get('multi_book_coverage',0):.1%}** · The Odds API configured: **{mi.get('odds_api_configured',False)}**")
+          print(f"- Live readiness: **{mon.get('live_readiness_score','n/a')}/100** · Distribution stability: **{mon.get('scores',{}).get('distribution_stability','n/a')}/100**")
+          print(f"- Tier validation: **{tv.get('status','EARLY_SAMPLE')}** · Posted flat-1u decisions: **{tv.get('graded_tier_bets',0)}** · Clean eligible: **{tv.get('validation_eligible_bets',0)}** · Validated cells: **{tv.get('validated_cells',0)}**")
+          print(f"- Forward edge evidence: **{ef.get('status','PENDING_FORWARD')}** · Observed: **{ef.get('observed_rows',0)}** · Clean entries: **{ef.get('clean_entries',0)}** · Graded: **{ef.get('graded_bets',0)}** · ROI: **{ef.get('roi')}** · CLV: **{ef.get('avg_execution_clv')}**")
+          if gate.get('blockers'):
+              print("- Production blockers: " + "; ".join(gate['blockers'][:4]))
+          PY
+      - name: Commit generated state
+        shell: bash
+        run: |
+          git config user.name "harbin-model-bot"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add outputs history reports docs
+
+          # Live-grading owns these files. The model may regenerate them locally for
+          # reporting, but must not race the grading workflow when publishing state.
+          GRADE_OWNED=(
+            reports/live_performance.json
+            reports/live_graded_predictions.csv
+            reports/live_graded_bets.csv
+            reports/tier_performance.json
+            reports/tier_performance.csv
+            reports/tier_validation_clean.csv
+            reports/live_graded_tiers.csv
+            reports/live_graded_tiers_clean.csv
+            outputs/live_performance.json
+            outputs/tier_performance.json
+            outputs/tier_performance.csv
+            outputs/tier_validation_clean.csv
+            outputs/live_graded_tiers.csv
+            outputs/live_graded_tiers_clean.csv
+            docs/live_performance.json
+            docs/tier_performance.json
+            docs/tier_performance.csv
+            docs/tier_validation_clean.csv
+            docs/live_graded_tiers.csv
+            docs/live_graded_tiers_clean.csv
+            reports/edge_timing_baseline_performance.json
+            reports/edge_timing_baseline_graded.csv
+            outputs/edge_timing_baseline_performance.json
+            outputs/edge_timing_baseline_graded.csv
+            docs/edge_timing_baseline_performance.json
+            docs/edge_timing_baseline_graded.csv
+            reports/edge_timing_forward_performance.json
+            reports/edge_timing_forward_graded.csv
+            outputs/edge_timing_forward_performance.json
+            outputs/edge_timing_forward_graded.csv
+            docs/edge_timing_forward_performance.json
+            docs/edge_timing_forward_graded.csv
+            reports/edge_forward_performance.json
+            reports/edge_forward_graded.csv
+            outputs/edge_forward_performance.json
+            outputs/edge_forward_graded.csv
+            docs/edge_forward_performance.json
+            docs/edge_forward_graded.csv
+          )
+          for f in "${GRADE_OWNED[@]}"; do
+            if git ls-files --error-unmatch "$f" >/dev/null 2>&1; then
+              git restore --staged --worktree "$f" || true
+            else
+              git rm --cached -f --ignore-unmatch "$f" >/dev/null 2>&1 || true
+              rm -f "$f"
+            fi
+          done
+
+          # The walk-forward backtest is the sole publisher of historical
+          # evidence/policy files. The live model may read/regenerate them locally,
+          # but must never race the backtest when committing generated state.
+          BACKTEST_OWNED=(
+            reports/backtest_bets.csv
+            reports/backtest_predictions.csv
+            reports/backtest_summary.json
+            reports/backtest_by_edge.csv
+            reports/backtest_by_signal.csv
+            reports/backtest_by_conference.csv
+            reports/backtest_by_role.csv
+            reports/backtest_by_season.csv
+            reports/backtest_by_week.csv
+            reports/calibration.csv
+            reports/edge_regimes.json
+            reports/edge_regimes.csv
+            reports/evidence_report.json
+            reports/production_policy.json
+            docs/backtest_summary.json
+            docs/evidence.json
+            docs/policy.json
+            docs/edge_regimes.json
+            docs/edge_regimes.csv
+          )
+          for f in "${BACKTEST_OWNED[@]}"; do
+            if git ls-files --error-unmatch "$f" >/dev/null 2>&1; then
+              git restore --staged --worktree "$f" || true
+            else
+              git rm --cached -f --ignore-unmatch "$f" >/dev/null 2>&1 || true
+              rm -f "$f"
+            fi
+          done
+
+          if ! git diff --cached --quiet; then
+            git commit -m "model: automated CFB v7 refresh"
+            git pull --rebase origin main
+            git push
+          else
+            echo "No generated changes to commit."
+          fi

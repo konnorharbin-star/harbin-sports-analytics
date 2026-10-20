@@ -6,3 +6,4 @@ Pillow>=10.0
 requests>=2.31
 pytest>=8.0
 pyarrow>=17.0
+tzdata>=2025.1; sys_platform == "win32"

@@ -99,8 +99,8 @@ class SportsDataVerseClient:
         return self._seasons[season].copy()
     def detect(self):
         now=pd.Timestamp.now(tz="UTC"); season=now.year if now.month>=7 else now.year-1
-        try: df=self.season_frame(season)
-        except Exception: season-=1; df=self.season_frame(season)
+        # A current-season outage must not silently publish last year's slate.
+        df=self.season_frame(season)
         regular=df[df["season_type"].astype(str).str.lower().isin({"regular","2"})].copy(); regular["_date"]=pd.to_datetime(regular["start_date"],utc=True,errors="coerce")
         completed=regular["completed"].map(_bool); upcoming=regular[(~completed)&(regular["_date"]>=now-pd.Timedelta(days=1))]
         if len(upcoming): return season,int(upcoming.sort_values("_date").iloc[0]["week"])
