@@ -5,6 +5,9 @@ on:
   push:
     branches: [main]
     paths:
+      - 'harbin/**'
+      - 'requirements.txt'
+      - 'run_week.py'
       - 'tests/**'
       - 'scripts/**'
       - 'platform_ops/**'
@@ -25,3 +28,38 @@ jobs:
         run: python -m pip install -r requirements.txt
       - name: Test full repository without placing bets or writing history
         run: python -m pytest -q
+  model-validation:
+    if: github.event_name == 'pull_request' || github.event_name == 'workflow_dispatch'
+    needs: test
+    runs-on: ubuntu-latest
+    timeout-minutes: 75
+    env:
+      PYTHONUNBUFFERED: '1'
+      TZ: America/Chicago
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+          cache: pip
+      - run: python -m pip install -r requirements.txt
+      - name: Run full current model without publishing or pushing history
+        run: python run_week.py
+      - name: Check full FBS coverage and publication consistency
+        run: |
+          python -m scripts.audit_schedule_coverage
+          python validate_publication.py
+      - name: Retain model and source-check evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: cfb-model-validation
+          path: |
+            outputs/*metadata.json
+            outputs/public_input_quality.*
+            outputs/schedule_coverage_audit.json
+            outputs/publication_validation.json
+            outputs/release_gate.json
+          if-no-files-found: warn

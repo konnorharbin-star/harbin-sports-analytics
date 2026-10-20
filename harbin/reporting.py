@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import json
+import hashlib
 import math
 from datetime import datetime, timezone
 from pathlib import Path
@@ -453,5 +454,12 @@ def validate_publication_files(output_dir: str | Path = "outputs", docs_dir: str
     else:
         checks.append(_check("monitor_present", False, "docs/live_monitoring.json missing or invalid"))
     checks.append(_check("data_quality_present", bool(dq), "docs/data_quality.json exists and parses"))
+    if metadata.get("public_inputs"):
+        quality = _read_json(docs / "public_input_quality.json")
+        quality_copy = _read_json(out / "public_input_quality.json")
+        forecast_path = docs / "latest.json"
+        digest = hashlib.sha256(forecast_path.read_bytes()).hexdigest() if forecast_path.exists() else None
+        checks.append(_check("public_input_quality_copy", bool(quality) and _json_equal(quality, quality_copy), "Source check report copies must agree"))
+        checks.append(_check("public_input_forecast_binding", bool(digest) and digest == quality.get("source_forecast_sha256") == metadata["public_inputs"].get("source_forecast_sha256"), "Source checks must describe the exact published forecast file"))
     errors = [c for c in checks if not c["passed"] and c["severity"] == "ERROR"]
     return {"status": "FAIL" if errors else "PASS", "checks": checks, "errors": errors}

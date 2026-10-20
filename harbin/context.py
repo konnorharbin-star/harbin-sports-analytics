@@ -9,6 +9,8 @@ import pandas as pd
 import requests
 
 from .advanced import canon_id, canon_team
+from .public_inputs import bind_event, event_venue, fetch_summary, reported_injuries, kickoff_weather
+from .official_personnel import OfficialResearch
 
 INJURY_URL = "https://github.com/sportsdataverse/sportsdataverse-data/releases/download/espn_cfb_injuries/injuries_{season}.parquet"
 ROSTER_URL = "https://github.com/sportsdataverse/sportsdataverse-data/releases/download/espn_cfb_rosters/cfb_rosters_{season}.parquet"
@@ -23,6 +25,7 @@ def _col(cols, *choices):
     for ch in choices:
         if isinstance(ch, str) and ch.lower() in low:
             return low[ch.lower()]
+    for ch in choices:
         words = ch if isinstance(ch, tuple) else (str(ch),)
         for c in cols:
             if all(w.lower() in str(c).lower() for w in words):
@@ -104,16 +107,19 @@ def normalize_injury_rows(df: pd.DataFrame, as_of=None, target_week=None) -> pd.
         return pd.DataFrame()
     as_of = _utc(as_of)
     out = df.copy()
-    tc = _col(out.columns, "team", "team_name", "school", "display_name")
+    tc = _col(out.columns, "team", "team_name", "team_display_name", "school", "display_name")
     tic = _col(out.columns, "team_id", ("team", "id"))
     aid = _col(out.columns, "athlete_id", "player_id", "id")
-    an = _col(out.columns, "athlete_name", "player_name", "name")
+    an = _col(out.columns, "athlete_name", "athlete_display_name", "player_name", "name")
     pc = _col(out.columns, "position", "position_abbreviation", "position_name")
     sc = _col(out.columns, "status", "status_name", "status_type")
     typ = _col(out.columns, "type", "injury_type")
     short = _col(out.columns, "short_comment", "short_detail")
     longc = _col(out.columns, "long_comment", "detail", "description")
-    dc = _col(out.columns, "date", "updated_at", "last_update", "timestamp")
+    # Feed as_of_date describes an export, not the injury report's publication.
+    dc = _col(out.columns, "injury_date", "date", "updated_at", "last_update", "timestamp")
+    if dc is not None and str(dc).lower() in {"as_of_date", "asof_date"}:
+        dc = None
     wc = _col(out.columns, "week")
 
     out["_team_id"] = out[tic].map(canon_id) if tic else ""
@@ -122,7 +128,7 @@ def normalize_injury_rows(df: pd.DataFrame, as_of=None, target_week=None) -> pd.
     out["_athlete_name"] = out[an].map(canon_team) if an else ""
     out["_position"] = out[pc].fillna("").astype(str) if pc else ""
     out["_week"] = pd.to_numeric(out[wc], errors="coerce") if wc else np.nan
-    out["_report_ts"] = pd.to_datetime(out[dc], utc=True, errors="coerce") if dc else pd.NaT
+    out["_report_ts"] = pd.to_datetime(out[dc], utc=True, errors="coerce") if dc else pd.Series(pd.NaT, index=out.index, dtype="datetime64[ns, UTC]")
 
     if dc:
         out = out[out["_report_ts"].isna() | (out["_report_ts"] <= as_of)]
@@ -162,6 +168,7 @@ def summarize_injury_rows(df: pd.DataFrame) -> dict:
             "injury_report_age_days": np.nan, "injury_reports": 0,
             "qb_injury_evidence_status": "NO_QB_REPORT",
             "qb_injury_timestamp_coverage": 0.0,
+            "fresh_dated_reports": 0,
         }
     sev = pd.to_numeric(df.get("_severity", 0), errors="coerce").fillna(0.0)
     active = sev >= 0.05
@@ -188,6 +195,7 @@ def summarize_injury_rows(df: pd.DataFrame) -> dict:
         "injury_reports": int(len(df)),
         "qb_injury_evidence_status": qb_evidence,
         "qb_injury_timestamp_coverage": qb_timestamp_coverage,
+        "fresh_dated_reports": int((ages.notna() & ages.le(7.0) & ages.ge(0)).sum()),
     }
 
 
@@ -203,7 +211,7 @@ def _active_value(row, active_col=None, status_col=None):
             return False, True
     if status_col:
         s = str(row.get(status_col) or "").lower()
-        if any(x in s for x in ("inactive", "suspended", "injured reserve", "out")):
+        if any(x in s for x in ("inactive", "unavailable", "not available", "not active", "not cleared", "suspended", "injured reserve", "out")):
             return False, True
         if any(x in s for x in ("active", "available", "healthy")):
             return True, True
@@ -219,6 +227,7 @@ def summarize_roster_rows(df: pd.DataFrame) -> dict:
             "roster_availability_risk": 0.0, "roster_status_known": False,
             "roster_position_known": False, "qb_status_verified_count": 0,
             "qb_status_unknown_count": 0,
+            "roster_status_coverage": 0.0,
         }
     aid = _col(df.columns, "athlete_id", "player_id", "id")
     an = _col(df.columns, "athlete_name", "player_name", "full_name", "name")
@@ -238,8 +247,8 @@ def summarize_roster_rows(df: pd.DataFrame) -> dict:
     active = states.map(lambda x: bool(x[0]))
     known = states.map(lambda x: bool(x[1]))
     roster_count = int(len(work))
-    active_count = int(active.sum())
-    inactive_count = roster_count - active_count if bool(known.any()) else 0
+    active_count = int((active & known).sum())
+    inactive_count = int((~active & known).sum())
     inactive_share = inactive_count / roster_count if roster_count and bool(known.any()) else np.nan
     if posc:
         pos = work[posc].fillna("").astype(str).str.upper()
@@ -267,6 +276,7 @@ def summarize_roster_rows(df: pd.DataFrame) -> dict:
         "qb_roster_count": qb_count, "active_qb_count": active_qbs,
         "roster_availability_risk": float(min(1.0, risk)),
         "roster_status_known": bool(known.any()), "roster_position_known": position_known,
+        "roster_status_coverage": float(known.mean()),
         "qb_status_verified_count": known_qbs, "qb_status_unknown_count": unknown_qbs,
     }
 
@@ -312,6 +322,7 @@ class ContextStore:
     def __init__(self, season, schedule_frame=None, cache_dir="cache/context", as_of=None):
         self.season = int(season)
         self.as_of = _utc(as_of)
+        self.clock_is_live = as_of is None
         current_cfb_season = self.as_of.year if self.as_of.month >= 7 else self.as_of.year - 1
         self.live_context_enabled = self.season == current_cfb_season
         self.cache = Path(cache_dir)
@@ -321,6 +332,9 @@ class ContextStore:
         self.session = requests.Session()
         self.session.headers.update({"User-Agent": "HarbinSportsAnalytics/7.2", "Accept": "application/json,*/*"})
         self._geo_cache, self._weather_cache, self._injury_views = {}, {}, {}
+        self.public_input_records = []
+        self.roster_players = []
+        self.official_research = OfficialResearch(self.session)
         self.injuries_raw = pd.DataFrame()
         self.roster_id, self.roster_name, self.team_by_id, self.team_by_name, self.game_rows = {}, {}, {}, {}, {}
         self._index_schedule()
@@ -385,6 +399,8 @@ class ContextStore:
             self.errors.append("rosters: missing team identity")
             return
         work = d.copy()
+        fields = [k for k in ("team_id", "athlete_id", "full_name", "display_name", "position_abbreviation", "position") if k in d]
+        self.roster_players = d[fields].to_dict("records")
         work["_team_id"] = d[tic].map(canon_id) if tic else ""
         work["_team_name"] = d[tc].map(canon_team) if tc else ""
         for (tid, name), z in work.groupby(["_team_id", "_team_name"], dropna=False):
@@ -427,7 +443,7 @@ class ContextStore:
                 "latitude": num(lat), "longitude": num(lon), "elevation": num(elev),
                 "city": str(r.get(city, "")) if city else "", "state": str(r.get(state, "")) if state else "",
                 "venue_id": canon_id(r.get(vc)) if vc else "", "indoor": _boolish(r.get(indoorc)) if indoorc else False,
-                "indoor_known": bool(indoorc),
+                "indoor_known": bool(indoorc and pd.notna(r.get(indoorc))),
             }
             if ic and canon_id(r.get(ic)):
                 self.team_by_id[canon_id(r.get(ic))] = meta
@@ -505,18 +521,17 @@ class ContextStore:
             return np.nan
 
     def _weather(self, meta, kick):
-        meta = self._geocode(meta)
-        if _boolish(meta.get("indoor", False)):
-            return {"indoor_weather_suppressed": 1.0}, meta
+        # Called with an event-bound venue, never a team's home-city guess.
         if not self.live_context_enabled or pd.isna(kick):
             return {}, meta
-        if kick < self.as_of - pd.Timedelta(hours=6) or kick > self.as_of + pd.Timedelta(days=16):
+        clock = _utc() if self.clock_is_live else self.as_of
+        if kick <= clock or kick > clock + pd.Timedelta(days=16):
             return {}, meta
         lat, lon = meta.get("latitude", np.nan), meta.get("longitude", np.nan)
         if pd.isna(lat) or pd.isna(lon):
             return {}, meta
         day = kick.strftime("%Y-%m-%d")
-        key = (round(float(lat), 2), round(float(lon), 2), kick.floor("h").isoformat())
+        key = (float(lat), float(lon), kick.floor("h").isoformat())
         if key in self._weather_cache:
             return self._weather_cache[key], meta
         try:
@@ -525,26 +540,21 @@ class ContextStore:
                 "hourly": "temperature_2m,precipitation_probability,precipitation,weather_code,wind_speed_10m,wind_gusts_10m",
                 "temperature_unit": "fahrenheit", "wind_speed_unit": "mph", "timezone": "UTC",
                 "start_date": day, "end_date": day,
-            }, timeout=10)
+            }, timeout=10, allow_redirects=False)
             r.raise_for_status()
+            if r.status_code != 200:
+                raise ValueError("WEATHER_SOURCE_REDIRECT")
             jdata = r.json()
-            h = jdata.get("hourly") or {}
-            ts = pd.to_datetime(h.get("time", []), utc=True, errors="coerce")
-            if not len(ts):
-                return {}, meta
-            j = int(np.argmin(np.abs((ts - kick).total_seconds())))
-            def val(name):
-                values = h.get(name) or [np.nan] * len(ts)
-                try:
-                    return float(values[j])
-                except Exception:
-                    return np.nan
-            precip = val("precipitation")
-            result = {
-                "temperature_f": val("temperature_2m"), "precip_probability": val("precipitation_probability"),
-                "precipitation_in": precip / 25.4 if _finite(precip) else np.nan,
-                "weather_code": val("weather_code"), "wind_mph": val("wind_speed_10m"), "wind_gust_mph": val("wind_gusts_10m"),
-            }
+            response_lat = jdata.get("latitude")
+            response_lon = jdata.get("longitude")
+            if not (_finite(response_lat) and _finite(response_lon)) or haversine_miles(lat, lon, response_lat, response_lon) > 15:
+                raise ValueError("WEATHER_RESPONSE_LOCATION_NOT_NEAR_EVENT_VENUE")
+            captured = _utc()
+            result = kickoff_weather(jdata, kick.isoformat(), captured=captured.isoformat(),
+                                     as_of=(captured if self.clock_is_live else self.as_of).isoformat())
+            import hashlib
+            result["source_url"] = r.url
+            result["response_sha256"] = hashlib.sha256(r.content).hexdigest()
             if pd.isna(meta.get("elevation", np.nan)) and jdata.get("elevation") is not None:
                 meta["elevation"] = float(jdata["elevation"]) * 3.28084
             self._weather_cache[key] = result
@@ -553,6 +563,30 @@ class ContextStore:
             self.errors.append(f"weather {key}: {type(exc).__name__}: {exc}")
             self._weather_cache[key] = {}
             return {}, meta
+
+    def _event_context(self, row, schedule_row):
+        game = row.to_dict()
+        if schedule_row is not None:
+            for key in ("home_id", "away_id", "venue_id"):
+                game[key] = schedule_row.get(key)
+            game["neutral_site"] = _boolish(schedule_row.get("neutral_site"))
+            game["start_time_tbd"] = _boolish(schedule_row.get("start_time_tbd"))
+        if not self.live_context_enabled:
+            return {"status": "CURRENT_CONTEXT_DISABLED", "reasons": ["HISTORICAL_SEASON"]}, {}, {}
+        try:
+            snapshot = fetch_summary(row.game_id, self.session)
+            clock = _utc() if self.clock_is_live else self.as_of
+            binding = bind_event(snapshot, game, as_of=clock.isoformat())
+            venue = event_venue(binding, snapshot, list(self.team_by_id.values()))
+            personnel = reported_injuries(binding, snapshot, as_of=clock.isoformat())
+            if binding["status"] == "EXACT_PREGAME_EVENT_VERIFIED" and self.clock_is_live:
+                personnel["official"] = self.official_research.collect(game, self.roster_players)
+                self.errors.extend(f"official source {row.game_id}: {error}" for error in personnel["official"].get("errors", []))
+            return binding, venue, personnel
+        except Exception as exc:
+            reason = f"event {row.game_id}: {type(exc).__name__}: {exc}"
+            self.errors.append(reason)
+            return {"status": "EVENT_SOURCE_ERROR", "reasons": [reason]}, {}, {}
 
     def _freshness_factor(self):
         latest = {d.get("source"): d.get("status") for d in self.cache_diagnostics}
@@ -582,6 +616,7 @@ class ContextStore:
         n = len(out)
         weather_resolved = roster_hits = travel_hits = venue_hits = injury_active_games = 0
         row_quality = []
+        injury_hits = event_hits = 0
         freshness = self._freshness_factor()
         injury_source_ok = self.live_context_enabled and not self.injuries_raw.empty
         for i, r in out.iterrows():
@@ -589,11 +624,35 @@ class ContextStore:
             hid = canon_id(sr.get("home_id")) if sr is not None and "home_id" in sr else ""
             aid = canon_id(sr.get("away_id")) if sr is not None and "away_id" in sr else ""
             target_week = int(r.get("week")) if _finite(r.get("week")) else None
+            binding, vm, event_personnel = self._event_context(r, sr)
+            event_ok = binding.get("status") == "EXACT_PREGAME_EVENT_VERIFIED"
+            event_hits += int(event_ok)
+            if self.clock_is_live:
+                self.as_of = _utc()
+                self._injury_views.clear()
             h = self._injury(r.home_team, hid, target_week) if injury_source_ok else summarize_injury_rows(pd.DataFrame())
             a = self._injury(r.away_team, aid, target_week) if injury_source_ok else summarize_injury_rows(pd.DataFrame())
+            dated = event_personnel.get("records") or []
+            # Prefer event-scoped dated reports when the endpoint exposes them.
+            if dated:
+                for side, tid in (("home", hid), ("away", aid)):
+                    rows = pd.DataFrame([x for x in dated if x["team_id"] == tid])
+                    if not rows.empty:
+                        summary = summarize_injury_rows(normalize_injury_rows(rows, self.as_of, target_week))
+                        if side == "home":
+                            h = summary
+                        else:
+                            a = summary
+            injury_ok = event_ok and h["fresh_dated_reports"] > 0 and a["fresh_dated_reports"] > 0
+            injury_hits += int(injury_ok)
+            if not event_ok:
+                h = summarize_injury_rows(pd.DataFrame())
+                a = summarize_injury_rows(pd.DataFrame())
             hrst = self._roster(r.home_team, hid) if self.live_context_enabled else summarize_roster_rows(pd.DataFrame())
             arst = self._roster(r.away_team, aid) if self.live_context_enabled else summarize_roster_rows(pd.DataFrame())
-            roster_ok = hrst["roster_count"] > 0 and arst["roster_count"] > 0
+            # ESPN season-roster active flags certify roster membership, not
+            # this game's availability. They cannot fill the availability gate.
+            roster_ok = False
             roster_hits += int(roster_ok)
             injury_active_games += int(h["injury_count"] + a["injury_count"] > 0)
             def team_availability(inj, roster):
@@ -616,8 +675,10 @@ class ContextStore:
             out.at[i, "home_qb_status_unknown_count"] = hrst["qb_status_unknown_count"]
             out.at[i, "away_qb_status_unknown_count"] = arst["qb_status_unknown_count"]
             # The roster/injury feeds do not certify which QB will start.
-            out.at[i, "home_qb_starter_verified"] = False
-            out.at[i, "away_qb_starter_verified"] = False
+            official = event_personnel.get("official") or {}
+            starters = official.get("starters") or {}
+            out.at[i, "home_qb_starter_verified"] = hid in starters
+            out.at[i, "away_qb_starter_verified"] = aid in starters
             out.at[i, "home_roster_availability_risk"] = hrst["roster_availability_risk"]
             out.at[i, "away_roster_availability_risk"] = arst["roster_availability_risk"]
             out.at[i, "home_availability_risk"] = home_avail
@@ -625,33 +686,34 @@ class ContextStore:
             out.at[i, "availability_edge_home"] = away_avail - home_avail
             out.at[i, "availability_risk"] = availability
 
-            hm = self._geocode(self._team_meta(r.home_team, hid))
-            am = self._geocode(self._team_meta(r.away_team, aid))
-            venue_ok = bool(hm) and (_boolish(hm.get("indoor", False)) or (_finite(hm.get("latitude")) and _finite(hm.get("longitude"))))
+            hm = self._team_meta(r.home_team, hid)
+            am = self._team_meta(r.away_team, aid)
+            venue_ok = event_ok and _finite(vm.get("latitude")) and _finite(vm.get("longitude"))
             venue_hits += int(venue_ok)
             kick = pd.to_datetime(r.date, utc=True, errors="coerce")
             home_rest, away_rest = self._rest(hid, r.home_team, kick), self._rest(aid, r.away_team, kick)
             out.at[i, "home_rest_days"] = home_rest
             out.at[i, "away_rest_days"] = away_rest
             out.at[i, "rest_edge_home"] = home_rest - away_rest if pd.notna(home_rest) and pd.notna(away_rest) else np.nan
-            travel = haversine_miles(am.get("latitude"), am.get("longitude"), hm.get("latitude"), hm.get("longitude"))
+            travel = haversine_miles(am.get("latitude"), am.get("longitude"), vm.get("latitude"), vm.get("longitude"))
             out.at[i, "away_travel_miles"] = travel
             travel_hits += int(pd.notna(travel))
-            indoor = _boolish(hm.get("indoor", False))
-            w, hm = self._weather(hm, kick)
-            weather_ok = indoor or bool(w)
+            indoor = False  # Generic indoor metadata is not a roof-position announcement.
+            w, vm = self._weather(vm, kick) if venue_ok else ({}, vm)
+            weather_ok = bool(w)
             weather_resolved += int(weather_ok)
             out.at[i, "venue_indoor"] = bool(indoor)
-            elev = hm.get("elevation", np.nan)
+            elev = vm.get("elevation", np.nan)
             out.at[i, "venue_elevation_ft"] = elev
             out.at[i, "altitude_change_away_ft"] = elev - am.get("elevation", np.nan) if pd.notna(elev) and pd.notna(am.get("elevation", np.nan)) else np.nan
             for k, v in w.items():
-                out.at[i, k] = v
+                if _finite(v):
+                    out.at[i, k] = v
             wr = weather_risk(w, indoor=indoor)
             tr = min(0.5, max(0.0, (float(travel) - 800.0) / 2200.0)) if pd.notna(travel) else 0.0
             rr = 0.35 if pd.notna(away_rest) and away_rest < 6 else 0.0
             travel_rest = min(1.0, tr + rr)
-            quality = _context_quality(injury_source_ok, roster_ok, venue_ok, weather_ok, freshness)
+            quality = _context_quality(injury_ok, roster_ok, venue_ok, weather_ok, freshness)
             base_context_risk = 0.64 * availability + 0.21 * wr + 0.15 * travel_rest
             context_risk = min(1.0, base_context_risk + 0.30 * (1.0 - quality))
             row_quality.append(quality)
@@ -659,11 +721,39 @@ class ContextStore:
             out.at[i, "travel_rest_risk"] = travel_rest
             out.at[i, "context_risk"] = context_risk
             out.at[i, "context_quality_score"] = quality
+            out.at[i, "event_binding_verified"] = event_ok
+            out.at[i, "game_venue_coordinates_verified"] = venue_ok
+            out.at[i, "dated_team_injury_reports_verified"] = injury_ok
+            out.at[i, "final_game_availability_verified"] = False
+            roof_status = vm.get("roof_status", "GAME_DAY_ROOF_OR_ENCLOSURE_UNVERIFIED")
+            out.at[i, "roof_evidence_status"] = roof_status
+            missing = ["confirmed_starting_qbs", "final_game_specific_player_availability"]
+            if hid in starters and aid in starters:
+                missing.remove("confirmed_starting_qbs")
+            if not event_ok:
+                missing.append("exact_pregame_event_binding")
+            if not venue_ok:
+                missing.append("event_venue_coordinates")
+            if not weather_ok:
+                missing.append("venue_bound_kickoff_weather")
+            if roof_status != "OUTDOOR_ROOF_POSITION_NOT_APPLICABLE":
+                missing.append("game_day_roof_or_fixed_enclosure")
+            self.public_input_records.append({
+                "game_id": str(r.game_id), "home_team": r.home_team, "away_team": r.away_team,
+                "kickoff_utc": kick.isoformat(), "event_binding": binding,
+                "venue": vm, "reported_personnel": event_personnel,
+                "fresh_home_team_reports": h["fresh_dated_reports"],
+                "fresh_away_team_reports": a["fresh_dated_reports"],
+                "weather": w, "roof_status": roof_status,
+                "missing_required_inputs": missing, "context_quality_score": quality,
+                "ready_for_context_adjusted_prediction": False,
+                "forecast_effect": "RISK_AND_UNCERTAINTY_ONLY_NO_FAIR_SCORE_ADJUSTMENT",
+            })
         if weather_resolved:
-            self.sources.append("Open-Meteo forecast / indoor venue suppression")
+            self.sources.append("Open-Meteo verified event-venue kickoff forecast")
         if travel_hits:
-            self.sources.append("Venue geocoding / team metadata")
-        injury_cov = 1.0 if injury_source_ok else 0.0
+            self.sources.append("Exact event venue ID / team metadata")
+        injury_cov = injury_hits / n
         roster_cov, venue_cov, weather_cov = roster_hits / n, venue_hits / n, weather_resolved / n
         core_cov = min(injury_cov, roster_cov, venue_cov, weather_cov)
         quality_score = float(np.mean(row_quality)) if row_quality else 0.0
@@ -675,4 +765,9 @@ class ContextStore:
             "roster_coverage": roster_cov, "venue_coverage": venue_cov, "travel_coverage": travel_hits / n,
             "live_context_enabled": self.live_context_enabled, "as_of": self.as_of.isoformat(),
             "cache_diagnostics": self.cache_diagnostics[-20:],
+            "event_binding_coverage": event_hits / n,
+            "starting_qb_confirmation_coverage": float((out.home_qb_starter_verified.astype(bool) & out.away_qb_starter_verified.astype(bool)).mean()),
+            "final_game_availability_coverage": 0.0,
+            "season_roster_listing_coverage": float(((out.home_roster_count > 0) & (out.away_roster_count > 0)).mean()),
+            "input_quality_report": "public_input_quality.json",
         }
