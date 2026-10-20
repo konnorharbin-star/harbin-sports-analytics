@@ -187,3 +187,17 @@ def test_missing_team_reports_do_not_get_credit_from_another_team(monkeypatch, t
     assert out.iloc[0]["model_margin_home"] == 3.2
     assert out.iloc[0]["model_total"] == 48.1
     assert out.iloc[0]["home_qb_starter_verified"] == False
+
+
+def test_failed_event_binding_does_not_apply_roster_availability_risk(monkeypatch, tmp_path):
+    monkeypatch.setattr(ContextStore, "_load_injuries", lambda *_: None)
+    monkeypatch.setattr(ContextStore, "_load_rosters", lambda *_: None)
+    monkeypatch.setattr(ContextStore, "_load_team_info", lambda *_: None)
+    store = ContextStore(2026, pd.DataFrame([{**game(), "start_date": KICK}]), cache_dir=tmp_path, as_of=NOW)
+    unavailable = summarize_roster_rows(pd.DataFrame([{"athlete_id": 1, "position": "QB", "active": False}]))
+    monkeypatch.setattr(store, "_roster", lambda *_: unavailable)
+    monkeypatch.setattr(store, "_event_context", lambda *_: ({"status": "EVENT_NOT_VERIFIED"}, {}, {}))
+    out, _ = store.attach(pd.DataFrame([game()]))
+    assert out.iloc[0]["availability_risk"] == 0
+    assert out.iloc[0]["home_roster_count"] == 0
+    assert store.public_input_records[0]["ready_for_context_adjusted_prediction"] is False

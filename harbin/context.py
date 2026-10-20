@@ -656,8 +656,8 @@ class ContextStore:
             if not event_ok:
                 h = summarize_injury_rows(pd.DataFrame())
                 a = summarize_injury_rows(pd.DataFrame())
-            hrst = self._roster(r.home_team, hid) if self.live_context_enabled else summarize_roster_rows(pd.DataFrame())
-            arst = self._roster(r.away_team, aid) if self.live_context_enabled else summarize_roster_rows(pd.DataFrame())
+            hrst = self._roster(r.home_team, hid) if self.live_context_enabled and event_ok else summarize_roster_rows(pd.DataFrame())
+            arst = self._roster(r.away_team, aid) if self.live_context_enabled and event_ok else summarize_roster_rows(pd.DataFrame())
             # ESPN season-roster active flags certify roster membership, not
             # this game's availability. They cannot fill the availability gate.
             roster_ok = False
