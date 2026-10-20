@@ -140,6 +140,11 @@ def test_unavailable_and_unknown_roster_members_are_not_active():
     assert result["roster_status_coverage"] == pytest.approx(2 / 3)
 
 
+def test_date_only_injury_does_not_acquire_an_invented_timezone():
+    frame = pd.DataFrame([{"team_id": 1, "athlete_id": 7, "status": "Out", "injury_date": "2026-10-20"}])
+    assert pd.isna(normalize_injury_rows(frame, as_of=NOW).iloc[0]["_report_age_days"])
+
+
 def test_quality_bound_to_original_forecast_and_rechecks_expiry():
     source = json.dumps([game()]).encode()
     record = {**game(), "kickoff_utc": KICK, "event_binding": bind_event(snapshot(), game(), as_of=NOW),

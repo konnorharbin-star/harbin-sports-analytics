@@ -129,6 +129,14 @@ def normalize_injury_rows(df: pd.DataFrame, as_of=None, target_week=None) -> pd.
     out["_position"] = out[pc].fillna("").astype(str) if pc else ""
     out["_week"] = pd.to_numeric(out[wc], errors="coerce") if wc else np.nan
     out["_report_ts"] = pd.to_datetime(out[dc], utc=True, errors="coerce") if dc else pd.Series(pd.NaT, index=out.index, dtype="datetime64[ns, UTC]")
+    if dc:
+        def explicit_clock(value):
+            try:
+                parsed = pd.Timestamp(value)
+                return parsed.tzinfo is not None
+            except (ValueError, TypeError):
+                return False
+        out.loc[~out[dc].map(explicit_clock), "_report_ts"] = pd.NaT
 
     if dc:
         out = out[out["_report_ts"].isna() | (out["_report_ts"] <= as_of)]
