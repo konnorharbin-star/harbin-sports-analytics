@@ -9,12 +9,12 @@ from scripts import market_form_challenger as m
 
 def rows():
     data = []
-    teams = [f"Team-{i}" for i in range(16)]
+    teams = [f"Team-{i}" for i in range(32)]
     for season in (2023, 2024, 2025):
         for week in range(1, 16):
-            # Eight nonoverlapping games in each week; repeated teams next week.
-            for i in range(8):
-                home, away = teams[i], teams[(i + 8) % 16]
+            # Sixteen nonoverlapping games in each week; repeated teams next week.
+            for i in range(16):
+                home, away = teams[i], teams[(i + 16) % 32]
                 market = .3 + .4 * ((i + week) % 8) / 7
                 model = min(.99, max(.01, market + .03 * ((week + i) % 3 - 1)))
                 result = int(((i * 23 + week * 11 + season) % 100) < 100 * market)
