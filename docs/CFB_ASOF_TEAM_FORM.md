@@ -40,3 +40,30 @@ This outputs an auditable JSON report and adds it as an Actions artifact. It **d
 ## Forward requirements
 
 For 2026 and later, log time-stamped first-seen model forecasts and paired contemporaneous market prices *before* kickoff; compare challenger against opening and updated market snapshots at matching observation times. Grade identical future game cohorts, including close games and confidence-pool points. No change becomes the live selection rule until it exceeds the market prospectively.
+
+## First retrospective outcome — October 31, 2026
+
+The PR research workflow executed on a matched sample of 778 games from 2025.
+The 2024 tuning sample chose the six-game team-form family, ridge penalty 0.3,
+with a tuning Brier improvement of 0.001152. That tuning gain did **not**
+generalize to the following season:
+
+| 2025 identical 778 games | Archived market | Form challenger |
+| --- | ---: | ---: |
+| Correct winners | 562 | 558 |
+| Win accuracy | 72.2365% | 71.7224% |
+| Brier (lower is better) | 0.1819984 | 0.1835276 |
+| Log loss (lower is better) | 0.5387499 | 0.5426183 |
+| Confidence-pool points | 17,933 | 17,869 |
+| Close-game correct (286) | 57.69% | 56.29% |
+
+**Decision:** REJECT form adjustment. Continue using the market-only benchmark.
+No second round of retuning based on 2025 outcomes is permitted. The tested
+market observations come from the archival opening-fields/final-fallback price
+series and do NOT establish a specific verified bookmaker's closing-line
+accuracy or an executable trading advantage.
+
+The code stays in the repository as a **failed research hypothesis with
+reproducible evidence**. A genuinely new forecasting idea must be
+pre-registered and evaluated on new pregame observations, not retrospectively
+optimized to this already-reviewed 2025 result.
