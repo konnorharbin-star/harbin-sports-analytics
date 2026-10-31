@@ -77,6 +77,12 @@ def test_evaluation_does_not_select_params():
     assert orig["estimated_coefficients"] == modified["estimated_coefficients"]
     assert orig["tune_best_raw"] == modified["tune_best_raw"]
     assert orig["evaluation_market"] != modified["evaluation_market"]
+    assert orig["retrospective_screen"] in (
+        "PASSED_RESEARCH_ONLY_NOT_PROSPECTIVE",
+        "REJECTED_NO_INCREMENTAL_FORECAST_ADVANTAGE",
+    )
+    if orig["evaluation_challenger"]["correct"] < orig["evaluation_market"]["correct"]:
+        assert orig["recommendation"] == "USE_MARKET_BASELINE_REJECT_FORM_ADJUSTMENT"
     assert not orig["promotion_eligible"]
     assert not orig["betting_authorized"]
 
