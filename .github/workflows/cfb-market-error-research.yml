@@ -1,6 +1,12 @@
 name: CFB Market-Error Research
 
 on:
+  pull_request:
+    branches: [main]
+    paths:
+      - 'scripts/market_error_challenger.py'
+      - 'tests/test_market_error_challenger.py'
+      - '.github/workflows/cfb-market-error-research.yml'
   workflow_dispatch:
   schedule:
     - cron: '13 18 * * 6'
