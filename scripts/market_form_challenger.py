@@ -222,8 +222,17 @@ def experiment(rows):
     market = evaluate(evaluation, forecast(evaluation))
     challenger = evaluate(evaluation, forecast(
         evaluation, selected["family"], beta) if use_model else forecast(evaluation))
+    retrospective_pass = bool(use_model and
+        challenger["correct"] >= market["correct"] and
+        challenger["brier"] < market["brier"] and
+        challenger["log_loss"] <= market["log_loss"] and
+        challenger["confidence_points"] >= market["confidence_points"])
     return {
         "spec": "cfb_asof_team_form_challenger_v1",
+        "retrospective_screen": ("PASSED_RESEARCH_ONLY_NOT_PROSPECTIVE" if retrospective_pass
+                                 else "REJECTED_NO_INCREMENTAL_FORECAST_ADVANTAGE"),
+        "recommendation": ("TRACK_PROSPECTIVELY_DO_NOT_USE_FOR_OFFICIAL_PICKS" if retrospective_pass
+                           else "USE_MARKET_BASELINE_REJECT_FORM_ADJUSTMENT"),
         "train_year": TRAIN, "tune_year": TUNE, "evaluation_year": EVAL,
         "sample_sizes": {str(k): len(v) for k, v in
                          [(TRAIN, train), (TUNE, tune), (EVAL, evaluation)]},
