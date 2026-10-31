@@ -1,6 +1,6 @@
 # CFB market-error challenger (research-only)
 
-This branch restores the dormant CFB Model + Dashboard Actions workflow and adds a separate, **zero-stake** probability challenger. Neither feature changes the existing score engine, market release gate, portfolio policy, or places bets.
+This branch adds read-only scheduled FBS **shadow forecast artifacts** and a separate **zero-stake** probability challenger. The existing full-history publishing workflow remains disabled, preserving the repository's original Git-publication evidence contract. Neither feature changes the score engine, market release gate, portfolio policy, or places bets.
 
 ## Model question
 
@@ -36,16 +36,16 @@ Optional live shadow output requires a **fresh, pre-kickoff** model publication 
 
 ## Full FBS automation
 
-**Actions → CFB Model + Dashboard** runs at UTC 11:17/17:17/23:17 daily plus Saturday 14:47 UTC. It can also be dispatched manually with both season and week (or neither).
+**Actions → CFB Shadow Forecast (Research Only)** runs at UTC 11:17/17:17/23:17 daily plus Saturday 14:47 UTC. It can also be dispatched manually with both season and week (or neither).
 
 Each run:
 1. Runs existing `run_week.py` for the upcoming FBS week, including FBS/FCS forecast-only scope.
-2. Archives original predictions in `history/first_seen_pregame_predictions.csv` **before** grading.
-3. Fails if the FBS coverage audit finds missing upcoming games.
-4. Verifies coherent model outputs and archives artifacts.
-5. Pushes validated `docs/`, `outputs/` and first-seen history updates so the dashboard does not stay stale.
+2. Fails if the FBS coverage audit finds missing upcoming games.
+3. Verifies the generated reporting bundle.
+4. Uploads run-specific research artifacts without pushing changes into the repository.
+5. **Does not** claim immutable Git-published pregame evidence, refresh the public dashboard, or create official locked picks.
 
-The model workflow runs the existing production-safe code path. The market-error challenger is **not** wired into betting or live prediction decisions.
+The shadow workflow runs the existing release-gated code path locally and does not publish generated state. The original disabled `.github/disabled-workflows/cfb-model.yml` remains disabled until its full-history and grading protections can be revalidated. The market-error challenger is **not** wired into betting or live prediction decisions.
 
 ## Promotion / future validation
 
