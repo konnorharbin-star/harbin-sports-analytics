@@ -1,0 +1,77 @@
+name: CFB Shadow Forecast (Research Only)
+
+on:
+  workflow_dispatch:
+    inputs:
+      season:
+        description: Optional season (both season and week, or neither)
+        required: false
+        type: string
+      week:
+        description: Optional week (both season and week, or neither)
+        required: false
+        type: string
+  schedule:
+    - cron: '17 11,17,23 * * *'
+    - cron: '47 14 * * 6'
+
+permissions:
+  contents: read
+
+concurrency:
+  group: cfb-shadow-forecast
+  cancel-in-progress: false
+
+jobs:
+  model:
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+          cache: pip
+      - run: python -m pip install -r requirements.txt
+      - name: Validate model contracts
+        run: python -m pytest -q tests/test_market_error_challenger.py tests/test_full_fbs_slate.py
+      - name: Run complete FBS slate (research only)
+        shell: bash
+        env:
+          SEASON: ${{ inputs.season }}
+          WEEK: ${{ inputs.week }}
+        run: |
+          set -euo pipefail
+          args=()
+          if [[ -n "$SEASON" || -n "$WEEK" ]]; then
+            if [[ -z "$SEASON" || -z "$WEEK" ]]; then
+              echo "Provide both season and week or neither" >&2
+              exit 1
+            fi
+            args+=(--season "$SEASON" --week "$WEEK")
+          fi
+          python run_week.py "${args[@]}"
+      - name: Audit missing FBS predictions
+        run: python -m scripts.audit_schedule_coverage
+      - name: Verify reporting coherence
+        run: python validate_publication.py
+      - name: Summarize non-published shadow slate
+        shell: bash
+        run: |
+          echo "### CFB research-only slate" >> "$GITHUB_STEP_SUMMARY"
+          cat outputs/schedule_coverage_audit.json >> "$GITHUB_STEP_SUMMARY"
+          echo "" >> "$GITHUB_STEP_SUMMARY"
+          echo "Research artifact only. No live dashboard writes, Git pushes, official locked forecasts, or automatic wagers." >> "$GITHUB_STEP_SUMMARY"
+      - name: Upload research outputs only
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: cfb-shadow-${{ github.run_id }}
+          path: |
+            outputs/
+            docs/latest.csv
+            docs/latest.json
+          if-no-files-found: warn
+          retention-days: 30
